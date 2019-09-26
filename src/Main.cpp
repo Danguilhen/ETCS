@@ -16,7 +16,7 @@
 #include "son_train.hpp"
 #include "Buttons.hpp"
 #include "planning.hpp"
-///////
+
 class Donnees
 {
 	V2f m_cartesiens;
