@@ -1187,7 +1187,7 @@ void gestionnaireAffichage(donnees & train)
 			{
 				train.setCouleurAiguille(YELLOW);
 				actualisationDonnees(train, "IndS", 0, 0, train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());//OK
-				if(train.getVtrain() < train.getVbut())
+				if (train.getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
 			else if(train.getStatus() == "NoS")
