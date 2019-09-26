@@ -24,7 +24,7 @@ class Donnees
     float m_vitesse;
 };
 
-/////////////////////////////////////////////t
+/////////////////////////////////////////////
 //Prototypes
 void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
 void affichageBoutons(double RE, RenderWindow & fenetre, int * ecart);
@@ -1183,7 +1183,7 @@ void gestionnaireAffichage(donnees & train)
 				if(train.getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
-			else if (train.getStatus() == "IndS" || (train.getVtrain() > train.getVbut() && (train.getVtrain() < train.getVitessePSL() && train.getVtrain() >= train.getVitesseISL())))
+			else if(train.getStatus() == "IndS" || (train.getVtrain() > train.getVbut() && (train.getVtrain() < train.getVitessePSL() && train.getVtrain() >= train.getVitesseISL())))
 			{
 				train.setCouleurAiguille(YELLOW);
 				actualisationDonnees(train, "IndS", 0, 0, train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());//OK
