@@ -24,7 +24,7 @@ class Donnees
     float m_vitesse;
 };
 
-/////////////////////////////////////////////
+/////////////////////////////////////////////t
 //Prototypes
 void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
 void affichageBoutons(double RE, RenderWindow & fenetre, int * ecart);
