@@ -1930,7 +1930,6 @@ void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
 			else
 				dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", to_string(train.getTempRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {},
 					numero, "numeric", boutons, ecran, train, ecart);
-
 		}
 	}
 }
