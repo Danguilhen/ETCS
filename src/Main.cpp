@@ -25,7 +25,7 @@ class Donnees
 };
 
 ///////////////////////////////////////////// -test pull request 3
-// test 27/09
+// test 27/09/19
 
 //Prototypes
 void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
