@@ -24,7 +24,7 @@ class Donnees
     float m_vitesse;
 };
 
-/////////////////////////////////////////////t
+///////////////////////////////////////////// -test pull request 3
 //Prototypes
 void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
 void affichageBoutons(double RE, RenderWindow & fenetre, int * ecart);
@@ -1183,7 +1183,7 @@ void gestionnaireAffichage(donnees & train)
 				if(train.getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
-			else if (train.getStatus() == "IndS" || (train.getVtrain() > train.getVbut() && (train.getVtrain() < train.getVitessePSL() && train.getVtrain() >= train.getVitesseISL())))
+			else if(train.getStatus() == "IndS" || (train.getVtrain() > train.getVbut() && (train.getVtrain() < train.getVitessePSL() && train.getVtrain() >= train.getVitesseISL())))
 			{
 				train.setCouleurAiguille(YELLOW);
 				actualisationDonnees(train, "IndS", 0, 0, train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());//OK
@@ -1929,8 +1929,8 @@ void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
 				dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", "", "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {}, numero, "numeric", boutons, ecran, train, ecart);
 			else
 				dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", to_string(train.getTempRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {},
-					numero, "numeric", boutons, ecran, train, ecart);
 
+					numero, "numeric", boutons, ecran, train, ecart);
 		}
 	}
 }
