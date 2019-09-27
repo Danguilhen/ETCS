@@ -24,7 +24,7 @@ class Donnees
     float m_vitesse;
 };
 
-/////////////////////////////////////////////
+///////////////////////////////////////////// -test pull request
 //Prototypes
 void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
 void affichageBoutons(double RE, RenderWindow & fenetre, int * ecart);
@@ -1929,6 +1929,7 @@ void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
 				dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", "", "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {}, numero, "numeric", boutons, ecran, train, ecart);
 			else
 				dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", to_string(train.getTempRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {},
+
 					numero, "numeric", boutons, ecran, train, ecart);
 		}
 	}
