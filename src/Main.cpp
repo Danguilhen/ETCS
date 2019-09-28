@@ -24,7 +24,6 @@ class Donnees
     float m_vitesse;
 };
 
-// test 27/09/19
 // test 27/09/19 a 13h20
 // test 27/09/19 a 13h40
 //TEST NICOLAS gdqsihbsdf aaaaaa
