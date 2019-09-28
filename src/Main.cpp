@@ -43,7 +43,6 @@ void gestionnaireAffichage(donnees & train);
 void test();
 void actualisationDonnees(donnees & train, string status, float red, float orange, float yellow, float white, float mediumGrey, float darkGrey);
 
-
 void test()
 {
 	while(true)
@@ -79,7 +78,6 @@ int main()
 	int numero = 1;
 	int temp_TTI = 0;
 	int version_test;
-
 
 ///////////////////////////////////////////////
 	PASP pasp0(400,40000);//évite erreur vector vide
