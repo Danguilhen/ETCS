@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp> //test Thomas
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <cstdlib>
