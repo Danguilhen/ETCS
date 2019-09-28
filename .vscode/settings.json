@@ -52,17 +52,28 @@
 	},
 
 	"workbench.colorCustomizations": {
-		"statusBar.background": "#8ac242",
-		"statusBar.foreground": "#ffffff",
 		"statusBar.debuggingBackground": "#5e9517",
 		"statusBar.debuggingForeground": "#ffffff",
 		"terminal.ansiBrightRed": "#ee3355",
 		"terminal.ansiBrightYellow": "#ffcc55",
 		"terminal.ansiBrightGreen": "#a5ea4f",
-		"terminal.ansiBrightBlue": "#5599ff"
+		"terminal.ansiBrightBlue": "#5599ff",
+		"activityBar.background": "#a2ce69",
+		"activityBar.foreground": "#15202b",
+		"activityBar.inactiveForeground": "#15202b99",
+		"activityBarBadge.background": "#3f88c0",
+		"activityBarBadge.foreground": "#e7e7e7",
+		"titleBar.activeBackground": "#8ac242",
+		"titleBar.inactiveBackground": "#8ac24299",
+		"titleBar.activeForeground": "#15202b",
+		"titleBar.inactiveForeground": "#15202b99",
+		"statusBar.background": "#8ac242",
+		"statusBarItem.hoverBackground": "#6f9e33",
+		"statusBar.foreground": "#15202b"
 	},
 
 	"[applescript]": {
 		"files.encoding": "utf8"
-	}
+	},
+	"peacock.color": "#8ac242"
 }
