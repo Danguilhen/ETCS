@@ -18,31 +18,6 @@
 #include "planning.hpp"
 #include "Fenetres.hpp"
 
-class Gradient
-{
-	private :
-
-	float distance_debut;
-	float taille;
-	int valeur;
-
-	public :
-
-	Gradient(float D_debut, float T, int V)
-	{
-		distance_debut = D_debut;
-		taille = T;
-		valeur = V;
-	}
-
-	float getDistance_debut();
-	void setDistance_debut(float D);
-	float getTaille();
-	void setTaille(float T);
-	int getValeur();
-	void setValeur(int V);
-};
-
 void menuWindows(vector <string> selection, vector <int>& enable, RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string title, int * ecart)
 {
 	Color color;
