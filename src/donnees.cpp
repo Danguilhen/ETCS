@@ -111,6 +111,11 @@ void donnees::CSM_PIM(float delta_ts)
 	}
 
 }
+void donnees::mode_test()
+{
+	cout << "rentrer le mode, le status, la vitesse du train, la vitesse EBI, la vitesse PSL, la distance avant le but" << endl;
+	cin >> mode >> status >> V_train >> Vf_FLOISL >> Vf_PSL >> Vf_ISL >> d_train_EOA;
+}
 
 float donnees::getDEOA() {return d_train_EOA;}
 float donnees::getVitesseISL() {return Vf_ISL;}
@@ -212,6 +217,7 @@ int donnees::getClignotementTexte() {return clignotementTexte;}
 void donnees::setClignotementTexte(int N) {clignotementTexte = N;}
 float donnees::getTTI(){return TTI;}
 void donnees::setTTI(float N){TTI = N;}
+
 
 int Train_Data::getlength() {return length;}
 void Train_Data::setlength(int P) {length = P;}

@@ -13,10 +13,129 @@ class Traction_models
 {
 
 };
+
+
 class Breaking_models
 {
 
 };
+
+/*
+class TRACK_TO_TRAIN
+{
+	//All Variables have one of the following prefixes:
+	//A_ Acceleration
+	//D_ distance
+	//G_ Gradient
+	//L_ length
+	//M_ Miscellaneous
+	//N_ Number
+	//NC_ class number
+	//NID_ identity number
+	//Q_ Qualifier
+	//T_ time/date
+	//V_ Speed
+	//X_ Text
+	Virtual_Balise_Cover_marker packet0;
+	System_Version_order packet2;
+	National_Values packet3;
+	Linking packet5;
+	Virtual_Balise_Cover_order packet6;
+	Level_1_Movement_Authority packet12;
+	Staff_Responsible_distance_information_from_loop packet13;
+	Level_2_3_Movement_Authority packet15;
+	Repositioning_Information packet16;
+	Gradient_Profile packet21;
+	International_Static_Speed_Profile packet27;
+	Track_Condition_Change_of_traction_system packet39;
+	Track_Condition_Change_of_allowed_current_consumption packet40;
+	Level_Transition_Order packet41;
+	Session_Management packet42;
+	Data_ueed_by_applications_outside_the_ERTMS/ETCS_system packet44;
+	Radio_Network_registration packet45;
+	Conditional_Level_Transition_Order packet46;
+	List_of_balises_for_SH_Area packet49;
+	Axle_load_Speed_Profile packet51;
+	Permitted_Braking_Distance_Information packet52;
+	Movement_Authority_Request_Parameters packet57;
+	Position_Report_Parameters packet58;
+	List_of_Balises_in_SR_Authority packet63;
+	Inhibition_of_revocable_TSRs_from_balises_in_L2_3 packet64;
+	Temporary_Speed_Restriction packet65;
+	Temporary_Speed_Restriction_Revocation packet66;
+	Track_Condition_Big_Metal_Masses packet67;
+	Track_Condition packet68;
+	Track_Condition_Station_Platforms packet69;
+	Route_Suitability_Data packet70;
+	Adhesion_Factor packet71;
+	Packet_for_sending_plain_text_messages packet72;
+	Packet_for_sending_fixed_text_messages packet76;
+	Geographical_Position_Information packet79;
+	Mode_profile packet80;
+	Level_crossing_information packet88;
+	Track_Ahead_Free_up_to_level2_3_transition_location packet90;
+	RBC_transition_order packet131;
+	Danger_for_Shunting_information packet132;
+	Radion_infill_area_information packet133;
+	EOLM_Packet packet134;
+	Stop_Shunting_on_desk_opening packet135;
+	Infill_location_reference packet136;
+	Stop_if_in_Staff_Responsible packet137;
+	Reversing_area_information packet138;
+	Reversing_supervision_information packet139;
+	Train_running_number_from_RBC packet140;
+	Default_Gradient_for_Temporary_Speed_Restriction packet141;
+	Session_Management_with_neighbouring_Radio_Infill_Unit packet143;
+	Inhibition_of_balise_group_message_consistency_reaction packet145;
+	LSSMA_display_toggle_order packet180;
+	Generic_LS_function_marker packet181;
+	Default_balise_loop_or_RIU_information packet254;
+	End_of_Information packet255;
+};
+
+
+class TRAIN_TO_TRACK
+{
+	Position_Report packet0;
+	Position_Report_based_on_two_balise_groups packet1;
+	Onboard_supported_system_versions packet2;
+};
+
+
+class Virtual_Balise_Cover_marker
+{
+	int NID_PACKET;
+	int NID_VBCMK;
+};
+
+
+class System_Version_order
+{
+	int NID_PACKET;
+	int Q_DIR;
+	int L_PACKET;
+	int M_VERSION;
+};
+
+
+class National_values
+{
+	int NID_PACKET;
+	int Q_DIR;
+	int L_PACKET;
+	int Q_SCALE;
+	int D_VALIDNV;
+	int NID_C;
+	int N_ITER;
+	int NID_Ck;    //<----------------------------------- PAS SUR
+	int V_NVSHUNT;
+	int V_NVSTFF;
+	int V_NVONSIGHT;
+	int V_NVLIMSUPERV;
+	int V_NVUNFIT;
+};
+
+*/
 class Train_Data
 {
 	private :
@@ -80,6 +199,7 @@ class Train_Data
 	void setTrain_running_number(int P);
 	void setTrain_type(string P);
 	string getTrain_type();
+
 };
 
 class donnees
@@ -258,6 +378,7 @@ class donnees
 	void setClignotementTexte(int N);
 	float getTTI();
 	void setTTI(float N);
+	void mode_test();
 
 	//Fonctions utilis�s dans calcul
 	void vitesse_train(float delta_ts);//mise � jour de la vitesse train
@@ -267,6 +388,7 @@ class donnees
 	void CSM_PIM(float delta_ts);//Si vitesse au dessus de la release speed
 
 };
+
 
 
 class VBC
