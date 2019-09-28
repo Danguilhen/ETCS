@@ -37,13 +37,7 @@
 		"*.json": "jsonc",
 		"*.stats": "cpp",
 		"*.desktop": "properties",
-		".clang-format": "yaml",
-		"chrono": "cpp",
-		"iostream": "cpp",
-		"ostream": "cpp",
-		"vector": "cpp",
-		"string": "cpp",
-		"fstream": "cpp"
+		".clang-format": "yaml"
 	},
 
 	"terminal.integrated.shell.windows": "C:/Program Files/Git/bin/bash.exe",
