@@ -28,6 +28,7 @@ class Donnees
 // test 27/09/19
 // test 27/09/19 a 13h20
 // test 27/09/19 a 13h40
+//TEST NICOLAS
 
 //Prototypes
 void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
