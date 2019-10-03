@@ -35,7 +35,9 @@ class PASP
 	private :
 	int vitesse_but;
 	int distance_but;
+	
 	public :
+
 	PASP(int V_but, int D_but)
 	{
 		vitesse_but = V_but;
@@ -65,15 +67,18 @@ class Planning_Announcements
 		distance = D;
 		numero = N;
 	}
+
 	Planning_Announcements()
 	{
 
 	}
+
 	void PAF(int V, float D)
 	{
 		distance = int(D);
 		vitesse = V;
 	}
+
 	int getnumero();
 	void setnumero(int V);
 	int getDistance();
