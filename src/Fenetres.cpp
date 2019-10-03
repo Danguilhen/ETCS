@@ -143,7 +143,7 @@ void MainWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font
 		train.getConnection() == "Up"))) || (train.getVtrain() == 0 && train.getGeneralMode() == "PT" && (train.getLevelETCS() == "Level 1" || ((train.getLevelETCS() == "Level 2" ||
 		train.getLevelETCS() == "Level 3") && train.getConnection() == "Up" && train.getPending_Emergency_Stop() == false))))
 	{
-		enable[6] = 0; //shunting
+		enable[6] = 0; //shunting  x
 		boutons[6].settype("up_type");
 	}
 	else if(train.getVtrain() == 0 && train.getGeneralMode() == "SH")
