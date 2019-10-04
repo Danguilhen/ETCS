@@ -32,7 +32,7 @@ void Buttons::action_type(Son & son)
 	{
 		if(driver_action == 1)
 		{
-			jouer_alarmes(son, 1, 1);
+			son.jouer_alarmes(1, 1);
 		}
 		if(driver_action == 3)
 		{
@@ -44,7 +44,7 @@ void Buttons::action_type(Son & son)
 	{
 		if(driver_action == 1)
 		{
-			jouer_alarmes(son, 1, 1);
+			son.jouer_alarmes(1, 1);
 			chrono.restart();
 			button_activation = 1;
 			n = 0;
@@ -79,7 +79,7 @@ void Buttons::action_type(Son & son)
 	{
 		if(driver_action == 1)
 		{
-			jouer_alarmes(son, 1, 1);
+			son.jouer_alarmes(1, 1);
 			chrono.restart();
 		}
 		if(driver_action == 3 && delta_ts > 2)

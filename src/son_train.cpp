@@ -45,15 +45,15 @@ Sound& Son::get_sound(){return sound;}
 void Son::set_mode(int M){mode = M;}
 int Son::get_mode(){return mode;}
 //Fonctions appel�es dans le main
-void init_alarmes(Son &son)//au d�but
+void Son::init_alarmes()//au d�but
 {
-	son.init_buffer_click();
-	son.init_buffer_S_info();
-	son.init_buffer_S1_toofast();
-	son.init_buffer_S2_warning();
+	init_buffer_click();
+	init_buffer_S_info();
+	init_buffer_S1_toofast();
+	init_buffer_S2_warning();
 }
 //Lorsqu'un son doit �tre jou�
-void jouer_alarmes(Son &son, int numero, int mode)
+void Son::jouer_alarmes(int numero, int mode)
 {
 	/*
 		Num�ro 1 : click
@@ -68,29 +68,32 @@ void jouer_alarmes(Son &son, int numero, int mode)
 
 		Il ne faut appeler le son qu'une seule fois
 	*/
-	son.set_mode(mode);
-	if(numero == 1 && son.get_mode() != 4)
-	son.get_sound().setBuffer(son.get_buffer_click());
-	if(numero == 2 && son.get_mode() != 4)
-	son.get_sound().setBuffer(son.get_buffer_S_info());
-	if(numero == 3 && son.get_mode() != 4)
-	son.get_sound().setBuffer(son.get_buffer_S1_toofast());
-	if(numero == 4 && son.get_mode() != 4)
-	son.get_sound().setBuffer(son.get_buffer_S2_warning());
+	set_mode(mode);
+	if(numero == 1 && get_mode() != 4)
+		get_sound().setBuffer(get_buffer_click());
+	if(numero == 2 && get_mode() != 4)
+		get_sound().setBuffer(get_buffer_S_info());
+	if(numero == 3 && get_mode() != 4)
+		get_sound().setBuffer(get_buffer_S1_toofast());
+	if(numero == 4 && get_mode() != 4)
+		get_sound().setBuffer(get_buffer_S2_warning());
 
-	if(son.get_mode() == 1)
-	{	son.get_sound().play();
-		son.set_mode(4);
+	if(get_mode() == 1)
+	{
+		get_sound().play();
+		set_mode(4);
 	}
-	if(son.get_mode() == 2)
-	{	son.get_sound().play();
-		son.get_sound().setLoop(true);
-		son.set_mode(4);
+	if(get_mode() == 2)
+	{
+		get_sound().play();
+		get_sound().setLoop(true);
+		set_mode(4);
 	}
-	if(son.get_mode() == 3)
-	{	son.get_sound().play();
-		son.get_sound().stop();
-		son.set_mode(4);
+	if(get_mode() == 3)
+	{
+		get_sound().play();
+		get_sound().stop();
+		set_mode(4);
 	}
 }
 

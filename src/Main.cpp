@@ -52,7 +52,7 @@ void test()
 int main()
 {
 	Son son;
-	init_alarmes(son);
+	son.init_alarmes();
 	Clock chrono;//d�but d�mo (delta_t = 0)
 	Time difftemps;
 	donnees train;
@@ -397,7 +397,7 @@ int main()
 				{
 					if(temp_TTI == 0)
 					{
-						jouer_alarmes(son, 2, 1);
+						son.jouer_alarmes(2, 1);
 						temp_TTI = 1;
 					}
 					rectangle(V2f(2,2), V2f(50, 50), DARK_GREY, RE, fenetre, ecart);
