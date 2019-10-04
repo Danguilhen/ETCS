@@ -620,7 +620,7 @@ void initialisation(int Vmax, double RE, vector<Symbol> & symbol, RenderWindow &
 	initSymbol(symbol);
 
 	//calculs preliminaires
-	centreIV= initValeurIndicateurVitesse(Vmax, RE, graduations, ecart);
+	centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart);
     aiguille = dessinAiguilleIV(centreIV, RE);
 
 	//creation et affichage de la fenetre
@@ -784,7 +784,7 @@ void indicateurVitesse(V2f centre, Color couleurAiguille, double RE, RenderWindo
 		fenetre.draw(Barre);
 	}
 
-	// ecriture des vitesses
+	//ecriture des vitesses
 	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[0].teta()));
 	//creation_texte(RE, to_string(graduations[0].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //0km/h
 	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[50].teta()));
@@ -1021,9 +1021,9 @@ void positionnementAiguille(ConvexShape aiguille,float vitesse, double RE, Rende
 
 	fenetre.draw(aiguille);
 
-	string str=to_string(graduations[(int)vitesse].vitesse());
+	string str = to_string(graduations[(int)vitesse].vitesse());
 	string s;
-	if(graduations[(int)vitesse].vitesse() > 100)
+	if(graduations[(int)vitesse].vitesse() > 99)
 	{
 		s = str.at(2);
 		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 2.0 - 3, 300 / 2.0), fenetre, 2, ecart);
@@ -1032,7 +1032,7 @@ void positionnementAiguille(ConvexShape aiguille,float vitesse, double RE, Rende
 		s = str.at(0);
 		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 - 50 / 6.0 - 3, 300 / 2.0), fenetre, 2, ecart);
 	}
-	else if(graduations[(int)vitesse].vitesse() > 10)
+	else if(graduations[(int)vitesse].vitesse() > 9)
 	{
 		s = str.at(1);
 		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), fenetre, 1, ecart);
