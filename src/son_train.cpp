@@ -19,23 +19,23 @@ using namespace sf;
 void Son::init_buffer_click()
 {
 	buffer_click.loadFromFile("ressources/sounds/click.wav");
-
 }
+
 void Son::init_buffer_S_info()
 {
 	buffer_S_info.loadFromFile("ressources/sounds/S_info.wav");
-
 }
+
 void Son::init_buffer_S1_toofast()
 {
 	buffer_S1_toofast.loadFromFile("ressources/sounds/S1_toofast.wav");
-
 }
+
 void Son::init_buffer_S2_warning()
 {
 	buffer_S2_warning.loadFromFile("ressources/sounds/S2_warning.wav");
-
 }
+
 //getter
 SoundBuffer& Son::get_buffer_click(){return buffer_click;}
 SoundBuffer& Son::get_buffer_S_info(){return  buffer_S_info;}
@@ -52,6 +52,7 @@ void Son::init_alarmes()//au d�but
 	init_buffer_S1_toofast();
 	init_buffer_S2_warning();
 }
+
 //Lorsqu'un son doit �tre jou�
 void Son::jouer_alarmes(int numero, int mode)
 {
@@ -96,4 +97,3 @@ void Son::jouer_alarmes(int numero, int mode)
 		set_mode(4);
 	}
 }
-

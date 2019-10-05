@@ -17,13 +17,13 @@ class Buttons
 	int n; // variable utilis�e pour le down_type
 
 	public :
+	
 	string gettype();
 	void settype(string P);
 	int getdriver_action();
 	void setdriver_action(int P);
 	void action_type(Son & son);
 	int getactivation();
-
 };
 
 #endif
