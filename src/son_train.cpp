@@ -15,46 +15,18 @@
 #include "son_train.hpp"
 
 using namespace sf;
-//initilisations
-void Son::init_buffer_click()
+
+//Fonctions appel�es dans le main
+void Son::init_alarmes() //au d�but
 {
 	buffer_click.loadFromFile("ressources/sounds/click.wav");
-}
-
-void Son::init_buffer_S_info()
-{
 	buffer_S_info.loadFromFile("ressources/sounds/S_info.wav");
-}
-
-void Son::init_buffer_S1_toofast()
-{
 	buffer_S1_toofast.loadFromFile("ressources/sounds/S1_toofast.wav");
-}
-
-void Son::init_buffer_S2_warning()
-{
 	buffer_S2_warning.loadFromFile("ressources/sounds/S2_warning.wav");
 }
 
-//getter
-SoundBuffer& Son::get_buffer_click(){return buffer_click;}
-SoundBuffer& Son::get_buffer_S_info(){return  buffer_S_info;}
-SoundBuffer& Son::get_buffer_S1_toofast(){return buffer_S1_toofast;}
-SoundBuffer& Son::get_buffer_S2_warning(){return buffer_S2_warning;}
-Sound& Son::get_sound(){return sound;}
-void Son::set_mode(int M){mode = M;}
-int Son::get_mode(){return mode;}
-//Fonctions appel�es dans le main
-void Son::init_alarmes()//au d�but
-{
-	init_buffer_click();
-	init_buffer_S_info();
-	init_buffer_S1_toofast();
-	init_buffer_S2_warning();
-}
-
 //Lorsqu'un son doit �tre jou�
-void Son::jouer_alarmes(int numero, int mode)
+void Son::jouer_alarmes(int numero, int Mode)
 {
 	/*
 		Num�ro 1 : click
@@ -69,31 +41,32 @@ void Son::jouer_alarmes(int numero, int mode)
 
 		Il ne faut appeler le son qu'une seule fois
 	*/
-	set_mode(mode);
-	if(numero == 1 && get_mode() != 4)
-		get_sound().setBuffer(get_buffer_click());
-	if(numero == 2 && get_mode() != 4)
-		get_sound().setBuffer(get_buffer_S_info());
-	if(numero == 3 && get_mode() != 4)
-		get_sound().setBuffer(get_buffer_S1_toofast());
-	if(numero == 4 && get_mode() != 4)
-		get_sound().setBuffer(get_buffer_S2_warning());
+	if(mode == 4)
+		sound.setLoop(false);
+	mode = Mode;
+	if(numero == 1 && mode != 4)
+		sound.setBuffer(buffer_click);
+	if(numero == 2 && mode != 4)
+		sound.setBuffer(buffer_S_info);
+	if(numero == 3 && mode != 4)
+		sound.setBuffer(buffer_S1_toofast);
+	if(numero == 4 && mode != 4)
+		sound.setBuffer(buffer_S2_warning);
 
-	if(get_mode() == 1)
+	if(mode == 1)
 	{
-		get_sound().play();
-		set_mode(4);
+		sound.play();
+		mode = 4;
 	}
-	if(get_mode() == 2)
+	if(mode == 2)
 	{
-		get_sound().play();
-		get_sound().setLoop(true);
-		set_mode(4);
+		sound.play();
+		sound.setLoop(true);
+		mode = 4;
 	}
-	if(get_mode() == 3)
+	if(mode == 3)
 	{
-		get_sound().play();
-		get_sound().stop();
-		set_mode(4);
+		sound.setLoop(false);
+		mode = 4;
 	}
 }
