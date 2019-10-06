@@ -41,7 +41,6 @@ void Announcements::setVitesse(int V){vitesse = V;}
 
 void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, vector<PASP> &tab_pasp, donnees &train, float delta_distance)
 {
-
 	int distance = 0;
 	int target = 0;
 	int vitesse = 0;
@@ -52,7 +51,7 @@ void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, v
 
 	for (size_t i = 0; i < tab_pasp.size(); i++)
 	{
-		if(i!=0)
+		if(i != 0)
 		{
 			tab_pasp[i].setDistance_but(tab_pasp[i].getDistance_but() - delta_distance);
 			if(tab_pasp[i].getDistance_but()<0)
@@ -60,7 +59,6 @@ void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, v
 				//train.setVligne(tab_pasp[i].getVitesse_but());
 				tab_pasp.erase(tab_pasp.begin() + i);
 			}
-
 		}
 		if(tab_pasp[i].getVitesse_but() < plus_petite_V)
 		{
@@ -70,16 +68,16 @@ void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, v
 	}
 
 	plus_petite_V = train.getVligne();
-	for(size_t i=0; i < tab_pasp.size(); i++)
+	for(size_t i = 0; i < tab_pasp.size(); i++)
 	{
-			n=0;
+			n = 0;
 		if(tab_pasp[i].getVitesse_but() <= plus_petite_V && tab_pasp[i].getDistance_but() > 0 && i > 0)
 		{
 			if(tab_pasp[i].getDistance_but() == distance_plus_petite_V && tab_pasp[i].getVitesse_but() != 0)
 				distance = 40000;
 			else
 				distance = tab_pasp[i].getDistance_but();
-			if(i==1)
+			if(i == 1)
 				vitesse = train.getVligne();
 			else
 			{
