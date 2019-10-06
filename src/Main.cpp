@@ -17,6 +17,8 @@
 #include "Buttons.hpp"
 #include "planning.hpp"
 #include "Fenetres.hpp"
+#include "Texte.hpp"
+
 
 class Donnees
 {
@@ -81,6 +83,7 @@ int main()
 	int version_test;
 
 
+
 ///////////////////////////////////////////////
 	PASP pasp0(400,40000);//évite erreur vector vide
 	PASP pasp1(225, 3000);
@@ -134,6 +137,8 @@ int main()
 	tab_paf.push_back(PAF1);
 	tab_paf.push_back(PAF2);
 	tab_paf.push_back(PAF3);
+
+	/*Texte_DMI texte_test();*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 	string choix;
@@ -350,8 +355,6 @@ int main()
 			demo2(train);
         	calcul(delta_ts,train);
 		}
-
-		//train.setVtrain(0);
         gestionnaireAffichage(train);
 		aiguille.setFillColor(train.getCouleurAiguille());
        	fenetre.clear();
@@ -555,6 +558,8 @@ int main()
 				creation_texte(RE, "Data", arial, GREY, 16, 0, V2f(64 * 2 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 - 10), fenetre, 1, ecart);
 				creation_texte(RE, "view", arial, GREY, 16, 0, V2f(64 * 2 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 + 10), fenetre, 1, ecart);
 				creation_texte(RE, "Spec", arial, GREY, 16, 0, V2f(64 * 3 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0), fenetre, 1, ecart);
+				TexteMessages(fenetre, RE, arial, ecart);
+
 
 				SE_04.afficher(V2f(64 * 4 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0), RE, ecart, fenetre);			//F5
 				DR_01.afficher(V2f(64 * 6 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0), RE, ecart, fenetre);			//F7

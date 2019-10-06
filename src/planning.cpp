@@ -199,7 +199,8 @@ void Orders_and_announcements(int scale,double RE, int * ecart, float delta_dist
 				for(size_t j = 1; j <= k; j++)
 				{
 					if(tab_pa[k].getDistance() < tab_pa[k - j].getDistance())
-					{	position = k - j;
+					{
+						position = k - j;
 						tab_pa.insert(tab_pa.begin() + position, tab_pa[k]);
 						tab_pa.erase(tab_pa.begin() + k + 1);
 					}
