@@ -101,6 +101,7 @@ int main()
 
 	vector<Gradient> tab_grad;
 	tab_grad.push_back(gradient1);
+
 	tab_grad.push_back(gradient2);
 	tab_grad.push_back(gradient3);
 	tab_grad.push_back(gradient4);
