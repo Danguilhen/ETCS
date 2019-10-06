@@ -38,7 +38,6 @@ void indicateurVitesse(V2f centre, Color couleurAiguille, double RE, RenderWindo
 V2f local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires);
 ConvexShape dessinAiguilleIV(V2f centre, double RE);
 void positionnementAiguille(ConvexShape aiguille, float vitesse, double RE, RenderWindow & fenetre, Font & arial, DonneesAfficheurVitesse graduations[], int * ecart);
-void planningInformation(RenderWindow & fenetre, double RE, Font & arial, vector<Symbol> & symbol, donnees &train, int * ecart, float temps_ecoule, Gradient &gradient, vector<PASP> &tab_pasp);
 void gestionnaireAffichage(donnees & train);
 void test();
 void actualisationDonnees(donnees & train, string status, float red, float orange, float yellow, float white, float mediumGrey, float darkGrey);
@@ -80,58 +79,7 @@ int main()
 	int version_test;
 
 ///////////////////////////////////////////////
-	PASP pasp0(400,40000);//évite erreur vector vide
-	PASP pasp1(225, 3000);
-	PASP pasp2(150, 5000);
-	PASP pasp5(0,8000);
-
-	vector<PASP> tab_pasp;
-	tab_pasp.push_back(pasp0);
-	tab_pasp.push_back(pasp1);
-	tab_pasp.push_back(pasp2);
-	tab_pasp.push_back(pasp5);
-
-	Gradient gradient1(2001,2000,20);
-	Gradient gradient2(0,2000,0);
-	Gradient gradient3(10000,5000,-5);
-	Gradient gradient4(4001,6000,0);
-	Gradient gradient5(15001,7000,35);
-
-	vector<Gradient> tab_grad;
-	tab_grad.push_back(gradient1);
-	tab_grad.push_back(gradient2);
-	tab_grad.push_back(gradient3);
-	tab_grad.push_back(gradient4);
-	tab_grad.push_back(gradient5);
-
-	Planning_Announcements PA1(1500,98);
-	Planning_Announcements PA2(1000,72);
-	Planning_Announcements PA3(3000,97);
-	Planning_Announcements PA6(4000,75);
-
-
-	vector<Planning_Announcements> tab_pa;//tout picto sauf flèche
-	tab_pa.push_back(PA1);
-	tab_pa.push_back(PA2);
-	tab_pa.push_back(PA3);
-	tab_pa.push_back(PA6);
-
-	Planning_Announcements PAF1;
-	Planning_Announcements PAF2;
-	Planning_Announcements PAF3;
-	Planning_Announcements PAF4;
-	Planning_Announcements PAF5;
-
-
-	vector<Planning_Announcements> tab_paf;//FLÉCHES VITESSE
-
-	PAF1.PAF(225, 3000);
-	PAF2.PAF(150, 5000);
-	PAF3.PAF(0,8000);
-
-	tab_paf.push_back(PAF1);
-	tab_paf.push_back(PAF2);
-	tab_paf.push_back(PAF3);
+	Planning planning;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 	string choix;
@@ -535,11 +483,11 @@ int main()
 					{
 						NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0), RE, ecart, fenetre);		//H2
 						if(train.getPlanning() == "show planning information" && train.getGeneralMode() == "FS")
-							planningInformation(fenetre, RE, arial, symbol, train, ecart, delta_ts, tab_grad, tab_pasp, tab_pa, tab_paf);
+							planning.planningInformation(fenetre, RE, arial, symbol, train, ecart, delta_ts);
 					}
 					if(version == "3.6.0" && (train.getGeneralMode() == "FS" || (train.getGeneralMode() == "OS" && train.getS_D_monitoring() == "On")))
 					{
-						planningInformation(fenetre, RE, arial, symbol, train, ecart, delta_ts, tab_grad, tab_pasp, tab_pa, tab_paf);
+						planning.planningInformation(fenetre, RE, arial, symbol, train, ecart, delta_ts);
 					}
 				}
 

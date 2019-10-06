@@ -29,17 +29,17 @@ void PASP::setVitesse_but(int V){vitesse_but = V;}
 int PASP::getDistance_but(){return distance_but;}
 void PASP::setDistance_but(int D){distance_but = D;}
 
-int Planning_Announcements::getDistance(){return distance;}
-void Planning_Announcements::setDistance(int D){distance = D;}
-int Planning_Announcements::getnumero(){return numero;}
-void Planning_Announcements::setnumero(int N){numero = N;}
-int Planning_Announcements::getPosition(){return position;}
-void Planning_Announcements::setPosition(int P){position = P;}
-int Planning_Announcements::getVitesse(){return vitesse;}
-void Planning_Announcements::setVitesse(int V){vitesse = V;}
+int Announcements::getDistance(){return distance;}
+void Announcements::setDistance(int D){distance = D;}
+int Announcements::getnumero(){return numero;}
+void Announcements::setnumero(int N){numero = N;}
+int Announcements::getPosition(){return position;}
+void Announcements::setPosition(int P){position = P;}
+int Announcements::getVitesse(){return vitesse;}
+void Announcements::setVitesse(int V){vitesse = V;}
 
 
-void pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, vector<PASP> &tab_pasp, donnees &train, float delta_distance)
+void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, vector<PASP> &tab_pasp, donnees &train, float delta_distance)
 {
 
 	int distance = 0;
@@ -124,7 +124,7 @@ void pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, vector<PASP
 	}
 }
 
-void planningInformation(RenderWindow & fenetre, double RE, Font & arial, vector<Symbol> & symbol, donnees &train, int * ecart, float temps_ecoule, vector<Gradient> &tab_grad, vector<PASP> &tab_pasp, vector<Planning_Announcements> &tab_pa, vector<Planning_Announcements> &tab_paf)
+void Planning::planningInformation(RenderWindow & fenetre, double RE, Font & arial, vector<Symbol> & symbol, donnees &train, int * ecart, float temps_ecoule)
 {
 	float delta_distance;
 	if(train.getPlanningScale() == 1000)
@@ -183,12 +183,11 @@ void planningInformation(RenderWindow & fenetre, double RE, Font & arial, vector
 	gradientProfile(fenetre, RE, arial, train.getPlanningScale(), ecart, delta_distance, tab_grad);
 }
 
-void Orders_and_announcements(int scale,double RE, int * ecart, float delta_distance, vector<Planning_Announcements> &tab_pa, vector<Symbol> & symbol, RenderWindow & fenetre)
+void Planning::Orders_and_announcements(int scale,double RE, int * ecart, float delta_distance, vector<Announcements> &tab_pa, vector<Symbol> & symbol, RenderWindow & fenetre)
 {
 	int target = 0;
 	int distance;
 	int position = 0;
-
 
 	for(size_t i = 0; i<tab_pa.size(); i++)
 	{
@@ -205,9 +204,7 @@ void Orders_and_announcements(int scale,double RE, int * ecart, float delta_dist
 					}
 				}
 
-
 				position = 0;
-
 			}
 		}
 
@@ -249,7 +246,7 @@ void Orders_and_announcements(int scale,double RE, int * ecart, float delta_dist
 
 }
 
-void gradientProfile(RenderWindow & fenetre, double RE, Font & arial, int scale, int * ecart, float delta_distance, vector<Gradient> &tab_grad)
+void Planning::gradientProfile(RenderWindow & fenetre, double RE, Font & arial, int scale, int * ecart, float delta_distance, vector<Gradient> &tab_grad)
 {
 	Color couleur;
 	string sens;
@@ -317,7 +314,8 @@ void gradientProfile(RenderWindow & fenetre, double RE, Font & arial, int scale,
 		}
 	}
 }
-void SpeedProfileDiscontinuityInformation(int scale,double RE, int * ecart, float delta_distance, vector<Planning_Announcements> &tab_paf, vector<Symbol> & symbol, RenderWindow & fenetre, Font arial)
+
+void Planning::SpeedProfileDiscontinuityInformation(int scale,double RE, int * ecart, float delta_distance, vector<Announcements> &tab_paf, vector<Symbol> & symbol, RenderWindow & fenetre, Font arial)
 {
 	int distance;
 	int target;
@@ -357,4 +355,32 @@ void SpeedProfileDiscontinuityInformation(int scale,double RE, int * ecart, floa
 			tab_paf.erase(tab_paf.begin()+i);
 		}
 	}
+}
+
+Planning::Planning() : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
+	gradient4(4001, 6000, 0), gradient5(15001, 7000, 35), PA1(1500, 98), PA2(1000, 72), PA3(3000, 97), PA6(4000, 75)
+{
+	tab_pasp.push_back(pasp0);
+	tab_pasp.push_back(pasp1);
+	tab_pasp.push_back(pasp2);
+	tab_pasp.push_back(pasp5);
+
+	tab_grad.push_back(gradient1);
+	tab_grad.push_back(gradient2);
+	tab_grad.push_back(gradient3);
+	tab_grad.push_back(gradient4);
+	tab_grad.push_back(gradient5);
+
+	tab_pa.push_back(PA1);
+	tab_pa.push_back(PA2);
+	tab_pa.push_back(PA3);
+	tab_pa.push_back(PA6);
+
+	PAF1.PAF(225, 3000);
+	PAF2.PAF(150, 5000);
+	PAF3.PAF(0,8000);
+
+	tab_paf.push_back(PAF1);
+	tab_paf.push_back(PAF2);
+	tab_paf.push_back(PAF3);
 }
