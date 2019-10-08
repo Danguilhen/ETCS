@@ -25,4 +25,73 @@ void windows(string & ecran, RenderWindow & fenetre, double RE, vector<Symbol> &
 void close(string & ecran, vector<Buttons> & boutons, int & numero);
 void driverIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart);
 
+
+class LeftSide
+{
+	protected :
+		void targetDistance(int distance, RenderWindow & fenetre, double RE, Font & arial, int * ecart);
+};
+
+
+class Fenetre
+{
+	protected :
+		Font arial;
+		Son son;
+		void creation_texte(double RE, string message, Font police, Color couleur, int taille, double OutlineThickness, V2f pos, RenderWindow & fenetre, int mode, int * ecart);
+		void rectangle(V2f pos, V2f taille, Color col, double RE, RenderWindow & fenetre, int * ecart);
+		void creation_rectangle(V2f pos, V2f dim, double RE, int mode, RenderWindow & fenetre, int * ecart);
+		void couleurForme(VertexArray & bande,Color col, int n);
+		void affichageBoutons(double RE, RenderWindow & fenetre, int * ecart);
+};
+
+
+class Main : public Fenetre, public LeftSide
+{
+
+};
+
+
+class Menu : public Fenetre
+{
+
+};
+
+
+class DataEntry : public Fenetre
+{
+
+};
+
+
+class Special : public Menu
+{
+
+};
+
+
+class Settings : public Menu
+{
+
+};
+
+
+class SRspeed : public Menu
+{
+
+};
+
+
+class DataView : public Menu
+{
+
+};
+
+
+class SystemVersion : public Menu
+{
+
+};
+
+
 #endif

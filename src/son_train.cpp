@@ -17,7 +17,7 @@
 using namespace sf;
 
 //Fonctions appel�es dans le main
-void Son::init_alarmes() //au d�but
+Son::Son() //au d�but
 {
 	buffer_click.loadFromFile("ressources/sounds/click.wav");
 	buffer_S_info.loadFromFile("ressources/sounds/S_info.wav");

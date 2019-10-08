@@ -899,3 +899,237 @@ void close(string & ecran, vector<Buttons> & boutons, int & numero)
     else if(boutons[11].getactivation()&& (ecran == "adhesionWindow" || ecran == "SRspeed/distanceWindow"))
         ecran = "specialWindow";
 }
+
+
+
+void Fenetre::creation_texte(double RE, string message, Font police, Color couleur, int taille, double OutlineThickness, V2f pos, RenderWindow & fenetre, int mode, int * ecart) //mode 1 : centrer / mode 2 : aligner droite / mode 3 : Geographical position / mode 4 : aligner gauche
+{
+	Text texte;
+	texte.setString(message);
+	texte.setFont(police);
+	texte.setOutlineThickness(OutlineThickness);
+	texte.setOutlineColor(couleur);
+	texte.setCharacterSize(taille * RE);
+	texte.setFillColor(couleur);
+	if(mode == 2)
+		texte.setOrigin(texte.getLocalBounds().left + texte.getLocalBounds().width * 1.0f, texte.getLocalBounds().top + texte.getLocalBounds().height / 2.0f);
+	else if(mode == 4)
+	{
+		if(message[message.size() - 1] == '_')
+		{
+			message = message.substr(0, message.size() - 1);
+		}
+
+		texte.setOrigin(texte.getLocalBounds().left, texte.getLocalBounds().top + texte.getLocalBounds().height / 2.0f);
+		if(message[message.size() - 1] == '_')
+		{
+			message += "_";
+			texte.setOrigin(texte.getLocalBounds().left, (pos.y + ecart[1]) * RE);
+		}
+	}
+	else if(mode == 3 && message.size() > 3)
+	{
+		Text metre;
+		if(couleur == BLACK)
+			metre.setString(message.substr(message.size() - 3, 3));
+		else
+			metre.setString(message.substr(1, message.size() - 1));
+		if(message.size() > 6)
+			message = message.substr(0, message.size() - 6) + " " + message.substr(message.size() - 6, 6);
+		if(couleur == BLACK)
+			message = message.substr(0, message.size() - 3) + " ";
+		else
+			message = message.substr(0, 1) + " ";
+		texte.setString(message);
+		metre.setFont(police);
+		metre.setOutlineThickness(OutlineThickness);
+		metre.setOutlineColor(couleur);
+		metre.setCharacterSize(10 * RE);
+		metre.setFillColor(couleur);
+		texte.setOrigin(texte.getLocalBounds().left + (texte.getLocalBounds().width + metre.getLocalBounds().width) / 2.0f, texte.getLocalBounds().top + texte.getLocalBounds().height / 2.0f);
+		metre.setOrigin(metre.getLocalBounds().left - (texte.getLocalBounds().width - metre.getLocalBounds().width) / 2.0f, metre.getLocalBounds().top - texte.getLocalBounds().height / 2.0f + metre.getLocalBounds().height * 1.0f);
+		metre.setPosition((pos.x + ecart[0]) * RE * 1.0f, (pos.y + ecart[1]) * RE * 1.0f);
+		fenetre.draw(metre);
+	}
+	else if(mode == 1 || mode == 3)
+	{
+		if(mode == 3)
+			texte.setCharacterSize(10 * RE);
+		texte.setOrigin(texte.getLocalBounds().left + texte.getLocalBounds().width / 2.0f, texte.getLocalBounds().top + texte.getLocalBounds().height / 2.0f);
+	}
+	texte.setPosition((pos.x + ecart[0]) * RE * 1.0f, (pos.y + ecart[1]) * RE * 1.0f);
+	fenetre.draw(texte);
+}
+
+void Fenetre::rectangle(V2f pos, V2f taille, Color col, double RE, RenderWindow & fenetre, int * ecart)
+{
+	RectangleShape barre(V2f(taille.x * RE, taille.y * RE));
+	barre.setPosition((pos.x + ecart[0]) * RE, (pos.y + ecart[1]) * RE);
+	barre.setFillColor(col);
+	fenetre.draw(barre);
+}
+
+//RESUME DE LA FONCTION
+//Besoin de la position de point en haut � gauche et de la dimension du quadrilat�re
+//RE permet de modifier l'�paisseur en fct du rapport d'�cran
+//mode 1=case mode 2=bouton mode 3=rappelle de la fonction pour cr�ation du carr� int�rieur
+void Fenetre::creation_rectangle(V2f pos, V2f dim, double RE, int mode, RenderWindow & fenetre, int * ecart)
+{
+	if(mode == 1)
+	{
+		rectangle(pos, dim, SHADOW, RE, fenetre, ecart);
+		rectangle(pos, V2f(dim.x - 1, dim.y - 1), BLACK, RE, fenetre, ecart);
+		rectangle(V2f(pos.x + 1, pos.y + 1), V2f(dim.x - 2, dim.y - 2), DARK_BLUE, RE, fenetre, ecart);
+	}
+	if(mode == 2)
+	{
+		rectangle(pos, dim, SHADOW, RE, fenetre, ecart);
+		rectangle(pos, V2f(dim.x - 1, dim.y - 1), BLACK, RE, fenetre, ecart);
+		rectangle(V2f(pos.x + 1, pos.y + 1), V2f(dim.x - 3, dim.y - 3), SHADOW, RE, fenetre, ecart);
+		rectangle(V2f(pos.x + 2, pos.y + 2), V2f(dim.x - 4, dim.y - 4), DARK_BLUE, RE, fenetre, ecart);
+	}
+	/*
+	int epaisseur = RE;
+	VertexArray bande(Quads,4);
+	pos.x = pos.x * RE;
+	pos.y = pos.y * RE;
+	dim.x = dim.x * RE;
+	dim.y = dim.y * RE;
+
+	//Creation 1 ere bande
+	bande[0].position=pos;
+	bande[1].position=V2f(pos.x + dim.x - epaisseur, pos.y);
+	bande[2].position=V2f(pos.x + dim.x - epaisseur, pos.y + epaisseur);
+	bande[3].position=V2f(pos.x, pos.y + epaisseur);
+
+	if(mode == 3)
+	{
+		couleurForme(bande, SHADOW, 4);
+	}
+	else
+	{
+		couleurForme(bande, BLACK, 4);
+	}
+	fenetre.draw(bande);
+
+	//Creation 2eme bande
+	bande[0].position= pos;
+	bande[1].position=V2f(pos.x + epaisseur, pos.y);
+	bande[2].position=V2f(pos.x + epaisseur, pos.y + dim.y - epaisseur);
+	bande[3].position=V2f(pos.x, pos.y + dim.y - epaisseur);
+
+	if(mode == 3)
+	{
+		couleurForme(bande, SHADOW, 4);
+	}
+	else
+	{
+		couleurForme(bande, BLACK, 4);
+	}
+	fenetre.draw(bande);
+
+	//Creation 3eme bande
+	bande[0].position= V2f(pos.x, pos.y + dim.y - epaisseur);
+	bande[1].position=V2f(pos.x + dim.x, pos.y + dim.y - epaisseur);
+	bande[2].position=V2f(pos.x + dim.x, pos.y + dim.y);
+	bande[3].position=V2f(pos.x, pos.y + dim.y);
+
+	if(mode == 3)
+	{
+		couleurForme(bande, BLACK, 4);
+	}
+	else
+	{
+		couleurForme(bande, SHADOW, 4);
+	}
+
+	fenetre.draw(bande);
+
+	//Creation 4eme bande
+	bande[0].position= V2f(pos.x+ dim.x - epaisseur, pos.y);
+	bande[1].position=V2f(pos.x + dim.x, pos.y);
+	bande[2].position=V2f(pos.x + dim.x, pos.y + dim.y);
+	bande[3].position=V2f(pos.x+ dim.x - epaisseur, pos.y + dim.y);
+
+	if(mode == 3)
+	{
+		couleurForme(bande, BLACK, 4);
+	}
+	else
+	{
+		couleurForme(bande, SHADOW, 4);
+	}
+	fenetre.draw(bande);
+
+	if(mode == 2)		//CREER LE CARRE INTERIEUR POUR UN BOUTON
+	{
+		pos.x = pos.x + epaisseur;
+		pos.y = pos.y + epaisseur;
+		dim.x = dim.x - 2 * epaisseur;
+		dim.y = dim.y - 2 * epaisseur;
+
+		creation_rectangle(pos, dim,3, 3, fenetre, ecart);
+	}
+	*/
+}
+
+void LeftSide::targetDistance(int distance, RenderWindow & fenetre, double RE, Font & arial, int * ecart)
+{
+	if(distance >= 0)
+	{
+		creation_texte(RE, to_string((int)round((distance / 10.0)) * 10), arial, GREY, 10, 0, V2f(54 / 2.0, 54 + 30 / 2.0), fenetre, 1, ecart);
+		rectangle(V2f(12, 54 + 30 - 1), V2f(13, 2), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 6), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 13), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 22), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 32), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(12, 54 + 30 + 45), V2f(13, 2), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 59), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 79), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 105), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(16, 54 + 30 + 152), V2f(9, 1), GREY, RE, fenetre, ecart);
+		rectangle(V2f(12, 54 + 30 + 185), V2f(13, 2), GREY, RE, fenetre, ecart);
+		if(distance <= 100)
+		{
+			rectangle(V2f(29 , 85 + 185 * ( 1 - (1.722*pow(10,-3)*distance))), V2f(10, 185 * (1.722*pow(10,-3)*distance)), GREY, RE, fenetre, ecart);
+		}
+		else if(distance <= 1000)
+		{
+			rectangle(V2f(29, 186 + 54 + 30 - (185 - 152)), V2f(10, 185 - 152), GREY, RE, fenetre, ecart);
+			rectangle(V2f(29 , 85 + 185 * ( 1 - (log(distance*(1/58.8236)) / log(17)))), V2f(10, 185 * (log(distance*(1/58.8236)) / log(17))), GREY, RE, fenetre, ecart);
+
+		}
+		else
+		{
+			rectangle(V2f(29, 186  + 54 + 30 -185), V2f(10, 185), GREY, RE, fenetre, ecart);
+		}
+	}
+}
+
+void Fenetre::couleurForme(VertexArray & bande,Color col, int n)
+{
+	for(int i = 0; i < n; i++)
+	{
+		bande[i].color= col;
+	}
+}
+
+void Fenetre::affichageBoutons(double RE, RenderWindow & fenetre, int * ecart)
+{
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);							//F1
+	creation_rectangle(V2f(64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);							//F2
+	creation_rectangle(V2f(2 *64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F3
+	creation_rectangle(V2f(3 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F4
+	creation_rectangle(V2f(4 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F5
+	creation_rectangle(V2f(5 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F6
+	creation_rectangle(V2f(6 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F7
+	creation_rectangle(V2f(7 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F8
+	creation_rectangle(V2f(8 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F9
+	creation_rectangle(V2f(9 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), RE, 2, fenetre, ecart);						//F10
+	creation_rectangle(V2f((640 - 40), 28), V2f(40, 64), RE, 2, fenetre, ecart);											//H2
+	creation_rectangle(V2f((640 - 40), (28 + 64)), V2f(40, 64), RE, 2, fenetre, ecart);										//H3
+	creation_rectangle(V2f((640 - 40), (28 + 2 * 64)), V2f(40, 64), RE, 2, fenetre, ecart);									//H4
+	creation_rectangle(V2f((640 - 40), (28 + 3 * 64)), V2f(40, 64), RE, 2, fenetre, ecart);									//H5
+	creation_rectangle(V2f((640 - 40), (28 + 4 * 64)), V2f(40, 64), RE, 2, fenetre, ecart);									//H6
+	creation_rectangle(V2f((640 - 40), (28 + 5 * 64)), V2f(40, 82), RE, 2, fenetre, ecart);									//H7
+}

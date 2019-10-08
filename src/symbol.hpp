@@ -185,7 +185,6 @@ class DonneesAfficheurVitesse
 
 	/////////////////////////////////////////////////////////////
 	//definition des methodes
-	Vector2f local2globalCoordonates(Vector2f localOrigin, float teta_origine);
 	/////////////////////////////////////////////////////////////
 
 	//definition des get
@@ -218,22 +217,29 @@ class DonneesAfficheurVitesse
 
 class Symbol
 {
-private :
-	Image image;
-	Texture texture;
-	Color m_color;
-public :
-	vector<Sprite> sprite;
-	void loadSymbol(string chemin_dacces);
-	void afficher(Vector2f position, double RE, int * ecart, RenderWindow & fenetre);
-	void effacer();
+	private :
+		Image image;
+		Texture texture;
+		Color m_color;
+		vector<Sprite> sprite;
+		void loadSymbol(string chemin_dacces);
+	public :
+		void afficher(Vector2f position, double RE, int * ecart, RenderWindow & fenetre);
+		void effacer();
+		Symbol(vector<Symbol> & symbol);
 };
 
-void initSymbol(vector<Symbol> & symbol);
-void targetDistance(int distance, RenderWindow & fenetre, double RE, Font & arial, int * ecart);
-void couleurForme(VertexArray & bande,Color col, int n);
-void rectangle(V2f pos, V2f taille, Color col, double RE, RenderWindow & fenetre, int * ecart);
-void creation_rectangle(V2f pos, V2f dim, double RE, int mode, RenderWindow & fenetre, int * ecart);
-void creation_texte(double RE, string message, Font police, Color couleur, int taille, double OutlineThickness, V2f pos, RenderWindow & fenetre, int mode, int * ecart);
+
+class Cadran
+{
+	private :
+		ConvexShape aiguille;
+		V2f centre;
+		V2f local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires);
+	public :
+		void arcVitesse(V2f centre, float V_red, float V_orange, float V_yellow, float V_white, float V_medium_grey, float V_dark_grey, double RE, RenderWindow & fenetre, Font & arial, DonneesAfficheurVitesse graduations[], int * ecart);
+		Cadran(double RE, int Vmax, DonneesAfficheurVitesse graduations[], int * ecart);
+};
+
 
 #endif
