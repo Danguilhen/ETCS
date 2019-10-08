@@ -20,6 +20,7 @@
 
 class Donnees
 {
+	//
 	V2f m_cartesiens;
 	V2f m_polaire;
     float m_vitesse;
