@@ -636,7 +636,7 @@ void initialisation(int Vmax, double RE, vector<Symbol> & symbol, RenderWindow &
 	fenetre.setFramerateLimit(60);
 }
 
-void demarage(RenderWindow & fenetre)
+/*void demarage(RenderWindow & fenetre)
 {
 	Image ImageDemarage;
 	Texture textureDemarage;
@@ -681,7 +681,7 @@ void demarage(RenderWindow & fenetre)
 
 	fenetre.draw(spriteDemarage);
 	fenetre.draw(chargement);
-}
+}*/
 
 void fondEcran(RenderWindow & fenetre, double RE, int * ecart)
 {

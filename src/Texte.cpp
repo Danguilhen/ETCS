@@ -27,6 +27,7 @@ void Texte_DMI::setAcknowledgement(int A){acknowledgement = A;}
 
 void TexteMessages(RenderWindow & fenetre, double RE, Font & arial, int * ecart)
 {
-	creation_texte(RE, "10:30", arial, WHITE, 10, 0,V2f(55, 350), fenetre, 4, ecart);
+	String Texte = "10h30";
+	creation_texte(RE, Texte, arial, WHITE, 10, 0,V2f(54 + 5, 350 + 10), fenetre, 4, ecart);
 }
 
