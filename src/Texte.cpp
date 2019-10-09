@@ -27,7 +27,12 @@ void Texte_DMI::setAcknowledgement(int A){acknowledgement = A;}
 
 void TexteMessages(RenderWindow & fenetre, double RE, Font & arial, int * ecart)
 {
-	String Texte = "10h30";
-	creation_texte(RE, Texte, arial, WHITE, 10, 0,V2f(54 + 5, 350 + 10), fenetre, 4, ecart);
+	for (int n = 0; n < 4; n++)
+	{
+		creation_texte(RE, "10H30", arial, WHITE, 10, 0, V2f(54 + 3, (350 + 7) + n*20), fenetre, 4, ecart);//+3 déplacement sur x par rapport à la norme
+		creation_texte(RE, "Route unsuitable loading gauge", arial, WHITE, 12, 0, V2f(54 + 3 + 37, (350 + 8) + n*20), fenetre, 4, ecart);//Police 12 et décallage de 3 par rapport à l'heure
+	}
+
+
 }
 
