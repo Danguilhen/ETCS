@@ -206,6 +206,67 @@ int A_brake_service(int speed, int d)
 //TRAIN DATA:
 //Ne peut-être modifié par le sol
 //Interne au train.
+class Train_Data
+{
+	private :
+
+	class Train_Categories
+	{
+		private :
+		string label;
+		int cant_deficiency_train_category_value;
+		int other_international_train_category_value;
+
+		public:
+		Train_Categories(string L, int C, int O)
+		{
+			label = L;
+			cant_deficiency_train_category_value = C;
+			other_international_train_category_value = O;
+		}
+
+	};
+	vector<Train_Categories> tab_TC_list;//création des listes de Train categories
+	//création des TC grâce au constructeur de la classe TC et ajout dans le vector
+	//exemple de valeur P171 de l'index !!!
+	Train_Categories train_categories;//La valeur stockée
+
+	int train_length;
+
+	int maximum_train_speed;
+
+	class Loading_gauge
+	{
+		private :
+		string Loading_gauge_label;
+		size_t Loading_gauge_value;//ATTENTION type inconnu
+
+		public :
+		Loading_gauge(string LGL, size_t LGV)
+		{
+			Loading_gauge_label = LGL;
+			Loading_gauge_value = LGV;
+		}
+	};
+	vector<Loading_gauge> tab_LG_list;//création des listes de Loading gauge
+	//création des LG grâce au constructeur de la classe LG et ajout dans le vector
+	Loading_gauge loading_gauge;//la valeur stockée
+
+	vector <string> Axle_load_categories;//création des listes de Axle_load_category
+	//Création et insertions grâce aux Push_Back
+	string axle_load_category;//la valeur stockée
+
+	size_t traction_system; //ATTENTION donnée inconnue //DONNEE NON MODIFIABLE
+
+	bool train_fitted_with_airtight_system;
+
+	vector<string> list_of_national_systems_available_on_board;//DONNEE NON MODIFIABLE
+
+	int axle_number;//DONNEE NON MODIFIABLE
+
+
+
+};
 
 //?: pourcentage de freinage
 
