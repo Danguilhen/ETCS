@@ -12,7 +12,6 @@
 #include "Fixed_Value_Data.hpp" //Ne pas oublier
 
 using namespace std;
-
 int main()
 {
   cout << "Hello,world!" << endl;
