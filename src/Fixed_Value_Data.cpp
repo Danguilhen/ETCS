@@ -20,12 +20,12 @@ V_warning_max = 140;
 T_dispTTI = 14;
 T_warning = 2;
 T_driver = 4;
-M_rotating_min 0.02;
+M_rotating_min 0.2;
 M_rotating_max 0.15;
 
 }
 
-void Fixed_value_data::Afficher_Fixed_value_data()
+void Fixed_Value_Data::Afficher_Fixed_value_data()
 {
 
 cout << "dV_ebi_min = " <<  dV_ebi_min << " km/h" << endl;
@@ -40,8 +40,8 @@ cout << "dV_warning_min = " << dV_warning_min << " km/h" << endl;
 cout << "dV_warning_max = " << dV_warning_max << " km/h" << endl;
 cout << "V_warning_min = " << V_warning_min << " km/h" << endl;
 cout << "V_warning_max = " << V_warning_max << " km/h" << endl;
-cout << "T_dispTTI = " << T_dispTTI14 << " s" << endl;
-cout << "T_warning = " << T_warning2 << " s" << endl;
+cout << "T_dispTTI = " << T_dispTTI << " s" << endl;
+cout << "T_warning = " << T_warning << " s" << endl;
 cout << "T_driver = " << T_driver << " s" << endl;
 cout << "M_rotating_min = " << M_rotating_min << " % de masse" << endl;
 cout << "M_rotating_max = " << M_rotating_max << " % de masse" << endl;
