@@ -1,5 +1,5 @@
-#ifndef Fixed_Value_Data
-#define Fixed_Value_Data
+#ifndef DEF_Fixed_Value_Data
+#define DEF_Fixed_Value_Data
 
 class Fixed_Value_Data
 {

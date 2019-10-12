@@ -82,4 +82,3 @@ float Fixed_Value_Data::getM_rotating_min()
 return M_rotating_min;
 float Fixed_Value_Data::getM_rotating_max()
 return M_rotating_max;
-//A REMPLIR
