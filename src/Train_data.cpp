@@ -321,7 +321,8 @@ class Train_Data
 
 	public :
 
-	
+	//GET ET SET A FAIRE SI NECESSAIRE
+
 
 
 };
