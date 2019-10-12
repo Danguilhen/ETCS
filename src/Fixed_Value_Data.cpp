@@ -20,8 +20,8 @@ V_warning_max = 140;
 T_dispTTI = 14;
 T_warning = 2;
 T_driver = 4;
-M_rotating_min 0.2;
-M_rotating_max 0.15;
+M_rotating_min =  0.2;
+M_rotating_max = 0.15;
 
 }
 
