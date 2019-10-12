@@ -14,6 +14,7 @@
 using namespace std;
 int main()
 {
-  cout << "Hello,world!" << endl;
+  Fixed_Value_Data fixe_value_data;
+  fixe_value_data.Afficher_Fixed_value_data();
   return 0;
 }
