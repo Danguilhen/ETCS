@@ -9,6 +9,7 @@
 #include <vector>
 #include <unistd.h>
 #include <algorithm>
+#include "Fixed_Value_Data.hpp" //Ne pas oublier
 
 using namespace std;
 
