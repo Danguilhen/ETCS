@@ -1,7 +1,7 @@
 #ifndef Fixed_Value_Data
 #define Fixed_Value_Data
 
-class Fixed_Value_Data Fixed_Value_Data
+class Fixed_Value_Data
 {
 private:
 
