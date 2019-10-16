@@ -36,7 +36,7 @@ M_rotating_max = 0.15;
 
 void Fixed_Value_Data::Afficher_Fixed_value_data()
 {
-
+cout<< "vous trouverez ci-dessous les fixed_value_data" << endl << endl;
 cout << "dV_ebi_min = " <<  dV_ebi_min << " km/h" << endl;
 cout << "dV_ebi_max = " << dV_ebi_max << " km/h" << endl;
 cout << "V_ebi_min = " << V_ebi_min <<  " km/h" << endl;
@@ -54,6 +54,7 @@ cout << "T_warning = " << T_warning << " s" << endl;
 cout << "T_driver = " << T_driver << " s" << endl;
 cout << "M_rotating_min = " << M_rotating_min << " % de masse" << endl;
 cout << "M_rotating_max = " << M_rotating_max << " % de masse" << endl;
+cout<<endl<< "fin fixed_value_data" << endl << endl;
 
 }
 
