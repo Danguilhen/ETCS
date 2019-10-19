@@ -37,7 +37,11 @@
 		"*.json": "jsonc",
 		"*.stats": "cpp",
 		"*.desktop": "properties",
-		".clang-format": "yaml"
+		".clang-format": "yaml",
+		"iostream": "cpp",
+		"deque": "cpp",
+		"string": "cpp",
+		"vector": "cpp"
 	},
 
 	"terminal.integrated.shell.windows": "C:/Program Files/Git/bin/bash.exe",
@@ -55,5 +59,6 @@
 	"[applescript]": {
 		"files.encoding": "utf8"
 	},
-	"peacock.color": "#8ac242"
+	"peacock.color": "#8ac242",
+	"C_Cpp.errorSquiggles": "Disabled"
 }

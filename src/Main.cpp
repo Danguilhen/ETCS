@@ -1,124 +1,170 @@
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <cstdio> // popen
-#include <cstring> // memset
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <unistd.h>
+#include <iostream>
 
-#include "graph/plot.hpp"
+using namespace std;
 
-class Pinger
-        : public sf::Drawable
+class Train
+
 {
-public:
-    Pinger(const std::string& dns, const sf::Vector2i& location)
-        : dns_(dns)
-    {
-        plot_.setSize(sf::Vector2f(600, 400));
-        plot_.setTitle("Ping "+dns);
-        plot_.setFont("./font.ttf");
-        plot_.setXLabel("Number of ping");
-        plot_.setYLabel("milliseconds");
-        plot_.setBackgroundColor(sf::Color(rand()%255, rand()%255, rand()%255));
-        plot_.setTitleColor(sf::Color::Black);
-        plot_.setPosition(sf::Vector2f(600*location.x, 400*location.y));
-        sf::plot::Curve &curve = plot_.createCurve("ping", sf::Color::Red);
-        curve.setFill(rand() % 2);
-        curve.setThickness(2 + rand() % 10);
-        curve.setColor(sf::Color(rand()%255, rand()%255, rand()%255));
-        curve.setLimit(10 + rand() % 100);
-    }
+	/*private :
 
-    void update()
-    {
-        sf::plot::Curve &curve = plot_.getCurve("ping");
-        curve.addValue(ping(dns_));
-        plot_.prepare();
-    }
+	class Train_Categories
+	{
+		private :
+		string label;
+		int cant_deficiency_train_category_value;
+		int other_international_train_category_value;
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const
-    {
-        target.draw(plot_, states);
-    }
+		public:
+		Train_Categories(string L, int C, int O)
+		{
+			label = L;
+			cant_deficiency_train_category_value = C;
+			other_international_train_category_value = O;
+		}
 
-    /// launch the ping command and get the ping ms result
-    /// not safe !
-    /// better in a thread !
-    float ping(const std::string& dns)
+	};
+	vector<Train_Categories> tab_TC_list;//création des listes de Train categories
+	//création des TC grâce au constructeur de la classe TC et ajout dans le vector
+	Train_Categories PASS1("PASS 1", 80, "PASSENGER TRAIN IN P");
+	Train_Categories PASS2("PASS 2", 130, "PASSENGER TRAIN IN P");
+	Train_Categories PASS3("PASS 3", 150, "PASSENGER TRAIN IN P");
+	Train_Categories TILT1("TILT 1", 165, "PASSENGER TRAIN IN P");
+	Train_Categories TILT2("TILT 2", 180, "PASSENGER TRAIN IN P");
+	Train_Categories TILT3("TILT 3", 210, "PASSENGER TRAIN IN P");
+	Train_Categories TILT4("TILT 4", 225, "PASSENGER TRAIN IN P");
+	Train_Categories TILT5("TILT 5", 245, "PASSENGER TRAIN IN P");
+	Train_Categories TILT6("TILT 6", 275, "PASSENGER TRAIN IN P");
+	Train_Categories TILT7("TILT 7", 300, "PASSENGER TRAIN IN P");
+	Train_Categories FP1("FP 1", 80, "Freight train in P");
+	Train_Categories FP2("FP 2", 100, "Freight train in P");
+	Train_Categories FP3("FP 3", 130, "Freight train in P");
+	Train_Categories FP4("FP 4", 150, "Freight train in P");
+	Train_Categories FG1("FG 1", 80, "Freight train in G");
+	Train_Categories FG2("FG 2", 100, "Freight train in G");
+	Train_Categories FG3("FG 3", 130, "Freight train in G");
+	Train_Categories FG4("FG 4", 150, "Freight train in G");
+	tab_TC_list.push_back(PASS1);
+	tab_TC_list.push_back(PASS2);
+	tab_TC_list.push_back(PASS3);
+	tab_TC_list.push_back(TILT1);
+	tab_TC_list.push_back(TILT2);
+	tab_TC_list.push_back(TILT3);
+	tab_TC_list.push_back(TILT4);
+	tab_TC_list.push_back(TILT5);
+	tab_TC_list.push_back(TILT6);
+	tab_TC_list.push_back(TILT7);
+	tab_TC_list.push_back(FP1);
+	tab_TC_list.push_back(FP2);
+	tab_TC_list.push_back(FP3);
+	tab_TC_list.push_back(FP4);
+	tab_TC_list.push_back(FG1);
+	tab_TC_list.push_back(FG2);
+	tab_TC_list.push_back(FG3);
+	tab_TC_list.push_back(FG4);
+	Train_Categories train_categories;//La valeur stockée
+
+	int train_length;
+
+	int maximum_train_speed;
+
+	class Loading_gauge
+	{
+		private :
+		string Loading_gauge_label;
+		//int Loading_gauge_value;
+
+		public :
+		Loading_gauge(string LGL)
+		{
+			Loading_gauge_label = LGL;
+			//Loading_gauge_value = LGV; n'a pas d'importance dans la suite
+		}
+	};
+	vector<Loading_gauge> tab_LG_list;//création des listes de Loading gauge
+	//création des LG grâce au constructeur de la classe LG et ajout dans le vector
+	Loading_gauge LG1("G1");
+	Loading_gauge LGA("GA");
+	Loading_gauge LGB("GB");
+	Loading_gauge LGC("GC");
+	Loading_gauge LGOUT_OF_C("GOUT_OF_C");
+	tab_LG_list.push_back(LG1);
+	tab_LG_list.push_back(LGA);
+	tab_LG_list.push_back(LGB);
+	tab_LG_list.push_back(LGC);
+	tab_LG_list.push_back(LGOUT_OF_C);
+	Loading_gauge loading_gauge;//la valeur stockée
+
+	vector <string> axle_load_categories;//création des listes de Axle_load_category
+	//Création et insertions grâce aux Push_Back
+	axle_load_categories.push_back("A");
+	axle_load_categories.push_back("B");
+	axle_load_categories.push_back("C");
+	axle_load_categories.push_back("D");
+	axle_load_categories.push_back("E");
+	axle_load_categories.push_back("F");
+	axle_load_categories.push_back("G");
+	string axle_load_category;//la valeur stockée
+
+	size_t traction_system; //ATTENTION donnée inconnue //DONNEE NON MODIFIABLE
+
+	bool train_fitted_with_airtight_system;
+
+	vector<string> list_of_national_systems_available_on_board;//DONNEE NON MODIFIABLE
+	list_of_national_systems_available_on_board.push_back("TVM");
+	list_of_national_systems_available_on_board.push_back("FR");
+	list_of_national_systems_available_on_board.push_back("EN");
+
+	int axle_number;//DONNEE NON MODIFIABLE*/
+
+    public :
+
+	vector < vector < float > > tab_A_brake;//tableau avec 2 colonnes la vitesse max où la décélération est admise, premiere colonne vitesse et deuxieme deceleration
+	float A_brake;
+	float Brake_percentage;
+    Train()
     {
-        std::string cmd = "ping " + dns + " -c 1";
-        FILE* file = popen(cmd.c_str(), "r");
-        if(!file) return -1.0f;
-        char buffer[1024];
-        std::memset(buffer, 0, 1024*sizeof(char));
-        if(fread(buffer, sizeof(char), 1024, file) == 0)
+        int nombre_deceleration;
+        cout << "nombre de decelerations" << endl;
+        cin >> nombre_deceleration;
+        for (int i = 0; i < nombre_deceleration; i++)
         {
-            pclose(file);
-            return -1.0f;
+            vector < float > ligne;
+            int v;
+            int d;
+            cout << "vitesse max" << endl;
+            cin >> v;
+            cout << "deceleration" << endl;
+            cin >> d;
+            ligne.push_back(v);
+            ligne.push_back(d);
+            tab_A_brake.push_back(ligne);
         }
-        std::string in(buffer);
-        size_t pos = in.find("time=");
-        size_t end_pos = in.find(" ms", pos+1);
-        if(pos == std::string::npos || end_pos == std::string::npos)
-        {
-            pclose(file);
-            return -1.0f;
-        }
-        in = in.substr(pos+5, end_pos-(pos+5));
-        pclose(file);
-        return std::atof(in.c_str());
     }
+	float A_Brake(int V);
 
-private:
-    sf::plot::Plot plot_;
-    std::string dns_;
 };
 
+float Train::A_Brake(int V)
+{
+    size_t i = 0;
+    while(V > int(tab_A_brake[i][0]) && i < tab_A_brake.size() - 1)
+    {
+        i++;
+    }
+    return int(tab_A_brake[i][1]);
+}
 
 int main()
 {
-    // initialize the srand
-    srand (time(NULL));
+    Train TGV;
+    float test;
 
-    sf::RenderWindow window(sf::VideoMode(600*2, 400*2), "SFML plot", sf::Style::Default);
+    test = TGV.A_Brake(175);
 
-    sf::Clock clock;
-    Pinger google_com("google.com", sf::Vector2i(0, 0));
-    Pinger google_fr("google.fr", sf::Vector2i(0, 1));
-    Pinger ensta_fr("ensta.fr", sf::Vector2i(1, 0));
-    Pinger bechu_org("bechu.org", sf::Vector2i(1, 1));
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if(event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        // Each 200 ms, a new random value is add to the random curve
-        if(clock.getElapsedTime().asMilliseconds() > 1000)
-        {
-            clock.restart();
-            google_com.update();
-            google_fr.update();
-            ensta_fr.update();
-            bechu_org.update();
-        }
-
-        window.clear();
-
-        window.draw(google_com);
-        window.draw(google_fr);
-        window.draw(ensta_fr);
-        window.draw(bechu_org);
-
-        window.display();
-    }
-
+    cout << test;
     return 0;
 }
-
-
-
-
-
