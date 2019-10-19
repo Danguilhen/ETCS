@@ -122,16 +122,45 @@ class Train_Data
 
 	int axle_number;//DONNEE NON MODIFIABLE
 
-	vector<vector <float>> tab_A_brake;
-	float A_brake;
+	A_brake A_brake_emergency();
+	A_brake A_brake_service();
+	A_brake A_brake_normal_service();
 	float Brake_percentage;
 
 	public :
 
-	float A_Brake(int v);
 	//GET ET SET A FAIRE SI NECESSAIRE
-
-
-
 };
+
+class A_brake
+
+{
+    private :
+
+	vector < vector < float > > tab_A_brake;//tableau avec 2 colonnes la vitesse max où la décélération est admise, premiere colonne vitesse et deuxieme deceleration
+	float Brake_percentage;
+
+	public :
+
+    A_brake(int nombre_deceleration)
+    {
+        for (int i = 0; i < nombre_deceleration; i++)
+        {
+
+            vector < float > ligne;
+            int v;
+            int d;
+            cout << "vitesse max" << endl;
+            cin >> v;
+            cout << "deceleration" << endl;
+            cin >> d;
+            ligne.push_back(v);
+            ligne.push_back(d);
+            tab_A_brake.push_back(ligne);
+
+        }
+    }
+	float Attribution_deceleration(int V);
+};
+
 #endif

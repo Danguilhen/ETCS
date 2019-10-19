@@ -8,17 +8,15 @@
 
 using namespace std;
 
-float Train_data::A_Brake(int v)
+float A_brake::Attribution_deceleration(int V)
 {
-    int i = 0;
-	if(v > tab_A_brake[tab_A_break.end()][0])
-		return int(tab_A_brake[i][0]);
-    else while(v > int(tab_A_brake[i][0]))
+    size_t i = 0;
+    while(V > int(tab_A_brake[i][0]) && i < tab_A_brake.size() - 1)
+    {
         i++;
-	return int(tab_A_brake[i][0]);
+    }
+    return int(tab_A_brake[i][1]);
 }
-
-
 
 
 //SUBSET 026
