@@ -1,6 +1,19 @@
 #ifndef fen
 #define fen
 
+#define DARK_BLUE Color(3,17,34)
+#define SHADOW Color(8,24,57)
+#define BLACK Color(0,0,0)
+#define WHITE Color(255,255,255)
+#define RED Color(191,0,2)
+#define ORANGE Color(234,145,0)
+#define YELLOW Color(223,223,0)
+#define PASP_DARK Color(33,49,74)
+#define PASP_LIGHT Color(41,74,107)
+#define GREY Color(195,195,195)
+#define MEDIUM_GREY Color(150,150,150)
+#define DARK_GREY Color(85,85,85)
+
 void MainWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart);
 void specialWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart);
 void settingsWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart);
@@ -37,7 +50,6 @@ class Fenetre
 {
 	protected :
 		Font arial;
-		Son son;
 		void creation_texte(double RE, string message, Font police, Color couleur, int taille, double OutlineThickness, V2f pos, RenderWindow & fenetre, int mode, int * ecart);
 		void rectangle(V2f pos, V2f taille, Color col, double RE, RenderWindow & fenetre, int * ecart);
 		void creation_rectangle(V2f pos, V2f dim, double RE, int mode, RenderWindow & fenetre, int * ecart);

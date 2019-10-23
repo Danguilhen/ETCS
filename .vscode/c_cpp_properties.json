@@ -7,7 +7,7 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"~/SFML-2.5.1/include/**",
+				"${workspaceFolder}/SFML-2.5.1/include/**",
 				"/usr/local/include/**",
 				"/usr/include/**"
 			],

@@ -158,20 +158,6 @@
 
 #define PI 3.14159265
 #define V2i Vector2i
-#define V2f Vector2f
-
-#define DARK_BLUE Color(3,17,34)
-#define SHADOW Color(8,24,57)
-#define BLACK Color(0,0,0)
-#define WHITE Color(255,255,255)
-#define RED Color(191,0,2)
-#define ORANGE Color(234,145,0)
-#define YELLOW Color(223,223,0)
-#define PASP_DARK Color(33,49,74)
-#define PASP_LIGHT Color(41,74,107)
-#define GREY Color(195,195,195)
-#define MEDIUM_GREY Color(150,150,150)
-#define DARK_GREY Color(85,85,85)
 
 using namespace sf;
 using namespace std;
