@@ -347,13 +347,13 @@ int main()
 
 			}
 
-			if(train.getLevelETCS() == "Level 0")
+			if(train.getLevel() == "Level 0")
                 LE_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
-            else if(train.getLevelETCS()  == "Level 1")
+            else if(train.getLevel()  == "Level 1")
                 LE_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
-            else if(train.getLevelETCS()  == "Level 2")
+            else if(train.getLevel()  == "Level 2")
                 LE_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
-            else if(train.getLevelETCS()  == "Level 3")
+            else if(train.getLevel()  == "Level 3")
                 LE_05.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
 
 			if((train.getGeneralMode() == "FS" && (train.getMode() == "PIM" || train.getMode() == "TSM" || train.getMode() == "RSM")) || train.getGeneralMode() == "RV")

@@ -39,7 +39,7 @@ int Announcements::getVitesse(){return vitesse;}
 void Announcements::setVitesse(int V){vitesse = V;}
 
 
-void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, vector<PASP> &tab_pasp, donnees &train, float delta_distance)
+void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, vector<PASP> &tab_pasp, donnees & train, float delta_distance)
 {
 	int distance = 0;
 	int target = 0;
@@ -122,7 +122,7 @@ void Planning::pasp(int scale, double RE, RenderWindow & fenetre, int * ecart, v
 	}
 }
 
-void Planning::planningInformation(RenderWindow & fenetre, double RE, Font & arial, vector<Symbol> & symbol, donnees &train, int * ecart, float temps_ecoule)
+void Planning::planningInformation(RenderWindow & fenetre, double RE, Font & arial, vector<Symbol> & symbol, donnees & train, int * ecart, float temps_ecoule)
 {
 	float delta_distance;
 	if(train.getPlanningScale() == 1000)

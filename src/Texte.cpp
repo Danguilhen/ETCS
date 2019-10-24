@@ -13,7 +13,6 @@
 #include <algorithm>
 #include "symbol.hpp"
 #include "donnees.hpp"
-#include "son_train.hpp"
 #include "Texte.hpp"
 
 int Texte_DMI::getPosition(){return position;}

@@ -2,7 +2,6 @@
 #define button
 
 #include "symbol.hpp"
-#include "son_train.hpp"
 
 class Buttons
 {
@@ -17,7 +16,7 @@ class Buttons
 	int n; // variable utilis�e pour le down_type
 
 	public :
-	
+
 	string gettype();
 	void settype(string P);
 	int getdriver_action();

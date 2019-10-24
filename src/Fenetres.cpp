@@ -45,11 +45,11 @@ void MainWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font
         enable[i] = 1;
     enable[3] = 2;
 	if((train.getVtrain() == 0 && train.getGeneralMode() == "SB" && train.getDriverID() && train.getTrainData() && train.getETATLevelETCS() && train.getTrainNumber()) ||
-		((train.getVtrain() == 0 && train.getGeneralMode() == "PT" && train.getTrainData()) && (train.getLevelETCS() == "Level 1" || ((train.getLevelETCS() == "Level 2" ||
-		train.getLevelETCS() == "Level 3") && train.getConnection() == "Up" && version == "3.6.0" && train.getPending_Emergency_Stop() == false))) || ((train.getVtrain() == 0 &&
-		train.getGeneralMode() == "PT" && train.getTrainData()) && (train.getLevelETCS() == "Level 1" || ((train.getLevelETCS() == "Level 2" || train.getLevelETCS() == "Level 3") &&
-		version == "3.4.0" && train.getPending_Emergency_Stop() == false))) || (train.getGeneralMode() == "SR" && (train.getLevelETCS() == "Level 2" || train.getLevelETCS() == "Level 3") &&
-		train.getConnection() == "Up" && version == "3.6.0") || (train.getGeneralMode() == "SR" && (train.getLevelETCS() == "Level 2" || train.getLevelETCS() == "Level 3") && version == "3.4.0"))
+		((train.getVtrain() == 0 && train.getGeneralMode() == "PT" && train.getTrainData()) && (train.getLevel() == "Level 1" || ((train.getLevel() == "Level 2" ||
+		train.getLevel() == "Level 3") && train.getConnection() == "Up" && version == "3.6.0" && train.getPending_Emergency_Stop() == false))) || ((train.getVtrain() == 0 &&
+		train.getGeneralMode() == "PT" && train.getTrainData()) && (train.getLevel() == "Level 1" || ((train.getLevel() == "Level 2" || train.getLevel() == "Level 3") &&
+		version == "3.4.0" && train.getPending_Emergency_Stop() == false))) || (train.getGeneralMode() == "SR" && (train.getLevel() == "Level 2" || train.getLevel() == "Level 3") &&
+		train.getConnection() == "Up" && version == "3.6.0") || (train.getGeneralMode() == "SR" && (train.getLevel() == "Level 2" || train.getLevel() == "Level 3") && version == "3.4.0"))
 	{
 		enable[0] = 0;
 		boutons[0].settype("up_type");
@@ -137,10 +137,10 @@ void MainWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font
 	else
 		boutons[5].settype("disabled");
 	if((train.getVtrain() == 0 && train.getDriverID() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||
-		train.getGeneralMode() == "OS" || train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" ) && train.getETATLevelETCS() && ((train.getLevelETCS() == "Level 0" ||
-		train.getLevelETCS() == "Level 1" || train.getLevelETCS().substr(0,2) == "NTC") || ((train.getLevelETCS() == "Level 2" || train.getLevelETCS() == "Level 3") &&
-		train.getConnection() == "Up"))) || (train.getVtrain() == 0 && train.getGeneralMode() == "PT" && (train.getLevelETCS() == "Level 1" || ((train.getLevelETCS() == "Level 2" ||
-		train.getLevelETCS() == "Level 3") && train.getConnection() == "Up" && train.getPending_Emergency_Stop() == false))))
+		train.getGeneralMode() == "OS" || train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" ) && train.getETATLevelETCS() && ((train.getLevel() == "Level 0" ||
+		train.getLevel() == "Level 1" || train.getLevel().substr(0,2) == "NTC") || ((train.getLevel() == "Level 2" || train.getLevel() == "Level 3") &&
+		train.getConnection() == "Up"))) || (train.getVtrain() == 0 && train.getGeneralMode() == "PT" && (train.getLevel() == "Level 1" || ((train.getLevel() == "Level 2" ||
+		train.getLevel() == "Level 3") && train.getConnection() == "Up" && train.getPending_Emergency_Stop() == false))))
 	{
 		enable[6] = 0; //shunting  x
 		boutons[6].settype("up_type");
@@ -192,7 +192,7 @@ void MainWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font
 }
 
 
-void overrideWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void overrideWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
     vector <string> selection(1);
     vector <int> enable(1);
@@ -200,7 +200,7 @@ void overrideWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
     if ((train.getVtrain() <=  train.getVrelease() && (train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS"||
         train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" || train.getGeneralMode() == "SH"))
         || (train.getVtrain() <=  train.getVrelease() && train.getGeneralMode() == "SB" && train.getDriverID() && train.getTrainData() && train.getETATLevelETCS() &&
-		(train.getLevelETCS() == "Level 2" || train.getLevelETCS() == "Level 3")) || (version =="3.6.0" && (train.getVtrain() <=  train.getVrelease() && train.getGeneralMode() == "PT" &&
+		(train.getLevel() == "Level 2" || train.getLevel() == "Level 3")) || (version =="3.6.0" && (train.getVtrain() <=  train.getVrelease() && train.getGeneralMode() == "PT" &&
 		train.getTrainData() && train.getTrainNumber())))
     {
         boutons[0].settype("up_type");
@@ -326,8 +326,8 @@ void RBCcontactWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol
     for (int i = 0; i <= 3; i++)
         enable[i] = 1;
     if(train.getVtrain() == 0 && train.getDriverID() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||
-		train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL" || train.getGeneralMode() == "PT") && train.getETATLevelETCS() && (train.getLevelETCS() == "Level 2" ||
-		train.getLevelETCS() == "Level 3"))
+		train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL" || train.getGeneralMode() == "PT") && train.getETATLevelETCS() && (train.getLevel() == "Level 2" ||
+		train.getLevel() == "Level 3"))
     {
          for (int i = 0; i <= 2 ; i++)
          {
@@ -525,14 +525,14 @@ void dataEntryWindows(vector<vector<string>> input_field, RenderWindow & fenetre
 		creation_texte(RE, to_string(i + 1) + " - " + selection[i], arial, GREY, 12, 0, V2f(54 + 280 + 15, 200 + 15 + 6 + i * 20), fenetre, 4, ecart);
 }
 
-void trainRunningNumberWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void trainRunningNumberWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
 	dataEntryWindows({{"", "", "0"}}, fenetre, RE, symbol, arial, 0, "Train running number", {}, numero, "numeric", boutons, ecran, train, ecart);
 }
 
-void ERTMS_ETCSlevelWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void ERTMS_ETCSlevelWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
-	dataEntryWindows({{"", train.getLevelETCS(), ""}}, fenetre, RE, symbol, arial, 0, "Level", {"Level 1", "Level 2", "Level 3", "Level 0"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", train.getLevel(), ""}}, fenetre, RE, symbol, arial, 0, "Level", {"Level 1", "Level 2", "Level 3", "Level 0"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
 		train.setLevelETCS("Level 1");
 	else if(boutons[1].getactivation())
@@ -543,44 +543,44 @@ void ERTMS_ETCSlevelWindow(RenderWindow & fenetre, double RE, vector<Symbol> & s
 		train.setLevelETCS("Level 0");
 }
 
-void driverIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void driverIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
     if(boutons[0].getactivation())
-		train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID() * 10 + 1);
+		train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 1);
     else if(boutons[1].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID()  * 10 + 2);
+        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 2);
     else if(boutons[2].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID() * 10 + 3);
+        train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 3);
     else if(boutons[3].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID()  * 10 + 4);
+        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 4);
     else if(boutons[4].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID() * 10 + 5) ;
+        train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 5) ;
     else if(boutons[5].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID() * 10 + 6);
+        train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 6);
     else if(boutons[6].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID()  * 10 + 7);
+        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 7);
     else if(boutons[7].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID()  * 10 + 8);
+        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 8);
     else if(boutons[8].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID()  * 10 + 9);
+        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 9);
     else if(boutons[9].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getTempDriver_ID()  * 10 + 0);
+        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 0);
     else if(boutons[10].getactivation())
-        train.train_Data.setTempDriver_ID(ceil(train.train_Data.getTempDriver_ID() /10));
+        train.setTempDriver_ID(ceil(train.getTempDriver_ID() /10));
     else if(boutons[12].getactivation())
-        train.train_Data.setTempDriver_ID(train.train_Data.getDriver_ID());
+        train.setTempDriver_ID(train.getDriver_ID());
     else if(boutons[15].getactivation())
     {
-        train.train_Data.setDriver_ID(train.train_Data.getTempDriver_ID());
-        dataEntryWindows({{"", to_string(train.train_Data.getDriver_ID()), "1"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train, ecart);
+        train.setDriver_ID(train.getTempDriver_ID());
+        dataEntryWindows({{"", to_string(train.getDriver_ID()), "1"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train, ecart);
     }
-	//if(train.train_Data.getTempDriver_ID() == 0)
+	//if(train.getTempDriver_ID() == 0)
 	//	dataEntryWindows({{"", "", "0"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train);
 	//else
-	dataEntryWindows({{"", to_string(train.train_Data.getTempDriver_ID()), "0"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", to_string(train.getTempDriver_ID()), "0"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train, ecart);
 }
 
-void radionetworkIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void radionetworkIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
 	dataEntryWindows({{"", train.getRadioNetworkID(), "0"}}, fenetre, RE, symbol, arial, 0, "Radio network ID", {}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
@@ -591,7 +591,7 @@ void radionetworkIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & sy
 		train.setRadioNetworkID("Telecom X");
 }
 
-void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
     int i = 0;
     if(numero == 1)
@@ -696,7 +696,7 @@ void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
 }
 
 
-void languageWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void languageWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
 	dataEntryWindows({{"", train.getLanguage(), "0"}}, fenetre, RE, symbol, arial, 0, "Language", {"English", "Francais"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
@@ -705,21 +705,21 @@ void languageWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
 		train.setLanguage("Francais");
 }
 
-void volumeWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void volumeWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
 	dataEntryWindows({{""}}, fenetre, RE, symbol, arial, 0, "Volume", {}, numero, "", boutons, ecran, train, ecart);
 }
 
-void brightnessWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void brightnessWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
 	dataEntryWindows({{""}}, fenetre, RE, symbol, arial, 0, "Brightness", {}, numero, "", boutons, ecran, train, ecart);
 }
 
-void trainDataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void trainDataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
-	vector<vector<string>> input_field = {{"Train category", train.train_Data.getTrain_category(), "0"}, {"Length (m)", to_string(train.train_Data.getlength()), "1"}, {"Brake percentage",
-		to_string(train.train_Data.getbreaking_percetage()), "0"}, {"Max speed (km/h)", to_string(train.train_Data.getmaximum_train_speed()), "0"}, {"Axle load category",
-		train.train_Data.getaxle_load_category(), "0"}, {"Airtight", train.train_Data.getAirtight(), "0"}, {"Loading gauge", train.train_Data.getloading_gauge(), "0"}};
+	vector<vector<string>> input_field = {{"Train category", train.getTrain_category(), "0"}, {"Length (m)", to_string(train.getlength()), "1"}, {"Brake percentage",
+		to_string(train.getbreaking_percetage()), "0"}, {"Max speed (km/h)", to_string(train.getmaximum_train_speed()), "0"}, {"Axle load category",
+		train.getaxle_load_category(), "0"}, {"Airtight", train.getAirtight(), "0"}, {"Loading gauge", train.getloading_gauge(), "0"}};
 	vector <string> selection = {};
 	string keyboard = "";
 	//if(numero == 1)
@@ -741,7 +741,7 @@ void trainDataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol,
 		creation_texte(RE, input_field[i][0], arial, GREY, 12, 0, V2f(204 - 5, 20 * i + 100 + 6), fenetre, 2, ecart);
 }
 
-void SRspeedWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void SRspeedWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
     dataEntryWindows({{"SR speed (km/h)", to_string(train.getSRspeed()), "0"}, {"SR distance (m)", "b", "0"}}, fenetre, RE, symbol, arial, 0, "SR speed/distance", {}, numero, "numeric", boutons,
 		ecran, train, ecart);
@@ -767,7 +767,7 @@ void SRspeedWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
 		train.setSRspeed(train.getSRspeed() * 10 + 0);
 }
 
-void adhesionWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void adhesionWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
 	dataEntryWindows({{"", train.getAdhesion(),"0"}}, fenetre, RE, symbol, arial, 0, "Adhesion", {"Non slippery rail","Slippery rail"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
@@ -814,14 +814,14 @@ void dataViewWindows(RenderWindow & fenetre, double RE, vector<Symbol> & symbol,
 	}
 }
 
-void dataViewWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void dataViewWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
 {
     vector<vector<string>> item;
     if(numero == 1)
-    	item = {{"Driver ID", to_string(train.train_Data.getDriver_ID())}, {"", ""},{"Train running number", to_string(train.train_Data.getTrain_running_number()) },
-			{"", ""}, {"Train type", train.train_Data.getTrain_type()}, {"Train category", train.train_Data.getTrain_category()}, {"Length (m)", to_string(train.train_Data.getlength())},
-			{"Brake percentage", to_string(train.train_Data.getbreaking_percetage())}, {"Max speed (km/h)", to_string(train.train_Data.getmaximum_train_speed())},
-			{"Axle load category", train.train_Data.getaxle_load_category()}, {"Airtight", train.train_Data.getAirtight()}, {"Loading gauge", train.train_Data.getloading_gauge()}};
+    	item = {{"Driver ID", to_string(train.getDriver_ID())}, {"", ""},{"Train running number", to_string(train.getTrain_running_number()) },
+			{"", ""}, {"Train type", train.getTrain_type()}, {"Train category", train.getTrain_category()}, {"Length (m)", to_string(train.getlength())},
+			{"Brake percentage", to_string(train.getbreaking_percetage())}, {"Max speed (km/h)", to_string(train.getmaximum_train_speed())},
+			{"Axle load category", train.getaxle_load_category()}, {"Airtight", train.getAirtight()}, {"Loading gauge", train.getloading_gauge()}};
     else
     	item = {{"Radio network ID", train.getRadioNetworkID()}, {"RBC ID", to_string(train.getRBCID())}, {"RBC phone number", to_string(train.getRBCphoneNumber())}, {"", ""},
 		{"VBC #1 set code", "d"}, {"VBC #2 set code", "e"}};
@@ -834,8 +834,7 @@ void systemVersionWindow(RenderWindow & fenetre, double RE, vector<Symbol> & sym
 	dataViewWindows(fenetre, RE, symbol, arial, "System version", numero, boutons, ecran, item, ecart);
 }
 
-
-void windows(string & ecran, RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees &train, vector<VBC> vbc, vector<Buttons> & boutons, int & numero, int * ecart)
+void windows(string & ecran, RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<VBC> vbc, vector<Buttons> & boutons, int & numero, int * ecart)
 {
     if(ecran == "mainWindow")
         MainWindow(fenetre, RE, symbol, arial, version, train, boutons, ecran, numero, ecart);
