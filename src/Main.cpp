@@ -4,7 +4,6 @@
 #include <math.h>
 #include <string>
 #include <ctime>
-#include <iostream>
 #include <vector>
 #include <unistd.h>
 #include <algorithm>
@@ -23,8 +22,6 @@ class Donnees
 
 ///////////////////////////////////////
 
-
-void initialisation(int Vmax, double RE, vector<Symbol> & symbol, RenderWindow & fenetre, Font & arial, V2f & centreIV, ConvexShape & aiguille, DonneesAfficheurVitesse graduations[], int * ecart);
 void demarage(RenderWindow & fenetre);
 void fondEcran(RenderWindow & fenetre, double RE, int * ecart);
 void indicateurVitesse(V2f centre, Color couleurAiguille, double RE, RenderWindow & fenetre, Font & arial, DonneesAfficheurVitesse graduations[], int Vmax, int * ecart);
@@ -40,7 +37,6 @@ int main()
 	DonneesAfficheurVitesse graduations[401];
 	ConvexShape aiguille;	// Creation des formes de l'aiguille de l'IV
 	V2f centreIV;						// Position du centre de l'indicateur de Vitesse
-	RenderWindow fenetre;
 	double RE;
 	int ecart[] = {0, 0};
 	vector<Symbol> symbol(154);
@@ -83,14 +79,11 @@ int main()
 	version_test = 0;
 	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	if(VideoMode::getDesktopMode().width / 640.0 < VideoMode::getDesktopMode().height / 480.0)
-		RE = VideoMode::getDesktopMode().width / 640.0;	//rapport Ecran
-	else
-		RE = VideoMode::getDesktopMode().height / 480.0; //rapport Ecran
+
 	CircleShape SSI(10 / 2.0 * RE);
 	SSI.setFillColor(WHITE);
 
-	initialisation(speedRange, RE, symbol, fenetre, arial, centreIV, aiguille, graduations, ecart);
+
 	//clockMoteurIsole.restart();
 
     //affiche la fenetre tant que l'utilisateur n'appuie pas sur la croix
@@ -534,21 +527,6 @@ int main()
     return 0;
 }
 
-void initialisation(int Vmax, double RE, vector<Symbol> & symbol, RenderWindow & fenetre, Font & arial, V2f & centreIV, ConvexShape & aiguille, DonneesAfficheurVitesse graduations[], int * ecart)
-{
-	//recuperation de la police
-	arial.loadFromFile("ressources/fonts/arial.ttf");
-
-	//definition des parametres de la fenetre
-	ContextSettings settings;
-	settings.antialiasingLevel = 8;
-
-	//creation et affichage de la fenetre
-	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Default, settings);
-	//	fenetre.create(VideoMode(VideoMode::getDesktopMode().width,height),"Ecran central",Style::Fullscreen, settings);
-	fenetre.setFramerateLimit(60);
-}
-
 void demarage(RenderWindow & fenetre)
 {
 	Image ImageDemarage;
@@ -588,7 +566,7 @@ void demarage(RenderWindow & fenetre)
 	//centrage
 	FloatRect texte;
 	texte = chargement.getGlobalBounds();
-	int position= VideoMode::getDesktopMode().width / 2 - texte.width / 2;
+	int position = VideoMode::getDesktopMode().width / 2 - texte.width / 2;
 	chargement.setPosition(position, VideoMode::getDesktopMode().height / 1.4);
 	//chargement.setColor(color.White);
 
@@ -849,3 +827,41 @@ void gestionnaireAffichage(donnees & train)
 
 
 
+//Prototypes -----------------------------------------------------------------------------------------------------------------------------
+void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
+
+
+//Brouillon ------------------------------------------------------------------------------------------------------------------------------
+
+void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart)		//Affiche toutes les cases sur l'\E9cran
+{
+	if(ecran == "defaultWindow")
+	{
+		creation_rectangle(V2f((54 + 234 + 46), (54 + 30 + 191 + 25 + 50 + 50)), V2f(63, 30), RE, 1, fenetre, ecart);			//G11
+		creation_rectangle(V2f((54 + 234 + 46 + 63), (54 + 30 + 191 + 25 + 50 + 50)), V2f(120, 30), RE, 1, fenetre, ecart);		//G12
+		creation_rectangle(V2f((54 + 234 + 46 + 63 + 120), (54 + 30 + 191 + 25 + 2 * 50)), V2f(63, 30), RE, 1, fenetre, ecart);	//G13
+	}
+	creation_rectangle(V2f(0, 0), V2f(54, 54), RE, 1, fenetre, ecart);															//A1
+	creation_rectangle(V2f(0, 54), V2f(54, (191 + 30)), RE, 1, fenetre, ecart);													//A2-3
+	creation_rectangle(V2f(0, (54 +30 + 191)), V2f(54, 25), RE, 1, fenetre, ecart);												//A4
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25)), V2f(54, 25), RE, 1, fenetre, ecart);										//C8
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 2)), V2f(54, 25), RE, 1, fenetre, ecart);									//C9
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 3)), V2f(54, 25), RE, 1, fenetre, ecart);									//E1
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 4)), V2f(54, 25), RE, 1, fenetre, ecart);									//E2
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 5)), V2f(54, 25), RE, 1, fenetre, ecart);									//E3
+	creation_rectangle(V2f((54 + 26 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B6
+	creation_rectangle(V2f((54 + 140 + 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B5
+	creation_rectangle(V2f((54 + 140 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B4
+	creation_rectangle(V2f((54 + 140 - 36 * 3 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);					//B3
+	creation_rectangle(V2f((54 + 254 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B7
+	creation_rectangle(V2f((54 + 3 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), RE, 1, fenetre, ecart);							//C1
+	creation_rectangle(V2f(54, 0), V2f(280, 300), RE, 1, fenetre, ecart);														//B
+	creation_rectangle(V2f(54, (54 + 30 + 191 + 25 + 50)), V2f(234, 4 * 20), RE, 1, fenetre, ecart);							//E5-6-7-8
+	creation_rectangle(V2f((54 + 234), (54 + 30 + 191 + 25 + 50)), V2f(46, 40), RE, 2, fenetre, ecart);							//E10
+	creation_rectangle(V2f((54 + 234), (54 + 30 + 191 + 25 + 50 + 40)), V2f(46, 40), RE, 2, fenetre, ecart);					//E11
+	creation_rectangle(V2f(62, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B6
+	creation_rectangle(V2f(140, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B3
+	creation_rectangle(V2f(177, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B4
+	creation_rectangle(V2f(212, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B5
+	creation_rectangle(V2f(289, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B7
+}

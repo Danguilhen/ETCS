@@ -14,9 +14,6 @@
 #include <algorithm>
 #include "Buttons.hpp"
 
-using namespace sf;
-using namespace std;
-
 string Buttons::gettype() {return type;}
 void Buttons::settype(string P) {type = P;}
 int Buttons::getdriver_action(){return driver_action;}
