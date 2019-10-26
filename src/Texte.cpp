@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/*#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <cstdlib>
@@ -35,3 +35,4 @@ void TexteMessages(RenderWindow & fenetre, double RE, Font & arial, int * ecart)
 
 }
 
+*/

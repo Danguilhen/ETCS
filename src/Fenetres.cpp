@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/*#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <cstdlib>
@@ -985,7 +985,7 @@ void Fenetre::creation_rectangle(V2f pos, V2f dim, double RE, int mode, RenderWi
 		rectangle(pos, V2f(dim.x - 1, dim.y - 1), BLACK, RE, fenetre, ecart);
 		rectangle(V2f(pos.x + 1, pos.y + 1), V2f(dim.x - 3, dim.y - 3), SHADOW, RE, fenetre, ecart);
 		rectangle(V2f(pos.x + 2, pos.y + 2), V2f(dim.x - 4, dim.y - 4), DARK_BLUE, RE, fenetre, ecart);
-	}
+	}*/
 	/*
 	int epaisseur = RE;
 	VertexArray bande(Quads,4);
@@ -1068,7 +1068,7 @@ void Fenetre::creation_rectangle(V2f pos, V2f dim, double RE, int mode, RenderWi
 
 		creation_rectangle(pos, dim,3, 3, fenetre, ecart);
 	}
-	*/
+	*//*
 }
 
 void LeftSide::targetDistance(int distance, RenderWindow & fenetre, double RE, Font & arial, int * ecart)
@@ -1130,4 +1130,4 @@ void Fenetre::affichageBoutons(double RE, RenderWindow & fenetre, int * ecart)
 	creation_rectangle(V2f((640 - 40), (28 + 3 * 64)), V2f(40, 64), RE, 2, fenetre, ecart);									//H5
 	creation_rectangle(V2f((640 - 40), (28 + 4 * 64)), V2f(40, 64), RE, 2, fenetre, ecart);									//H6
 	creation_rectangle(V2f((640 - 40), (28 + 5 * 64)), V2f(40, 82), RE, 2, fenetre, ecart);									//H7
-}
+}*/

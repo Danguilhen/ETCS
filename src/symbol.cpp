@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/*#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <cstdlib>
@@ -81,9 +81,9 @@ void Symbol::effacer()
 	{
 		sprite.erase(sprite.begin());
 	}
-	/*m_color = sprite[0].getColor();
-	m_color.a = 0;
-	sprite[0].setColor(m_color);*/
+	//m_color = sprite[0].getColor();
+	//m_color.a = 0;
+	//sprite[0].setColor(m_color);
 }
 
 Symbol::Symbol(vector<Symbol> & symbol)
@@ -359,4 +359,4 @@ void Cadran::arcVitesse(V2f centre, float V_red, float V_orange, float V_yellow,
 		Barre[3].position = local2globalCoordonates(centre,teta_origine + 4,V2f(128 * RE,graduations[i].teta() - deltateta / 2.0));
 		fenetre.draw(Barre);
 	}
-}
+}*/

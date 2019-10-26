@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/*#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <cstdlib>
@@ -172,11 +172,11 @@ void Planning::planningInformation(RenderWindow & fenetre, double RE, Font & ari
 	rectangle(V2f(54 + 280 + 40, 21), V2f(200, 2), MEDIUM_GREY, RE, fenetre, ecart);
 
 	//?
-	/*if(TSMstart <= (scale / 40.0) && TSMstart >= 0) //Indication Marker
-		rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 283 - TSMstart * (283 - 250) / (scale / 40.0)), V2f(93, 2), YELLOW, RE, fenetre, ecart);
-	else if(TSMstart <= scale && TSMstart >= 0)
-		rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 283 - (283 - 250) - log10(TSMstart / (scale / 40.0)) * (250 - 21) / log10(scale / (scale / 40.0))), V2f(93, 2), YELLOW, RE,
-			fenetre, ecart); //Indication Marker*/
+	//if(TSMstart <= (scale / 40.0) && TSMstart >= 0) //Indication Marker
+	//	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 283 - TSMstart * (283 - 250) / (scale / 40.0)), V2f(93, 2), YELLOW, RE, fenetre, ecart);
+	//else if(TSMstart <= scale && TSMstart >= 0)
+	//	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 283 - (283 - 250) - log10(TSMstart / (scale / 40.0)) * (250 - 21) / log10(scale / (scale / 40.0))), V2f(93, 2), YELLOW, RE,
+	//		fenetre, ecart); //Indication Marker
 	//LES GRADIENT
 	gradientProfile(fenetre, RE, arial, train.getPlanningScale(), ecart, delta_distance, tab_grad);
 }
@@ -381,4 +381,4 @@ Planning::Planning() : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pa
 	tab_paf.push_back(PAF1);
 	tab_paf.push_back(PAF2);
 	tab_paf.push_back(PAF3);
-}
+}*/
