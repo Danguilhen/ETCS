@@ -12,52 +12,8 @@ using namespace std;
 //define ---------------------------------------------------------------------------------------------------------------------------------
 #define V2f Vector2f
 
-//DMI ------------------------------------------------------------------------------------------------------------------------------------
-
-class DMI
-{
-	private :
-		RenderWindow fenetre;
-		ContextSettings settings;
-		int signalisation;
-		Data data;
-		ETCS ETCS{fenetre, data};
-	public :
-		DMI();
-		void update();
-};
-
-DMI::DMI()
-{
-	//creation et affichage de la fenetre
-	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Default, settings);
-	fenetre.setFramerateLimit(60);
-	settings.antialiasingLevel = 8;
-}
-
-void DMI::update()
-{
-	data.update();
-	switch(signalisation)
-	{
-		case 0: ETCS.update();
-		case 1: ;
-		case 2: ;
-	}
-}
-
-//Main -----------------------------------------------------------------------------------------------------------------------------------
-int main()
-{
-	DMI app;
-	while(true)
-	{
-		app.update();
-	};
-}
-
 //Data -----------------------------------------------------------------------------------------------------------------------------------
-class Data
+/*class Data
 {
 	private :
 		int Vtrain;
@@ -68,18 +24,19 @@ class Data
 		double RE;
 		Font arial;
 		int son;
-		/* Son :
-			Num�ro 1 : click
-			Num�ro 2 : S-info
-			Num�ro 3 : S1_toofast
-			Num�ro 4 : S2_warning
-			Mode 1 : Jouer UNE fois
-			Mode 2 : Jouer en boucle
-			Mode 3 : Stopper la boucle, le son s'arr�te
-		*/
+		//Son :
+		//	Num�ro 1 : click
+		//	Num�ro 2 : S-info
+		//	Num�ro 3 : S1_toofast
+		//	Num�ro 4 : S2_warning
+		//	Mode 1 : Jouer UNE fois
+		//	Mode 2 : Jouer en boucle
+		//	Mode 3 : Stopper la boucle, le son s'arr�te
+
 
 	public :
 		Data();
+		void update();
 		int getVtrain();
 		string getGeneralMode();
 		string getMode();
@@ -98,13 +55,114 @@ Data::Data()
 	arial.loadFromFile("ressources/fonts/arial.ttf"); //recuperation de la police
 }
 
+void Data::update()
+{
+
+}
+
 int Data::getVtrain(){return Vtrain;}
-string Data::getGeneralMode(){return generalMode;};
-string Data::getMode(){return mode;};
-string Data::getStatus(){return status;};
-string Data::getLevel(){return level;};
-double Data::getRE(){return RE;};
-void Data::setSon(int a){son = a;};
+string Data::getGeneralMode(){return generalMode;}
+string Data::getMode(){return mode;}
+string Data::getStatus(){return status;}
+string Data::getLevel(){return level;}
+double Data::getRE(){return RE;}
+void Data::setSon(int a){son = a;}
+
+//Button -----------------------------------------------------------------------------------------------------------------------------------
+class Button
+{
+	private :
+		Data *data;
+		string type;
+		int driver_action;//press� ou non
+		int button_activation = 0;//nombre de fois activ�
+		bool button_state;//enabled ou non
+		Clock chrono;
+		Time t_actif;
+		int n; // variable utilis�e pour le down_type
+
+	public :
+		Button(Data &data);
+		string gettype();
+		void settype(string P);
+		int getdriver_action();
+		void setdriver_action(int P);
+		void action_type();
+		int getactivation();
+};
+
+Button::Button(Data &data)
+{
+	this->data = &data;
+}
+
+string Button::gettype() {return type;}
+void Button::settype(string P) {type = P;}
+int Button::getdriver_action(){return driver_action;}
+void Button::setdriver_action(int P){driver_action = P;}
+int Button::getactivation(){return button_activation;}
+
+void Button::action_type()
+{
+	t_actif = chrono.getElapsedTime();
+	float delta_ts=t_actif.asSeconds();
+	button_activation = 0;
+	if(type == "up_type")
+	{
+		if(driver_action == 1)
+		{
+			data->setSon(11);
+		}
+		if(driver_action == 3)
+		{
+			button_activation = 1;
+		}
+	}
+	if(type == "down_type")
+	{
+		if(driver_action == 1)
+		{
+			data->setSon(11);
+			chrono.restart();
+			button_activation = 1;
+			n = 0;
+		}
+		else if(driver_action == 2)
+		{
+			if(delta_ts <= 1.5 && n == 0)
+			{
+				button_activation = 0;
+			}
+			if (delta_ts > 1.5)
+			{
+				n = 1;
+				chrono.restart();
+			}
+			if(n == 1)
+			{
+				if(round(delta_ts*10) == 0.3*10)
+				{
+					button_activation = 1;
+					chrono.restart();
+				}
+				else
+					button_activation = 0;
+			}
+		}
+	}
+	if (type == "delay_type")
+	{
+		if(driver_action == 1)
+		{
+			data->setSon(11);
+			chrono.restart();
+		}
+		if(driver_action == 3 && delta_ts > 2)
+		{
+			button_activation = 1;
+		}
+	}
+}
 
 //ETCS -----------------------------------------------------------------------------------------------------------------------------------
 class ETCS
@@ -120,7 +178,7 @@ class ETCS
 		void action();
 };
 
-ETCS::ETCS(RenderWindow &fenetre, Data& data): button(16)
+ETCS::ETCS(RenderWindow &fenetre, Data& data): button(16, data)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
@@ -297,100 +355,49 @@ void ETCS::action()
 		        button[15].setdriver_action(3);
 		}
     }
-}
+}*/
 
-//Button -----------------------------------------------------------------------------------------------------------------------------------
-class Button
+//DMI ------------------------------------------------------------------------------------------------------------------------------------
+
+class DMI
 {
 	private :
-		Data *data;
-		string type;
-		int driver_action;//press� ou non
-		int button_activation = 0;//nombre de fois activ�
-		bool button_state;//enabled ou non
-		Clock chrono;
-		Time t_actif;
-		int n; // variable utilis�e pour le down_type
-
+		RenderWindow fenetre;
+		//ContextSettings settings;
+		int signalisation;
+		//Data data;
+		//ETCS etcs{fenetre, data};
 	public :
-		Button(Data &data);
-		string gettype();
-		void settype(string P);
-		int getdriver_action();
-		void setdriver_action(int P);
-		void action_type();
-		int getactivation();
+		DMI();
+		void start();
 };
 
-Button::Button(Data &data)
+DMI::DMI()
 {
-	this->data = &data;
+	//creation et affichage de la fenetre
+	//fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Default, settings);
+	//fenetre.setFramerateLimit(60);
+	//settings.antialiasingLevel = 8;
 }
 
-string Button::gettype() {return type;}
-void Button::settype(string P) {type = P;}
-int Button::getdriver_action(){return driver_action;}
-void Button::setdriver_action(int P){driver_action = P;}
-int Button::getactivation(){return button_activation;}
-
-void Button::action_type()
+void DMI::start()
 {
-	t_actif = chrono.getElapsedTime();
-	float delta_ts=t_actif.asSeconds();
-	button_activation = 0;
-	if(type == "up_type")
+	while(true)//fenetre.isOpen())
 	{
-		if(driver_action == 1)
+		//data.update();
+		switch(signalisation)
 		{
-			data->setSon(11);
+			case 0: ;//etcs.update();
+			case 1: ;
+			case 2: ;
+			default: ;
 		}
-		if(driver_action == 3)
-		{
-			button_activation = 1;
-		}
-	}
-	if(type == "down_type")
-	{
-		if(driver_action == 1)
-		{
-			data->setSon(11);
-			chrono.restart();
-			button_activation = 1;
-			n = 0;
-		}
-		else if(driver_action == 2)
-		{
-			if(delta_ts <= 1.5 && n == 0)
-			{
-				button_activation = 0;
-			}
-			if (delta_ts > 1.5)
-			{
-				n = 1;
-				chrono.restart();
-			}
-			if(n == 1)
-			{
-				if(round(delta_ts*10) == 0.3*10)
-				{
-					button_activation = 1;
-					chrono.restart();
-				}
-				else
-					button_activation = 0;
-			}
-		}
-	}
-	if (type == "delay_type")
-	{
-		if(driver_action == 1)
-		{
-			data->setSon(11);
-			chrono.restart();
-		}
-		if(driver_action == 3 && delta_ts > 2)
-		{
-			button_activation = 1;
-		}
-	}
+	};
+}
+
+//Main -----------------------------------------------------------------------------------------------------------------------------------
+int main()
+{
+	DMI app;
+	app.start();
 }
