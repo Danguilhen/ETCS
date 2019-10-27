@@ -1,4 +1,4 @@
-/*#include <cstdlib>
+#include <cstdlib>
 #include <iostream>
 #include <thread>
 #include <math.h>
@@ -86,8 +86,7 @@ int main()
     while(fenetre.isOpen())
     {
 
-		for(int i = 0; i <= 15; i++)
-			buttons[i].action_type(son);
+		
 
         difftemps = chrono.getElapsedTime();
         chrono.restart();
