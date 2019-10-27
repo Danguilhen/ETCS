@@ -897,14 +897,3 @@ void close(string & ecran, vector<Buttons> & boutons, int & numero)
     else if(boutons[11].getactivation()&& (ecran == "adhesionWindow" || ecran == "SRspeed/distanceWindow"))
         ecran = "specialWindow";
 }
-
-
-
-
-
-
-
-
-
-
-

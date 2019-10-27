@@ -8,7 +8,6 @@
 using namespace sf;
 using namespace std;
 
-
 //define ---------------------------------------------------------------------------------------------------------------------------------
 #define V2f Vector2f
 
@@ -24,6 +23,161 @@ using namespace std;
 #define GREY Color(195,195,195)
 #define MEDIUM_GREY Color(150,150,150)
 #define DARK_GREY Color(85,85,85)
+
+#define DR_01 symbol[0]
+#define DR_02 symbol[1]
+#define DR_03 symbol[2]
+#define DR_04 symbol[3]
+#define DR_05 symbol[4]
+#define LE_01 symbol[5]
+#define LE_02 symbol[6]
+#define LE_02a symbol[7]
+#define LE_03 symbol[8]
+#define LE_04 symbol[9]
+#define LE_05 symbol[10]
+#define LE_06 symbol[11]
+#define LE_07 symbol[12]
+#define LE_08 symbol[13]
+#define LE_08a symbol[14]
+#define LE_09 symbol[15]
+#define LE_09a symbol[16]
+#define LE_10 symbol[17]
+#define LE_11 symbol[18]
+#define LE_12 symbol[19]
+#define LE_13 symbol[20]
+#define LE_14 symbol[21]
+#define LE_15 symbol[22]
+#define LS_01 symbol[23]
+#define LX_01 symbol[24]
+#define MO_01 symbol[25]
+#define MO_02 symbol[26]
+#define MO_03 symbol[27]
+#define MO_04 symbol[28]
+#define MO_05 symbol[29]
+#define MO_06 symbol[30]
+#define MO_07 symbol[31]
+#define MO_08 symbol[32]
+#define MO_09 symbol[33]
+#define MO_10 symbol[34]
+#define MO_11 symbol[35]
+#define MO_12 symbol[36]
+#define MO_13 symbol[37]
+#define MO_14 symbol[38]
+#define MO_15 symbol[39]
+#define MO_16 symbol[40]
+#define MO_17 symbol[41]
+#define MO_18 symbol[42]
+#define MO_19 symbol[43]
+#define MO_20 symbol[44]
+#define MO_21 symbol[45]
+#define MO_22 symbol[46]
+#define NA_01 symbol[47]
+#define NA_02 symbol[48]
+#define NA_03 symbol[49]
+#define NA_04 symbol[50]
+#define NA_05 symbol[51]
+#define NA_06 symbol[52]
+#define NA_07 symbol[53]
+#define NA_08 symbol[54]
+#define NA_09 symbol[55]
+#define NA_10 symbol[56]
+#define NA_11 symbol[57]
+#define NA_12 symbol[58]
+#define NA_13 symbol[59]
+#define NA_14 symbol[60]
+#define NA_15 symbol[61]
+#define NA_16 symbol[62]
+#define NA_17 symbol[63]
+#define NA_18 symbol[64]
+#define NA_18_2 symbol[65]
+#define NA_19 symbol[66]
+#define NA_20 symbol[67]
+#define NA_21 symbol[68]
+#define NA_22 symbol[69]
+#define NA_23 symbol[70]
+#define PL_01 symbol[71]
+#define PL_02 symbol[72]
+#define PL_03 symbol[73]
+#define PL_04 symbol[74]
+#define PL_05 symbol[75]
+#define PL_06 symbol[76]
+#define PL_07 symbol[77]
+#define PL_08 symbol[78]
+#define PL_09 symbol[79]
+#define PL_10 symbol[80]
+#define PL_11 symbol[81]
+#define PL_12 symbol[82]
+#define PL_13 symbol[83]
+#define PL_14 symbol[84]
+#define PL_15 symbol[85]
+#define PL_16 symbol[86]
+#define PL_17 symbol[87]
+#define PL_18 symbol[88]
+#define PL_19 symbol[89]
+#define PL_20 symbol[90]
+#define PL_21 symbol[91]
+#define PL_22 symbol[92]
+#define PL_23 symbol[93]
+#define PL_24 symbol[94]
+#define PL_25 symbol[95]
+#define PL_26 symbol[96]
+#define PL_27 symbol[97]
+#define PL_28 symbol[98]
+#define PL_29 symbol[99]
+#define PL_30 symbol[100]
+#define PL_31 symbol[101]
+#define PL_32 symbol[102]
+#define PL_33 symbol[103]
+#define PL_34 symbol[104]
+#define PL_35 symbol[105]
+#define PL_36 symbol[106]
+#define SE_01 symbol[107]
+#define SE_02 symbol[108]
+#define SE_03 symbol[109]
+#define SE_04 symbol[110]
+#define ST_01 symbol[111]
+#define ST_02 symbol[112]
+#define ST_03 symbol[113]
+#define ST_04 symbol[114]
+#define ST_05 symbol[115]
+#define ST_06 symbol[116]
+#define TC_01 symbol[117]
+#define TC_02 symbol[118]
+#define TC_03 symbol[119]
+#define TC_04 symbol[120]
+#define TC_05 symbol[121]
+#define TC_06 symbol[122]
+#define TC_07 symbol[123]
+#define TC_08 symbol[124]
+#define TC_09 symbol[125]
+#define TC_10 symbol[126]
+#define TC_11 symbol[127]
+#define TC_12 symbol[128]
+#define TC_13 symbol[129]
+#define TC_14 symbol[130]
+#define TC_15 symbol[131]
+#define TC_16 symbol[132]
+#define TC_17 symbol[133]
+#define TC_18 symbol[134]
+#define TC_19 symbol[135]
+#define TC_20 symbol[136]
+#define TC_21 symbol[137]
+#define TC_22 symbol[138]
+#define TC_23 symbol[139]
+#define TC_24 symbol[140]
+#define TC_25 symbol[141]
+#define TC_26 symbol[142]
+#define TC_27 symbol[143]
+#define TC_28 symbol[144]
+#define TC_29 symbol[145]
+#define TC_30 symbol[146]
+#define TC_31 symbol[147]
+#define TC_32 symbol[148]
+#define TC_33 symbol[149]
+#define TC_34 symbol[150]
+#define TC_35 symbol[151]
+#define TC_36 symbol[152]
+#define TC_37 symbol[153]
 
 //Data -----------------------------------------------------------------------------------------------------------------------------------
 class Data
@@ -59,6 +213,7 @@ class Data
 		double getRE();
 		int getEcartX();
 		int getEcartY();
+		Font getFont();
 		void setSon(int a);
 };
 
@@ -84,9 +239,83 @@ string Data::getLevel(){return level;}
 double Data::getRE(){return RE;}
 int Data::getEcartX(){return ecartX;}
 int Data::getEcartY(){return ecartY;}
+Font Data::getFont(){return arial;}
 void Data::setSon(int a){son = a;}
 
-//Fenetre -----------------------------------------------------------------------------------------------------------------------------------
+//Symbol -----------------------------------------------------------------------------------------------------------------------------------
+class Symbol
+{
+	private :
+		RenderWindow *fenetre;
+		Data *data;
+		Image image;
+		Texture texture;
+		Color m_color;
+		vector<Sprite> sprite;
+		void loadSymbol(string chemin_dacces);
+	public :
+		void afficher(Vector2f position);
+		void effacer();
+		Symbol(vector<Symbol> & symbol);
+};
+
+void Symbol::loadSymbol(string chemin_dacces)
+{
+	if (!image.loadFromFile(chemin_dacces)) // Si le chargement du fichier a �chou�
+	{
+	     cout << "Erreur durant le chargement de l'image" << endl;
+	}
+	else // Si le chargement de l'image a r�ussi
+	{
+		texture.loadFromImage(image);
+	}
+}
+
+void Symbol::afficher(V2f position)
+{
+	Sprite spr;
+	sprite.push_back(spr);
+	int m = sprite.size() - 1;
+	sprite[m].setTexture(texture);
+	sprite[m].setScale(data->getRE(), data->getRE());
+	position.x = position.x * data->getRE() - sprite[m].getGlobalBounds().width / 2 + data->getEcartX() * data->getRE();
+	position.y = position.y * data->getRE() - sprite[m].getGlobalBounds().height / 2 + data->getEcartY() * data->getRE();
+	sprite[m].setPosition(position);
+	m_color = sprite[m].getColor();
+	m_color.a = 255;
+	sprite[m].setColor(m_color);
+	fenetre->draw(sprite[m]);
+}
+
+void Symbol::effacer()
+{
+	int m = sprite.size();
+	for(int i = 0; i < m; i++)
+	{
+		sprite.erase(sprite.begin());
+	}
+	//m_color = sprite[0].getColor();
+	//m_color.a = 0;
+	//sprite[0].setColor(m_color);
+}
+
+Symbol::Symbol(vector<Symbol> & symbol)
+{
+	vector<string> nom{"DR_01", "DR_02", "DR_03", "DR_04", "DR_05", "LE_01", "LE_02", "LE_02a", "LE_03", "LE_04", "LE_05", "LE_06", "LE_07", "LE_08", "LE_08a", "LE_09", "LE_09a", "LE_10", "LE_11", "LE_12",
+	"LE_13", "LE_14", "LE_15", "LS_01", "LX_01", "MO_01", "MO_02", "MO_03", "MO_04", "MO_05", "MO_06", "MO_07", "MO_08", "MO_09", "MO_10", "MO_11", "MO_12", "MO_13", "MO_14", "MO_15", "MO_16", "MO_17",
+	"MO_18", "MO_19", "MO_20", "MO_21", "MO_22", "NA_01", "NA_02", "NA_03", "NA_04", "NA_05", "NA_06", "NA_07", "NA_08", "NA_09", "NA_10", "NA_11", "NA_12", "NA_13", "NA_14", "NA_15", "NA_16", "NA_17",
+	"NA_18", "NA_18_2", "NA_19", "NA_20", "NA_21", "NA_22", "NA_23", "PL_01", "PL_02", "PL_03", "PL_04", "PL_05", "PL_06", "PL_07", "PL_08", "PL_09", "PL_10", "PL_11", "PL_12", "PL_13", "PL_14", "PL_15",
+	"PL_16", "PL_17", "PL_18", "PL_19", "PL_20", "PL_21", "PL_22", "PL_23", "PL_24", "PL_25", "PL_26", "PL_27", "PL_28", "PL_29", "PL_30", "PL_31", "PL_32", "PL_33", "PL_34", "PL_35", "PL_36", "SE_01",
+	"SE_02", "SE_03", "SE_04", "ST_01", "ST_02", "ST_03", "ST_04", "ST_05", "ST_06", "TC_01", "TC_02", "TC_03", "TC_04", "TC_05", "TC_06", "TC_07", "TC_08", "TC_09", "TC_10", "TC_11", "TC_12", "TC_13",
+	"TC_14", "TC_15", "TC_16", "TC_17", "TC_18", "TC_19", "TC_20", "TC_21", "TC_22", "TC_23", "TC_24", "TC_25", "TC_26", "TC_27", "TC_28", "TC_29", "TC_30", "TC_31", "TC_32", "TC_33", "TC_34", "TC_35",
+	"TC_36", "TC_37"};
+	for(int i = 0; i < int(nom.size()); i++)
+	{
+		symbol[i].loadSymbol("ressources/symbols/" + nom[i] + ".bmp");
+	}
+}
+
+//Fenetres -----------------------------------------------------------------------------------------------------------------------------------
 class Tools
 {
 	protected :
@@ -167,14 +396,14 @@ void Tools::rectangle(V2f pos, V2f taille, Color col)
 class LeftSide : public virtual Tools
 {
 	protected :
-		void targetDistance(int distance, RenderWindow & fenetre, double RE, Font & arial);
+		void targetDistance(int distance);
 };
 
-void LeftSide::targetDistance(int distance, RenderWindow & fenetre, double RE, Font & arial)
+void LeftSide::targetDistance(int distance)
 {
 	if(distance >= 0)
 	{
-		creation_texte(to_string((int)round((distance / 10.0)) * 10), arial, GREY, 10, 0, V2f(54 / 2.0, 54 + 30 / 2.0), 1);
+		creation_texte(to_string((int)round((distance / 10.0)) * 10), data->getFont(), GREY, 10, 0, V2f(54 / 2.0, 54 + 30 / 2.0), 1);
 		rectangle(V2f(12, 54 + 30 - 1), V2f(13, 2), GREY);
 		rectangle(V2f(16, 54 + 30 + 6), V2f(9, 1), GREY);
 		rectangle(V2f(16, 54 + 30 + 13), V2f(9, 1), GREY);
@@ -193,7 +422,7 @@ void LeftSide::targetDistance(int distance, RenderWindow & fenetre, double RE, F
 		else if(distance <= 1000)
 		{
 			rectangle(V2f(29, 186 + 54 + 30 - (185 - 152)), V2f(10, 185 - 152), GREY);
-			rectangle(V2f(29 , 85 + 185 * ( 1 - (log(distance*(1/58.8236)) / log(17)))), V2f(10, 185 * (log(distance*(1/58.8236)) / log(17))), GREY);
+			rectangle(V2f(29 , 85 + 185 * ( 1 - (log(distance*(1/58.8236)) / log(17)))), V2f(10, 185 * (log(distance * (1 / 58.8236)) / log(17))), GREY);
 		}
 		else
 		{
@@ -727,4 +956,5 @@ int main()
 {
 	DMI app;
 	app.start();
+	return 0;
 }
