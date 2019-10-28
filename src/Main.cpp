@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
@@ -315,7 +316,9 @@ Symbol::Symbol(vector<Symbol> & symbol)
 	}
 }
 
-//Fenetres -----------------------------------------------------------------------------------------------------------------------------------
+
+
+//Tools -----------------------------------------------------------------------------------------------------------------------------------
 class Tools
 {
 	protected :
@@ -323,6 +326,7 @@ class Tools
 		Data *data;
 		void creation_texte(string message, Font police, Color couleur, int taille, double OutlineThickness, V2f pos, int mode);
 		void rectangle(V2f pos, V2f taille, Color col);
+		void couleurForme(VertexArray & bande,Color col, int n);
 };
 
 void Tools::creation_texte(string message, Font police, Color couleur, int taille, double OutlineThickness, V2f pos, int mode) //mode 1 : centrer / mode 2 : aligner droite / mode 3 : Geographical position / mode 4 : aligner gauche
@@ -392,7 +396,334 @@ void Tools::rectangle(V2f pos, V2f taille, Color col)
 	fenetre->draw(barre);
 }
 
+void Tools::couleurForme(VertexArray & bande,Color col, int n)
+{
+	for(int i = 0; i < n; i++)
+	{
+		bande[i].color= col;
+	}
+}
 
+// Texte --------------------------------------------------------------------------------------------------------------------------
+
+class Texte_DMI : public Tools
+{
+	private :
+		int position;//position dans le 4 rectangle de E
+		int heure;//heure de l'affichage
+		string message;//message à diffuser
+		int acknowledgement;//si besoin d'acquitter
+
+	public :
+		Texte_DMI(int h, string m, int a);
+		void TexteMessages();
+
+		int getPosition();
+		void setPosition(int P);
+		int getHeure();
+		void setHeure(int H);
+		string getMessage();
+		void setMessage(string M);
+		int getAcknowledgement();
+		void setAcknowledgement(int A);
+};
+
+Texte_DMI::Texte_DMI(int h, string m, int a)
+{
+	heure = h;
+	message = m;
+	acknowledgement = a;
+}
+
+void Texte_DMI::TexteMessages()
+{
+	for (int n = 0; n < 4; n++)
+	{
+		creation_texte("10H30", data->getFont(), WHITE, 10, 0, V2f(54 + 3, (350 + 7) + n * 20), 4);//+3 déplacement sur x par rapport à la norme
+		creation_texte("Route unsuitable loading gauge", data->getFont(), WHITE, 12, 0, V2f(54 + 3 + 37, (350 + 8) + n * 20), 4);//Police 12 et décallage de 3 par rapport à l'heure
+	}
+}
+
+int Texte_DMI::getPosition(){return position;}
+void Texte_DMI::setPosition(int P){position = P;}
+int Texte_DMI::getHeure(){return heure;}
+void Texte_DMI::setHeure(int H){heure = H;}
+string Texte_DMI::getMessage(){return message;}
+void Texte_DMI::setMessage(string M){message = M;}
+int Texte_DMI::getAcknowledgement(){return acknowledgement;}
+void Texte_DMI::setAcknowledgement(int A){acknowledgement = A;}
+
+//Cadran -----------------------------------------------------------------------------------------------------------------------------------
+class Cadran : public Tools
+{
+	private :
+		ConvexShape aiguille;
+		V2f centre;
+		V2f local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires);
+	public :
+		void arcVitesse(V2f centre, float V_red, float V_orange, float V_yellow, float V_white, float V_medium_grey, float V_dark_grey, DonneesAfficheurVitesse graduations[]);
+		Cadran(int Vmax, DonneesAfficheurVitesse graduations[]);
+};
+
+void Cadran::indicateurVitesse(V2f centre, Color couleurAiguille, DonneesAfficheurVitesse graduations[], int Vmax)
+{
+	V2f position;
+	CircleShape Centre;
+	Centre.setFillColor(couleurAiguille);
+	Centre.setPosition(V2f(centre.x - 25 * data->getRE(),centre.y - 25 * data->getRE()));
+	Centre.setRadius(25 * data->getRE());
+	fenetre->draw(Centre);
+	float teta_origine = 90 + 144;
+	float tetaep = 0.5;
+
+	VertexArray Barre(Quads, 4);
+
+	// trace d'une barre
+	//definition de la couleur de chaque points
+
+	couleurForme(Barre, WHITE, 4);
+
+	///////////////////////////////////////////////////////////////////////////////
+	//affichage des graduations
+
+	for(int i = 0; i <= Vmax; i = i + 10) //i correspond a la vitesse
+	{
+		if((Vmax == 400 && i % 50 == 0) || (Vmax != 400 && i % 20 == 0))
+		{ //affiche des barres plus longues tous les 50km/h
+			//positionnement de chaque points
+			Barre[0].position = local2globalCoordonates(centre, teta_origine,V2f(data->getRE() * 125, graduations[i].teta() - tetaep / 2));
+			Barre[1].position = local2globalCoordonates(centre, teta_origine,V2f(data->getRE() * 125, graduations[i].teta() + tetaep / 2));
+			Barre[2].position = local2globalCoordonates(centre, teta_origine,V2f(data->getRE() * (125 - 25), graduations[i].teta() + tetaep / 2));
+			Barre[3].position = local2globalCoordonates(centre, teta_origine,V2f(data->getRE() * (125 - 25), graduations[i].teta() - tetaep / 2));
+			if(i != 250 && i != 350)
+			{
+				position = local2globalCoordonates(centre,teta_origine,V2f(83 * data->getRE(), graduations[i].teta()));
+				creation_texte(RE, to_string(graduations[i].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE - ecart[0], position.y / RE - ecart[1]), fenetre, 1, ecart);
+			}
+		}
+		else
+		{
+			//positionnement de chaque points
+			Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(data->getRE() * 125, graduations[i].teta() - tetaep / 2));
+			Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(data->getRE() * 125, graduations[i].teta() + tetaep / 2));
+			Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f(data->getRE() * (125 - 15), graduations[i].teta() + tetaep / 2));
+			Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f(data->getRE() * (125 - 15), graduations[i].teta() - tetaep / 2));
+		}
+		fenetre.draw(Barre);
+	}
+
+	//ecriture des vitesses
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[0].teta()));
+	//creation_texte(RE, to_string(graduations[0].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //0km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[50].teta()));
+	//creation_texte(RE, to_string(graduations[50].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //50km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[100].teta()));
+	//creation_texte(RE, to_string(graduations[100].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //100km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[150].teta()));
+	//creation_texte(RE, to_string(graduations[150].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //150km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[200].teta()));
+	//creation_texte(RE, to_string(graduations[200].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //200km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[300].teta()));
+	//creation_texte(RE, to_string(graduations[300].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //300km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[400].teta()));
+	//creation_texte(RE, to_string(graduations[400].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //400km/h
+}
+
+V2f Cadran::local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires)
+{
+	V2f Coordonnees;
+	Coordonnees.x = localOrigin.x - (- 1) * CoordonneesPolaires.x* cos((CoordonneesPolaires.y-teta_origine)* PI / 180.0); //PI/180 permet de passer de la valeur de radians a une valeur en degree
+	Coordonnees.y = localOrigin.y - (- 1) * CoordonneesPolaires.x* sin((CoordonneesPolaires.y-teta_origine)* PI / 180.0); // le facteur -1 permet de se mettre dans le cas du cercle trigonometrique
+	return Coordonnees;
+}
+
+Cadran::Cadran(int Vmax, DonneesAfficheurVitesse graduations[])	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
+{
+	centre.x = data->getRE() * (54 + 280 / 2.0 + data->getEcartX());
+	centre.y = data->getRE() * (300 / 2.0 + data->getEcartY());
+
+	aiguille.setPointCount(8);
+	aiguille.setPosition(centre);
+
+	aiguille.setPoint(0,V2f(- (80 + 25) * data->getRE(), - 3 / 2.0 * data->getRE()));
+	aiguille.setPoint(1,V2f(- (80 + 25) * data->getRE(), 3 / 2.0 * data->getRE()));
+	aiguille.setPoint(2,V2f(- (80 + 25 - 15) * data->getRE(), 3 / 2.0 * data->getRE()));
+	aiguille.setPoint(3,V2f(- (57 + 25) * data->getRE(),9 / 2.0 * data->getRE()));
+	aiguille.setPoint(4,V2f(- 20 * data->getRE(),9 / 2.0 * data->getRE()));
+	aiguille.setPoint(5,V2f(- 20 * data->getRE(), - 9 / 2.0 * data->getRE()));
+	aiguille.setPoint(6,V2f(- (57 + 25) * data->getRE(), - 9 / 2.0 * data->getRE()));
+	aiguille.setPoint(7,V2f(- (80 + 25 - 15) * data->getRE(), - 3 / 2.0 * data->getRE()));
+
+	int Vfaible;
+	float kmh2degVfaible;
+	int workWidth = VideoMode::getDesktopMode().width * 49 / 100.0;
+	int widthMargin = workWidth * 3 / 100.0;
+	float teta_origine = 90 + 144; //decalage d'angle par rapport a un repere trigonometrique place la valeur 0
+	float r = workWidth / 2.0 - widthMargin * 5;
+	float teta = 0;
+	if(Vmax == 400) //petite vitesse : differentes echelles entre 0 et 200 et 200 et 400
+	{
+		Vfaible = 200;
+		kmh2degVfaible = 144.0 / 150;
+	}
+	else
+	{
+		Vfaible = Vmax;
+		kmh2degVfaible = 144.0 / (Vmax / 2.0);
+	}
+	float kmh2degVeleve = kmh2degVfaible / 2.0;
+
+	V2f polaire(r,teta);
+
+	//initialisation
+	graduations[0].polaire(polaire);
+	graduations[0].local2globalCoordonates(centre,teta_origine);
+
+	for(int i = 1; i <= Vfaible; i++)	//i correspond a la vitesse
+	{
+		polaire.y = i * kmh2degVfaible;
+		graduations[i].polaire(polaire);
+		graduations[i].local2globalCoordonates(centre,teta_origine);
+		graduations[i].vitesse(i);
+	}
+	for(int i = 1 + Vfaible; i <= Vmax; i++) //i correspond a la vitesse
+	{
+		polaire.y = Vfaible * kmh2degVfaible / 2.0 + i * kmh2degVeleve;
+		graduations[i].polaire(polaire);
+		graduations[i].local2globalCoordonates(centre,teta_origine);
+		graduations[i].vitesse(i);
+	}
+}
+
+void Cadran::arcVitesse(V2f centre, float V_red, float V_orange, float V_yellow, float V_white, float V_medium_grey, float V_dark_grey, DonneesAfficheurVitesse graduations[])
+{
+	int V1 = max(max(V_orange, V_red), max(max(V_dark_grey, V_yellow), V_white));
+	int V2 = max(max(V_dark_grey, V_yellow), V_white);
+
+	float teta_origine = 90 + 144;
+	VertexArray Barre(Quads, 4);
+	float deltateta = abs(graduations[0].teta()-graduations[1].teta());
+	Color couleur2 = GREY;
+	Color couleur4 = BLACK;
+
+	if(V_medium_grey != 0)
+		creation_texte(to_string((int)V_medium_grey), data->getFont(), GREY, 17, 0, V2f(54 + 26, 274), 1);
+	for(int i = V2 + 1; i <= V1; i++)
+	{
+		if(V_red > V_orange)
+			couleurForme(Barre, RED, 4);
+		else if(V_red < V_orange)
+			couleurForme(Barre, ORANGE, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f((137 - 20) * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f((137 - 20) * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+	for(int i = 0; i<= V2; i++)
+	{
+		couleurForme(Barre, WHITE, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+	for(int i = (V2 - 2 * asin(3 / float(137 - 20))); i <= V2; i++)
+	{
+		if(V_yellow > V_dark_grey && V_yellow > V_white)
+			couleurForme(Barre, YELLOW, 4);
+		else if(V_white > V_dark_grey && V_white > V_yellow)
+			couleurForme(Barre, WHITE, 4);
+		else
+			couleurForme(Barre, DARK_GREY, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f((128 - 11) * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f((128 - 11) * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+	for(int i = V1; i <= V_red; i++)
+	{
+		couleurForme(Barre, RED, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+	for(int i = 0; i <= V_yellow; i++)
+	{
+		couleurForme(Barre, YELLOW, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+	for(int i = 0; i <= V_dark_grey; i++)
+	{
+		couleurForme(Barre, DARK_GREY, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f(128 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+	for(int i = 1; i <= V_medium_grey; i++)
+	{
+		couleurForme(Barre, couleur2, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f(137 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4)* data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4)* data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+	if(V1 < V_medium_grey)
+	{
+		for(int i = 1; i <= V1; i++)
+		{
+			couleurForme(Barre, couleur4, 4);
+			Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4) * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+			Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4) * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+			Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 3)* data->getRE(),graduations[i].teta() + deltateta / 2.0));
+			Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 3)* data->getRE(),graduations[i].teta() - deltateta / 2.0));
+			fenetre->draw(Barre);
+		}
+		for(int i = V1 + 1; i <= V_medium_grey; i++) //trait noir
+		{
+			couleurForme(Barre, couleur2, 4);
+			Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4) * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+			Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4) * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+			Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f(128* data->getRE(),graduations[i].teta() + deltateta / 2.0));
+			Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f(128* data->getRE(),graduations[i].teta() - deltateta / 2.0));
+			fenetre->draw(Barre);
+		}
+	}
+	else
+	{
+		for(int i = 1; i <= V_medium_grey; i++)
+		{
+			couleurForme(Barre, couleur4, 4);
+			Barre[0].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4) * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+			Barre[1].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 4) * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+			Barre[2].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 3)* data->getRE(),graduations[i].teta() + deltateta / 2.0));
+			Barre[3].position = local2globalCoordonates(centre,teta_origine,V2f((128 + 3)* data->getRE(),graduations[i].teta() - deltateta / 2.0));
+			fenetre->draw(Barre);
+		}
+	}
+	for(int i = 0; i <= 4; i++) //Affichage fixe
+	{
+		couleurForme(Barre, DARK_GREY, 4);
+		Barre[0].position = local2globalCoordonates(centre,teta_origine + 4,V2f(137 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		Barre[1].position = local2globalCoordonates(centre,teta_origine + 4,V2f(137 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[2].position = local2globalCoordonates(centre,teta_origine + 4,V2f(128 * data->getRE(),graduations[i].teta() + deltateta / 2.0));
+		Barre[3].position = local2globalCoordonates(centre,teta_origine + 4,V2f(128 * data->getRE(),graduations[i].teta() - deltateta / 2.0));
+		fenetre->draw(Barre);
+	}
+}
+
+//Fenetres -----------------------------------------------------------------------------------------------------------------------------------
 class LeftSide : public virtual Tools
 {
 	protected :
@@ -435,10 +766,7 @@ void LeftSide::targetDistance(int distance)
 class Fenetre : public virtual Tools
 {
 	protected :
-		Data *data;
-		RenderWindow *fenetre;
 		void creation_rectangle(V2f pos, V2f dim, int mode);
-		void couleurForme(VertexArray & bande,Color col, int n);
 		void affichageBoutons();
 };
 
@@ -546,14 +874,6 @@ void Fenetre::creation_rectangle(V2f pos, V2f dim, int mode)
 	*/
 }
 
-void Fenetre::couleurForme(VertexArray & bande,Color col, int n)
-{
-	for(int i = 0; i < n; i++)
-	{
-		bande[i].color= col;
-	}
-}
-
 void Fenetre::affichageBoutons()
 {
 	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);			//F1
@@ -583,14 +903,207 @@ class Main : public Fenetre, public LeftSide
 
 class Menu : public Fenetre
 {
-
+	protected :
+		Data *data;
+		RenderWindow *fenetre;
+		void menu(vector <string> selection, vector <int>& enable, vector<Symbol> & symbol, string title);
 };
 
+void Menu::menu(vector <string> selection, vector <int>& enable, vector<Symbol> & symbol, string title)
+{
+	Color color;
+	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK);
+	NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));	//H5
+	for(int i = 0; i < (int)selection.size(); i++)
+	{
+		if(enable[i] == 0)
+			color = GREY;
+		else if(enable[i] == 1)
+			color = DARK_GREY;
+		if(enable[i] != 2)
+		{
+			creation_texte(to_string(i + 1) + " - " + selection[i], data->getFont(), color, 12, 0, V2f(54 + 280 + 15, 100 + 6 + i * 20), 4);
+			creation_texte(to_string(i + 1), data->getFont(), color, 16, 0, V2f(64 / 2.0 + i * 64, 430 + 50 / 2.0), 1);
+		}
+	}
+	creation_texte(title, data->getFont(), GREY, 12, 0, V2f(54 + 280 + 3, 12), 4);
+}
 
 class DataEntry : public Fenetre
 {
-
+	protected :
+		void dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Buttons> & boutons, string & ecran);
 };
+
+void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Buttons> & boutons, string & ecran)
+{
+	for(int i = 0; i <= 9; i++)
+		boutons[i].settype("down_type");
+	if(keyboard == "numeric")
+	{
+		NA_21.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));			//H2
+		boutons[10].settype("down_type");
+		for(int i = 1; i <= 10; i++)
+			creation_texte(to_string(i % 10), data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), 1);
+	}
+	else if(keyboard == "enhanced numeric")
+	{
+		NA_21.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));			//H2
+		creation_texte("1.  ", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 1 * 64, 430 + 50 / 2.0), 3);
+		for(int i = 2; i <= 10; i++)
+			creation_texte(to_string(i % 10), data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), 1);
+	}
+	else if(keyboard == "alphanumeric")
+	{
+		NA_21.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));			//H2
+		creation_texte("1", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 1 * 64, 430 + 50 / 2.0), 1);
+		creation_texte("2abc", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 2 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("3def", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 3 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("4hij", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 4 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("5klm", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 5 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("6nop", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 6 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("7qrs", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 7 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("8tuv", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 8 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("9wxyz", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 9 * 64, 430 + 50 / 2.0), 3);
+		creation_texte("0", data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + 10 * 64, 430 + 50 / 2.0), 1);
+	}
+	else if(keyboard == "dedicated keyboard")
+    {
+        for(int i = 1; i <= (int)selection.size(); i++)
+            creation_texte(to_string(i % 10), data->getFont(), GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), 1);
+        if(selection.size() >= 10)
+            boutons[9].settype("up_type");
+    }
+	if(boutons[14].getactivation())
+		sel = sel % input_field.size() + 1;
+	else if(boutons[13].getactivation())
+	{
+		if(sel != 1)
+			sel--;
+		else
+			sel = input_field.size();
+	}
+	int numero = sel;
+	string sequenceNumber;
+	Color color;
+	if(complete == 1 && input_field.size() > 4)
+		sequenceNumber = string(" (") + to_string((int)ceil(numero / 4.0)) + "/" + to_string((int)ceil(input_field.size() / 4.0)) + ")";
+	else if(complete == 0 && input_field.size() > 3)
+		sequenceNumber = string(" (") + to_string((int)ceil(numero / 3.0)) + "/" + to_string((int)ceil(input_field.size() / 3.0)) + ")";
+	if(((int)ceil(numero / 4.0) == 1 && complete == 1) || ((int)ceil(numero / 3.0) == 1 && complete == 0))
+	{
+		NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
+		boutons[11].settype("up_type");
+		close(ecran, boutons, sel);
+	}
+	else
+	{
+		NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
+		boutons[11].settype("up_type");
+		if(boutons[11].getactivation())
+		{
+			while(sel % 4 != 0)
+				sel--;
+			sel = sel - 3;
+		}
+	}
+	if((((complete == 1 && input_field.size() > 4 && (int)ceil(numero / 4.0) == (int)ceil(input_field.size() / 4.0)) || (complete == 0 && input_field.size() > 3 &&
+		(int)ceil(numero / 3.0) == (int)ceil(input_field.size() / 3.0)))))
+	{
+		NA_18_2.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
+		boutons[12].settype("disabled");
+	}
+	else if((complete == 1 && input_field.size() > 4) || (complete == 0 && input_field.size() > 3))
+	{
+		boutons[12].settype("up_type");
+		NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
+		if(boutons[12].getactivation())
+		{
+			while(sel % 4 != 0)
+				sel++;
+			sel++;
+		}
+	}
+	if(input_field.size() > 1)
+	{
+		NA_14.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 4 + 64 / 2.0));	//H6
+		NA_13.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 3 + 64 / 2.0));	//H5
+	}
+	NA_20.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 5 + 41));		//H7
+	if(complete)
+	{
+		rectangle(V2f(0, 380), V2f(334, 50), DARK_GREY);
+		rectangle(V2f(0, 380), V2f(334 - 1, 50 - 1), WHITE);
+		rectangle(V2f(0 + 1, 380 + 1), V2f(334 - 2, 50 - 2), MEDIUM_GREY);
+		creation_texte("Yes", data->getFont(), BLACK, 12, 0, V2f(334 / 2.0, 380 + 25), 1);
+		creation_texte(title + " entry complete ?", data->getFont(), GREY, 12, 0, V2f(334 / 2.0, 330 + 25), 1);
+		rectangle(V2f(0, 0), V2f(334, 24), BLACK);
+		creation_texte(title + sequenceNumber, data->getFont(), GREY, 12, 0, V2f(54 + 280 - 3, 12), 2);
+	}
+	else
+	{
+		rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK);
+		creation_texte(title, data->getFont(), GREY, 12, 0, V2f(54 + 280 + 3, 12), 4);
+	}
+	if(input_field.size() == 1)
+	{
+		rectangle(V2f(54 + 280, 50), V2f(266, 50), DARK_GREY);
+		rectangle(V2f(54 + 280, 50), V2f(266 - 1, 50 - 1), WHITE);
+		rectangle(V2f(54 + 280 + 1, 50 + 1), V2f(266 - 2, 50 - 2), MEDIUM_GREY);
+		creation_texte(input_field[0][1], data->getFont(), BLACK, 12, 0, V2f(54 + 280 + 10, 25 + 50), 4);
+	}
+	else
+	{
+		if(complete)
+		{
+			if(numero % 4)
+				numero = numero - numero % 4;
+			else
+				numero = numero - 4;
+		}
+		else
+			numero = numero - numero % 3;
+		for(int i = numero; i <= min((int)input_field.size() - 1, 3 + numero); i++)
+		{
+			rectangle(V2f(54 + 280, 50 * (i - numero) + 50 * (1 - complete)), V2f(164, 50), MEDIUM_GREY);
+			rectangle(V2f(54 + 280 + 1, 50 * (i - numero) + 1 + 50 * (1 - complete)), V2f(164 - 2, 50 - 2), BLACK);
+			rectangle(V2f(54 + 280 + 1, 1 + 50 * (i - numero) + 50 * (1 - complete)), V2f(164 - 2, 50 - 2), DARK_GREY);
+			if(i == sel - 1)
+			{
+				rectangle(V2f(54 + 280 + 164, 50 * (i - numero) + 50 * (1 - complete)), V2f(102, 50), DARK_GREY);
+				rectangle(V2f(54 + 280 + 164, 50 * (i - numero) + 50 * (1 - complete)), V2f(102 - 1, 50 - 1), WHITE);
+				rectangle(V2f(54 + 280 + 164 + 1, 50 * (i - numero) + 1 + 50 * (1 - complete)), V2f(102 - 2, 50 - 2), MEDIUM_GREY);
+			}
+			else
+			{
+				rectangle(V2f(54 + 280 + 164, 50 * (i - numero) + 50 * (1 - complete)), V2f(102, 50), MEDIUM_GREY);
+				rectangle(V2f(54 + 280 + 164 + 1, 50 * (i - numero) + 1 + 50 * (1 - complete)), V2f(102 - 2, 50 - 2), BLACK);
+				rectangle(V2f(54 + 280 + 164 + 1, 1 + 50 * (i - numero) + 50 * (1 - complete)), V2f(102 - 2, 50 - 2), DARK_GREY);
+			}
+			creation_texte(input_field[i][0], data->getFont(), GREY, 12, 0, V2f(54 + 280 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
+			if(i == sel - 1)
+			{	if(train.getClignotementTexte()/30 <= 1)
+				{
+					creation_texte(input_field[i][1], data->getFont(), BLACK, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
+					train.setClignotementTexte(train.getClignotementTexte() + 1);
+				}
+				else if (train.getClignotementTexte()/30 <= 2)
+				{
+					creation_texte(input_field[i][1] + "_", data->getFont(), BLACK, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
+					train.setClignotementTexte(train.getClignotementTexte() + 1);
+				}
+				else
+					train.setClignotementTexte(0);
+			}
+			else if(input_field[i][2] == "1")
+				creation_texte(input_field[i][1], data->getFont(), WHITE, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
+			else
+				creation_texte(input_field[i][1], data->getFont(), GREY, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
+		}
+	}
+	for(int i = 0; i < (int)selection.size(); i++)
+		creation_texte(to_string(i + 1) + " - " + selection[i], data->getFont(), GREY, 12, 0, V2f(54 + 280 + 15, 200 + 15 + 6 + i * 20), 4);
+}
 
 
 class Special : public Menu

@@ -7,11 +7,8 @@
 #include <vector>
 #include <unistd.h>
 #include <algorithm>
+#include <string>
 #include "symbol.hpp"
-#include "donnees.hpp"
-#include "Buttons.hpp"
-#include "planning.hpp"
-
 
 class Donnees
 {
@@ -20,14 +17,8 @@ class Donnees
     float m_vitesse;
 };
 
-///////////////////////////////////////
-
 void demarage(RenderWindow & fenetre);
 void fondEcran(RenderWindow & fenetre, double RE, int * ecart);
-void indicateurVitesse(V2f centre, Color couleurAiguille, double RE, RenderWindow & fenetre, Font & arial, DonneesAfficheurVitesse graduations[], int Vmax, int * ecart);
-void positionnementAiguille(ConvexShape aiguille, float vitesse, double RE, RenderWindow & fenetre, Font & arial, DonneesAfficheurVitesse graduations[], int * ecart);
-void gestionnaireAffichage(donnees & train);
-void actualisationDonnees(donnees & train, string status, float red, float orange, float yellow, float white, float mediumGrey, float darkGrey);
 
 int main()
 {
@@ -86,7 +77,7 @@ int main()
     while(fenetre.isOpen())
     {
 
-		
+
 
         difftemps = chrono.getElapsedTime();
         chrono.restart();
@@ -424,7 +415,127 @@ void fondEcran(RenderWindow & fenetre, double RE, int * ecart)
 	fenetre.draw(fond);
 }
 
-void positionnementAiguille(ConvexShape aiguille,float vitesse, double RE, RenderWindow & fenetre, Font & arial, DonneesAfficheurVitesse graduations[], int * ecart)
+//Prototypes -----------------------------------------------------------------------------------------------------------------------------
+void affichageRectangle(string ecran);
+
+
+//Brouillon ------------------------------------------------------------------------------------------------------------------------------
+
+void affichageRectangle(string ecran)		//Affiche toutes les cases sur l'\E9cran
+{
+	if(ecran == "defaultWindow")
+	{
+		creation_rectangle(V2f((54 + 234 + 46), (54 + 30 + 191 + 25 + 50 + 50)), V2f(63, 30), 1);			//G11
+		creation_rectangle(V2f((54 + 234 + 46 + 63), (54 + 30 + 191 + 25 + 50 + 50)), V2f(120, 30), 1);		//G12
+		creation_rectangle(V2f((54 + 234 + 46 + 63 + 120), (54 + 30 + 191 + 25 + 2 * 50)), V2f(63, 30), 1);	//G13
+	}
+	creation_rectangle(V2f(0, 0), V2f(54, 54), 1);															//A1
+	creation_rectangle(V2f(0, 54), V2f(54, (191 + 30)), 1);													//A2-3
+	creation_rectangle(V2f(0, (54 +30 + 191)), V2f(54, 25), 1);												//A4
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25)), V2f(54, 25), 1);										//C8
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 2)), V2f(54, 25), 1);									//C9
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 3)), V2f(54, 25), 1);									//E1
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 4)), V2f(54, 25), 1);									//E2
+	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 5)), V2f(54, 25), 1);									//E3
+	creation_rectangle(V2f((54 + 26 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), 1);						//B6
+	creation_rectangle(V2f((54 + 140 + 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), 1);						//B5
+	creation_rectangle(V2f((54 + 140 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), 1);						//B4
+	creation_rectangle(V2f((54 + 140 - 36 * 3 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), 1);					//B3
+	creation_rectangle(V2f((54 + 254 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), 1);						//B7
+	creation_rectangle(V2f((54 + 3 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 1);							//C1
+	creation_rectangle(V2f(54, 0), V2f(280, 300), 1);														//B
+	creation_rectangle(V2f(54, (54 + 30 + 191 + 25 + 50)), V2f(234, 4 * 20), 1);							//E5-6-7-8
+	creation_rectangle(V2f((54 + 234), (54 + 30 + 191 + 25 + 50)), V2f(46, 40), 2);							//E10
+	creation_rectangle(V2f((54 + 234), (54 + 30 + 191 + 25 + 50 + 40)), V2f(46, 40), 2);					//E11
+	creation_rectangle(V2f(62, 257), V2f(36, 36), 1); //B6
+	creation_rectangle(V2f(140, 257), V2f(36, 36), 1); //B3
+	creation_rectangle(V2f(177, 257), V2f(36, 36), 1); //B4
+	creation_rectangle(V2f(212, 257), V2f(36, 36), 1); //B5
+	creation_rectangle(V2f(289, 257), V2f(36, 36), 1); //B7
+}
+
+// Reste cadran ------------------------------------------------------------------------------------------------------------
+
+#define PI 3.14159265
+#define V2i Vector2i
+
+class DonneesAfficheurVitesse
+{
+    public:
+
+	DonneesAfficheurVitesse();
+	DonneesAfficheurVitesse(Vector2f cartesiens, Vector2f polaire, int vitesse);
+
+	/////////////////////////////////////////////////////////////
+	//definition des methodes
+	/////////////////////////////////////////////////////////////
+
+	//definition des get
+	void cartesiens(Vector2f cartesiens);
+	void polaire(Vector2f polaire);
+	void x(int x);
+	void y(int y);
+	void r(int r);
+	void teta(int teta);
+	void vitesse(int vitesse);
+
+	/////////////////////////////////////////////////////////////
+	//definition des set
+
+	Vector2f cartesien();
+	Vector2f polaire();
+	float x();
+	float y();
+	float r();
+	float teta();
+	int vitesse();
+
+    private:
+
+	Vector2f m_cartesiens;
+	Vector2f m_polaire;
+    float m_vitesse;
+};
+
+
+
+
+DonneesAfficheurVitesse::DonneesAfficheurVitesse()
+{
+	m_cartesiens.x = 0;
+	m_cartesiens.y = 0;
+	m_polaire.x = 0;
+	m_polaire.y = 0;
+	m_vitesse = 0;
+}
+
+DonneesAfficheurVitesse::DonneesAfficheurVitesse(Vector2f cartesiens, Vector2f polaire, int vitesse)
+{
+	m_cartesiens = cartesiens;
+	m_polaire = polaire;
+	m_vitesse = vitesse;
+}
+
+void DonneesAfficheurVitesse::cartesiens(Vector2f cartesiens) {m_cartesiens = cartesiens;}
+void DonneesAfficheurVitesse::polaire(Vector2f polaire) {m_polaire = polaire;}
+void DonneesAfficheurVitesse::x(int x) {m_cartesiens.x = x;} // set x
+void DonneesAfficheurVitesse::y(int y) {m_cartesiens.y = y;} // set y
+void DonneesAfficheurVitesse::r(int r) {m_polaire.x = r;} // set r
+void DonneesAfficheurVitesse::teta(int teta) {m_polaire.y = teta;} // set teta
+void DonneesAfficheurVitesse::vitesse(int vitesse) {m_vitesse = vitesse;} // set vitesse
+Vector2f DonneesAfficheurVitesse::cartesien() {return m_cartesiens;}
+Vector2f DonneesAfficheurVitesse::polaire() {return m_polaire;}
+float DonneesAfficheurVitesse::x() {return m_cartesiens.x;}
+float DonneesAfficheurVitesse::y() {return m_cartesiens.y;}
+float DonneesAfficheurVitesse::r() {return m_polaire.x;}
+float DonneesAfficheurVitesse::teta() {return m_polaire.y;}
+int DonneesAfficheurVitesse::vitesse() {return m_vitesse;}
+
+// Brouillon --------------------------------------------------------------------------------------------------------------------------
+
+void positionnementAiguille(ConvexShape aiguille, float vitesse, DonneesAfficheurVitesse graduations[]);
+
+void positionnementAiguille(ConvexShape aiguille,float vitesse, DonneesAfficheurVitesse graduations[])
 {
 	float teta0 = 90 - 144;
 	float kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
@@ -442,260 +553,24 @@ void positionnementAiguille(ConvexShape aiguille,float vitesse, double RE, Rende
 	if(graduations[(int)vitesse].vitesse() > 99)
 	{
 		s = str.at(2);
-		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 2.0 - 3, 300 / 2.0), fenetre, 2, ecart);
+		creation_texte(s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 2.0 - 3, 300 / 2.0), 2);
 		s = str.at(1);
-		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 6.0 - 3, 300 / 2.0), fenetre, 2, ecart);
+		creation_texte(s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 6.0 - 3, 300 / 2.0), 2);
 		s = str.at(0);
-		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 - 50 / 6.0 - 3, 300 / 2.0), fenetre, 2, ecart);
+		creation_texte(s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 - 50 / 6.0 - 3, 300 / 2.0), 2);
 	}
 	else if(graduations[(int)vitesse].vitesse() > 9)
 	{
 		s = str.at(1);
-		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), fenetre, 1, ecart);
+		creation_texte(s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), 1);
 		s = str.at(0);
-		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0, 300 / 2.0), fenetre, 1, ecart);
+		creation_texte(s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0, 300 / 2.0), 1);
 	}
 	else
 	{
 		s = str.at(0);
-		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), fenetre, 1, ecart);
+		creation_texte(RE, s, arial, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), 1);
 	}
 }
 
-void actualisationDonnees(donnees & train, string status, float red, float orange, float yellow, float white, float mediumGrey, float darkGrey)
-{
-	train.setStatus(status);
-	train.setVred(red);
-	train.setVorange(orange);
-	train.setVyellow(yellow);
-	train.setVwhite(white);
-	if(darkGrey == 0)
-		train.setVmediumGrey(mediumGrey);
-	else
-		train.setVmediumGrey(0);
-	train.setVdarkGrey(darkGrey);
-}
-
-void gestionnaireAffichage(donnees & train)
-{
-	if(train.getGeneralMode() == "FS" || train.getGeneralMode() == "OS")
-	{
-		if(train.getMode() == "CSM")
-		{
-			if(train.getStatus() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
-			{
-				if(train.getVtrain()<= train.getVitessePSL())
-					train.setCouleurAiguille(GREY);
-				else
-					train.setCouleurAiguille(RED);
-				actualisationDonnees(train, "IntS", train.getVitesseFLOISL(), 0, 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
-					train.setStatus("NoS");
-			}
-			else if(train.getStatus() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
-			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
-					train.setStatus("NoS");
-			}
-			else if(train.getStatus() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
-			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "OvS", 0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
-					train.setStatus("NoS");
-			}
-			else if(train.getStatus() == "NoS")
-			{
-				train.setCouleurAiguille(GREY);
-				actualisationDonnees(train, "OvS", 0, 0, 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
-					train.setStatus("NoS");
-			}
-		}
-        else if(train.getMode() == "PIM")
-        {
-            if(train.getStatus() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
-            {
-            	if(train.getVtrain()<= train.getVbut())
-            		train.setCouleurAiguille(GREY);
-            	else if(train.getVtrain()<= train.getVitessePSL())
-            		train.setCouleurAiguille(WHITE);
-            	else
-            		train.setCouleurAiguille(RED);
-            	actualisationDonnees(train, "IntS", train.getVitesseFLOISL(), 0,0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
-
-                if(train.getVtrain() < train.getVitessePSL())
-                    train.setStatus("NoS");
-            }
-            else if(train.getStatus() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
-            {
-            	train.setCouleurAiguille(ORANGE);
-                actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), 0, train.getVitessePSL(), train.getVrelease(),train.getVbut());
-                if(train.getVtrain() < train.getVitessePSL())
-                    train.setStatus("NoS");
-            }
-            else if(train.getStatus() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
-            {
-            	train.setCouleurAiguille(ORANGE);
-                actualisationDonnees(train, "OvS", 0, train.getVitesseFLOISL(), 0,train.getVitessePSL(), train.getVrelease(), train.getVbut());
-                if(train.getVtrain() < train.getVitessePSL())
-                    train.setStatus("NoS");
-            }
-            else if(train.getStatus() == "NoS")
-            {
-				if(train.getVtrain()<= train.getVbut())
-					train.setCouleurAiguille(GREY);
-				else
-					train.setCouleurAiguille(WHITE);
-                actualisationDonnees(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
-                if(train.getVtrain() < train.getVitessePSL())
-                    train.setStatus("NoS");
-            }
-        }
-
-		else if(train.getMode() == "TSM")
-		{
-			if(train.getStatus() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
-			{
-				if(train.getVtrain()<= train.getVbut())
-					train.setCouleurAiguille(GREY);
-				else if(train.getVtrain()<= train.getVitessePSL())
-					train.setCouleurAiguille(YELLOW);
-				else
-					train.setCouleurAiguille(RED);
-				actualisationDonnees(train, "IntS",train.getVitesseFLOISL(), 0,train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
-				if(train.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
-			}
-			else if(train.getStatus() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
-			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), train.getVitessePSL(), 0, train.getVrelease(), train.getVbut());
-				if(train.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
-			}
-			else if(train.getStatus() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
-			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "OvS",  0, train.getVitesseFLOISL(), train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
-				if(train.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
-			}
-			else if (train.getStatus() == "IndS"||(train.getVtrain() < train.getVitessePSL() && train.getVtrain() >= train.getVitesseISL()))
-			{
-				actualisationDonnees(train, "IndS", 0, 0, train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut() );//OK
-				if (train.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
-			}
-			else if(train.getStatus() == "NoS")
-			{
-				if(train.getVtrain()<= train.getVbut())
-					train.setCouleurAiguille(GREY);
-				else
-					train.setCouleurAiguille(WHITE);
-				actualisationDonnees(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());//OK
-				if(train.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
-			}
-		}
-		else if(train.getMode() == "RSM")
-		{
-
-		}
-	}
-	else if(train.getGeneralMode() == "LS")
-	{
-		if(train.getMode() == "CSM")
-		{
-
-		}
-		else if(train.getMode() == "PIM")
-		{
-
-		}
-		else if(train.getMode() == "TSM")
-		{
-
-		}
-		else if(train.getMode() == "RSM")
-		{
-
-		}
-	}
-	else if(train.getGeneralMode() == "SR/UN")
-	{
-		if(train.getMode() == "CSM")
-		{
-
-		}
-		else if(train.getMode() == "PIM")
-		{
-
-		}
-		else if(train.getMode() == "TSM")
-		{
-
-		}
-	}
-	else if(train.getGeneralMode() == "SH/RV")
-	{
-		if(train.getMode() == "CSM")
-		{
-
-		}
-	}
-	else if(train.getGeneralMode() == "NL/SB/PT")
-	{
-
-	}
-	else if(train.getGeneralMode() == "TR")
-	{
-
-	}
-}
-
-
-
-
-
-
-//Prototypes -----------------------------------------------------------------------------------------------------------------------------
-void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart);
-
-
-//Brouillon ------------------------------------------------------------------------------------------------------------------------------
-
-void affichageRectangle(double RE, RenderWindow & fenetre, string ecran, int * ecart)		//Affiche toutes les cases sur l'\E9cran
-{
-	if(ecran == "defaultWindow")
-	{
-		creation_rectangle(V2f((54 + 234 + 46), (54 + 30 + 191 + 25 + 50 + 50)), V2f(63, 30), RE, 1, fenetre, ecart);			//G11
-		creation_rectangle(V2f((54 + 234 + 46 + 63), (54 + 30 + 191 + 25 + 50 + 50)), V2f(120, 30), RE, 1, fenetre, ecart);		//G12
-		creation_rectangle(V2f((54 + 234 + 46 + 63 + 120), (54 + 30 + 191 + 25 + 2 * 50)), V2f(63, 30), RE, 1, fenetre, ecart);	//G13
-	}
-	creation_rectangle(V2f(0, 0), V2f(54, 54), RE, 1, fenetre, ecart);															//A1
-	creation_rectangle(V2f(0, 54), V2f(54, (191 + 30)), RE, 1, fenetre, ecart);													//A2-3
-	creation_rectangle(V2f(0, (54 +30 + 191)), V2f(54, 25), RE, 1, fenetre, ecart);												//A4
-	creation_rectangle(V2f(0, (54 + 30 + 191 + 25)), V2f(54, 25), RE, 1, fenetre, ecart);										//C8
-	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 2)), V2f(54, 25), RE, 1, fenetre, ecart);									//C9
-	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 3)), V2f(54, 25), RE, 1, fenetre, ecart);									//E1
-	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 4)), V2f(54, 25), RE, 1, fenetre, ecart);									//E2
-	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 5)), V2f(54, 25), RE, 1, fenetre, ecart);									//E3
-	creation_rectangle(V2f((54 + 26 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B6
-	creation_rectangle(V2f((54 + 140 + 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B5
-	creation_rectangle(V2f((54 + 140 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B4
-	creation_rectangle(V2f((54 + 140 - 36 * 3 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);					//B3
-	creation_rectangle(V2f((54 + 254 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), RE, 1, fenetre, ecart);						//B7
-	creation_rectangle(V2f((54 + 3 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), RE, 1, fenetre, ecart);							//C1
-	creation_rectangle(V2f(54, 0), V2f(280, 300), RE, 1, fenetre, ecart);														//B
-	creation_rectangle(V2f(54, (54 + 30 + 191 + 25 + 50)), V2f(234, 4 * 20), RE, 1, fenetre, ecart);							//E5-6-7-8
-	creation_rectangle(V2f((54 + 234), (54 + 30 + 191 + 25 + 50)), V2f(46, 40), RE, 2, fenetre, ecart);							//E10
-	creation_rectangle(V2f((54 + 234), (54 + 30 + 191 + 25 + 50 + 40)), V2f(46, 40), RE, 2, fenetre, ecart);					//E11
-	creation_rectangle(V2f(62, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B6
-	creation_rectangle(V2f(140, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B3
-	creation_rectangle(V2f(177, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B4
-	creation_rectangle(V2f(212, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B5
-	creation_rectangle(V2f(289, 257), V2f(36, 36), RE, 1, fenetre, ecart); //B7
-}*/
+void indicateurVitesse(V2f centre, Color couleurAiguille, double RE, RenderWindow & fenetre, Font & arial, DonneesAfficheurVitesse graduations[], int Vmax, int * ecart);

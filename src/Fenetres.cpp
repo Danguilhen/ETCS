@@ -1,8 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/System.hpp>
-#include <cstdlib>
-#include <iostream>
 #include <thread>
 #include <math.h>
 #include <string>
@@ -11,33 +6,33 @@
 #include <vector>
 #include <unistd.h>
 #include <algorithm>
-#include "symbol.hpp"
-#include "donnees.hpp"
-#include "Buttons.hpp"
-#include "planning.hpp"
-#include "Fenetres.hpp"
 
-void menuWindows(vector <string> selection, vector <int>& enable, RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string title, int * ecart)
-{
-	Color color;
-	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK, RE, fenetre, ecart);
-	NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0), RE, ecart, fenetre);	//H5
-	for(int i = 0; i < (int)selection.size(); i++)
-	{
-		if(enable[i] == 0)
-			color = GREY;
-		else if(enable[i] == 1)
-			color = DARK_GREY;
-		if(enable[i] != 2)
-		{
-			creation_texte(RE, to_string(i + 1) + " - " + selection[i], arial, color, 12, 0, V2f(54 + 280 + 15, 100 + 6 + i * 20), fenetre, 4, ecart);
-			creation_texte(RE, to_string(i + 1), arial, color, 16, 0, V2f(64 / 2.0 + i * 64, 430 + 50 / 2.0), fenetre, 1, ecart);
-		}
-	}
-	creation_texte(RE, title, arial, GREY, 12, 0, V2f(54 + 280 + 3, 12), fenetre, 4, ecart);
-}
+void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero);
+void specialWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void settingsWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero);
+void SRspeedWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void dataViewWindows(vector<Symbol> & symbol, Font & arial, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item);
+void RBCdataWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void dataViewWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void systemVersionWindow(vector<Symbol> & symbol, Font & arial, vector<Buttons> & boutons, string & ecran, int & numero);
 
-void MainWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void overrideWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void adhesionWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void RBCcontactWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void trainRunningNumberWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void radionetworkIDWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void trainDataWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void brightnessWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void volumeWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void languageWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void windows(string & ecran, vector<Symbol> & symbol, Font & arial, string version, donnees &train, vector<VBC> vbc, vector<Buttons> & boutons, int & numero);
+void close(string & ecran, vector<Buttons> & boutons, int & numero);
+void driverIDWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+
+
+
+void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(9);
     vector <int> enable(9);
@@ -192,7 +187,7 @@ void MainWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font
 }
 
 
-void overrideWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void overrideWindow(vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(1);
     vector <int> enable(1);
@@ -222,7 +217,7 @@ void overrideWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
     close(ecran, boutons, numero);
 }
 
-void specialWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void specialWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(3);
     vector <int> enable(3);
@@ -269,7 +264,7 @@ void specialWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
     close(ecran, boutons, numero);
 }
 
-void settingsWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void settingsWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(6);
     vector <int> enable(6);
@@ -319,7 +314,7 @@ void settingsWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
 }
 
 
-void RBCcontactWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void RBCcontactWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(4);
     vector <int> enable(4);
@@ -354,183 +349,12 @@ void RBCcontactWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol
     close(ecran, boutons, numero);
 }
 
-void dataEntryWindows(vector<vector<string>> input_field, RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, int complete, string title, vector<string> selection, int & sel,
-	string keyboard, vector<Buttons> & boutons, string & ecran, donnees & train, int * ecart)
-{
-	for(int i = 0; i <= 9; i++)
-		boutons[i].settype("down_type");
-	if(keyboard == "numeric")
-	{
-		NA_21.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0), RE, ecart, fenetre);			//H2
-		boutons[10].settype("down_type");
-		for(int i = 1; i <= 10; i++)
-			creation_texte(RE, to_string(i % 10), arial, GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), fenetre, 1, ecart);
-	}
-	else if(keyboard == "enhanced numeric")
-	{
-		NA_21.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0), RE, ecart, fenetre);			//H2
-		creation_texte(RE, "1.  ", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 1 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		for(int i = 2; i <= 10; i++)
-			creation_texte(RE, to_string(i % 10), arial, GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), fenetre, 1, ecart);
-	}
-	else if(keyboard == "alphanumeric")
-	{
-		NA_21.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0), RE, ecart, fenetre);			//H2
-		creation_texte(RE, "1", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 1 * 64, 430 + 50 / 2.0), fenetre, 1, ecart);
-		creation_texte(RE, "2abc", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 2 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "3def", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 3 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "4hij", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 4 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "5klm", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 5 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "6nop", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 6 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "7qrs", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 7 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "8tuv", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 8 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "9wxyz", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 9 * 64, 430 + 50 / 2.0), fenetre, 3, ecart);
-		creation_texte(RE, "0", arial, GREY, 16, 0, V2f(- 64 / 2.0 + 10 * 64, 430 + 50 / 2.0), fenetre, 1, ecart);
-	}
-	else if(keyboard == "dedicated keyboard")
-    {
-        for(int i = 1; i <= (int)selection.size(); i++)
-            creation_texte(RE, to_string(i % 10), arial, GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), fenetre, 1, ecart);
-        if(selection.size() >= 10)
-            boutons[9].settype("up_type");
-    }
-	if(boutons[14].getactivation())
-		sel = sel % input_field.size() + 1;
-	else if(boutons[13].getactivation())
-	{
-		if(sel != 1)
-			sel--;
-		else
-			sel = input_field.size();
-	}
-	int numero = sel;
-	string sequenceNumber;
-	Color color;
-	if(complete == 1 && input_field.size() > 4)
-		sequenceNumber = string(" (") + to_string((int)ceil(numero / 4.0)) + "/" + to_string((int)ceil(input_field.size() / 4.0)) + ")";
-	else if(complete == 0 && input_field.size() > 3)
-		sequenceNumber = string(" (") + to_string((int)ceil(numero / 3.0)) + "/" + to_string((int)ceil(input_field.size() / 3.0)) + ")";
-	if(((int)ceil(numero / 4.0) == 1 && complete == 1) || ((int)ceil(numero / 3.0) == 1 && complete == 0))
-	{
-		NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0), RE, ecart, fenetre);		//H3
-		boutons[11].settype("up_type");
-		close(ecran, boutons, sel);
-	}
-	else
-	{
-		NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0), RE, ecart, fenetre);		//H3
-		boutons[11].settype("up_type");
-		if(boutons[11].getactivation())
-		{
-			while(sel % 4 != 0)
-				sel--;
-			sel = sel - 3;
-		}
-	}
-	if((((complete == 1 && input_field.size() > 4 && (int)ceil(numero / 4.0) == (int)ceil(input_field.size() / 4.0)) || (complete == 0 && input_field.size() > 3 &&
-		(int)ceil(numero / 3.0) == (int)ceil(input_field.size() / 3.0)))))
-	{
-		NA_18_2.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0), RE, ecart, fenetre);	//H4
-		boutons[12].settype("disabled");
-	}
-	else if((complete == 1 && input_field.size() > 4) || (complete == 0 && input_field.size() > 3))
-	{
-		boutons[12].settype("up_type");
-		NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0), RE, ecart, fenetre);	//H4
-		if(boutons[12].getactivation())
-		{
-			while(sel % 4 != 0)
-				sel++;
-			sel++;
-		}
-	}
-	if(input_field.size() > 1)
-	{
-		NA_14.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 4 + 64 / 2.0), RE, ecart, fenetre);	//H6
-		NA_13.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 3 + 64 / 2.0), RE, ecart, fenetre);	//H5
-	}
-	NA_20.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 5 + 41), RE, ecart, fenetre);		//H7
-	if(complete)
-	{
-		rectangle(V2f(0, 380), V2f(334, 50), DARK_GREY, RE, fenetre, ecart);
-		rectangle(V2f(0, 380), V2f(334 - 1, 50 - 1), WHITE, RE, fenetre, ecart);
-		rectangle(V2f(0 + 1, 380 + 1), V2f(334 - 2, 50 - 2), MEDIUM_GREY, RE, fenetre, ecart);
-		creation_texte(RE, "Yes", arial, BLACK, 12, 0, V2f(334 / 2.0, 380 + 25), fenetre, 1, ecart);
-		creation_texte(RE, title + " entry complete ?", arial, GREY, 12, 0, V2f(334 / 2.0, 330 + 25), fenetre, 1, ecart);
-		rectangle(V2f(0, 0), V2f(334, 24), BLACK, RE, fenetre, ecart);
-		creation_texte(RE, title + sequenceNumber, arial, GREY, 12, 0, V2f(54 + 280 - 3, 12), fenetre, 2, ecart);
-	}
-	else
-	{
-		rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK, RE, fenetre, ecart);
-		creation_texte(RE, title, arial, GREY, 12, 0, V2f(54 + 280 + 3, 12), fenetre, 4, ecart);
-	}
-	if(input_field.size() == 1)
-	{
-		rectangle(V2f(54 + 280, 50), V2f(266, 50), DARK_GREY, RE, fenetre, ecart);
-		rectangle(V2f(54 + 280, 50), V2f(266 - 1, 50 - 1), WHITE, RE, fenetre, ecart);
-		rectangle(V2f(54 + 280 + 1, 50 + 1), V2f(266 - 2, 50 - 2), MEDIUM_GREY, RE, fenetre, ecart);
-		creation_texte(RE, input_field[0][1], arial, BLACK, 12, 0, V2f(54 + 280 + 10, 25 + 50), fenetre, 4, ecart);
-	}
-	else
-	{
-		if(complete)
-		{
-			if(numero % 4)
-				numero = numero - numero % 4;
-			else
-				numero = numero - 4;
-		}
-		else
-			numero = numero - numero % 3;
-		for(int i = numero; i <= min((int)input_field.size() - 1, 3 + numero); i++)
-		{
-			rectangle(V2f(54 + 280, 50 * (i - numero) + 50 * (1 - complete)), V2f(164, 50), MEDIUM_GREY, RE, fenetre, ecart);
-			rectangle(V2f(54 + 280 + 1, 50 * (i - numero) + 1 + 50 * (1 - complete)), V2f(164 - 2, 50 - 2), BLACK, RE, fenetre, ecart);
-			rectangle(V2f(54 + 280 + 1, 1 + 50 * (i - numero) + 50 * (1 - complete)), V2f(164 - 2, 50 - 2), DARK_GREY, RE, fenetre, ecart);
-			if(i == sel - 1)
-			{
-				rectangle(V2f(54 + 280 + 164, 50 * (i - numero) + 50 * (1 - complete)), V2f(102, 50), DARK_GREY, RE, fenetre, ecart);
-				rectangle(V2f(54 + 280 + 164, 50 * (i - numero) + 50 * (1 - complete)), V2f(102 - 1, 50 - 1), WHITE, RE, fenetre, ecart);
-				rectangle(V2f(54 + 280 + 164 + 1, 50 * (i - numero) + 1 + 50 * (1 - complete)), V2f(102 - 2, 50 - 2), MEDIUM_GREY, RE, fenetre, ecart);
-			}
-			else
-			{
-				rectangle(V2f(54 + 280 + 164, 50 * (i - numero) + 50 * (1 - complete)), V2f(102, 50), MEDIUM_GREY, RE, fenetre, ecart);
-				rectangle(V2f(54 + 280 + 164 + 1, 50 * (i - numero) + 1 + 50 * (1 - complete)), V2f(102 - 2, 50 - 2), BLACK, RE, fenetre, ecart);
-				rectangle(V2f(54 + 280 + 164 + 1, 1 + 50 * (i - numero) + 50 * (1 - complete)), V2f(102 - 2, 50 - 2), DARK_GREY, RE, fenetre, ecart);
-			}
-			creation_texte(RE, input_field[i][0], arial, GREY, 12, 0, V2f(54 + 280 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), fenetre, 4, ecart);
-			if(i == sel - 1)
-			{	if(train.getClignotementTexte()/30 <= 1)
-				{
-					creation_texte(RE, input_field[i][1], arial, BLACK, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), fenetre, 4, ecart);
-					train.setClignotementTexte(train.getClignotementTexte() + 1);
-				}
-				else if (train.getClignotementTexte()/30 <= 2)
-				{
-					creation_texte(RE, input_field[i][1] + "_", arial, BLACK, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), fenetre, 4, ecart);
-					train.setClignotementTexte(train.getClignotementTexte() + 1);
-				}
-				else
-					train.setClignotementTexte(0);
-			}
-			else if(input_field[i][2] == "1")
-				creation_texte(RE, input_field[i][1], arial, WHITE, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), fenetre, 4, ecart);
-			else
-				creation_texte(RE, input_field[i][1], arial, GREY, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), fenetre, 4, ecart);
-		}
-	}
-	for(int i = 0; i < (int)selection.size(); i++)
-		creation_texte(RE, to_string(i + 1) + " - " + selection[i], arial, GREY, 12, 0, V2f(54 + 280 + 15, 200 + 15 + 6 + i * 20), fenetre, 4, ecart);
-}
-
-void trainRunningNumberWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void trainRunningNumberWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	dataEntryWindows({{"", "", "0"}}, fenetre, RE, symbol, arial, 0, "Train running number", {}, numero, "numeric", boutons, ecran, train, ecart);
 }
 
-void ERTMS_ETCSlevelWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	dataEntryWindows({{"", train.getLevel(), ""}}, fenetre, RE, symbol, arial, 0, "Level", {"Level 1", "Level 2", "Level 3", "Level 0"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
@@ -543,7 +367,7 @@ void ERTMS_ETCSlevelWindow(RenderWindow & fenetre, double RE, vector<Symbol> & s
 		train.setLevelETCS("Level 0");
 }
 
-void driverIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void driverIDWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     if(boutons[0].getactivation())
 		train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 1);
@@ -580,7 +404,7 @@ void driverIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
 	dataEntryWindows({{"", to_string(train.getTempDriver_ID()), "0"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train, ecart);
 }
 
-void radionetworkIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void radionetworkIDWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	dataEntryWindows({{"", train.getRadioNetworkID(), "0"}}, fenetre, RE, symbol, arial, 0, "Radio network ID", {}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
@@ -591,7 +415,7 @@ void radionetworkIDWindow(RenderWindow & fenetre, double RE, vector<Symbol> & sy
 		train.setRadioNetworkID("Telecom X");
 }
 
-void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void RBCdataWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     int i = 0;
     if(numero == 1)
@@ -696,7 +520,7 @@ void RBCdataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
 }
 
 
-void languageWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void languageWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	dataEntryWindows({{"", train.getLanguage(), "0"}}, fenetre, RE, symbol, arial, 0, "Language", {"English", "Francais"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
@@ -705,17 +529,17 @@ void languageWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
 		train.setLanguage("Francais");
 }
 
-void volumeWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void volumeWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	dataEntryWindows({{""}}, fenetre, RE, symbol, arial, 0, "Volume", {}, numero, "", boutons, ecran, train, ecart);
 }
 
-void brightnessWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void brightnessWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	dataEntryWindows({{""}}, fenetre, RE, symbol, arial, 0, "Brightness", {}, numero, "", boutons, ecran, train, ecart);
 }
 
-void trainDataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void trainDataWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	vector<vector<string>> input_field = {{"Train category", train.getTrain_category(), "0"}, {"Length (m)", to_string(train.getlength()), "1"}, {"Brake percentage",
 		to_string(train.getbreaking_percetage()), "0"}, {"Max speed (km/h)", to_string(train.getmaximum_train_speed()), "0"}, {"Axle load category",
@@ -741,7 +565,7 @@ void trainDataWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol,
 		creation_texte(RE, input_field[i][0], arial, GREY, 12, 0, V2f(204 - 5, 20 * i + 100 + 6), fenetre, 2, ecart);
 }
 
-void SRspeedWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void SRspeedWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     dataEntryWindows({{"SR speed (km/h)", to_string(train.getSRspeed()), "0"}, {"SR distance (m)", "b", "0"}}, fenetre, RE, symbol, arial, 0, "SR speed/distance", {}, numero, "numeric", boutons,
 		ecran, train, ecart);
@@ -767,7 +591,7 @@ void SRspeedWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, F
 		train.setSRspeed(train.getSRspeed() * 10 + 0);
 }
 
-void adhesionWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void adhesionWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	dataEntryWindows({{"", train.getAdhesion(),"0"}}, fenetre, RE, symbol, arial, 0, "Adhesion", {"Non slippery rail","Slippery rail"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
 	if(boutons[0].getactivation())
@@ -776,7 +600,7 @@ void adhesionWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
 		train.setAdhesion("Slippery rail");
 }
 
-void dataViewWindows(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item, int * ecart)
+void dataViewWindows(vector<Symbol> & symbol, Font & arial, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item)
 {
 	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK, RE, fenetre, ecart);
 	if(title == "Data View")
@@ -814,7 +638,7 @@ void dataViewWindows(RenderWindow & fenetre, double RE, vector<Symbol> & symbol,
 	}
 }
 
-void dataViewWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void dataViewWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector<vector<string>> item;
     if(numero == 1)
@@ -828,13 +652,13 @@ void dataViewWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, 
     dataViewWindows(fenetre, RE, symbol, arial, "Data View", numero, boutons, ecran, item, ecart);
 }
 
-void systemVersionWindow(RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, vector<Buttons> & boutons, string & ecran, int & numero, int * ecart)
+void systemVersionWindow(vector<Symbol> & symbol, Font & arial, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	vector<vector<string>> item = {{"Operated system version", ""}};
 	dataViewWindows(fenetre, RE, symbol, arial, "System version", numero, boutons, ecran, item, ecart);
 }
 
-void windows(string & ecran, RenderWindow & fenetre, double RE, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<VBC> vbc, vector<Buttons> & boutons, int & numero, int * ecart)
+void windows(string & ecran, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<VBC> vbc, vector<Buttons> & boutons, int & numero)
 {
     if(ecran == "mainWindow")
         MainWindow(fenetre, RE, symbol, arial, version, train, boutons, ecran, numero, ecart);
