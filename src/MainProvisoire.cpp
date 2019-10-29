@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <algorithm>
 #include <string>
-#include "symbol.hpp"
 
 class Donnees
 {
@@ -456,8 +455,7 @@ void affichageRectangle(string ecran)		//Affiche toutes les cases sur l'\E9cran
 
 // Reste cadran ------------------------------------------------------------------------------------------------------------
 
-#define PI 3.14159265
-#define V2i Vector2i
+
 
 class DonneesAfficheurVitesse
 {
