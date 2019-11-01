@@ -118,10 +118,6 @@ int main()
 
 		if(ecran != "trainDataWindow" && ecran != "RBCdataWindow")
 		{
-			indicateurVitesse(centreIV, train.getCouleurAiguille(), RE, fenetre, arial, graduations, speedRange, ecart);
-			if(train.getVtrain() > 0)
-				arcVitesse(centreIV, train.getVred(), train.getVorange(), train.getVyellow(), train.getVwhite(), train.getVmediumGrey(), train.getVdarkGrey(), RE, fenetre, arial, graduations, ecart);
-			positionnementAiguille(aiguille, train.getVtrain(), RE, fenetre, arial, graduations, ecart);
 			if(train.getConnection() == "Up") //Connection Up
 				{
 				ST_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 * 3 + 25 / 2.0), RE, ecart, fenetre);	//E1

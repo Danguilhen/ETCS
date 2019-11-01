@@ -203,6 +203,7 @@ class Data
 		float V_white;
 		float V_medium_grey;
 		float V_dark_grey;
+		Color aiguille;
 		//Son :
 		//	Num�ro 1 : click
 		//	Num�ro 2 : S-info
@@ -232,6 +233,7 @@ class Data
 		float getV_white();
 		float getV_medium_grey();
 		float getV_dark_grey();
+		Color getAiguilleColor();
 };
 
 Data::Data()
@@ -265,6 +267,7 @@ float Data::getV_yellow(){return V_yellow;}
 float Data::getV_white(){return V_white;}
 float Data::getV_medium_grey(){return V_medium_grey;}
 float Data::getV_dark_grey(){return V_dark_grey;}
+Color Data::getAiguilleColor(){return aiguille;}
 
 //Symbol -----------------------------------------------------------------------------------------------------------------------------------
 class Symbol
@@ -278,7 +281,7 @@ class Symbol
 		vector<Sprite> sprite;
 		void loadSymbol(string chemin_dacces);
 	public :
-		void afficher(Vector2f position);
+		void afficher(V2f position);
 		void effacer();
 		Symbol(vector<Symbol> & symbol);
 };
@@ -350,6 +353,7 @@ class Tools
 		void creation_texte(string message, Color couleur, int taille, double OutlineThickness, V2f pos, int mode);
 		void rectangle(V2f pos, V2f taille, Color col);
 		void couleurForme(VertexArray & bande,Color col, int n);
+		V2f local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires);
 };
 
 void Tools::creation_texte(string message, Color couleur, int taille, double OutlineThickness, V2f pos, int mode) //mode 1 : centrer / mode 2 : aligner droite / mode 3 : Geographical position / mode 4 : aligner gauche
@@ -427,6 +431,14 @@ void Tools::couleurForme(VertexArray & bande,Color col, int n)
 	}
 }
 
+V2f Tools::local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires)
+{
+	V2f Coordonnees;
+	Coordonnees.x = localOrigin.x - (- 1) * CoordonneesPolaires.x * cos((CoordonneesPolaires.y - teta_origine) * PI / 180.0); //PI/180 permet de passer de la valeur de radians a une valeur en degree
+	Coordonnees.y = localOrigin.y - (- 1) * CoordonneesPolaires.x * sin((CoordonneesPolaires.y - teta_origine) * PI / 180.0); // le facteur -1 permet de se mettre dans le cas du cercle trigonometrique
+	return Coordonnees;
+}
+
 // Texte --------------------------------------------------------------------------------------------------------------------------
 
 class Texte_DMI : public Tools
@@ -480,39 +492,33 @@ void Texte_DMI::setAcknowledgement(int A){acknowledgement = A;}
 class DonneesAfficheurVitesse
 {
     public:
+		DonneesAfficheurVitesse();
+		DonneesAfficheurVitesse(V2f cartesiens, V2f polaire, int vitesse);
 
-	DonneesAfficheurVitesse();
-	DonneesAfficheurVitesse(Vector2f cartesiens, Vector2f polaire, int vitesse);
+		//definition des get
+		void cartesiens(V2f cartesiens);
+		void polaire(V2f polaire);
+		void x(int x);
+		void y(int y);
+		void r(int r);
+		void teta(int teta);
+		void vitesse(int vitesse);
 
-	/////////////////////////////////////////////////////////////
-	//definition des methodes
-	/////////////////////////////////////////////////////////////
-
-	//definition des get
-	void cartesiens(Vector2f cartesiens);
-	void polaire(Vector2f polaire);
-	void x(int x);
-	void y(int y);
-	void r(int r);
-	void teta(int teta);
-	void vitesse(int vitesse);
-
-	/////////////////////////////////////////////////////////////
-	//definition des set
-
-	Vector2f cartesien();
-	Vector2f polaire();
-	float x();
-	float y();
-	float r();
-	float teta();
-	int vitesse();
+		//definition des set
+		V2f cartesien();
+		V2f polaire();
+		float x();
+		float y();
+		float r();
+		float teta();
+		int vitesse();
 
     private:
-
-	Vector2f m_cartesiens;
-	Vector2f m_polaire;
-    float m_vitesse;
+		V2f *centre;
+		float *teta_origine;
+		V2f m_cartesiens;
+		V2f m_polaire;
+    	float m_vitesse;
 };
 
 DonneesAfficheurVitesse::DonneesAfficheurVitesse()
@@ -524,22 +530,28 @@ DonneesAfficheurVitesse::DonneesAfficheurVitesse()
 	m_vitesse = 0;
 }
 
-DonneesAfficheurVitesse::DonneesAfficheurVitesse(Vector2f cartesiens, Vector2f polaire, int vitesse)
+DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f cartesiens, V2f polaire, int vitesse)
 {
 	m_cartesiens = cartesiens;
 	m_polaire = polaire;
 	m_vitesse = vitesse;
 }
 
-void DonneesAfficheurVitesse::cartesiens(Vector2f cartesiens) {m_cartesiens = cartesiens;}
-void DonneesAfficheurVitesse::polaire(Vector2f polaire) {m_polaire = polaire;}
+void DonneesAfficheurVitesse::polaire(V2f polaire)
+{
+	m_polaire = polaire;
+	m_cartesiens.x = centre->x - (-1) * m_polaire.x * cos((m_polaire.y - *teta_origine) * PI / 180.0); //PI/180 permet de passer de la valeur de radians a une valeur en degree
+	m_cartesiens.y = centre->y - (-1) * m_polaire.x * sin((m_polaire.y - *teta_origine) * PI / 180.0); // le facteur -1 permet de se mettre dans le cas du cercle trigonometrique
+}
+
+void DonneesAfficheurVitesse::cartesiens(V2f cartesiens) {m_cartesiens = cartesiens;}
 void DonneesAfficheurVitesse::x(int x) {m_cartesiens.x = x;} // set x
 void DonneesAfficheurVitesse::y(int y) {m_cartesiens.y = y;} // set y
 void DonneesAfficheurVitesse::r(int r) {m_polaire.x = r;} // set r
 void DonneesAfficheurVitesse::teta(int teta) {m_polaire.y = teta;} // set teta
 void DonneesAfficheurVitesse::vitesse(int vitesse) {m_vitesse = vitesse;} // set vitesse
-Vector2f DonneesAfficheurVitesse::cartesien() {return m_cartesiens;}
-Vector2f DonneesAfficheurVitesse::polaire() {return m_polaire;}
+V2f DonneesAfficheurVitesse::cartesien() {return m_cartesiens;}
+V2f DonneesAfficheurVitesse::polaire() {return m_polaire;}
 float DonneesAfficheurVitesse::x() {return m_cartesiens.x;}
 float DonneesAfficheurVitesse::y() {return m_cartesiens.y;}
 float DonneesAfficheurVitesse::r() {return m_polaire.x;}
@@ -551,96 +563,37 @@ int DonneesAfficheurVitesse::vitesse() {return m_vitesse;}
 class Cadran : public Tools
 {
 	private :
+		int Vmax;
 		ConvexShape aiguille;
 		DonneesAfficheurVitesse graduations[401];
 		V2f centre;
-		V2f local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires);
-		VertexArray Shape(V2f centre, float teta_origine, DonneesAfficheurVitesse graduations, V2f a, V2f b, V2f c, V2f d);
+		CircleShape Centre;
+		float teta0;
+		float kmh2degVfaible;
+		float kmh2degVeleve = kmh2degVfaible;
+		VertexArray Shape(float teta_origine, DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d);
 	public :
-		void arcVitesse(V2f centre);
 		Cadran(int Vmax);
-		void indicateurVitesse(V2f centre, Color couleurAiguille, int Vmax);
-		void positionnementAiguille(float vitesse);
+		void update();
 };
 
-V2f Cadran::local2globalCoordonates(V2f localOrigin, float teta_origine, V2f CoordonneesPolaires)
-{
-	V2f Coordonnees;
-	Coordonnees.x = localOrigin.x - (- 1) * CoordonneesPolaires.x* cos((CoordonneesPolaires.y-teta_origine)* PI / 180.0); //PI/180 permet de passer de la valeur de radians a une valeur en degree
-	Coordonnees.y = localOrigin.y - (- 1) * CoordonneesPolaires.x* sin((CoordonneesPolaires.y-teta_origine)* PI / 180.0); // le facteur -1 permet de se mettre dans le cas du cercle trigonometrique
-	return Coordonnees;
-}
-
-VertexArray Cadran::Shape(V2f centre, float teta_origine, DonneesAfficheurVitesse graduations, V2f a, V2f b, V2f c, V2f d)
+VertexArray Cadran::Shape(float teta_origine, DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d)
 {
 	VertexArray Barre(Quads, 4);
-	Barre[0].position = local2globalCoordonates(centre,teta_origine, V2f(a.x * data->getRE(),graduations.teta() + a.y));
-	Barre[1].position = local2globalCoordonates(centre,teta_origine, V2f(b.x * data->getRE(),graduations.teta() + b.y));
-	Barre[2].position = local2globalCoordonates(centre,teta_origine, V2f(c.x * data->getRE(),graduations.teta() + c.y));
-	Barre[3].position = local2globalCoordonates(centre,teta_origine, V2f(d.x * data->getRE(),graduations.teta() + d.y));
+	Barre[0].position = local2globalCoordonates(centre,teta_origine, V2f(a.x * data->getRE(),grad.teta() + a.y));
+	Barre[1].position = local2globalCoordonates(centre,teta_origine, V2f(b.x * data->getRE(),grad.teta() + b.y));
+	Barre[2].position = local2globalCoordonates(centre,teta_origine, V2f(c.x * data->getRE(),grad.teta() + c.y));
+	Barre[3].position = local2globalCoordonates(centre,teta_origine, V2f(d.x * data->getRE(),grad.teta() + d.y));
 	return Barre;
-}
-
-void Cadran::indicateurVitesse(V2f centre, Color couleurAiguille, int Vmax)
-{
-	V2f position;
-	CircleShape Centre;
-	Centre.setFillColor(couleurAiguille);
-	Centre.setPosition(V2f(centre.x - 25 * data->getRE(),centre.y - 25 * data->getRE()));
-	Centre.setRadius(25 * data->getRE());
-	fenetre->draw(Centre);
-	float teta_origine = 90 + 144;
-	float tetaep = 0.5;
-
-	VertexArray Barre(Quads, 4);
-
-	// trace d'une barre
-	//definition de la couleur de chaque points
-
-	couleurForme(Barre, WHITE, 4);
-
-	///////////////////////////////////////////////////////////////////////////////
-	//affichage des graduations
-
-	for(int i = 0; i <= Vmax; i = i + 10) //i correspond a la vitesse
-	{
-		if((Vmax == 400 && i % 50 == 0) || (Vmax != 400 && i % 20 == 0))
-		{ //affiche des barres plus longues tous les 50km/h
-			//positionnement de chaque points
-			Barre = Shape(centre, teta_origine, graduations[i], V2f(125, - tetaep / 2.0), V2f(125, tetaep / 2.0), V2f(125 - 25, tetaep / 2.0), V2f(125 - 25, - tetaep / 2.0));
-			if(i != 250 && i != 350)
-			{
-				position = local2globalCoordonates(centre,teta_origine,V2f(83 * data->getRE(), graduations[i].teta()));
-				creation_texte(to_string(graduations[i].vitesse()), WHITE, 16, 0, V2f(position.x / data->getRE() - data->getEcartX(), position.y / data->getRE() - data->getEcartX()), 1);
-			}
-		}
-		else
-		{
-			//positionnement de chaque points
-			Barre = Shape(centre, teta_origine, graduations[i], V2f(125, - tetaep / 2.0), V2f(125, tetaep / 2.0), V2f(125 - 15, tetaep / 2.0), V2f(125 - 15, - tetaep / 2.0));
-		}
-		fenetre->draw(Barre);
-	}
-
-	//ecriture des vitesses
-	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[0].teta()));
-	//creation_texte(RE, to_string(graduations[0].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //0km/h
-	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[50].teta()));
-	//creation_texte(RE, to_string(graduations[50].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //50km/h
-	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[100].teta()));
-	//creation_texte(RE, to_string(graduations[100].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //100km/h
-	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[150].teta()));
-	//creation_texte(RE, to_string(graduations[150].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //150km/h
-	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[200].teta()));
-	//creation_texte(RE, to_string(graduations[200].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //200km/h
-	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[300].teta()));
-	//creation_texte(RE, to_string(graduations[300].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //300km/h
-	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[400].teta()));
-	//creation_texte(RE, to_string(graduations[400].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //400km/h
 }
 
 Cadran::Cadran(int Vmax)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
 {
+	this->Vmax = Vmax;
+	teta0 = 90 - 144;
+	kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
+	kmh2degVeleve = kmh2degVfaible / 2.0;
+
 	centre.x = data->getRE() * (54 + 280 / 2.0 + data->getEcartX());
 	centre.y = data->getRE() * (300 / 2.0 + data->getEcartY());
 
@@ -675,30 +628,76 @@ Cadran::Cadran(int Vmax)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier
 	}
 	float kmh2degVeleve = kmh2degVfaible / 2.0;
 
-	V2f polaire(r,teta);
-
-	//initialisation
-	graduations[0].polaire(polaire);
-	graduations[0].local2globalCoordonates(centre,teta_origine);
-
 	for(int i = 1; i <= Vfaible; i++)	//i correspond a la vitesse
 	{
-		polaire.y = i * kmh2degVfaible;
-		graduations[i].polaire(polaire);
-		graduations[i].local2globalCoordonates(centre,teta_origine);
+		graduations[i].polaire(V2f(0, i * kmh2degVfaible));
 		graduations[i].vitesse(i);
 	}
 	for(int i = 1 + Vfaible; i <= Vmax; i++) //i correspond a la vitesse
 	{
-		polaire.y = Vfaible * kmh2degVfaible / 2.0 + i * kmh2degVeleve;
-		graduations[i].polaire(polaire);
-		graduations[i].local2globalCoordonates(centre,teta_origine);
+		graduations[i].polaire(V2f(0, Vfaible * kmh2degVfaible / 2.0 + i * kmh2degVeleve));
 		graduations[i].vitesse(i);
 	}
 }
 
-void Cadran::arcVitesse(V2f centre)
+void Cadran::update()
 {
+	V2f position;
+	CircleShape Centre;
+	Centre.setFillColor(data->getAiguilleColor());
+	Centre.setPosition(V2f(centre.x - 25 * data->getRE(),centre.y - 25 * data->getRE()));
+	Centre.setRadius(25 * data->getRE());
+	fenetre->draw(Centre);
+	float teta_origine = 90 + 144;
+	float tetaep = 0.5;
+
+	VertexArray Barre(Quads, 4);
+
+	// trace d'une barre
+	//definition de la couleur de chaque points
+
+	couleurForme(Barre, WHITE, 4);
+
+	///////////////////////////////////////////////////////////////////////////////
+	//affichage des graduations
+
+	for(int i = 0; i <= Vmax; i = i + 10) //i correspond a la vitesse
+	{
+		if((Vmax == 400 && i % 50 == 0) || (Vmax != 400 && i % 20 == 0))
+		{ //affiche des barres plus longues tous les 50km/h
+			//positionnement de chaque points
+			Barre = Shape(teta_origine, graduations[i], V2f(125, - tetaep / 2.0), V2f(125, tetaep / 2.0), V2f(125 - 25, tetaep / 2.0), V2f(125 - 25, - tetaep / 2.0));
+			if(i != 250 && i != 350)
+			{
+				position = local2globalCoordonates(centre,teta_origine,V2f(83 * data->getRE(), graduations[i].teta()));
+				creation_texte(to_string(graduations[i].vitesse()), WHITE, 16, 0, V2f(position.x / data->getRE() - data->getEcartX(), position.y / data->getRE() - data->getEcartX()), 1);
+			}
+		}
+		else
+		{
+			//positionnement de chaque points
+			Barre = Shape(teta_origine, graduations[i], V2f(125, - tetaep / 2.0), V2f(125, tetaep / 2.0), V2f(125 - 15, tetaep / 2.0), V2f(125 - 15, - tetaep / 2.0));
+		}
+		fenetre->draw(Barre);
+	}
+
+	//ecriture des vitesses
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[0].teta()));
+	//creation_texte(RE, to_string(graduations[0].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //0km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[50].teta()));
+	//creation_texte(RE, to_string(graduations[50].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //50km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[100].teta()));
+	//creation_texte(RE, to_string(graduations[100].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //100km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[150].teta()));
+	//creation_texte(RE, to_string(graduations[150].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //150km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[200].teta()));
+	//creation_texte(RE, to_string(graduations[200].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //200km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[300].teta()));
+	//creation_texte(RE, to_string(graduations[300].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //300km/h
+	//position = local2globalCoordonates(centre,teta_origine,V2f(200,graduations[400].teta()));
+	//creation_texte(RE, to_string(graduations[400].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //400km/h
+
+
 	int V1 = max(max(data->getV_orange(), data->getV_red()), max(max(data->getV_dark_grey(), data->getV_yellow()), data->getV_white()));
 	int V2 = max(max(data->getV_dark_grey(), data->getV_yellow()), data->getV_white());
 
@@ -716,13 +715,13 @@ void Cadran::arcVitesse(V2f centre)
 			couleurForme(Barre, RED, 4);
 		else if(data->getV_red() < data->getV_orange())
 			couleurForme(Barre, ORANGE, 4);
-		Barre = Shape(centre, teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(137 - 20, deltateta / 2.0), V2f(137 - 20, - deltateta / 2.0));
+		Barre = Shape(teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(137 - 20, deltateta / 2.0), V2f(137 - 20, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = 0; i<= V2; i++)
 	{
 		couleurForme(Barre, WHITE, 4);
-		Barre = Shape(centre, teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		Barre = Shape(teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = (V2 - 2 * asin(3 / float(137 - 20))); i <= V2; i++)
@@ -733,31 +732,31 @@ void Cadran::arcVitesse(V2f centre)
 			couleurForme(Barre, WHITE, 4);
 		else
 			couleurForme(Barre, DARK_GREY, 4);
-		Barre = Shape(centre, teta_origine, graduations[i], V2f(128, - deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128 - 11, deltateta / 2.0), V2f(128 - 11, - deltateta / 2.0));
+		Barre = Shape(teta_origine, graduations[i], V2f(128, - deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128 - 11, deltateta / 2.0), V2f(128 - 11, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = V1; i <= data->getV_red(); i++)
 	{
 		couleurForme(Barre, RED, 4);
-		Barre = Shape(centre, teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		Barre = Shape(teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = 0; i <= data->getV_yellow(); i++)
 	{
 		couleurForme(Barre, YELLOW, 4);
-		Barre = Shape(centre, teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		Barre = Shape(teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = 0; i <= data->getV_dark_grey(); i++)
 	{
 		couleurForme(Barre, DARK_GREY, 4);
-		Barre = Shape(centre, teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		Barre = Shape(teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = 1; i <= data->getV_medium_grey(); i++)
 	{
 		couleurForme(Barre, couleur2, 4);
-		Barre = Shape(centre, teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 4, - deltateta / 2.0));
+		Barre = Shape(teta_origine, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 4, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	if(V1 < data->getV_medium_grey())
@@ -765,13 +764,13 @@ void Cadran::arcVitesse(V2f centre)
 		for(int i = 1; i <= V1; i++)
 		{
 			couleurForme(Barre, couleur4, 4);
-			Barre = Shape(centre, teta_origine, graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
+			Barre = Shape(teta_origine, graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
 			fenetre->draw(Barre);
 		}
 		for(int i = V1 + 1; i <= data->getV_medium_grey(); i++) //trait noir
 		{
 			couleurForme(Barre, couleur2, 4);
-			Barre = Shape(centre, teta_origine, graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+			Barre = Shape(teta_origine, graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 			fenetre->draw(Barre);
 		}
 	}
@@ -780,34 +779,27 @@ void Cadran::arcVitesse(V2f centre)
 		for(int i = 1; i <= data->getV_medium_grey(); i++)
 		{
 			couleurForme(Barre, couleur4, 4);
-			Barre = Shape(centre, teta_origine, graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
+			Barre = Shape(teta_origine, graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
 			fenetre->draw(Barre);
 		}
 	}
 	for(int i = 0; i <= 4; i++) //Affichage fixe
 	{
 		couleurForme(Barre, DARK_GREY, 4);
-		Barre = Shape(centre, teta_origine + 4.0, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		Barre = Shape(teta_origine + 4.0, graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
-}
 
-void Cadran::positionnementAiguille(float vitesse)
-{
-	float teta0 = 90 - 144;
-	float kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
-	float kmh2degVeleve = kmh2degVfaible / 2.0;
-
-	if (vitesse < 200)
-		aiguille.setRotation(vitesse * kmh2degVfaible+teta0);
+	if(data->getVtrain() < 200)
+		aiguille.setRotation(data->getVtrain() * kmh2degVfaible+teta0);
 	else
-		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + vitesse * kmh2degVeleve+teta0);
+		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + data->getVtrain() * kmh2degVeleve+teta0);
 
 	fenetre->draw(aiguille);
 
-	string str = to_string(graduations[(int)vitesse].vitesse());
+	string str = to_string(graduations[(int)data->getVtrain()].vitesse());
 	string s;
-	if(graduations[(int)vitesse].vitesse() > 99)
+	if(graduations[(int)data->getVtrain()].vitesse() > 99)
 	{
 		s = str.at(2);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 2.0 - 3, 300 / 2.0), 2);
@@ -816,7 +808,7 @@ void Cadran::positionnementAiguille(float vitesse)
 		s = str.at(0);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 - 50 / 6.0 - 3, 300 / 2.0), 2);
 	}
-	else if(graduations[(int)vitesse].vitesse() > 9)
+	else if(graduations[(int)data->getVtrain()].vitesse() > 9)
 	{
 		s = str.at(1);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), 1);
@@ -920,46 +912,46 @@ class Announcements
 class Planning : public Tools
 {
 	private :
+		int scale;
 
-	PASP pasp0;//évite erreur vector vide
-	PASP pasp1;
-	PASP pasp2;
-	PASP pasp5;
+		PASP pasp0;//évite erreur vector vide
+		PASP pasp1;
+		PASP pasp2;
+		PASP pasp5;
 
-	vector<PASP> tab_pasp;
+		vector<PASP> tab_pasp;
 
-	Gradient gradient1;
-	Gradient gradient2;
-	Gradient gradient3;
-	Gradient gradient4;
-	Gradient gradient5;
+		Gradient gradient1;
+		Gradient gradient2;
+		Gradient gradient3;
+		Gradient gradient4;
+		Gradient gradient5;
 
-	vector<Gradient> tab_grad;
+		vector<Gradient> tab_grad;
 
-	Announcements PA1;
-	Announcements PA2;
-	Announcements PA3;
-	Announcements PA6;
+		Announcements PA1;
+		Announcements PA2;
+		Announcements PA3;
+		Announcements PA6;
 
-	vector<Announcements> tab_pa;//tout picto sauf flèche
+		vector<Announcements> tab_pa;//tout picto sauf flèche
 
-	Announcements PAF1;
-	Announcements PAF2;
-	Announcements PAF3;
-	Announcements PAF4;
-	Announcements PAF5;
+		Announcements PAF1;
+		Announcements PAF2;
+		Announcements PAF3;
+		Announcements PAF4;
+		Announcements PAF5;
 
-	vector<Announcements> tab_paf;//FLÉCHES VITESSE
+		vector<Announcements> tab_paf;//FLÉCHES VITESSE
 
-	void SpeedProfileDiscontinuityInformation(int scale, float delta_distance, vector<Announcements> &tab_paf, vector<Symbol> & symbol);
-	void Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa, vector<Symbol> & symbol);
-	void gradientProfile(int scale, float delta_distance, vector<Gradient> &tab_grad);
-	void pasp(int scale, vector<PASP> &tab_pasp, float delta_distance);
+		void SpeedProfileDiscontinuityInformation(int scale, float delta_distance, vector<Announcements> &tab_paf, vector<Symbol> & symbol);
+		void Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa, vector<Symbol> & symbol);
+		void gradientProfile(int scale, float delta_distance, vector<Gradient> &tab_grad);
+		void pasp(int scale, vector<PASP> &tab_pasp, float delta_distance);
 
 	public:
-
-	Planning();
-	void planningInformation(vector<Symbol> & symbol, float temps_ecoule);
+		Planning();
+		void planningInformation(vector<Symbol> & symbol, float temps_ecoule);
 };
 
 
@@ -1071,7 +1063,7 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 void Planning::planningInformation(vector<Symbol> & symbol, float temps_ecoule)
 {
 	float delta_distance;
-	if(train.getPlanningScale() == 1000)
+	if(scale == 1000)
 	{
 		NA_05.afficher(V2f(54 + 280 + 40 / 2.0, 15 + 270 + 15 / 2.0));	//D9
 		NA_09.afficher(V2f(64 * 9 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F10
@@ -1081,7 +1073,7 @@ void Planning::planningInformation(vector<Symbol> & symbol, float temps_ecoule)
 		NA_03.afficher(V2f(54 + 280 + 40 / 2.0, 15 + 270 + 15 / 2.0));	//D9
 		NA_07.afficher(V2f(64 * 9 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F10
 	}
-	if(train.getPlanningScale() == 32000)
+	if(scale == 32000)
 	{
 		NA_06.afficher(V2f(54 + 280 + 40 / 2.0, 15 / 2.0));	//D9
 		NA_10.afficher(V2f(64 * 8 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F9
@@ -1092,20 +1084,20 @@ void Planning::planningInformation(vector<Symbol> & symbol, float temps_ecoule)
 		NA_08.afficher(V2f(64 * 8 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F9
 	}
 	//TEXTE GRADUATION
-	creation_texte(to_string(int(train.getPlanningScale())), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 21 + 1), 2);
-	creation_texte(to_string(int(train.getPlanningScale() / 2)), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 64), 2);
-	creation_texte(to_string(int(train.getPlanningScale() / 4)), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 107), 2);
-	creation_texte(to_string(int(train.getPlanningScale() / 8)), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 150 + 1), 2);
+	creation_texte(to_string(int(scale)), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 21 + 1), 2);
+	creation_texte(to_string(int(scale / 2)), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 64), 2);
+	creation_texte(to_string(int(scale / 4)), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 107), 2);
+	creation_texte(to_string(int(scale / 8)), MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 150 + 1), 2);
 	creation_texte("0", MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 283 + 1), 2);
 	//FOND
 	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 15), V2f(93 + 8, 270), PASP_DARK);
 	//MOUVEMENT
-	delta_distance = (train.getVtrain()/3.6)*temps_ecoule;
+	delta_distance = (data->getVtrain() / 3.6) * temps_ecoule;
 	//LES PASP
 
-	pasp(train.getPlanningScale(), tab_pasp, train, delta_distance);
-	Orders_and_announcements(train.getPlanningScale(), delta_distance, tab_pa, symbol);
-	SpeedProfileDiscontinuityInformation(train.getPlanningScale(), delta_distance, tab_paf, symbol);
+	pasp(scale, tab_pasp, delta_distance);
+	Orders_and_announcements(scale, delta_distance, tab_pa, symbol);
+	SpeedProfileDiscontinuityInformation(scale, delta_distance, tab_paf, symbol);
 	//LES GRADUATIONS
 	rectangle(V2f(54 + 280 + 40, 283), V2f(200, 2), MEDIUM_GREY);
 	rectangle(V2f(54 + 280 + 40, 250), V2f(200, 1), DARK_GREY);
@@ -1124,7 +1116,7 @@ void Planning::planningInformation(vector<Symbol> & symbol, float temps_ecoule)
 	//	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 283 - (283 - 250) - log10(TSMstart / (scale / 40.0)) * (250 - 21) / log10(scale / (scale / 40.0))), V2f(93, 2), YELLOW, RE,
 	//		fenetre, ecart); //Indication Marker
 	//LES GRADIENT
-	gradientProfile(train.getPlanningScale(), delta_distance, tab_grad);
+	gradientProfile(scale, delta_distance, tab_grad);
 }
 
 void Planning::Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa, vector<Symbol> & symbol)
