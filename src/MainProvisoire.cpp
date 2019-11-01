@@ -9,24 +9,14 @@
 #include <algorithm>
 #include <string>
 
-class Donnees
-{
-	V2f m_cartesiens;
-	V2f m_polaire;
-    float m_vitesse;
-};
-
-void demarage(RenderWindow & fenetre);
-void fondEcran(RenderWindow & fenetre, double RE, int * ecart);
+void fondEcran();
 
 int main()
 {
 	Clock chrono;//d�but d�mo (delta_t = 0)
 	Time difftemps;
-	donnees train;
 	ConvexShape aiguille;	// Creation des formes de l'aiguille de l'IV
 	V2f centreIV;						// Position du centre de l'indicateur de Vitesse
-	double RE;
 	int ecart[] = {0, 0};
 	vector<Symbol> symbol(154);
 	string version;
@@ -47,7 +37,7 @@ int main()
 	string choix;
 	do
 	{
-		cout << "MERCI DE RENTRER LA VERSION A = 3.6.0 B = 3.4.0"<<endl;
+		cout << "MERCI DE RENTRER LA VERSION A = 3.6.0 B = 3.4.0" << endl;
 		cin >> choix;
 		cout << choix << endl;
 	}while(choix !="A" && choix !="B" && choix != "C" && choix != "D");
@@ -58,7 +48,7 @@ int main()
 	if(choix == "C" || choix == "D")
 	{
 		version_test = 1;
-		train.mode_test();
+		data->mode_test();
 	}
 	else
 	version_test = 0;
@@ -80,29 +70,29 @@ int main()
         difftemps = chrono.getElapsedTime();
         chrono.restart();
         float delta_ts=difftemps.asSeconds();
-        if((train.getVtrain() > 160 || train.getVtrain() == - 1) && version_test != 1)
+        if((data->getVtrain() > 160 || data->getVtrain() == - 1) && version_test != 1)
         {
-			demo(train);
-        	calcul(delta_ts,train);
+			demo();
+        	calcul(delta_ts);
 		}
-        if(train.getVtrain() < 160 && version_test != 1)
+        if(data->getVtrain() < 160 && version_test != 1)
         {
-			demo2(train);
-        	calcul(delta_ts,train);
+			demo2();
+        	calcul(delta_ts);
 		}
 
-		//train.setVtrain(0);
-        gestionnaireAffichage(train);
-		aiguille.setFillColor(train.getCouleurAiguille());
+		//data->setVtrain(0);
+        gestionnaireAffichage();
+		aiguille.setFillColor(data->getCouleurAiguille());
        	fenetre.clear();
 
-		fondEcran(fenetre, RE, ecart);
+		fondEcran();
 
-		affichageBoutons(RE, fenetre, ecart);
+		affichageBoutons();
 
 		if(ecran != "trainDataWindow" && ecran != "RBCdataWindow")
 		{
-			affichageRectangle(RE, fenetre, ecran, ecart);
+			affichageRectangle(ecran);
 			for(int i = 0; i < 154; i++) // reafficher toutes les images
 			{
 				symbol[i].effacer();
@@ -118,31 +108,31 @@ int main()
 
 		if(ecran != "trainDataWindow" && ecran != "RBCdataWindow")
 		{
-			if(train.getConnection() == "Up") //Connection Up
+			if(data->getConnection() == "Up") //Connection Up
 				{
-				ST_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 * 3 + 25 / 2.0), RE, ecart, fenetre);	//E1
+				ST_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 * 3 + 25 / 2.0));	//E1
 				}
-			else if(train.getConnection() == "Lost/Set-Up failed") //Connection Lost/Set-Up failed
-				ST_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 * 3 + 25 / 2.0), RE, ecart, fenetre);	//E1
-			if(train.getReversing() == "Permitted") //Reversing permitted indication
-				ST_06.afficher(V2f(54 + 37 * 3 + 58 + 37 + 37 / 2.0, 300 + 50 / 2.0), RE, ecart, fenetre);	//C6
+			else if(data->getConnection() == "Lost/Set-Up failed") //Connection Lost/Set-Up failed
+				ST_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 * 3 + 25 / 2.0));	//E1
+			if(data->getReversing() == "Permitted") //Reversing permitted indication
+				ST_06.afficher(V2f(54 + 37 * 3 + 58 + 37 + 37 / 2.0, 300 + 50 / 2.0));	//C6
 
 			if(version == "3.6.0")
 			{
-				train.setTTI((train.getDEOA() - (3 / 5.0)*train.getD_but())/(train.getVtrain()/3.6)); // TEMPORAIRE POUR LA DEMO
+				data->setTTI((data->getDEOA() - (3 / 5.0)*data->getD_but())/(data->getVtrain()/3.6)); // TEMPORAIRE POUR LA DEMO
 				//Rappel TTIdisp est à 14 s selon la subset026
-				if((train.getGeneralMode() == "FS" || ((train.getGeneralMode() == "OS" || train.getGeneralMode() == "SR") && TTI == "On")) && (train.getMode() == "CSM" || train.getMode() == "PIM") && train.getTTI() < 14)  //A1 : TTI
+				if((data->getGeneralMode() == "FS" || ((data->getGeneralMode() == "OS" || data->getGeneralMode() == "SR") && TTI == "On")) && (data->getMode() == "CSM" || data->getMode() == "PIM") && data->getTTI() < 14)  //A1 : TTI
 				{
 					if(temp_TTI == 0)
 					{
 						son.jouer_alarmes(2, 1);
 						temp_TTI = 1;
 					}
-					rectangle(V2f(2,2), V2f(50, 50), DARK_GREY, RE, fenetre, ecart);
+					rectangle(V2f(2,2), V2f(50, 50), DARK_GREY);
 					for(int n = 0; n <= 10; n++)
 					{
-						if(14*(10 - n)/10 <= train.getTTI() && train.getTTI() < 14*(10 - (n - 1))/10)
-							rectangle(V2f(54/2 - 2.5*n, 54/2 - 2.5*n), V2f(n*5,n*5), WHITE, RE, fenetre, ecart);
+						if(14*(10 - n)/10 <= data->getTTI() && data->getTTI() < 14*(10 - (n - 1))/10)
+							rectangle(V2f(54/2 - 2.5*n, 54/2 - 2.5*n), V2f(n*5,n*5), WHITE);
 					}
 				}
 				else
@@ -154,22 +144,22 @@ int main()
 			if(version == "3.4.0")		//Voir avec benoit
 			{
 
-				LS_01.afficher(V2f(54 / 2.0, 54 / 2.0), RE, ecart, fenetre);	//A1
-				creation_texte(RE, to_string(LSSMA), arial, GREY, 16, 0, V2f(54 / 2.0, 54 / 2.0), fenetre, 1, ecart); //400km/h
+				LS_01.afficher(V2f(54 / 2.0, 54 / 2.0));	//A1
+				creation_texte(to_string(LSSMA), GREY, 16, 0, V2f(54 / 2.0, 54 / 2.0), 1); //400km/h
 
 			}
 
-			if(train.getLevel() == "Level 0")
-                LE_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
-            else if(train.getLevel()  == "Level 1")
-                LE_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
-            else if(train.getLevel()  == "Level 2")
-                LE_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
-            else if(train.getLevel()  == "Level 3")
-                LE_05.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0), RE, ecart, fenetre);
+			if(data->getLevel() == "Level 0")
+                LE_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
+            else if(data->getLevel()  == "Level 1")
+                LE_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
+            else if(data->getLevel()  == "Level 2")
+                LE_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
+            else if(data->getLevel()  == "Level 3")
+                LE_05.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
 
-			if((train.getGeneralMode() == "FS" && (train.getMode() == "PIM" || train.getMode() == "TSM" || train.getMode() == "RSM")) || train.getGeneralMode() == "RV")
-				targetDistance(train.getDEOA(), fenetre, RE, arial, ecart);
+			if((data->getGeneralMode() == "FS" && (data->getMode() == "PIM" || data->getMode() == "TSM" || data->getMode() == "RSM")) || data->getGeneralMode() == "RV")
+				targetDistance(data->getDEOA());
 
 			if(ecran == "defaultWindow")
 			{
@@ -205,202 +195,155 @@ int main()
 					ecran = "settingsWindow";
 				else if (buttons[5].getactivation() == 1)
                 {
-                    if(train.getTunnelStoppingArea() == "TunnelStoppingArea" || train.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
-                        train.setTunnelStoppingArea(train.getTunnelStoppingArea() + "-");
-                    else if (train.getTunnelStoppingArea() == "TunnelStoppingArea-" || train.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
-                        train.setTunnelStoppingArea(train.getTunnelStoppingArea().substr(0, train.getTunnelStoppingArea().size() - 1));
+                    if(data->getTunnelStoppingArea() == "TunnelStoppingArea" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
+                        data->setTunnelStoppingArea(data->getTunnelStoppingArea() + "-");
+                    else if (data->getTunnelStoppingArea() == "TunnelStoppingArea-" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
+                        data->setTunnelStoppingArea(data->getTunnelStoppingArea().substr(0, data->getTunnelStoppingArea().size() - 1));
                 }
 
 				else if (buttons[6].getactivation() == 1)
 				{
-					if(train.getS_D_monitoring() == "On")
-						train.setS_D_monitoring("Off");
-					else if (train.getS_D_monitoring() == "Off")
-						train.setS_D_monitoring("On");
+					if(data->getS_D_monitoring() == "On")
+						data->setS_D_monitoring("Off");
+					else if (data->getS_D_monitoring() == "Off")
+						data->setS_D_monitoring("On");
 				}
 
 				else if (buttons[7].getactivation() == 1)
 				{
-					if(train.getGeographicalPosition() == "On")
-						train.setGeographicalPosition("Off");
-					else if (train.getGeographicalPosition() == "Off")
-						train.setGeographicalPosition("On");
+					if(data->getGeographicalPosition() == "On")
+						data->setGeographicalPosition("Off");
+					else if (data->getGeographicalPosition() == "Off")
+						data->setGeographicalPosition("On");
 				}
 				else if(buttons[8].getactivation() == 1)
 				{
-					if(train.getPlanningScale() < 32000)
-					train.setPlanningScale(train.getPlanningScale() * 2.0);
+					if(data->getPlanningScale() < 32000)
+					data->setPlanningScale(data->getPlanningScale() * 2.0);
 				}
 				else if(buttons[9].getactivation() == 1)
 				{
-					if(train.getPlanningScale() > 1000)
-					train.setPlanningScale(train.getPlanningScale() / 2.0);
+					if(data->getPlanningScale() > 1000)
+					data->setPlanningScale(data->getPlanningScale() / 2.0);
 				}
 				else if (buttons[10].getactivation() == 1 && version == "3.4.0")
 				{
-					if(train.getPlanning() == "show planning information")
-						train.setPlanning("Off");
-					else if(train.getPlanning() == "Off")
-						train.setPlanning("show planning information");
+					if(data->getPlanning() == "show planning information")
+						data->setPlanning("Off");
+					else if(data->getPlanning() == "Off")
+						data->setPlanning("show planning information");
 				}
-				if(train.getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
+				if(data->getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
                 {
-                    if(train.getTunnelStoppingArea() == "TunnelStoppingArea")
+                    if(data->getTunnelStoppingArea() == "TunnelStoppingArea")
                     {
-                        TC_36.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE, ecart, fenetre);  //C2
-                        creation_texte(RE, to_string(train.getRemainingDistanceTunnel()), arial, GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), fenetre, 2, ecart);
+                        TC_36.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
+                        creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
                     }
-                    else if(train.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
+                    else if(data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
                     {
-                        TC_37.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE, ecart, fenetre);  //C2
-                        creation_texte(RE, to_string(train.getRemainingDistanceTunnel()), arial, GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), fenetre, 2, ecart);
+                        TC_37.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
+                        creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
                     }
-                    DR_05.afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0), RE, ecart, fenetre); //F6
+                    DR_05.afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6
                 }
-				if(train.getGeographicalPosition() != "Unknown") //Geographical position
+				if(data->getGeographicalPosition() != "Unknown") //Geographical position
 				{
-					if(train.getGeographicalPosition() == "On") //toggled on
+					if(data->getGeographicalPosition() == "On") //toggled on
 					{
-						rectangle(V2f(54 + 234 + 46 + 63, 54 + 30 + 191 + 25 + 50 + 50), V2f(120, 30), GREY, RE, fenetre, ecart);//G12
-						creation_texte(RE, to_string(train.getPointKilometrique()), arial, BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), fenetre, 3, ecart);
+						rectangle(V2f(54 + 234 + 46 + 63, 54 + 30 + 191 + 25 + 50 + 50), V2f(120, 30), GREY);//G12
+						creation_texte(to_string(data->getPointKilometrique()), BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), 3);
 					}
-					DR_03.afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0), RE, ecart, fenetre);	//F8
+					DR_03.afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8
 
 				}
-				if(train.getPlanning() != "Unknown")
+				if(data->getPlanning() != "Unknown")
 				{
 					if(version == "3.4.0")
 					{
-						NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0), RE, ecart, fenetre);		//H2
-						if(train.getPlanning() == "show planning information" && train.getGeneralMode() == "FS")
-							planning.planningInformation(fenetre, RE, arial, symbol, train, ecart, delta_ts);
+						NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2
+						if(data->getPlanning() == "show planning information" && data->getGeneralMode() == "FS")
+							planning.planningInformation(symbol, delta_ts);
 					}
-					if(version == "3.6.0" && (train.getGeneralMode() == "FS" || (train.getGeneralMode() == "OS" && train.getS_D_monitoring() == "On")))
+					if(version == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && data->getS_D_monitoring() == "On")))
 					{
-						planning.planningInformation(fenetre, RE, arial, symbol, train, ecart, delta_ts);
+						planning.planningInformation(symbol, delta_ts);
 					}
 				}
 
 				time_t curtime;
 				time(&curtime);
 				string date = ctime(&curtime);
-				creation_texte(RE, date.substr(10,9), arial, GREY, 10, 0, V2f(54 + 280 + 63 + 120 + 63 / 2.0, 300 + 50 + 50 + 30 / 2.0), fenetre, 1, ecart);
-				creation_texte(RE, "Main", arial, GREY, 16, 0, V2f(64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0), fenetre, 1, ecart);
-				creation_texte(RE, "Over-", arial, GREY, 16, 0, V2f(64 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 - 10), fenetre, 1, ecart);
-				creation_texte(RE, "ride", arial, GREY, 16, 0, V2f(64 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 + 10), fenetre, 1, ecart);
-				creation_texte(RE, "Data", arial, GREY, 16, 0, V2f(64 * 2 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 - 10), fenetre, 1, ecart);
-				creation_texte(RE, "view", arial, GREY, 16, 0, V2f(64 * 2 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 + 10), fenetre, 1, ecart);
-				creation_texte(RE, "Spec", arial, GREY, 16, 0, V2f(64 * 3 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0), fenetre, 1, ecart);
-				TexteMessages(fenetre, RE, arial, ecart);//special class texte
+				creation_texte(date.substr(10,9), GREY, 10, 0, V2f(54 + 280 + 63 + 120 + 63 / 2.0, 300 + 50 + 50 + 30 / 2.0), 1);
+				creation_texte("Main", GREY, 16, 0, V2f(64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0), 1);
+				creation_texte("Over-", GREY, 16, 0, V2f(64 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 - 10), 1);
+				creation_texte("ride", GREY, 16, 0, V2f(64 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 + 10), 1);
+				creation_texte("Data", GREY, 16, 0, V2f(64 * 2 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 - 10), 1);
+				creation_texte("view", GREY, 16, 0, V2f(64 * 2 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0 + 10), 1);
+				creation_texte("Spec", GREY, 16, 0, V2f(64 * 3 + 64 / 2.0, 300 + 4 * 25 + 30 + 50 / 2.0), 1);
+				TexteMessages();//special class texte
 
-				SE_04.afficher(V2f(64 * 4 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0), RE, ecart, fenetre);			//F5
-				DR_01.afficher(V2f(64 * 6 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0), RE, ecart, fenetre);			//F7
-				NA_13.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 3 + 64 / 2.0), RE, ecart, fenetre);	//H5
-				NA_14.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 4 + 64 / 2.0), RE, ecart, fenetre);	//H6
-				NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2 + 64 / 2.0), RE, ecart, fenetre);	//H4
-				NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0), RE, ecart, fenetre);		//H3
-				NA_20.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 5 * 64 + 82 / 2.0), RE, ecart, fenetre);	//H7
-				DR_04.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2, 28 + 5 * 64 + 82 / 2.0), RE, ecart, fenetre);		//H7
+				SE_04.afficher(V2f(64 * 4 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));			//F5
+				DR_01.afficher(V2f(64 * 6 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));			//F7
+				NA_13.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 3 + 64 / 2.0));	//H5
+				NA_14.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 4 + 64 / 2.0));	//H6
+				NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2 + 64 / 2.0));	//H4
+				NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
+				NA_20.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 5 * 64 + 82 / 2.0));	//H7
+				DR_04.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2, 28 + 5 * 64 + 82 / 2.0));		//H7
 			}
 		}
 
-		windows(ecran, fenetre, RE, symbol, arial, version, train, vbc, buttons, numero, ecart);
+		windows(ecran, symbol, version, vbc, buttons, numero);
 
-		//ST_02.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 / 2.0), RE);	//A4
-		//ST_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + + 25 + 25 + 25 / 2.0), RE);	//C9
-		//LE_06.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_07.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_08.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_08a.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);//C1
-		//LE_09.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_09a.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);//C1
-		//LE_10.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_11.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_12.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_13.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_14.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//LE_15.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_01.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_02.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_04.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_05.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_06.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_07.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_08.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_09.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_10.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_11.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_12.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_13.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_14.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_15.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_16.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_17.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_18.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_20.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
-		//MO_21.afficher(V2f(54 + 254, 274), RE);	//B7
-		//MO_22.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0), RE);	//C1
+		//ST_02.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 / 2.0));	//A4
+		//ST_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + + 25 + 25 + 25 / 2.0));	//C9
+		//LE_06.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_07.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_08.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_08a.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));//C1
+		//LE_09.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_09a.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));//C1
+		//LE_10.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_11.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_12.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_13.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_14.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//LE_15.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_01.afficher(V2f(54 + 254, 274));	//B7
+		//MO_02.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_04.afficher(V2f(54 + 254, 274));	//B7
+		//MO_05.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_06.afficher(V2f(54 + 254, 274));	//B7
+		//MO_07.afficher(V2f(54 + 254, 274));	//B7
+		//MO_08.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_09.afficher(V2f(54 + 254, 274));	//B7
+		//MO_10.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_11.afficher(V2f(54 + 254, 274));	//B7
+		//MO_12.afficher(V2f(54 + 254, 274));	//B7
+		//MO_13.afficher(V2f(54 + 254, 274));	//B7
+		//MO_14.afficher(V2f(54 + 254, 274));	//B7
+		//MO_15.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_16.afficher(V2f(54 + 254, 274));	//B7
+		//MO_17.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_18.afficher(V2f(54 + 254, 274));	//B7
+		//MO_20.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
+		//MO_21.afficher(V2f(54 + 254, 274));	//B7
+		//MO_22.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
 
         fenetre.display();
     }
     return 0;
 }
 
-void demarage(RenderWindow & fenetre)
-{
-	Image ImageDemarage;
-	Texture textureDemarage;
-	Sprite spriteDemarage;
-
-	ImageDemarage.loadFromFile("ressources/ecran demarage.png");
-
-	textureDemarage.loadFromImage(ImageDemarage,IntRect());
-	textureDemarage.setSmooth(true);
-	spriteDemarage.setTexture(textureDemarage);
-
-	///////////////////////////////////////////////////////////
-	//mise � l'echelle de l'image
-
-	FloatRect rectDemarage;
-
-	//recuperation de la taille de l'image
-	rectDemarage = spriteDemarage.getGlobalBounds();
-
-	float scaleHeight, scaleWidth;
-	//calcul du facteur d'echelle a appliquer
-	scaleHeight = VideoMode::getDesktopMode().height/rectDemarage.height;
-	scaleWidth = VideoMode::getDesktopMode().width / rectDemarage.width;
-
-	//mise a l'echelle absolue
-	spriteDemarage.setScale(scaleWidth,scaleHeight);
-	//////////////////////////////////////////////////////////////////
-	//positionnement du sprite
-	spriteDemarage.setPosition(0,0);
-
-	//////////////////////////////////////////////////////////////////
-	//ecriture du texte
-	Font eurostile;
-	eurostile.loadFromFile("ressources/fonts/Eurostile.ttf");
-	Text chargement("Chargement", eurostile, 80);
-	//centrage
-	FloatRect texte;
-	texte = chargement.getGlobalBounds();
-	int position = VideoMode::getDesktopMode().width / 2 - texte.width / 2;
-	chargement.setPosition(position, VideoMode::getDesktopMode().height / 1.4);
-	//chargement.setColor(color.White);
-
-	fenetre.draw(spriteDemarage);
-	fenetre.draw(chargement);
-}
-
-void fondEcran(RenderWindow & fenetre, double RE, int * ecart)
+void fondEcran()
 {
 	// definition d'un Vertex array
 	VertexArray fond(Quads,4);
 	//definition des points
 
-	fond[0].position = V2f(ecart[0] * RE, ecart[1] * RE);
-	fond[1].position = V2f((640 + ecart[0]) * RE, ecart[1] * RE);
+	fond[0].position = V2f(ecart[0] * RE[1] * RE);
+	fond[1].position = V2f((640 + ecart[0]) * RE[1] * RE);
 	fond[2].position = V2f((640 + ecart[0]) * RE, (480 + ecart[1]) * RE);
 	fond[3].position = V2f(ecart[0] * RE, (480 + ecart[1]) * RE);
 
@@ -453,52 +396,52 @@ void affichageRectangle(string ecran)		//Affiche toutes les cases sur l'\E9cran
 
 
 void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero);
-void specialWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void settingsWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero);
-void SRspeedWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void dataViewWindows(vector<Symbol> & symbol, Font & arial, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item);
-void RBCdataWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void dataViewWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void systemVersionWindow(vector<Symbol> & symbol, Font & arial, vector<Buttons> & boutons, string & ecran, int & numero);
+void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero);
+void SRspeedWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void dataViewWindows(vector<Symbol> & symbol, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item);
+void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void systemVersionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
 
-void overrideWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void adhesionWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void RBCcontactWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void trainRunningNumberWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void radionetworkIDWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void trainDataWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void brightnessWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void volumeWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void languageWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
-void windows(string & ecran, vector<Symbol> & symbol, Font & arial, string version, donnees &train, vector<VBC> vbc, vector<Buttons> & boutons, int & numero);
+void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero);
+void adhesionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void trainRunningNumberWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void brightnessWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void volumeWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons, int & numero);
 void close(string & ecran, vector<Buttons> & boutons, int & numero);
-void driverIDWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero);
+void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
 
 
 
-void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(9);
     vector <int> enable(9);
     for (int i = 0; i <= 9; i++)
         enable[i] = 1;
     enable[3] = 2;
-	if((train.getVtrain() == 0 && train.getGeneralMode() == "SB" && train.getDriverID() && train.getTrainData() && train.getETATLevelETCS() && train.getTrainNumber()) ||
-		((train.getVtrain() == 0 && train.getGeneralMode() == "PT" && train.getTrainData()) && (train.getLevel() == "Level 1" || ((train.getLevel() == "Level 2" ||
-		train.getLevel() == "Level 3") && train.getConnection() == "Up" && version == "3.6.0" && train.getPending_Emergency_Stop() == false))) || ((train.getVtrain() == 0 &&
-		train.getGeneralMode() == "PT" && train.getTrainData()) && (train.getLevel() == "Level 1" || ((train.getLevel() == "Level 2" || train.getLevel() == "Level 3") &&
-		version == "3.4.0" && train.getPending_Emergency_Stop() == false))) || (train.getGeneralMode() == "SR" && (train.getLevel() == "Level 2" || train.getLevel() == "Level 3") &&
-		train.getConnection() == "Up" && version == "3.6.0") || (train.getGeneralMode() == "SR" && (train.getLevel() == "Level 2" || train.getLevel() == "Level 3") && version == "3.4.0"))
+	if((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && data->getTrainNumber()) ||
+		((data->getVtrain() == 0 && data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
+		data->getLevel() == "Level 3") && data->getConnection() == "Up" && version == "3.6.0" && data->getPending_Emergency_Stop() == false))) || ((data->getVtrain() == 0 &&
+		data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
+		version == "3.4.0" && data->getPending_Emergency_Stop() == false))) || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
+		data->getConnection() == "Up" && version == "3.6.0") || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") && version == "3.4.0"))
 	{
 		enable[0] = 0;
 		boutons[0].settype("up_type");
 	}
 	else
 		boutons[0].settype("disabled");
-	if((train.getVtrain() == 0 && train.getGeneralMode() == "SB" && train.getDriverID() && train.getETATLevelETCS()) ||((train.getModif_DriverID_NTC() ||(train.getModif_DriverID_NTC() == false &&
-		train.getVtrain() == 0)) && (train.getGeneralMode() == "SH" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||
-		train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL" || train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" )))
+	if((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) ||((data->getModif_DriverID_NTC() ||(data->getModif_DriverID_NTC() == false &&
+		data->getVtrain() == 0)) && (data->getGeneralMode() == "SH" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" )))
 	{
 		enable[1] = 0;
 		boutons[1].settype("up_type");
@@ -516,9 +459,9 @@ void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &
 	}
 	else
 		boutons[1].settype("disabled");
-	if(train.getVtrain() == 0 && train.getDriverID() && train.getDriverID() && train.getETATLevelETCS() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" ||
-		train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL" || train.getGeneralMode() == "UN" ||
-		train.getGeneralMode() == "SN" ))
+	if(data->getVtrain() == 0 && data->getDriverID() && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
+		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" ||
+		data->getGeneralMode() == "SN" ))
 	{
 		enable[2] = 0;
 		boutons[2].settype("up_type");
@@ -535,8 +478,8 @@ void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &
 	}
 	else
 		boutons[2].settype("disabled");
-	if(train.getVtrain() == 0 && train.getDriverID() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||
-		train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL" || train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" ))
+	if(data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ))
 	{
 		enable[4] = 0;
 		boutons[4].settype("up_type");
@@ -555,9 +498,9 @@ void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &
 	}
 	else
 		boutons[4].settype("disabled");
-	if((train.getVtrain() == 0 && train.getGeneralMode() == "SB" && train.getDriverID() && train.getETATLevelETCS()) || ((train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" ||
-		train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL"|| train.getGeneralMode() == "UN" ||
-		train.getGeneralMode() == "SN" )))
+	if((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) || ((data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
+		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"|| data->getGeneralMode() == "UN" ||
+		data->getGeneralMode() == "SN" )))
 	{
 		enable[5] = 0;
 		boutons[5].settype("up_type");
@@ -576,31 +519,31 @@ void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &
 	}
 	else
 		boutons[5].settype("disabled");
-	if((train.getVtrain() == 0 && train.getDriverID() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||
-		train.getGeneralMode() == "OS" || train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" ) && train.getETATLevelETCS() && ((train.getLevel() == "Level 0" ||
-		train.getLevel() == "Level 1" || train.getLevel().substr(0,2) == "NTC") || ((train.getLevel() == "Level 2" || train.getLevel() == "Level 3") &&
-		train.getConnection() == "Up"))) || (train.getVtrain() == 0 && train.getGeneralMode() == "PT" && (train.getLevel() == "Level 1" || ((train.getLevel() == "Level 2" ||
-		train.getLevel() == "Level 3") && train.getConnection() == "Up" && train.getPending_Emergency_Stop() == false))))
+	if((data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+		data->getGeneralMode() == "OS" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ) && data->getETATLevelETCS() && ((data->getLevel() == "Level 0" ||
+		data->getLevel() == "Level 1" || data->getLevel().substr(0,2) == "NTC") || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
+		data->getConnection() == "Up"))) || (data->getVtrain() == 0 && data->getGeneralMode() == "PT" && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
+		data->getLevel() == "Level 3") && data->getConnection() == "Up" && data->getPending_Emergency_Stop() == false))))
 	{
 		enable[6] = 0; //shunting  x
 		boutons[6].settype("up_type");
 	}
-	else if(train.getVtrain() == 0 && train.getGeneralMode() == "SH")
+	else if(data->getVtrain() == 0 && data->getGeneralMode() == "SH")
 	{
 		enable[6] = 0;//Exit Shunting
 		boutons[6].settype("up_type");
 	}
 	else
 		boutons[6].settype("disabled");
-	if(train.getVtrain() == 0 && train.getDriverID() && train.getETATLevelETCS() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" ||
-		train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS" || train.getGeneralMode() == "SH") && train.getNon_Leading() == false)
+	if(data->getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
+		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "SH") && data->getNon_Leading() == false)
 	{
 		enable[7] = 0;
 		boutons[7].settype("up_type");
 	}
 	else
 		boutons[7].settype("disabled");
-	if(train.getGeneralMode() == "SH" && train.getPassive_Shunting())
+	if(data->getGeneralMode() == "SH" && data->getPassive_Shunting())
 	{
 		enable[8] = 0;
 		boutons[8].settype("up_type");
@@ -609,9 +552,9 @@ void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &
 		boutons[8].settype("disabled");
 	if (version == "3.6.0")
 	{
-		if (train.getVtrain() == 0 && train.getDriverID() && train.getETATLevelETCS() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" ||
-			train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL"||
-			train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" || train.getGeneralMode() == "PT"))
+		if (data->getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
+			data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"||
+			data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "PT"))
 		{
 			enable[9] = 0;
 			boutons[9].settype("up_type");
@@ -627,24 +570,24 @@ void MainWindow(vector<Symbol> & symbol, Font & arial, string version, donnees &
 	selection = {"Start", "Driver ID", "Train data", "", "Level", "Train running number", "Shunting", "Non-Leading", "Maintain Shunting"};
 	if(version == "3.6.0")
 		selection.push_back("Radio data");
-    menuWindows(selection, enable, fenetre, RE, symbol, arial, "Main", ecart);
+    menuWindows(selection, enable, symbol, "Main");
     close(ecran, boutons, numero);
 }
 
 
-void overrideWindow(vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(1);
     vector <int> enable(1);
     enable[0] = 1;
-    if ((train.getVtrain() <=  train.getVrelease() && (train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS"||
-        train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN" || train.getGeneralMode() == "SH"))
-        || (train.getVtrain() <=  train.getVrelease() && train.getGeneralMode() == "SB" && train.getDriverID() && train.getTrainData() && train.getETATLevelETCS() &&
-		(train.getLevel() == "Level 2" || train.getLevel() == "Level 3")) || (version =="3.6.0" && (train.getVtrain() <=  train.getVrelease() && train.getGeneralMode() == "PT" &&
-		train.getTrainData() && train.getTrainNumber())))
+    if ((data->getVtrain() <=  data->getVrelease() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
+        data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "SH"))
+        || (data->getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() &&
+		(data->getLevel() == "Level 2" || data->getLevel() == "Level 3")) || (version =="3.6.0" && (data->getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "PT" &&
+		data->getTrainData() && data->getTrainNumber())))
     {
         boutons[0].settype("up_type");
-        if(version == "3.4.0" || (version == "3.6.0" && train.getTrainNumber()))
+        if(version == "3.4.0" || (version == "3.6.0" && data->getTrainNumber()))
             enable[0] = 0;
     }
     else
@@ -652,40 +595,40 @@ void overrideWindow(vector<Symbol> & symbol, Font & arial, string version, donne
     if (boutons[0].getactivation())
     {
         ecran = "defaultWindow";
-        if(train.getEOA())
-            train.setEOA(false);
+        if(data->getEOA())
+            data->setEOA(false);
         else
-            train.setEOA(true);
+            data->setEOA(true);
     }
     selection = {"EOA"};
-    menuWindows(selection, enable, fenetre, RE, symbol, arial, "Override", ecart);
+    menuWindows(selection, enable, symbol, "Override");
     close(ecran, boutons, numero);
 }
 
-void specialWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero)
+void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(3);
     vector <int> enable(3);
     for (int i = 0; i <= 2; i++)
         enable[i] = 1;
-    if ((train.getVtrain() == 0 && train.getGeneralMode() == "SB" && train.getmodif_Adhesion() && train.getDriverID() && train.getTrainData() && train.getETATLevelETCS())
-        || (train.getmodif_Adhesion() && (train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS"||
-        train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN")))
+    if ((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getmodif_Adhesion() && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS())
+        || (data->getmodif_Adhesion() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
+        data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN")))
     {
             enable[0] = 0;
             boutons[0].settype("up_type");
     }
     else
         boutons[0].settype("disabled");
-    if(train.getVtrain() == 0 && train.getGeneralMode() == "SR")
+    if(data->getVtrain() == 0 && data->getGeneralMode() == "SR")
     {
         enable[1] = 0;
         boutons[1].settype("up_type");
     }
     else
         boutons[1].settype("disabled");
-    if (train.getVtrain() == 0 && train.getDriverID() && train.getTrainData() && train.getETATLevelETCS() && (train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" ||
-		train.getGeneralMode() == "SR" || train.getGeneralMode() == "OS"|| train.getGeneralMode() == "PT" || train.getGeneralMode() == "SB"))
+    if (data->getVtrain() == 0 && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
+		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"|| data->getGeneralMode() == "PT" || data->getGeneralMode() == "SB"))
     {
         enable[2] = 0;
         boutons[2].settype("up_type");
@@ -705,20 +648,20 @@ void specialWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector
 		boutons[14].settype("disabled");
     }
     selection = {"Adhesion", "SR speed / distance", "Train integrity"};
-    menuWindows(selection, enable, fenetre, RE, symbol, arial, "Special", ecart);
+    menuWindows(selection, enable, symbol, "Special");
     close(ecran, boutons, numero);
 }
 
-void settingsWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero)
+void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(6);
     vector <int> enable(6);
     for (int i = 0; i <= 5; i++)
         enable[i] = 1;
-    if ((train.getVtrain() == 0 && train.getGeneralMode() == "SB")
-        || (train.getGeneralMode() == "SH" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||train.getGeneralMode() == "OS" ||
-        train.getGeneralMode() == "NL" || train.getGeneralMode() == "UN" || train.getGeneralMode() == "TR" || train.getGeneralMode() == "PT" || train.getGeneralMode() == "SN" ||
-        train.getGeneralMode() == "RV"))
+    if ((data->getVtrain() == 0 && data->getGeneralMode() == "SB")
+        || (data->getGeneralMode() == "SH" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||data->getGeneralMode() == "OS" ||
+        data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "TR" || data->getGeneralMode() == "PT" || data->getGeneralMode() == "SN" ||
+        data->getGeneralMode() == "RV"))
     {
         for (int i = 0; i <= 3; i++)
         {
@@ -739,14 +682,14 @@ void settingsWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vecto
         for (int i = 0; i <= 3; i++)
             boutons[i].settype("delayed");
     }
-    if(train.getVtrain() == 0 && train.getGeneralMode() == "SB" && vbc.size() < 20)
+    if(data->getVtrain() == 0 && data->getGeneralMode() == "SB" && vbc.size() < 20)
     {
         enable[4] = 0;
         boutons[4].settype("up_type");
     }
     else
         boutons[4].settype("delayed");
-    if(train.getVtrain() == 0 && train.getGeneralMode() == "SB" && vbc.size() > 0)
+    if(data->getVtrain() == 0 && data->getGeneralMode() == "SB" && vbc.size() > 0)
     {
         enable[5] = 0;
         boutons[5].settype("up_type");
@@ -754,20 +697,20 @@ void settingsWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vecto
     else
         boutons[5].settype("delayed");
     selection = {"Language", "Volume", "Brightness", "System version", "Set VBC", "Remote VBC"};
-    menuWindows(selection, enable, fenetre, RE, symbol, arial, "Settings", ecart);
+    menuWindows(selection, enable, symbol, "Settings");
     close(ecran, boutons, numero);
 }
 
 
-void RBCcontactWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vector<Buttons> & boutons, string & ecran, int & numero)
+void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector <string> selection(4);
     vector <int> enable(4);
     for (int i = 0; i <= 3; i++)
         enable[i] = 1;
-    if(train.getVtrain() == 0 && train.getDriverID() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||
-		train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL" || train.getGeneralMode() == "PT") && train.getETATLevelETCS() && (train.getLevel() == "Level 2" ||
-		train.getLevel() == "Level 3"))
+    if(data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "PT") && data->getETATLevelETCS() && (data->getLevel() == "Level 2" ||
+		data->getLevel() == "Level 3"))
     {
          for (int i = 0; i <= 2 ; i++)
          {
@@ -780,9 +723,9 @@ void RBCcontactWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vec
         for (int i = 0; i <= 2; i++)
             boutons[i].settype("delayed");
     }
-    if(train.getVtrain() == 0 && train.getDriverID() && (train.getGeneralMode() == "SB" || train.getGeneralMode() == "FS" || train.getGeneralMode() == "LS" || train.getGeneralMode() == "SR" ||
-		train.getGeneralMode() == "OS" || train.getGeneralMode() == "NL" || train.getGeneralMode() == "PT" || train.getGeneralMode() == "UN" || train.getGeneralMode() == "SN") &&
-		train.getETATLevelETCS())
+    if(data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "PT" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN") &&
+		data->getETATLevelETCS())
     {
          enable[3] = 0;
          boutons[3].settype("up_type");
@@ -790,205 +733,205 @@ void RBCcontactWindow(vector<Symbol> & symbol, Font & arial, donnees &train, vec
     else
          boutons[3].settype("delayed");
     selection = {"Contact last RBC", "Use short number", "Enter RBC data", "Radio Network ID"};
-    menuWindows(selection, enable, fenetre, RE, symbol, arial, "RBC contact", ecart);
+    menuWindows(selection, enable, symbol, "RBC contact");
     close(ecran, boutons, numero);
 }
 
-void trainRunningNumberWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void trainRunningNumberWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	dataEntryWindows({{"", "", "0"}}, fenetre, RE, symbol, arial, 0, "Train running number", {}, numero, "numeric", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", "", "0"}}, symbol, 0, "Train running number", {}, numero, "numeric", boutons, ecran);
 }
 
-void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	dataEntryWindows({{"", train.getLevel(), ""}}, fenetre, RE, symbol, arial, 0, "Level", {"Level 1", "Level 2", "Level 3", "Level 0"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", data->getLevel(), ""}}, symbol, 0, "Level", {"Level 1", "Level 2", "Level 3", "Level 0"}, numero, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
-		train.setLevelETCS("Level 1");
+		data->setLevelETCS("Level 1");
 	else if(boutons[1].getactivation())
-		train.setLevelETCS("Level 2");
+		data->setLevelETCS("Level 2");
 	else if(boutons[2].getactivation())
-		train.setLevelETCS("Level 3");
+		data->setLevelETCS("Level 3");
 	else if(boutons[3].getactivation())
-		train.setLevelETCS("Level 0");
+		data->setLevelETCS("Level 0");
 }
 
-void driverIDWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     if(boutons[0].getactivation())
-		train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 1);
+		data->setTempDriver_ID(data->getTempDriver_ID() * 10 + 1);
     else if(boutons[1].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 2);
+        data->setTempDriver_ID(data->getTempDriver_ID()  * 10 + 2);
     else if(boutons[2].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 3);
+        data->setTempDriver_ID(data->getTempDriver_ID() * 10 + 3);
     else if(boutons[3].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 4);
+        data->setTempDriver_ID(data->getTempDriver_ID()  * 10 + 4);
     else if(boutons[4].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 5) ;
+        data->setTempDriver_ID(data->getTempDriver_ID() * 10 + 5) ;
     else if(boutons[5].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID() * 10 + 6);
+        data->setTempDriver_ID(data->getTempDriver_ID() * 10 + 6);
     else if(boutons[6].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 7);
+        data->setTempDriver_ID(data->getTempDriver_ID()  * 10 + 7);
     else if(boutons[7].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 8);
+        data->setTempDriver_ID(data->getTempDriver_ID()  * 10 + 8);
     else if(boutons[8].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 9);
+        data->setTempDriver_ID(data->getTempDriver_ID()  * 10 + 9);
     else if(boutons[9].getactivation())
-        train.setTempDriver_ID(train.getTempDriver_ID()  * 10 + 0);
+        data->setTempDriver_ID(data->getTempDriver_ID()  * 10 + 0);
     else if(boutons[10].getactivation())
-        train.setTempDriver_ID(ceil(train.getTempDriver_ID() /10));
+        data->setTempDriver_ID(ceil(data->getTempDriver_ID() /10));
     else if(boutons[12].getactivation())
-        train.setTempDriver_ID(train.getDriver_ID());
+        data->setTempDriver_ID(data->getDriver_ID());
     else if(boutons[15].getactivation())
     {
-        train.setDriver_ID(train.getTempDriver_ID());
-        dataEntryWindows({{"", to_string(train.getDriver_ID()), "1"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train, ecart);
+        data->setDriver_ID(data->getTempDriver_ID());
+        dataEntryWindows({{"", to_string(data->getDriver_ID()), "1"}}, symbol, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran);
     }
-	//if(train.getTempDriver_ID() == 0)
-	//	dataEntryWindows({{"", "", "0"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train);
+	//if(data->getTempDriver_ID() == 0)
+	//	dataEntryWindows({{"", "", "0"}}, symbol, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran);
 	//else
-	dataEntryWindows({{"", to_string(train.getTempDriver_ID()), "0"}}, fenetre, RE, symbol, arial, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", to_string(data->getTempDriver_ID()), "0"}}, symbol, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran);
 }
 
-void radionetworkIDWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	dataEntryWindows({{"", train.getRadioNetworkID(), "0"}}, fenetre, RE, symbol, arial, 0, "Radio network ID", {}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", data->getRadioNetworkID(), "0"}}, symbol, 0, "Radio network ID", {}, numero, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
-		train.setRadioNetworkID("GSMR-A");
+		data->setRadioNetworkID("GSMR-A");
 	else if(boutons[1].getactivation())
-		train.setRadioNetworkID("GSMR-B");
+		data->setRadioNetworkID("GSMR-B");
 	else if(boutons[1].getactivation())
-		train.setRadioNetworkID("Telecom X");
+		data->setRadioNetworkID("Telecom X");
 }
 
-void RBCdataWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     int i = 0;
     if(numero == 1)
     {
         if(boutons[0].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 1);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 1);
         else if(boutons[1].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 2);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 2);
         else if(boutons[2].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 3);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 3);
         else if(boutons[3].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 4);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 4);
         else if(boutons[4].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 5);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 5);
         else if(boutons[5].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 6);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 6);
         else if(boutons[6].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 7);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 7);
         else if(boutons[7].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 8);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 8);
         else if(boutons[8].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 9);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 9);
         else if(boutons[9].getactivation())
-            train.setTempRBCID(train.getTempRBCID() * 10 + 0);
+            data->setTempRBCID(data->getTempRBCID() * 10 + 0);
         else if(boutons[10].getactivation())
-            train.setTempRBCID(ceil(train.getTempRBCID()/10));
+            data->setTempRBCID(ceil(data->getTempRBCID()/10));
         else if (boutons[13].getactivation() || boutons[14].getactivation() || boutons[12].getactivation())
         {
-            train.setTempRBCID(train.getRBCID());
+            data->setTempRBCID(data->getRBCID());
             i = 1;
-            dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", to_string(train.getRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {}, numero,
-				"numeric", boutons, ecran, train, ecart);
+            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {}, numero,
+				"numeric", boutons, ecran);
         }
         else if(boutons[15].getactivation())
         {
-            train.setRBCID(train.getTempRBCID());
+            data->setRBCID(data->getTempRBCID());
             numero++;
             i = 1;
-            dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "1"}, {"RBC phone number", to_string(train.getRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {},
-				numero, "numeric", boutons, ecran, train, ecart);
+            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "1"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
+				numero, "numeric", boutons, ecran);
         }
         if(i ==0)
 		{
-			if(train.getTempRBCID() == 0)
-				dataEntryWindows({{"RBC ID", "", "0"}, {"RBC phone number", to_string(train.getRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {}, numero, "numeric", boutons,
-					ecran, train, ecart);
+			if(data->getTempRBCID() == 0)
+				dataEntryWindows({{"RBC ID", "", "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {}, numero, "numeric", boutons,
+					ecran);
 			else
-				dataEntryWindows({{"RBC ID", to_string(train.getTempRBCID()), "0"}, {"RBC phone number", to_string(train.getRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {},
-					numero, "numeric", boutons, ecran, train, ecart);
+				dataEntryWindows({{"RBC ID", to_string(data->getTempRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
+					numero, "numeric", boutons, ecran);
 		}
     }
     else
     {
         if(boutons[0].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 1);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 1);
         else if(boutons[1].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 2);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 2);
         else if(boutons[2].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 3);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 3);
         else if(boutons[3].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 4);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 4);
         else if(boutons[4].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 5);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 5);
         else if(boutons[5].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 6);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 6);
         else if(boutons[6].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 7);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 7);
         else if(boutons[7].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 8);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 8);
         else if(boutons[8].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 9);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 9);
         else if(boutons[9].getactivation())
-            train.setTempRBCphoneNumber(train.getTempRBCphoneNumber() * 10 + 0);
+            data->setTempRBCphoneNumber(data->getTempRBCphoneNumber() * 10 + 0);
         else if(boutons[10].getactivation())
-            train.setTempRBCphoneNumber(ceil(train.getTempRBCphoneNumber()/10));
+            data->setTempRBCphoneNumber(ceil(data->getTempRBCphoneNumber()/10));
         else if (boutons[13].getactivation() || boutons[14].getactivation() || boutons[14].getactivation())
         {
-            train.setTempRBCphoneNumber(train.getRBCphoneNumber());
+            data->setTempRBCphoneNumber(data->getRBCphoneNumber());
             i = 1;
-            dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", to_string(train.getRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {}, numero,
-				"numeric", boutons, ecran, train, ecart);
+            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {}, numero,
+				"numeric", boutons, ecran);
         }
         else if(boutons[15].getactivation())
         {
-            train.setRBCphoneNumber(train.getTempRBCphoneNumber());
+            data->setRBCphoneNumber(data->getTempRBCphoneNumber());
             numero--;
             i = 1;
-            dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "1"}, {"RBC phone number", to_string(train.getRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {},
-				numero, "numeric", boutons, ecran, train, ecart);
+            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "1"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
+				numero, "numeric", boutons, ecran);
         }
 
        if(i ==0)
 		{
-			if(train.getTempRBCphoneNumber() == 0)
-				dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", "", "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {}, numero, "numeric", boutons, ecran, train, ecart);
+			if(data->getTempRBCphoneNumber() == 0)
+				dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", "", "0"}}, symbol, 1, "RBC data", {}, numero, "numeric", boutons, ecran);
 			else
-				dataEntryWindows({{"RBC ID", to_string(train.getRBCID()), "0"}, {"RBC phone number", to_string(train.getTempRBCphoneNumber()), "0"}}, fenetre, RE, symbol, arial, 1, "RBC data", {},
-					numero, "numeric", boutons, ecran, train, ecart);
+				dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getTempRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
+					numero, "numeric", boutons, ecran);
 
 		}
 	}
 }
 
 
-void languageWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	dataEntryWindows({{"", train.getLanguage(), "0"}}, fenetre, RE, symbol, arial, 0, "Language", {"English", "Francais"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", data->getLanguage(), "0"}}, symbol, 0, "Language", {"English", "Francais"}, numero, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
-		train.setLanguage("English");
+		data->setLanguage("English");
 	else if(boutons[1].getactivation())
-		train.setLanguage("Francais");
+		data->setLanguage("Francais");
 }
 
-void volumeWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void volumeWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	dataEntryWindows({{""}}, fenetre, RE, symbol, arial, 0, "Volume", {}, numero, "", boutons, ecran, train, ecart);
+	dataEntryWindows({{""}}, symbol, 0, "Volume", {}, numero, "", boutons, ecran);
 }
 
-void brightnessWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void brightnessWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	dataEntryWindows({{""}}, fenetre, RE, symbol, arial, 0, "Brightness", {}, numero, "", boutons, ecran, train, ecart);
+	dataEntryWindows({{""}}, symbol, 0, "Brightness", {}, numero, "", boutons, ecran);
 }
 
-void trainDataWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	vector<vector<string>> input_field = {{"Train category", train.getTrain_category(), "0"}, {"Length (m)", to_string(train.getlength()), "1"}, {"Brake percentage",
-		to_string(train.getbreaking_percetage()), "0"}, {"Max speed (km/h)", to_string(train.getmaximum_train_speed()), "0"}, {"Axle load category",
-		train.getaxle_load_category(), "0"}, {"Airtight", train.getAirtight(), "0"}, {"Loading gauge", train.getloading_gauge(), "0"}};
+	vector<vector<string>> input_field = {{"Train category", data->getTrain_category(), "0"}, {"Length (m)", to_string(data->getlength()), "1"}, {"Brake percentage",
+		to_string(data->getbreaking_percetage()), "0"}, {"Max speed (km/h)", to_string(data->getmaximum_train_speed()), "0"}, {"Axle load category",
+		data->getaxle_load_category(), "0"}, {"Airtight", data->getAirtight(), "0"}, {"Loading gauge", data->getloading_gauge(), "0"}};
 	vector <string> selection = {};
 	string keyboard = "";
 	//if(numero == 1)
@@ -1005,142 +948,142 @@ void trainDataWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vec
 	//
 	//if(numero == 7)
 	//
-	dataEntryWindows(input_field, fenetre, RE, symbol, arial, 1, "Train data", selection, numero, keyboard, boutons, ecran, train, ecart);
+	dataEntryWindows(input_field, symbol, 1, "Train data", selection, numero, keyboard, boutons, ecran);
 	for(int i = 0; i < int(input_field.size()); i++)
-		creation_texte(RE, input_field[i][0], arial, GREY, 12, 0, V2f(204 - 5, 20 * i + 100 + 6), fenetre, 2, ecart);
+		creation_texte(input_field[i][0], GREY, 12, 0, V2f(204 - 5, 20 * i + 100 + 6), 2);
 }
 
-void SRspeedWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void SRspeedWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-    dataEntryWindows({{"SR speed (km/h)", to_string(train.getSRspeed()), "0"}, {"SR distance (m)", "b", "0"}}, fenetre, RE, symbol, arial, 0, "SR speed/distance", {}, numero, "numeric", boutons,
-		ecran, train, ecart);
+    dataEntryWindows({{"SR speed (km/h)", to_string(data->getSRspeed()), "0"}, {"SR distance (m)", "b", "0"}}, symbol, 0, "SR speed/distance", {}, numero, "numeric", boutons,
+		ecran);
 	if(boutons[0].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 1);
+		data->setSRspeed(data->getSRspeed() * 10 + 1);
 	else if(boutons[1].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 2);
+		data->setSRspeed(data->getSRspeed() * 10 + 2);
 	else if(boutons[2].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 3);
+		data->setSRspeed(data->getSRspeed() * 10 + 3);
 	else if(boutons[3].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 4);
+		data->setSRspeed(data->getSRspeed() * 10 + 4);
 	else if(boutons[4].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 5);
+		data->setSRspeed(data->getSRspeed() * 10 + 5);
 	else if(boutons[5].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 6);
+		data->setSRspeed(data->getSRspeed() * 10 + 6);
 	else if(boutons[6].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 7);
+		data->setSRspeed(data->getSRspeed() * 10 + 7);
 	else if(boutons[7].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 8);
+		data->setSRspeed(data->getSRspeed() * 10 + 8);
 	else if(boutons[8].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 9);
+		data->setSRspeed(data->getSRspeed() * 10 + 9);
 	else if(boutons[9].getactivation())
-		train.setSRspeed(train.getSRspeed() * 10 + 0);
+		data->setSRspeed(data->getSRspeed() * 10 + 0);
 }
 
-void adhesionWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void adhesionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
-	dataEntryWindows({{"", train.getAdhesion(),"0"}}, fenetre, RE, symbol, arial, 0, "Adhesion", {"Non slippery rail","Slippery rail"}, numero, "dedicated keyboard", boutons, ecran, train, ecart);
+	dataEntryWindows({{"", data->getAdhesion(),"0"}}, symbol, 0, "Adhesion", {"Non slippery rail","Slippery rail"}, numero, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
-		train.setAdhesion("Non slippery rail");
+		data->setAdhesion("Non slippery rail");
 	else if(boutons[1].getactivation())
-		train.setAdhesion("Slippery rail");
+		data->setAdhesion("Slippery rail");
 }
 
-void dataViewWindows(vector<Symbol> & symbol, Font & arial, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item)
+void dataViewWindows(vector<Symbol> & symbol, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item)
 {
-	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK, RE, fenetre, ecart);
+	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK);
 	if(title == "Data View")
 		title += " (" + to_string(numero) + "/2)";
-	creation_texte(RE, title, arial, GREY, 17, 0, V2f(54 + 280 + 3, 12), fenetre, 4, ecart);
+	creation_texte(title, GREY, 17, 0, V2f(54 + 280 + 3, 12), 4);
 	for(int i = 0; i <= int(item.size()) - 1; i++)
 	{
-		creation_texte(RE, item[i][0], arial, GREY, 17, 0, V2f(280 + 54 + 176 - 5, 60 + 17 / 2.0 + i * 22), fenetre, 2, ecart);
-		creation_texte(RE, item[i][1], arial, GREY, 17, 0, V2f(280 + 54 + 176 + 5, 60 + 17 / 2.0 + i * 22), fenetre, 4, ecart);
+		creation_texte(item[i][0], GREY, 17, 0, V2f(280 + 54 + 176 - 5, 60 + 17 / 2.0 + i * 22), 2);
+		creation_texte(item[i][1], GREY, 17, 0, V2f(280 + 54 + 176 + 5, 60 + 17 / 2.0 + i * 22), 4);
 	}
 	if(numero == 1)
 	{
-		NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0), RE, ecart, fenetre);		//H3
+		NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
 		boutons[11].settype("up_type");
 		close(ecran, boutons, numero);
 	}
 	else if(numero == 2)
 	{
-		NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0), RE, ecart, fenetre);		//H3
+		NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
 		boutons[11].settype("up_type");
 		if(boutons[11].getactivation())
 			numero--;
 	}
 	if(numero == 2)
 	{
-		NA_18_2.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0), RE, ecart, fenetre);	//H4
+		NA_18_2.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
 		boutons[12].settype("disabled");
 	}
 	else if(numero == 1)
 	{
 		boutons[12].settype("up_type");
-		NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0), RE, ecart, fenetre);	//H4
+		NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
 		if(boutons[12].getactivation())
 			numero++;
 	}
 }
 
-void dataViewWindow(vector<Symbol> & symbol, Font & arial, donnees & train, vector<Buttons> & boutons, string & ecran, int & numero)
+void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
     vector<vector<string>> item;
     if(numero == 1)
-    	item = {{"Driver ID", to_string(train.getDriver_ID())}, {"", ""},{"Train running number", to_string(train.getTrain_running_number()) },
-			{"", ""}, {"Train type", train.getTrain_type()}, {"Train category", train.getTrain_category()}, {"Length (m)", to_string(train.getlength())},
-			{"Brake percentage", to_string(train.getbreaking_percetage())}, {"Max speed (km/h)", to_string(train.getmaximum_train_speed())},
-			{"Axle load category", train.getaxle_load_category()}, {"Airtight", train.getAirtight()}, {"Loading gauge", train.getloading_gauge()}};
+    	item = {{"Driver ID", to_string(data->getDriver_ID())}, {"", ""},{"Train running number", to_string(data->getTrain_running_number()) },
+			{"", ""}, {"Train type", data->getTrain_type()}, {"Train category", data->getTrain_category()}, {"Length (m)", to_string(data->getlength())},
+			{"Brake percentage", to_string(data->getbreaking_percetage())}, {"Max speed (km/h)", to_string(data->getmaximum_train_speed())},
+			{"Axle load category", data->getaxle_load_category()}, {"Airtight", data->getAirtight()}, {"Loading gauge", data->getloading_gauge()}};
     else
-    	item = {{"Radio network ID", train.getRadioNetworkID()}, {"RBC ID", to_string(train.getRBCID())}, {"RBC phone number", to_string(train.getRBCphoneNumber())}, {"", ""},
+    	item = {{"Radio network ID", data->getRadioNetworkID()}, {"RBC ID", to_string(data->getRBCID())}, {"RBC phone number", to_string(data->getRBCphoneNumber())}, {"", ""},
 		{"VBC #1 set code", "d"}, {"VBC #2 set code", "e"}};
-    dataViewWindows(fenetre, RE, symbol, arial, "Data View", numero, boutons, ecran, item, ecart);
+    dataViewWindows(symbol, "Data View", numero, boutons, ecran, item);
 }
 
-void systemVersionWindow(vector<Symbol> & symbol, Font & arial, vector<Buttons> & boutons, string & ecran, int & numero)
+void systemVersionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
 {
 	vector<vector<string>> item = {{"Operated system version", ""}};
-	dataViewWindows(fenetre, RE, symbol, arial, "System version", numero, boutons, ecran, item, ecart);
+	dataViewWindows(symbol, "System version", numero, boutons, ecran, item);
 }
 
-void windows(string & ecran, vector<Symbol> & symbol, Font & arial, string version, donnees & train, vector<VBC> vbc, vector<Buttons> & boutons, int & numero)
+void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons, int & numero)
 {
     if(ecran == "mainWindow")
-        MainWindow(fenetre, RE, symbol, arial, version, train, boutons, ecran, numero, ecart);
+        MainWindow(symbol, version, boutons, ecran, numero);
     else if(ecran == "overrideWindow")
-        overrideWindow(fenetre, RE, symbol, arial, version, train, boutons, ecran, numero, ecart);
+        overrideWindow(symbol, version, boutons, ecran, numero);
     else if(ecran == "specialWindow")
-        specialWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        specialWindow(symbol, boutons, ecran, numero);
     else if(ecran == "settingsWindow")
-        settingsWindow(fenetre, RE, symbol, arial, train, vbc, boutons, ecran, numero, ecart);
+        settingsWindow(symbol, vbc, boutons, ecran, numero);
     else if(ecran == "RBCcontactWindow")
-        RBCcontactWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        RBCcontactWindow(symbol, boutons, ecran, numero);
     else if(ecran == "trainRunningNumberWindow")
-        trainRunningNumberWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        trainRunningNumberWindow(symbol, boutons, ecran, numero);
     else if(ecran == "ERTMS_ETCSlevelWindow")
-        ERTMS_ETCSlevelWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        ERTMS_ETCSlevelWindow(symbol, boutons, ecran, numero);
     else if(ecran == "driverIDWindow")
-        driverIDWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        driverIDWindow(symbol, boutons, ecran, numero);
     else if(ecran == "radionetworkIDWindow")
-        radionetworkIDWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        radionetworkIDWindow(symbol, boutons, ecran, numero);
     else if(ecran == "RBCdataWindow")
-        RBCdataWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        RBCdataWindow(symbol, boutons, ecran, numero);
     else if(ecran == "languageWindow")
-        languageWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        languageWindow(symbol, boutons, ecran, numero);
     else if(ecran == "volumeWindow")
-        volumeWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        volumeWindow(symbol, boutons, ecran, numero);
     else if(ecran == "brightnessWindow")
-        brightnessWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        brightnessWindow(symbol, boutons, ecran, numero);
     else if(ecran == "SRspeed/distanceWindow")
-        SRspeedWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        SRspeedWindow(symbol, boutons, ecran, numero);
     else if(ecran == "adhesionWindow")
-        adhesionWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        adhesionWindow(symbol, boutons, ecran, numero);
     else if(ecran == "trainDataWindow")
-        trainDataWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        trainDataWindow(symbol, boutons, ecran, numero);
     else if(ecran == "dataViewWindow")
-        dataViewWindow(fenetre, RE, symbol, arial, train, boutons, ecran, numero, ecart);
+        dataViewWindow(symbol, boutons, ecran, numero);
     else if(ecran == "systemVersionWindow")
-        systemVersionWindow(fenetre, RE, symbol, arial, boutons, ecran, numero, ecart);
+        systemVersionWindow(symbol, boutons, ecran, numero);
 }
 
 
@@ -1150,9 +1093,9 @@ void close(string & ecran, vector<Buttons> & boutons, int & numero)
         numero = 1;
     if(boutons[11].getactivation() && (ecran == "mainWindow" || ecran == "overrideWindow" || ecran == "specialWindow" || ecran == "settingsWindow"|| ecran == "dataViewWindow"))
         ecran = "defaultWindow";
-    else if(boutons[11].getactivation()&& (ecran == "languageWindow" || ecran == "volumeWindow" || ecran == "brightnessWindow"))
+    else if(boutons[11].getactivation() && (ecran == "languageWindow" || ecran == "volumeWindow" || ecran == "brightnessWindow"))
         ecran = "settingsWindow";
-    else if(boutons[11].getactivation()&& (ecran == "driverIDWindow" || ecran == "trainDataWindow" || ecran == "trainRunningNumberWindow" || ecran == "RBCdataWindow" ||
+    else if(boutons[11].getactivation() && (ecran == "driverIDWindow" || ecran == "trainDataWindow" || ecran == "trainRunningNumberWindow" || ecran == "RBCdataWindow" ||
 		ecran == "ERTMS_ETCSlevelWindow"))
         {
             ecran = "mainWindow";
