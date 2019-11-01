@@ -137,12 +137,14 @@ class A_brake
 {
     private :
 
-	vector < vector < float > > tab_A_brake;//tableau avec 2 colonnes la vitesse max où la décélération est admise, premiere colonne vitesse et deuxieme deceleration
-	float Brake_percentage;
+	//vector < vector < float > > tab_A_brake;//tableau avec 2 colonnes la vitesse max où la décélération est admise, premiere colonne vitesse et deuxieme deceleration
+
 
 	public :
 
-    A_brake(int nombre_deceleration)
+
+
+    /*A_brake(int nombre_deceleration)
     {
         for (int i = 0; i < nombre_deceleration; i++)
         {
@@ -159,7 +161,7 @@ class A_brake
             tab_A_brake.push_back(ligne);
 
         }
-    }
+    }*/
 	float Attribution_deceleration(int V);
 };
 
