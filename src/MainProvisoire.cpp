@@ -1,4 +1,4 @@
-#include <cstdlib>
+/*#include <cstdlib>
 #include <iostream>
 #include <thread>
 #include <math.h>
@@ -331,7 +331,7 @@ int main()
 		//MO_21.afficher(V2f(54 + 254, 274));	//B7
 		//MO_22.afficher(V2f(54 + 3 * 37 + 58 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));	//C1
 
-        fenetre.display();
+        fenetre->display();
     }
     return 0;
 }
@@ -349,7 +349,7 @@ void fondEcran()
 
 	couleurForme(fond, DARK_BLUE, 4);
 
-	fenetre.draw(fond);
+	fenetre->draw(fond);
 }
 
 //Prototypes -----------------------------------------------------------------------------------------------------------------------------
@@ -1108,4 +1108,4 @@ void close(string & ecran, vector<Buttons> & boutons, int & numero)
         }
     else if(boutons[11].getactivation()&& (ecran == "adhesionWindow" || ecran == "SRspeed/distanceWindow"))
         ecran = "specialWindow";
-}
+}*/
