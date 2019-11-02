@@ -154,8 +154,6 @@ void donnees::setVmediumGrey(float V) {V_medium_grey = V;}
 void donnees::setVdarkGrey(float V) {V_dark_grey = V;}
 int donnees::getPointKilometrique() {return pointKilometrique;}
 float donnees::getTSMstart() {return TSMstart;}
-float donnees::getPlanningScale() {return planningScale;}
-void donnees::setPlanningScale(float P) {planningScale = P;}
 void donnees::setMode(string M) {mode = M;}
 string donnees::getMode() {return mode;}
 void donnees::setStatus(string S) {status = S;}

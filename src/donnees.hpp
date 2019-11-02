@@ -1,8 +1,6 @@
 #ifndef dem
 #define dem
 
-#include "symbol.hpp"
-
 #define VINIT 250
 #define ACCELERATION -0.9
 #define D_BUT 2000.0
@@ -239,7 +237,6 @@ class donnees
 	float V_dark_grey;
 	int pointKilometrique = 256708;
 	float TSMstart = 800;
-	float planningScale = 32000;
 	Color couleurAiguille = RED;		//Changer la couleur de l'aiguille
 	int remainingDistanceTunnel = 348;
 	float Vrelease = 30;
