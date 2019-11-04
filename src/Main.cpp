@@ -4,7 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
-//#include "Fenetres.hpp"
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <cstring>
+#include <netdb.h>
 
 using namespace sf;
 using namespace std;
@@ -196,14 +201,6 @@ class Data
 		int ecartY;
 		Font arial;
 		int son;
-		int Vligne;
-		float V_red;
-		float V_orange;
-		float V_yellow;
-		float V_white;
-		float V_medium_grey;
-		float V_dark_grey;
-		Color aiguille;
 		//Son :
 		//	Num�ro 1 : click
 		//	Num�ro 2 : S-info
@@ -212,6 +209,17 @@ class Data
 		//	Mode 1 : Jouer UNE fois
 		//	Mode 2 : Jouer en boucle
 		//	Mode 3 : Stopper la boucle, le son s'arr�te
+		int Vligne;
+		float V_red;
+		float V_orange;
+		float V_yellow;
+		float V_white;
+		float V_medium_grey;
+		float V_dark_grey;
+		Color aiguille;
+		int sock = socket(AF_INET, SOCK_STREAM,0);
+		int socketValue = 0;
+		void SocketSend(char buf[]);
 
 	public :
 		Data();
@@ -247,7 +255,96 @@ Data::Data()
 
 void Data::update()
 {
+	//Création du message envoyé au serveur
+    char buf[4096];
 
+	SocketSend(buf);
+
+	int counter = 1;
+	string info;
+	for(int i = 0; i < 5; i++)
+	{
+    	while(buf[counter] != '!')
+		{
+    		info += buf[counter];
+    		counter += 1;
+    	}
+	}
+	istringstream iss(info);
+	vector<string> results((istream_iterator<string>(iss)), istream_iterator<string>());
+
+	Vligne = stoi(results[0]);
+	Vtrain = stoi(results[1]);
+	V_red = stof(results[2]);
+	V_orange = stof(results[3]);
+	V_yellow = stof(results[4]);
+	V_white = stof(results[5]);
+	V_medium_grey = stof(results[6]);
+	V_dark_grey = stof(results[7]);
+	string generalMode = results[8];
+	string mode = results[9];
+	string status = results[10];
+	string level = results[11];
+	Color aiguille;
+}
+
+// Fonction de connexion du client au serveur
+// Serveur : RPI2; Client = RPI1
+void Data::SocketSend(char buf[])
+{
+	//Création du socket
+  	//Si le socket n'est pas créé, sock=-1, sortie de fonction
+  	if(sock == -1)
+	{
+		sock = socket(AF_INET, SOCK_STREAM,0);
+  		return;
+	}
+    socketValue = 1;
+
+  	//Choix du port et de l'IP
+  	int port = 54000;
+  	string ipAddress = "192.168.1.90";
+
+  	sockaddr_in hint;
+  	hint.sin_family = AF_INET;
+  	hint.sin_port = htons(port);
+  	inet_pton(AF_INET, ipAddress.c_str(), &hint.sin_addr);
+
+  	//Début de la connexion au serveur, lorsqu'elle est établie on sort de la boucle
+    socketValue = 2;
+	int connectRes;
+    do
+    {
+        connectRes = connect(sock, (sockaddr*)&hint, sizeof(hint));
+    } while(connectRes == -1);
+
+  	socketValue = 3;
+  	do
+	{
+    	//send to server
+    	int sendRes = send(sock, buf, strlen(buf),0);
+
+    	//on vérifie si le message a été envoyé
+    	if(sendRes == -1)
+    		continue;
+
+    	socketValue = 4;
+
+    	// On nettoie le tableau envoyé qui va servir maintenant à recevoir la réponse du serveur
+    	memset(buf, 0, 4096);
+    	int bytesReceived = -1;
+    	bytesReceived = recv(sock, buf, 4096, 0);
+    	if(bytesReceived == -1 || bytesReceived == NULL)
+		{
+    	    cout << "";
+    	    socketValue = 5;
+    	}
+    	else //On sort de la boucle : la connexion est établie
+		{
+    	    socketValue = 6;
+    	    break;
+    	}
+  	} while(true);
 }
 
 int Data::getVtrain(){return Vtrain;}
@@ -1884,10 +1981,10 @@ class ETCS
 		SRspeed srSpeed{*fenetre, *data};
 		DataView dataView{*fenetre, *data};
 		SystemVersion systemVersion{*fenetre, *data};
+		void action();
 	public :
 		ETCS(RenderWindow &fenetre, Data &data);
 		void update();
-		void action();
 };
 
 ETCS::ETCS(RenderWindow &fenetre, Data &data): button(16, data)
@@ -1900,7 +1997,7 @@ ETCS::ETCS(RenderWindow &fenetre, Data &data): button(16, data)
 
 void ETCS::update()
 {
-	cout << "toto" << endl;
+	action();
 }
 
 void ETCS::action()
@@ -1914,6 +2011,38 @@ void ETCS::action()
 	}
     while(fenetre->pollEvent(event))
     {
+		if (event.type==sf::Event::MouseButtonReleased)
+		{
+            int x=event.mouseButton.x;
+            int y=event.mouseButton.y;
+			for(int i = 0; i < 10; i++)
+			{
+				if(x > ((64 * i + data->getEcartX()) * data->getRE()) && x < ((64 * (i + 1) + data->getEcartX()) * data->getRE()) && y > ((430 + data->getEcartY()) * data->getRE()) && y < ((480 + data->getEcartY()) * data->getRE()))
+            	{
+					if(button[i].getdriver_action() == 0)
+						button[i].setdriver_action(1);
+					else
+						button[i].setdriver_action(2);
+				}
+			}
+			for(int i = 10; i < 15; i++)
+			{
+            	if(x > ((54 + 280 + 246 + 20 + data->getEcartX()) * data->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * (i - 10) + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * (i - 9) + data->getEcartY()) * data->getRE()))
+            	{
+					if(button[i].getdriver_action() == 0)
+						button[i].setdriver_action(1);
+					else
+						button[i].setdriver_action(2);
+				}
+			}
+			if(x > ((54 + 280 + 246 + 20 + data->getEcartX()) * data->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * 5 + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * 5 + 82 + data->getEcartY()) * data->getRE()))
+            {
+				if(button[15].getdriver_action() == 0)
+					button[15].setdriver_action(1);
+				else
+					button[15].setdriver_action(2);
+			}
+        }
 	    if(event.type == Event::Closed)
             fenetre->close();
 		if(event.type == Event::KeyPressed)
@@ -1924,6 +2053,8 @@ void ETCS::action()
 			{
 		        if(button[0].getdriver_action() == 0)
 					button[0].setdriver_action(1);
+				else
+					button[0].setdriver_action(2);
 			}
 			else if(event.key.code == Keyboard::Z)
 			{
