@@ -217,6 +217,8 @@ class Data
 		float V_medium_grey;
 		float V_dark_grey;
 		Color aiguille;
+		string version;
+		int pointKilometrique;
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
 		int socketValue = 0;*/
 		void SocketSend(char buf[]);
@@ -242,6 +244,8 @@ class Data
 		float getV_medium_grey();
 		float getV_dark_grey();
 		Color getAiguilleColor();
+		string getVersion();
+		int getPointKilometrique();
 };
 
 Data::Data()
@@ -365,6 +369,8 @@ float Data::getV_white(){return V_white;}
 float Data::getV_medium_grey(){return V_medium_grey;}
 float Data::getV_dark_grey(){return V_dark_grey;}
 Color Data::getAiguilleColor(){return aiguille;}
+string Data::getVersion(){return version;}
+int Data::getPointKilometrique(){return pointKilometrique;}
 
 //Symbol -----------------------------------------------------------------------------------------------------------------------------------
 class Symbol
@@ -1042,6 +1048,8 @@ class Planning : public Tools
 	public:
 		Planning();
 		void planningInformation(vector<Symbol> & symbol, float temps_ecoule);
+		int getScale();
+		void setScale(int S);
 };
 
 
@@ -1065,6 +1073,10 @@ int Announcements::getPosition(){return position;}
 void Announcements::setPosition(int P){position = P;}
 int Announcements::getVitesse(){return vitesse;}
 void Announcements::setVitesse(int V){vitesse = V;}
+
+
+int Planning::getScale(){return scale;}
+void Planning::setScale(int S){scale = S;}
 
 
 void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
@@ -1590,6 +1602,8 @@ class Default : public Fenetre, public LeftSide
 		vector <Symbol> symbol;
 		vector <Button> buttons;
 		string *ecran;
+		Planning planning;
+		string geographicalPosition;
 	public :
 		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &button);
 		void update();
@@ -1651,22 +1665,22 @@ void Default::update()
 	}
 		else if (buttons[7].getactivation() == 1)
 	{
-		if(data->getGeographicalPosition() == "On")
-			data->setGeographicalPosition("Off");
-		else if (data->getGeographicalPosition() == "Off")
-			data->setGeographicalPosition("On");
+		if(geographicalPosition == "On")
+			geographicalPosition = "Off";
+		else if (geographicalPosition == "Off")
+			geographicalPosition = "On";
 	}
 	else if(buttons[8].getactivation() == 1)
 	{
-		if(data->getPlanningScale() < 32000)
-		data->setPlanningScale(data->getPlanningScale() * 2.0);
+		if(planning.getScale() < 32000)
+		planning.setScale(planning.getScale() * 2.0);
 	}
 	else if(buttons[9].getactivation() == 1)
 	{
-		if(data->getPlanningScale() > 1000)
-			data->setPlanningScale(data->getPlanningScale() / 2.0);
+		if(planning.getScale() > 1000)
+			planning.setScale(planning.getScale() / 2.0);
 	}
-	else if (buttons[10].getactivation() == 1 && version == "3.4.0")
+	else if (buttons[10].getactivation() == 1 && data->getVersion() == "3.4.0")
 	{
 		if(data->getPlanning() == "show planning information")
 			data->setPlanning("Off");
@@ -1687,9 +1701,9 @@ void Default::update()
         }
         DR_05.afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6
     }
-	if(data->getGeographicalPosition() != "Unknown") //Geographical position
+	if(geographicalPosition != "Unknown") //Geographical position
 	{
-		if(data->getGeographicalPosition() == "On") //toggled on
+		if(geographicalPosition == "On") //toggled on
 		{
 			rectangle(V2f(54 + 234 + 46 + 63, 54 + 30 + 191 + 25 + 50 + 50), V2f(120, 30), GREY);//G12
 			creation_texte(to_string(data->getPointKilometrique()), BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), 3);
@@ -1698,15 +1712,15 @@ void Default::update()
 	}
 	if(data->getPlanning() != "Unknown")
 	{
-		if(version == "3.4.0")
+		if(data->getVersion() == "3.4.0")
 		{
 			NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2
 			if(data->getPlanning() == "show planning information" && data->getGeneralMode() == "FS")
-				planning.planningInformation(symbol, delta_ts);
+				planning.planningInformation(delta_ts);
 		}
-		if(version == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && data->getS_D_monitoring() == "On")))
+		if(data->getVersion() == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && data->getS_D_monitoring() == "On")))
 		{
-			planning.planningInformation(symbol, delta_ts);
+			planning.planningInformation(delta_ts);
 		}
 	}
 }
