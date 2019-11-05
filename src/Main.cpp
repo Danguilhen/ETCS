@@ -1589,9 +1589,10 @@ class Default : public Fenetre, public LeftSide
 		Data *data;
 		vector <Symbol> symbol;
 		vector <Button> buttons;
+		string *ecran;
 	public :
-		void update();
 		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &button);
+		void update();
 };
 
 Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &button)
@@ -1601,7 +1602,6 @@ Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vect
 	this->symbol = symbol;
 	this->buttons = buttons;
 }
-
 
 void Default::update()
 {
@@ -1615,11 +1615,11 @@ void Default::update()
 		buttons[13].settype("disabled");
 		buttons[14].settype("disabled");
 		buttons[15].settype("disabled");
-        ecran = "mainWindow";
+        *ecran = "mainWindow";
 	}
 	else if(buttons[1].getactivation() == 1)
 	{
-		ecran = "overrideWindow";
+		*ecran = "overrideWindow";
 		for(int i = 0; i <= 15; i++)
 			buttons[i].settype("disabled");
 		buttons[0].settype("up_type");
@@ -1627,14 +1627,14 @@ void Default::update()
 	}
 	else if(buttons[2].getactivation() == 1)
 	{
-		ecran = "dataViewWindow";
+		*ecran = "dataViewWindow";
 		for(int i = 0; i <= 15; i++)
 			buttons[i].settype("disabled");
 	}
 	else if(buttons[3].getactivation() == 1)
-		ecran = "specialWindow";
+		*ecran = "specialWindow";
 	else if(buttons[4].getactivation() == 1)
-		ecran = "settingsWindow";
+		*ecran = "settingsWindow";
 	else if (buttons[5].getactivation() == 1)
        {
            if(data->getTunnelStoppingArea() == "TunnelStoppingArea" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
