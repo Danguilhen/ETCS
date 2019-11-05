@@ -1,4 +1,4 @@
-/*#include <cstdlib>
+#include <cstdlib>
 #include <iostream>
 #include <thread>
 #include <math.h>
@@ -294,7 +294,7 @@ int main()
 			}
 		}
 
-		windows(ecran, symbol, version, vbc, buttons, numero);
+		windows(ecran, symbol, version, vbc, buttons);
 
 		//ST_02.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 / 2.0));	//A4
 		//ST_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + + 25 + 25 + 25 / 2.0));	//C9
@@ -395,32 +395,32 @@ void affichageRectangle(string ecran)		//Affiche toutes les cases sur l'\E9cran
 
 
 
-void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero);
-void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero);
-void SRspeedWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void dataViewWindows(vector<Symbol> & symbol, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item);
-void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void systemVersionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran);
+void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran);
+void SRspeedWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void dataViewWindows(vector<Symbol> & symbol, string title, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item);
+void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void systemVersionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
 
-void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero);
-void adhesionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void trainRunningNumberWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void brightnessWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void volumeWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
-void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons, int & numero);
-void close(string & ecran, vector<Buttons> & boutons, int & numero);
-void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero);
+void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran);
+void adhesionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void trainRunningNumberWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void brightnessWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void volumeWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
+void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons);
+void close(string & ecran, vector<Buttons> & boutons);
+void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
 
 
 
-void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero)
+void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran)
 {
     vector <string> selection(9);
     vector <int> enable(9);
@@ -571,11 +571,11 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 	if(version == "3.6.0")
 		selection.push_back("Radio data");
     menuWindows(selection, enable, symbol, "Main");
-    close(ecran, boutons, numero);
+    close(ecran, boutons);
 }
 
 
-void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran, int & numero)
+void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran)
 {
     vector <string> selection(1);
     vector <int> enable(1);
@@ -602,10 +602,10 @@ void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & b
     }
     selection = {"EOA"};
     menuWindows(selection, enable, symbol, "Override");
-    close(ecran, boutons, numero);
+    close(ecran, boutons);
 }
 
-void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
     vector <string> selection(3);
     vector <int> enable(3);
@@ -649,10 +649,10 @@ void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
     }
     selection = {"Adhesion", "SR speed / distance", "Train integrity"};
     menuWindows(selection, enable, symbol, "Special");
-    close(ecran, boutons, numero);
+    close(ecran, boutons);
 }
 
-void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran, int & numero)
+void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran)
 {
     vector <string> selection(6);
     vector <int> enable(6);
@@ -698,11 +698,11 @@ void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> 
         boutons[5].settype("delayed");
     selection = {"Language", "Volume", "Brightness", "System version", "Set VBC", "Remote VBC"};
     menuWindows(selection, enable, symbol, "Settings");
-    close(ecran, boutons, numero);
+    close(ecran, boutons);
 }
 
 
-void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
     vector <string> selection(4);
     vector <int> enable(4);
@@ -734,17 +734,17 @@ void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string
          boutons[3].settype("delayed");
     selection = {"Contact last RBC", "Use short number", "Enter RBC data", "Radio Network ID"};
     menuWindows(selection, enable, symbol, "RBC contact");
-    close(ecran, boutons, numero);
+    close(ecran, boutons);
 }
 
-void trainRunningNumberWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void trainRunningNumberWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-	dataEntryWindows({{"", "", "0"}}, symbol, 0, "Train running number", {}, numero, "numeric", boutons, ecran);
+	dataEntryWindows({{"", "", "0"}}, symbol, 0, "Train running number", {}, "numeric", boutons, ecran);
 }
 
-void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-	dataEntryWindows({{"", data->getLevel(), ""}}, symbol, 0, "Level", {"Level 1", "Level 2", "Level 3", "Level 0"}, numero, "dedicated keyboard", boutons, ecran);
+	dataEntryWindows({{"", data->getLevel(), ""}}, symbol, 0, "Level", {"Level 1", "Level 2", "Level 3", "Level 0"}, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
 		data->setLevelETCS("Level 1");
 	else if(boutons[1].getactivation())
@@ -755,7 +755,7 @@ void ERTMS_ETCSlevelWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, s
 		data->setLevelETCS("Level 0");
 }
 
-void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
     if(boutons[0].getactivation())
 		data->setTempDriver_ID(data->getTempDriver_ID() * 10 + 1);
@@ -784,17 +784,17 @@ void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string &
     else if(boutons[15].getactivation())
     {
         data->setDriver_ID(data->getTempDriver_ID());
-        dataEntryWindows({{"", to_string(data->getDriver_ID()), "1"}}, symbol, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran);
+        dataEntryWindows({{"", to_string(data->getDriver_ID()), "1"}}, symbol, 0, "Driver ID", {}, "alphanumeric", boutons, ecran);
     }
 	//if(data->getTempDriver_ID() == 0)
-	//	dataEntryWindows({{"", "", "0"}}, symbol, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran);
+	//	dataEntryWindows({{"", "", "0"}}, symbol, 0, "Driver ID", {}, "alphanumeric", boutons, ecran);
 	//else
-	dataEntryWindows({{"", to_string(data->getTempDriver_ID()), "0"}}, symbol, 0, "Driver ID", {}, numero, "alphanumeric", boutons, ecran);
+	dataEntryWindows({{"", to_string(data->getTempDriver_ID()), "0"}}, symbol, 0, "Driver ID", {}, "alphanumeric", boutons, ecran);
 }
 
-void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-	dataEntryWindows({{"", data->getRadioNetworkID(), "0"}}, symbol, 0, "Radio network ID", {}, numero, "dedicated keyboard", boutons, ecran);
+	dataEntryWindows({{"", data->getRadioNetworkID(), "0"}}, symbol, 0, "Radio network ID", {}, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
 		data->setRadioNetworkID("GSMR-A");
 	else if(boutons[1].getactivation())
@@ -803,7 +803,7 @@ void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, st
 		data->setRadioNetworkID("Telecom X");
 }
 
-void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
     int i = 0;
     if(numero == 1)
@@ -834,7 +834,7 @@ void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
         {
             data->setTempRBCID(data->getRBCID());
             i = 1;
-            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {}, numero,
+            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
 				"numeric", boutons, ecran);
         }
         else if(boutons[15].getactivation())
@@ -843,16 +843,16 @@ void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
             numero++;
             i = 1;
             dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "1"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
-				numero, "numeric", boutons, ecran);
+				"numeric", boutons, ecran);
         }
         if(i ==0)
 		{
 			if(data->getTempRBCID() == 0)
-				dataEntryWindows({{"RBC ID", "", "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {}, numero, "numeric", boutons,
+				dataEntryWindows({{"RBC ID", "", "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {}, "numeric", boutons,
 					ecran);
 			else
 				dataEntryWindows({{"RBC ID", to_string(data->getTempRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
-					numero, "numeric", boutons, ecran);
+					"numeric", boutons, ecran);
 		}
     }
     else
@@ -883,7 +883,7 @@ void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
         {
             data->setTempRBCphoneNumber(data->getRBCphoneNumber());
             i = 1;
-            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {}, numero,
+            dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
 				"numeric", boutons, ecran);
         }
         else if(boutons[15].getactivation())
@@ -892,42 +892,42 @@ void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
             numero--;
             i = 1;
             dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "1"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
-				numero, "numeric", boutons, ecran);
+				"numeric", boutons, ecran);
         }
 
        if(i ==0)
 		{
 			if(data->getTempRBCphoneNumber() == 0)
-				dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", "", "0"}}, symbol, 1, "RBC data", {}, numero, "numeric", boutons, ecran);
+				dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", "", "0"}}, symbol, 1, "RBC data", {}, "numeric", boutons, ecran);
 			else
 				dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "0"}, {"RBC phone number", to_string(data->getTempRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
-					numero, "numeric", boutons, ecran);
+					"numeric", boutons, ecran);
 
 		}
 	}
 }
 
 
-void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-	dataEntryWindows({{"", data->getLanguage(), "0"}}, symbol, 0, "Language", {"English", "Francais"}, numero, "dedicated keyboard", boutons, ecran);
+	dataEntryWindows({{"", data->getLanguage(), "0"}}, symbol, 0, "Language", {"English", "Francais"}, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
 		data->setLanguage("English");
 	else if(boutons[1].getactivation())
 		data->setLanguage("Francais");
 }
 
-void volumeWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void volumeWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-	dataEntryWindows({{""}}, symbol, 0, "Volume", {}, numero, "", boutons, ecran);
+	dataEntryWindows({{""}}, symbol, 0, "Volume", {}, "", boutons, ecran);
 }
 
-void brightnessWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void brightnessWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-	dataEntryWindows({{""}}, symbol, 0, "Brightness", {}, numero, "", boutons, ecran);
+	dataEntryWindows({{""}}, symbol, 0, "Brightness", {}, "", boutons, ecran);
 }
 
-void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
 	vector<vector<string>> input_field = {{"Train category", data->getTrain_category(), "0"}, {"Length (m)", to_string(data->getlength()), "1"}, {"Brake percentage",
 		to_string(data->getbreaking_percetage()), "0"}, {"Max speed (km/h)", to_string(data->getmaximum_train_speed()), "0"}, {"Axle load category",
@@ -948,14 +948,14 @@ void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string 
 	//
 	//if(numero == 7)
 	//
-	dataEntryWindows(input_field, symbol, 1, "Train data", selection, numero, keyboard, boutons, ecran);
+	dataEntryWindows(input_field, symbol, 1, "Train data", selection, keyboard, boutons, ecran);
 	for(int i = 0; i < int(input_field.size()); i++)
 		creation_texte(input_field[i][0], GREY, 12, 0, V2f(204 - 5, 20 * i + 100 + 6), 2);
 }
 
-void SRspeedWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void SRspeedWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-    dataEntryWindows({{"SR speed (km/h)", to_string(data->getSRspeed()), "0"}, {"SR distance (m)", "b", "0"}}, symbol, 0, "SR speed/distance", {}, numero, "numeric", boutons,
+    dataEntryWindows({{"SR speed (km/h)", to_string(data->getSRspeed()), "0"}, {"SR distance (m)", "b", "0"}}, symbol, 0, "SR speed/distance", {}, "numeric", boutons,
 		ecran);
 	if(boutons[0].getactivation())
 		data->setSRspeed(data->getSRspeed() * 10 + 1);
@@ -979,16 +979,16 @@ void SRspeedWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
 		data->setSRspeed(data->getSRspeed() * 10 + 0);
 }
 
-void adhesionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void adhesionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
-	dataEntryWindows({{"", data->getAdhesion(),"0"}}, symbol, 0, "Adhesion", {"Non slippery rail","Slippery rail"}, numero, "dedicated keyboard", boutons, ecran);
+	dataEntryWindows({{"", data->getAdhesion(),"0"}}, symbol, 0, "Adhesion", {"Non slippery rail","Slippery rail"}, "dedicated keyboard", boutons, ecran);
 	if(boutons[0].getactivation())
 		data->setAdhesion("Non slippery rail");
 	else if(boutons[1].getactivation())
 		data->setAdhesion("Slippery rail");
 }
 
-void dataViewWindows(vector<Symbol> & symbol, string title, int & numero, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item)
+void dataViewWindows(vector<Symbol> & symbol, string title, vector<Buttons> & boutons, string & ecran, vector<vector<string>> item)
 {
 	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK);
 	if(title == "Data View")
@@ -1003,7 +1003,7 @@ void dataViewWindows(vector<Symbol> & symbol, string title, int & numero, vector
 	{
 		NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
 		boutons[11].settype("up_type");
-		close(ecran, boutons, numero);
+		close(ecran, boutons);
 	}
 	else if(numero == 2)
 	{
@@ -1026,7 +1026,7 @@ void dataViewWindows(vector<Symbol> & symbol, string title, int & numero, vector
 	}
 }
 
-void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
     vector<vector<string>> item;
     if(numero == 1)
@@ -1037,57 +1037,57 @@ void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string &
     else
     	item = {{"Radio network ID", data->getRadioNetworkID()}, {"RBC ID", to_string(data->getRBCID())}, {"RBC phone number", to_string(data->getRBCphoneNumber())}, {"", ""},
 		{"VBC #1 set code", "d"}, {"VBC #2 set code", "e"}};
-    dataViewWindows(symbol, "Data View", numero, boutons, ecran, item);
+    dataViewWindows(symbol, "Data View", boutons, ecran, item);
 }
 
-void systemVersionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran, int & numero)
+void systemVersionWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
 	vector<vector<string>> item = {{"Operated system version", ""}};
-	dataViewWindows(symbol, "System version", numero, boutons, ecran, item);
+	dataViewWindows(symbol, "System version", boutons, ecran, item);
 }
 
-void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons, int & numero)
+void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons)
 {
     if(ecran == "mainWindow")
-        MainWindow(symbol, version, boutons, ecran, numero);
+        MainWindow(symbol, version, boutons, ecran);
     else if(ecran == "overrideWindow")
-        overrideWindow(symbol, version, boutons, ecran, numero);
+        overrideWindow(symbol, version, boutons, ecran);
     else if(ecran == "specialWindow")
-        specialWindow(symbol, boutons, ecran, numero);
+        specialWindow(symbol, boutons, ecran);
     else if(ecran == "settingsWindow")
-        settingsWindow(symbol, vbc, boutons, ecran, numero);
+        settingsWindow(symbol, vbc, boutons, ecran);
     else if(ecran == "RBCcontactWindow")
-        RBCcontactWindow(symbol, boutons, ecran, numero);
+        RBCcontactWindow(symbol, boutons, ecran);
     else if(ecran == "trainRunningNumberWindow")
-        trainRunningNumberWindow(symbol, boutons, ecran, numero);
+        trainRunningNumberWindow(symbol, boutons, ecran);
     else if(ecran == "ERTMS_ETCSlevelWindow")
-        ERTMS_ETCSlevelWindow(symbol, boutons, ecran, numero);
+        ERTMS_ETCSlevelWindow(symbol, boutons, ecran);
     else if(ecran == "driverIDWindow")
-        driverIDWindow(symbol, boutons, ecran, numero);
+        driverIDWindow(symbol, boutons, ecran);
     else if(ecran == "radionetworkIDWindow")
-        radionetworkIDWindow(symbol, boutons, ecran, numero);
+        radionetworkIDWindow(symbol, boutons, ecran);
     else if(ecran == "RBCdataWindow")
-        RBCdataWindow(symbol, boutons, ecran, numero);
+        RBCdataWindow(symbol, boutons, ecran);
     else if(ecran == "languageWindow")
-        languageWindow(symbol, boutons, ecran, numero);
+        languageWindow(symbol, boutons, ecran);
     else if(ecran == "volumeWindow")
-        volumeWindow(symbol, boutons, ecran, numero);
+        volumeWindow(symbol, boutons, ecran);
     else if(ecran == "brightnessWindow")
-        brightnessWindow(symbol, boutons, ecran, numero);
+        brightnessWindow(symbol, boutons, ecran);
     else if(ecran == "SRspeed/distanceWindow")
-        SRspeedWindow(symbol, boutons, ecran, numero);
+        SRspeedWindow(symbol, boutons, ecran);
     else if(ecran == "adhesionWindow")
-        adhesionWindow(symbol, boutons, ecran, numero);
+        adhesionWindow(symbol, boutons, ecran);
     else if(ecran == "trainDataWindow")
-        trainDataWindow(symbol, boutons, ecran, numero);
+        trainDataWindow(symbol, boutons, ecran);
     else if(ecran == "dataViewWindow")
-        dataViewWindow(symbol, boutons, ecran, numero);
+        dataViewWindow(symbol, boutons, ecran);
     else if(ecran == "systemVersionWindow")
-        systemVersionWindow(symbol, boutons, ecran, numero);
+        systemVersionWindow(symbol, boutons, ecran);
 }
 
 
-void close(string & ecran, vector<Buttons> & boutons, int & numero)
+void close(string & ecran, vector<Buttons> & boutons)
 {
     if(boutons[11].getactivation())
         numero = 1;
@@ -1108,4 +1108,4 @@ void close(string & ecran, vector<Buttons> & boutons, int & numero)
         }
     else if(boutons[11].getactivation()&& (ecran == "adhesionWindow" || ecran == "SRspeed/distanceWindow"))
         ecran = "specialWindow";
-}*/
+}
