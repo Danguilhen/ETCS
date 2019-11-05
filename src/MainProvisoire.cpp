@@ -307,7 +307,6 @@ void brightnessWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string
 void volumeWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
 void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
 void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons);
-void close(string & ecran, vector<Buttons> & boutons);
 void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
 
 
@@ -463,7 +462,11 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 	if(version == "3.6.0")
 		selection.push_back("Radio data");
     menuWindows(selection, enable, symbol, "Main");
-    close(ecran, boutons);
+	if(boutons[11].getactivation())
+	{
+        numero = 1;
+        ecran = "defaultWindow";
+	}
 }
 
 
@@ -494,7 +497,11 @@ void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & b
     }
     selection = {"EOA"};
     menuWindows(selection, enable, symbol, "Override");
-    close(ecran, boutons);
+	if(boutons[11].getactivation())
+	{
+        numero = 1;
+        ecran = "defaultWindow";
+	}
 }
 
 void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
@@ -541,7 +548,11 @@ void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
     }
     selection = {"Adhesion", "SR speed / distance", "Train integrity"};
     menuWindows(selection, enable, symbol, "Special");
-    close(ecran, boutons);
+    if(boutons[11].getactivation())
+	{
+        numero = 1;
+        ecran = "defaultWindow";
+	}
 }
 
 void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran)
@@ -590,7 +601,11 @@ void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> 
         boutons[5].settype("delayed");
     selection = {"Language", "Volume", "Brightness", "System version", "Set VBC", "Remote VBC"};
     menuWindows(selection, enable, symbol, "Settings");
-    close(ecran, boutons);
+    if(boutons[11].getactivation())
+	{
+        numero = 1;
+        ecran = "defaultWindow";
+	}
 }
 
 
@@ -983,21 +998,21 @@ void close(string & ecran, vector<Buttons> & boutons)
 {
     if(boutons[11].getactivation())
         numero = 1;
-    if(boutons[11].getactivation() && (ecran == "mainWindow" || ecran == "overrideWindow" || ecran == "specialWindow" || ecran == "settingsWindow"|| ecran == "dataViewWindow"))
+    if(boutons[11].getactivation() && (ecran == "dataViewWindow"))
         ecran = "defaultWindow";
     else if(boutons[11].getactivation() && (ecran == "languageWindow" || ecran == "volumeWindow" || ecran == "brightnessWindow"))
         ecran = "settingsWindow";
     else if(boutons[11].getactivation() && (ecran == "driverIDWindow" || ecran == "trainDataWindow" || ecran == "trainRunningNumberWindow" || ecran == "RBCdataWindow" ||
 		ecran == "ERTMS_ETCSlevelWindow"))
-        {
-            ecran = "mainWindow";
-            boutons[3].settype("disabled");
-			boutons[10].settype("disabled");
-			boutons[12].settype("disabled");
-			boutons[13].settype("disabled");
-			boutons[14].settype("disabled");
-			boutons[15].settype("disabled");
-        }
+    {
+        ecran = "mainWindow";
+        boutons[3].settype("disabled");
+		boutons[10].settype("disabled");
+		boutons[12].settype("disabled");
+		boutons[13].settype("disabled");
+		boutons[14].settype("disabled");
+		boutons[15].settype("disabled");
+    }
     else if(boutons[11].getactivation()&& (ecran == "adhesionWindow" || ecran == "SRspeed/distanceWindow"))
         ecran = "specialWindow";
 }
