@@ -1677,15 +1677,15 @@ void Default::update()
     {
         if(data->getTunnelStoppingArea() == "TunnelStoppingArea")
         {
-            TC_36->afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
+            TC_36.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
             creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
         }
         else if(data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
         {
-            TC_37->afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
+            TC_37.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
             creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
         }
-        DR_05->afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6
+        DR_05.afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6
     }
 	if(data->getGeographicalPosition() != "Unknown") //Geographical position
 	{
@@ -1694,13 +1694,13 @@ void Default::update()
 			rectangle(V2f(54 + 234 + 46 + 63, 54 + 30 + 191 + 25 + 50 + 50), V2f(120, 30), GREY);//G12
 			creation_texte(to_string(data->getPointKilometrique()), BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), 3);
 		}
-		DR_03->afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8
+		DR_03.afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8
 	}
 	if(data->getPlanning() != "Unknown")
 	{
 		if(version == "3.4.0")
 		{
-			NA_02->afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2
+			NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2
 			if(data->getPlanning() == "show planning information" && data->getGeneralMode() == "FS")
 				planning.planningInformation(symbol, delta_ts);
 		}
