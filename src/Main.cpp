@@ -219,6 +219,8 @@ class Data
 		Color aiguille;
 		string version;
 		int pointKilometrique;
+		int remainingDistanceTunnel = 500;
+		string tunnelStoppingArea = "TunnelStoppingArea";
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
 		int socketValue = 0;*/
 		void SocketSend(char buf[]);
@@ -246,6 +248,9 @@ class Data
 		Color getAiguilleColor();
 		string getVersion();
 		int getPointKilometrique();
+		int getRemainingDistanceTunnel();
+		string getTunnelStoppingArea();
+		void setTunnelStoppingArea(string TSA);
 };
 
 Data::Data()
@@ -371,6 +376,9 @@ float Data::getV_dark_grey(){return V_dark_grey;}
 Color Data::getAiguilleColor(){return aiguille;}
 string Data::getVersion(){return version;}
 int Data::getPointKilometrique(){return pointKilometrique;}
+int Data::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
+string Data::getTunnelStoppingArea(){return tunnelStoppingArea;}
+void Data::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
 
 //Symbol -----------------------------------------------------------------------------------------------------------------------------------
 class Symbol
@@ -1040,14 +1048,16 @@ class Planning : public Tools
 
 		vector<Announcements> tab_paf;//FLÉCHES VITESSE
 
+		vector <Symbol> symbol;
+
 		void SpeedProfileDiscontinuityInformation(int scale, float delta_distance, vector<Announcements> &tab_paf, vector<Symbol> & symbol);
 		void Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa, vector<Symbol> & symbol);
 		void gradientProfile(int scale, float delta_distance, vector<Gradient> &tab_grad);
 		void pasp(int scale, vector<PASP> &tab_pasp, float delta_distance);
 
 	public:
-		Planning();
-		void planningInformation(vector<Symbol> & symbol, float temps_ecoule);
+		Planning(vector<Symbol> &symbol);
+		void planningInformation(float temps_ecoule);
 		int getScale();
 		void setScale(int S);
 };
@@ -1162,7 +1172,7 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 	}
 }
 
-void Planning::planningInformation(vector<Symbol> & symbol, float temps_ecoule)
+void Planning::planningInformation(float temps_ecoule)
 {
 	float delta_distance;
 	if(scale == 1000)
@@ -1394,9 +1404,11 @@ void Planning::SpeedProfileDiscontinuityInformation(int scale, float delta_dista
 	}
 }
 
-Planning::Planning() : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
+Planning::Planning(vector<Symbol> &symbol) : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
 	gradient4(4001, 6000, 0), gradient5(15001, 7000, 35), PA1(1500, 98), PA2(1000, 72), PA3(3000, 97), PA6(4000, 75)
 {
+	this->symbol = symbol;
+
 	tab_pasp.push_back(pasp0);
 	tab_pasp.push_back(pasp1);
 	tab_pasp.push_back(pasp2);
@@ -1426,7 +1438,7 @@ Planning::Planning() : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pa
 class LeftSide : public virtual Tools
 {
 	protected :
-		Cadran speed;
+		Cadran speed{400};
 		void targetDistance(int distance);
 };
 
@@ -1602,24 +1614,26 @@ class Default : public Fenetre, public LeftSide
 		vector <Symbol> symbol;
 		vector <Button> buttons;
 		string *ecran;
-		Planning planning;
+		Planning planning{symbol};
 		string geographicalPosition;
+		string S_D_monitoring = "Off";
+		string planningAffichage = "show planning information";
 	public :
-		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &button);
+		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol/*, vector<Button> &buttons*/);
 		void update();
 };
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &button)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol/*, vector<Button> &buttons*/)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
 	this->symbol = symbol;
-	this->buttons = buttons;
+	//this->buttons = buttons;
 }
 
 void Default::update()
 {
-	for (int i = 0; i <= 15; i++)
+	for(int i = 0; i <= 15; i++)
 		buttons[i].settype("up_type");
 	if(buttons[0].getactivation() == 1)
 	{
@@ -1650,20 +1664,20 @@ void Default::update()
 	else if(buttons[4].getactivation() == 1)
 		*ecran = "settingsWindow";
 	else if (buttons[5].getactivation() == 1)
-       {
-           if(data->getTunnelStoppingArea() == "TunnelStoppingArea" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
-               data->setTunnelStoppingArea(data->getTunnelStoppingArea() + "-");
-           else if (data->getTunnelStoppingArea() == "TunnelStoppingArea-" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
-               data->setTunnelStoppingArea(data->getTunnelStoppingArea().substr(0, data->getTunnelStoppingArea().size() - 1));
-       }
-		else if (buttons[6].getactivation() == 1)
+    {
+        if(data->getTunnelStoppingArea() == "TunnelStoppingArea" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
+            data->setTunnelStoppingArea(data->getTunnelStoppingArea() + "-");
+        else if (data->getTunnelStoppingArea() == "TunnelStoppingArea-" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
+            data->setTunnelStoppingArea(data->getTunnelStoppingArea().substr(0, data->getTunnelStoppingArea().size() - 1));
+    }
+	else if (buttons[6].getactivation() == 1)
 	{
-		if(data->getS_D_monitoring() == "On")
-			data->setS_D_monitoring("Off");
-		else if (data->getS_D_monitoring() == "Off")
-			data->setS_D_monitoring("On");
+		if(S_D_monitoring == "On")
+			S_D_monitoring = "Off";
+		else if (S_D_monitoring == "Off")
+			S_D_monitoring = "On";
 	}
-		else if (buttons[7].getactivation() == 1)
+	else if (buttons[7].getactivation() == 1)
 	{
 		if(geographicalPosition == "On")
 			geographicalPosition = "Off";
@@ -1682,10 +1696,10 @@ void Default::update()
 	}
 	else if (buttons[10].getactivation() == 1 && data->getVersion() == "3.4.0")
 	{
-		if(data->getPlanning() == "show planning information")
-			data->setPlanning("Off");
-		else if(data->getPlanning() == "Off")
-			data->setPlanning("show planning information");
+		if(planningAffichage == "show planning information")
+			planningAffichage = "Off";
+		else if(planningAffichage == "Off")
+			planningAffichage = "show planning information";
 	}
 	if(data->getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
     {
@@ -1710,17 +1724,17 @@ void Default::update()
 		}
 		DR_03.afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8
 	}
-	if(data->getPlanning() != "Unknown")
+	if(planningAffichage != "Unknown")
 	{
 		if(data->getVersion() == "3.4.0")
 		{
 			NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2
-			if(data->getPlanning() == "show planning information" && data->getGeneralMode() == "FS")
-				planning.planningInformation(delta_ts);
+			if(planningAffichage == "show planning information" && data->getGeneralMode() == "FS")
+				planning.planningInformation(0);
 		}
-		if(data->getVersion() == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && data->getS_D_monitoring() == "On")))
+		if(data->getVersion() == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && S_D_monitoring == "On")))
 		{
-			planning.planningInformation(delta_ts);
+			planning.planningInformation(0);
 		}
 	}
 }
