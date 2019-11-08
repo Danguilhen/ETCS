@@ -223,7 +223,7 @@ class Data
 		string tunnelStoppingArea = "TunnelStoppingArea";
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
 		int socketValue = 0;*/
-		void SocketSend(char buf[]);
+		//void SocketSend(char buf[]);
 
 	public :
 		Data();
@@ -299,8 +299,8 @@ void Data::update()
 
 // Fonction de connexion du client au serveur
 // Serveur : RPI2; Client = RPI1
-void Data::SocketSend(char buf[])
-{/*
+/*void Data::SocketSend(char buf[])
+{
 	//Création du socket
   	//Si le socket n'est pas créé, sock=-1, sortie de fonction
   	if(sock == -1)
@@ -353,8 +353,8 @@ void Data::SocketSend(char buf[])
     	    socketValue = 6;
     	    break;
     	}
-  	} while(true);*/
-}
+  	} while(true);
+}*/
 
 int Data::getVtrain(){return Vtrain;}
 string Data::getGeneralMode(){return generalMode;}
@@ -380,6 +380,102 @@ int Data::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
 string Data::getTunnelStoppingArea(){return tunnelStoppingArea;}
 void Data::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
 
+//Button -----------------------------------------------------------------------------------------------------------------------------------
+class Button
+{
+	private :
+		Data *data;
+		string type;
+		int driver_action;//press� ou non
+		int button_activation = 0;//nombre de fois activ�
+		bool button_state;//enabled ou non
+		Clock chrono;
+		Time t_actif;
+		int n; // variable utilis�e pour le down_type
+
+	public :
+		Button(Data &data);
+		string gettype();
+		void settype(string P);
+		int getdriver_action();
+		void setdriver_action(int P);
+		void action_type();
+		int getactivation();
+};
+
+Button::Button(Data &data)
+{
+	this->data = &data;
+}
+
+string Button::gettype() {return type;}
+void Button::settype(string P) {type = P;}
+int Button::getdriver_action(){return driver_action;}
+void Button::setdriver_action(int P){driver_action = P;}
+int Button::getactivation(){return button_activation;}
+
+void Button::action_type()
+{
+	t_actif = chrono.getElapsedTime();
+	float delta_ts=t_actif.asSeconds();
+	button_activation = 0;
+	if(type == "up_type")
+	{
+		if(driver_action == 1)
+		{
+			data->setSon(11);
+		}
+		if(driver_action == 3)
+		{
+			button_activation = 1;
+		}
+	}
+	if(type == "down_type")
+	{
+		if(driver_action == 1)
+		{
+			data->setSon(11);
+			chrono.restart();
+			button_activation = 1;
+			n = 0;
+		}
+		else if(driver_action == 2)
+		{
+			if(delta_ts <= 1.5 && n == 0)
+			{
+				button_activation = 0;
+			}
+			if (delta_ts > 1.5)
+			{
+				n = 1;
+				chrono.restart();
+			}
+			if(n == 1)
+			{
+				if(round(delta_ts*10) == 0.3*10)
+				{
+					button_activation = 1;
+					chrono.restart();
+				}
+				else
+					button_activation = 0;
+			}
+		}
+	}
+	if (type == "delay_type")
+	{
+		if(driver_action == 1)
+		{
+			data->setSon(11);
+			chrono.restart();
+		}
+		if(driver_action == 3 && delta_ts > 2)
+		{
+			button_activation = 1;
+		}
+	}
+}
+
 //Symbol -----------------------------------------------------------------------------------------------------------------------------------
 class Symbol
 {
@@ -394,7 +490,7 @@ class Symbol
 	public :
 		void afficher(V2f position);
 		void effacer();
-		Symbol(vector<Symbol> & symbol);
+		void init(RenderWindow &fenetre, Data &data);
 };
 
 void Symbol::loadSymbol(string chemin_dacces)
@@ -437,8 +533,10 @@ void Symbol::effacer()
 	//sprite[0].setColor(m_color);
 }
 
-Symbol::Symbol(vector<Symbol> & symbol)
+void Symbol::init(RenderWindow &fenetre, Data &data)
 {
+	this->fenetre = &fenetre;
+	this->data = &data;
 	vector<string> nom{"DR_01", "DR_02", "DR_03", "DR_04", "DR_05", "LE_01", "LE_02", "LE_02a", "LE_03", "LE_04", "LE_05", "LE_06", "LE_07", "LE_08", "LE_08a", "LE_09", "LE_09a", "LE_10", "LE_11", "LE_12",
 	"LE_13", "LE_14", "LE_15", "LS_01", "LX_01", "MO_01", "MO_02", "MO_03", "MO_04", "MO_05", "MO_06", "MO_07", "MO_08", "MO_09", "MO_10", "MO_11", "MO_12", "MO_13", "MO_14", "MO_15", "MO_16", "MO_17",
 	"MO_18", "MO_19", "MO_20", "MO_21", "MO_22", "NA_01", "NA_02", "NA_03", "NA_04", "NA_05", "NA_06", "NA_07", "NA_08", "NA_09", "NA_10", "NA_11", "NA_12", "NA_13", "NA_14", "NA_15", "NA_16", "NA_17",
@@ -449,7 +547,7 @@ Symbol::Symbol(vector<Symbol> & symbol)
 	"TC_36", "TC_37"};
 	for(int i = 0; i < int(nom.size()); i++)
 	{
-		symbol[i].loadSymbol("ressources/symbols/" + nom[i] + ".bmp");
+		this[i].loadSymbol("ressources/symbols/" + nom[i] + ".bmp");
 	}
 }
 
@@ -1619,16 +1717,16 @@ class Default : public Fenetre, public LeftSide
 		string S_D_monitoring = "Off";
 		string planningAffichage = "show planning information";
 	public :
-		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol/*, vector<Button> &buttons*/);
+		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons);
 		void update();
 };
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol/*, vector<Button> &buttons*/)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
 	this->symbol = symbol;
-	//this->buttons = buttons;
+	this->buttons = buttons;
 }
 
 void Default::update()
@@ -2030,110 +2128,16 @@ SystemVersion::SystemVersion(RenderWindow &fenetre, Data &data)
 	this->data = &data;
 }
 
-//Button -----------------------------------------------------------------------------------------------------------------------------------
-class Button
-{
-	private :
-		Data *data;
-		string type;
-		int driver_action;//press� ou non
-		int button_activation = 0;//nombre de fois activ�
-		bool button_state;//enabled ou non
-		Clock chrono;
-		Time t_actif;
-		int n; // variable utilis�e pour le down_type
-
-	public :
-		Button(Data &data);
-		string gettype();
-		void settype(string P);
-		int getdriver_action();
-		void setdriver_action(int P);
-		void action_type();
-		int getactivation();
-};
-
-Button::Button(Data &data)
-{
-	this->data = &data;
-}
-
-string Button::gettype() {return type;}
-void Button::settype(string P) {type = P;}
-int Button::getdriver_action(){return driver_action;}
-void Button::setdriver_action(int P){driver_action = P;}
-int Button::getactivation(){return button_activation;}
-
-void Button::action_type()
-{
-	t_actif = chrono.getElapsedTime();
-	float delta_ts=t_actif.asSeconds();
-	button_activation = 0;
-	if(type == "up_type")
-	{
-		if(driver_action == 1)
-		{
-			data->setSon(11);
-		}
-		if(driver_action == 3)
-		{
-			button_activation = 1;
-		}
-	}
-	if(type == "down_type")
-	{
-		if(driver_action == 1)
-		{
-			data->setSon(11);
-			chrono.restart();
-			button_activation = 1;
-			n = 0;
-		}
-		else if(driver_action == 2)
-		{
-			if(delta_ts <= 1.5 && n == 0)
-			{
-				button_activation = 0;
-			}
-			if (delta_ts > 1.5)
-			{
-				n = 1;
-				chrono.restart();
-			}
-			if(n == 1)
-			{
-				if(round(delta_ts*10) == 0.3*10)
-				{
-					button_activation = 1;
-					chrono.restart();
-				}
-				else
-					button_activation = 0;
-			}
-		}
-	}
-	if (type == "delay_type")
-	{
-		if(driver_action == 1)
-		{
-			data->setSon(11);
-			chrono.restart();
-		}
-		if(driver_action == 3 && delta_ts > 2)
-		{
-			button_activation = 1;
-		}
-	}
-}
-
 //ETCS -----------------------------------------------------------------------------------------------------------------------------------
 class ETCS
 {
 	private :
 		RenderWindow *fenetre;
 		Data *data;
+		vector <Symbol> symbol;
 		vector <Button> button;
 		Event event;
+		Default def{*fenetre, *data, symbol, button};
 		Special special{*fenetre, *data};
 		Settings settings{*fenetre, *data};
 		SRspeed srSpeed{*fenetre, *data};
@@ -2147,6 +2151,7 @@ class ETCS
 
 ETCS::ETCS(RenderWindow &fenetre, Data &data): button(16, data)
 {
+	symbol.init(fenetre, data);
 	this->fenetre = &fenetre;
 	this->data = &data;
 	for(int i = 0; i <= 15; i++)
@@ -2156,6 +2161,7 @@ ETCS::ETCS(RenderWindow &fenetre, Data &data): button(16, data)
 void ETCS::update()
 {
 	action();
+	def.update();
 }
 
 void ETCS::action()

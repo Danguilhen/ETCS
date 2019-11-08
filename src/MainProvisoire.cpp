@@ -1,4 +1,4 @@
-#include <cstdlib>
+/*#include <cstdlib>
 #include <iostream>
 #include <thread>
 #include <math.h>
@@ -1015,4 +1015,4 @@ void close(string & ecran, vector<Buttons> & boutons)
     }
     else if(boutons[11].getactivation()&& (ecran == "adhesionWindow" || ecran == "SRspeed/distanceWindow"))
         ecran = "specialWindow";
-}
+}*/
