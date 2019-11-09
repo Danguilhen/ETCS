@@ -6,15 +6,13 @@
 
 using namespace std;
 
-class A_brake
+class Step_fonction
 
 {
-    public :
+    private :
 
-	vector < vector < float > > tab_A_brake;//tableau avec 2 colonnes la vitesse max où la décélération est admise, premiere colonne vitesse et deuxieme deceleration
-	float A_brake;
-	float Brake_percentage;
-    A_brake(int nombre_deceleration)
+	vector < vector < float > > step_tab;
+    /*A_brake(int nombre_deceleration)
     {
         for (int i = 0; i < nombre_deceleration; i++)
         {
@@ -29,17 +27,44 @@ class A_brake
             ligne.push_back(d);
             tab_A_brake.push_back(ligne);
         }
+    }*/ //utile si besoin de créer en direct une step_function
+
+    public:
+    
+    A_brake(vector<vector<float>> vect)
+    {
+        step_tab = vect;
     }
-	float A_Brake(int V);
+
+	float Attribution(int V_train);
 
 };
 
-float A_brake::Attribution_deceleration(int V)
+float A_brake::Attribution(int V_train)
 {
     size_t i = 0;
-    while(V > int(tab_A_brake[i][0]) && i < tab_A_brake.size() - 1)
+    while(V_train > int(tab_A_brake[i][0]) && i < tab_A_brake.size() - 1)
     {
         i++;
     }
     return int(tab_A_brake[i][1]);
+}
+
+
+int main()
+{
+
+    vector <vector <int>> test{{1, 2, 3},
+    {1, 2},
+    {1, 2, 3}};
+
+    for(size_t i=0; i< test.size(); i++)
+    {
+        for(size_t j=0; j< test[i].size(); j++)
+        {
+            cout << test[i][j];
+        }
+        cout << endl;
+    }
+    return 0;
 }
