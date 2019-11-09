@@ -7,11 +7,21 @@
 using namespace std;
 
 class Step_fonction
-
 {
     private :
 
 	vector < vector < float > > step_tab;
+
+
+    public:
+
+    Step_fonction(vector<vector<float>> vect)
+    {
+        step_tab = vect;
+    }
+	float Attribution_fonction_vitesse(int V_train);
+
+    //////////////////////////////////
     /*A_brake(int nombre_deceleration)
     {
         for (int i = 0; i < nombre_deceleration; i++)
@@ -29,42 +39,47 @@ class Step_fonction
         }
     }*/ //utile si besoin de créer en direct une step_function
 
-    public:
-    
-    A_brake(vector<vector<float>> vect)
+};
+
+class Braking_model : public Step_fonction
+{
+    Braking_model(vector<vector<float>> vect)
     {
-        step_tab = vect;
+        Step_fonction(vector<vector<float>> vect);
     }
 
-	float Attribution(int V_train);
 
 };
 
-float A_brake::Attribution(int V_train)
+class Correcteur : public Step_fonction
 {
-    size_t i = 0;
-    while(V_train > int(tab_A_brake[i][0]) && i < tab_A_brake.size() - 1)
-    {
-        i++;
-    }
-    return int(tab_A_brake[i][1]);
-}
+
+};
+
+class Gradient : public Step_fonction
+{
+
+};
+
+class MSRP : public Step_fonction
+{
+
+};
+
 
 
 int main()
 {
 
-    vector <vector <int>> test{{1, 2, 3},
-    {1, 2},
-    {1, 2, 3}};
+    Braking_model(vector <vector <int>> test{{1, 2, 3},{1, 2},{1, 2, 3}});
 
     for(size_t i=0; i< test.size(); i++)
     {
         for(size_t j=0; j< test[i].size(); j++)
         {
-            cout << test[i][j];
+            
         }
-        cout << endl;
+
     }
     return 0;
 }
