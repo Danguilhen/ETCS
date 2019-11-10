@@ -3,7 +3,7 @@
 
 class TrackRelatedInputs
 {
-	public :
+	private :
 	National_Value_Data NVD;
 	TracksideSpeedRestriction TSR;
 }
