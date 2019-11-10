@@ -8,7 +8,7 @@ using namespace std;
 
 class Step_fonction
 {
-    private :
+    protected :
 
 	vector < vector < float > > step_tab;
 
@@ -19,7 +19,18 @@ class Step_fonction
     {
         step_tab = vect;
     }
+	getStep_tab()
+	{
+		return step_tab;
+	}
+	setStep_tab(vector<vector<float>> vector)
+	{
+		step_tab = vector;
+	}
+	//prototypes
 	float Attribution_fonction_vitesse(int V_train);
+	vector<vector<float>> getStep_tab();
+	void setStep_tab(vector<vector<float>> vector);
 
     //////////////////////////////////
     /*A_brake(int nombre_deceleration)
@@ -41,7 +52,7 @@ class Step_fonction
 
 };
 
-class Braking_model : public Step_fonction
+class Braking_model : public virtual Step_fonction
 {
     Braking_model(vector<vector<float>> vect)
     {
@@ -51,17 +62,17 @@ class Braking_model : public Step_fonction
 
 };
 
-class Correcteur : public Step_fonction
+class Correcteur : public virtual Step_fonction
 {
 
 };
 
-class Gradient : public Step_fonction
+class Gradient : public virtual Step_fonction
 {
 
 };
 
-class MSRP : public Step_fonction
+class MSRP : public virtual Step_fonction
 {
 
 };
@@ -70,14 +81,14 @@ class MSRP : public Step_fonction
 
 int main()
 {
-
-    Braking_model(vector <vector <int>> test{{1, 2, 3},{1, 2},{1, 2, 3}});
+	vector <vector <float>> test{{1, 2, 3},{1, 2},{1, 2, 3}};
+    Braking_model A_brake(test);
 
     for(size_t i=0; i< test.size(); i++)
     {
         for(size_t j=0; j< test[i].size(); j++)
         {
-            
+			test = A_brake.getStep_tab();
         }
 
     }
