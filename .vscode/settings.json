@@ -41,7 +41,8 @@
 		"iostream": "cpp",
 		"deque": "cpp",
 		"string": "cpp",
-		"vector": "cpp"
+		"vector": "cpp",
+		"thread": "cpp"
 	},
 
 	"terminal.integrated.shell.windows": "C:/Program Files/Git/bin/bash.exe",
