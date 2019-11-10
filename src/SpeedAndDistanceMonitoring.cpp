@@ -1,9 +1,8 @@
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 #include <string>
-#include "SpeedAndDistanceMonitoring.hpp"
-#include "TrainRelatedInputs.hpp"
-#include "TrackRelatedInputs.hpp"
+#include "ETCS_Bord_Main.hpp"
 
 using namespace std;
 

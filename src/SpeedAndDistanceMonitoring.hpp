@@ -3,8 +3,7 @@
 
 class MRSP : public TrackRelatedInputs
 {
-	public :
-	
-}
+
+};
 
 #endif

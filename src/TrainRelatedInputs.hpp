@@ -1,61 +1,15 @@
 #ifndef TRI
 #define TRI
 
-class TrainRelatedInputs
-{
-    public :
-
-    Train_Data data;
-    Fixed_Value_Data FVD;
-
-}
-
-class Train_Data
-{
-        private :
-
-        //création des TC grâce au constructeur de la classe TC et ajout dans le vector
-        vector<Train_Categories> tab_TC_list{PASS1("PASS 1", 80, "PASSENGER TRAIN IN P"), PASS2("PASS 2", 130, "PASSENGER TRAIN IN P"), PASS3("PASS 3", 150, "PASSENGER TRAIN IN P"), TILT1("TILT 1", 165, "PASSENGER TRAIN IN P")
-        TILT2("TILT 2", 180, "PASSENGER TRAIN IN P"), TILT3("TILT 3", 210, "PASSENGER TRAIN IN P"), TILT4("TILT 4", 225, "PASSENGER TRAIN IN P"), TILT5("TILT 5", 245, "PASSENGER TRAIN IN P"),
-        TILT6("TILT 6", 275, "PASSENGER TRAIN IN P"), TILT7("TILT 7", 300, "PASSENGER TRAIN IN P"), FP1("FP 1", 80, "Freight train in P"), FP2("FP 2", 100, "Freight train in P"), FP3("FP 3", 130, "Freight train in P"),
-        FP4("FP 4", 150, "Freight train in P"), FG1("FG 1", 80, "Freight train in G"), FG2("FG 2", 100, "Freight train in G"), FG3("FG 3", 130, "Freight train in G"), FG4("FG 4", 150, "Freight train in G")};//création des listes de Train categories
-        Train_Categories train_categories;//La valeur stockée
-
-        int train_length;
-
-        int maximum_train_speed;
-
-        vector<Loading_gauge> tab_LG_list{LG1("G1"), LGA("GA"), LGB("GB"), LGC("GC"), LGOUT_OF_C("GOUT_OF_C")};//création des listes de Loading gauge
-        Loading_gauge loading_gauge;//la valeur stockée
-
-        vector <string> axle_load_categories{"A", "B", "C", "D", "E", "F", "G"};//création des listes de Axle_load_category
-        string axle_load_category;//la valeur stockée
-
-        size_t traction_system; //ATTENTION donnée inconnue //DONNEE NON MODIFIABLE
-
-        bool train_fitted_with_airtight_system;
-
-        vector<string> list_of_national_systems_available_on_board;//DONNEE NON MODIFIABLE
-        list_of_national_systems_available_on_board.push_back("TVM");
-        list_of_national_systems_available_on_board.push_back("FR");
-        list_of_national_systems_available_on_board.push_back("EN");
-
-        int axle_number;//DONNEE NON MODIFIABLE
-
-	public :
-
-	//GET ET SET A FAIRE SI NECESSAIRE
-};
-
 class Train_Categories
 {
     private :
-        string label;
+        std::string label;
         int cant_deficiency_train_category_value;
         int other_international_train_category_value;
 
     public:
-        Train_Categories(string L, int C, int O)
+        Train_Categories(std::string L, int C, int O)
         {
             label = L;
             cant_deficiency_train_category_value = C;
@@ -66,11 +20,11 @@ class Train_Categories
 class Loading_gauge
 {
     private :
-        string Loading_gauge_label;
+        std::string Loading_gauge_label;
         //int Loading_gauge_value;
 
     public :
-        Loading_gauge(string LGL)
+        Loading_gauge(std::string LGL)
         {
             Loading_gauge_label = LGL;
             //Loading_gauge_value = LGV; n'a pas d'importance dans la suite
@@ -129,6 +83,50 @@ int getT_warning();
 int getT_driver();
 float getM_rotating_min();
 float getM_rotating_max();
+
+};
+
+
+class Train_Data
+{
+        private :
+
+        //création des TC grâce au constructeur de la classe TC et ajout dans le vector
+        std::vector<Train_Categories> tab_TC_list{PASS1("PASS 1", 80, "PASSENGER TRAIN IN P"), PASS2("PASS 2", 130, "PASSENGER TRAIN IN P"), PASS3("PASS 3", 150, "PASSENGER TRAIN IN P"), TILT1("TILT 1", 165, "PASSENGER TRAIN IN P")
+        TILT2("TILT 2", 180, "PASSENGER TRAIN IN P"), TILT3("TILT 3", 210, "PASSENGER TRAIN IN P"), TILT4("TILT 4", 225, "PASSENGER TRAIN IN P"), TILT5("TILT 5", 245, "PASSENGER TRAIN IN P"),
+        TILT6("TILT 6", 275, "PASSENGER TRAIN IN P"), TILT7("TILT 7", 300, "PASSENGER TRAIN IN P"), FP1("FP 1", 80, "Freight train in P"), FP2("FP 2", 100, "Freight train in P"), FP3("FP 3", 130, "Freight train in P"),
+        FP4("FP 4", 150, "Freight train in P"), FG1("FG 1", 80, "Freight train in G"), FG2("FG 2", 100, "Freight train in G"), FG3("FG 3", 130, "Freight train in G"), FG4("FG 4", 150, "Freight train in G")};//création des listes de Train categories
+        Train_Categories train_categories;//La valeur stockée
+
+        int train_length;
+
+        int maximum_train_speed;
+
+        std::vector<Loading_gauge> tab_LG_list{LG1("G1"), LGA("GA"), LGB("GB"), LGC("GC"), LGOUT_OF_C("GOUT_OF_C")};//création des listes de Loading gauge
+        Loading_gauge loading_gauge;//la valeur stockée
+
+        std::vector <std::string> axle_load_categories{"A", "B", "C", "D", "E", "F", "G"};//création des listes de Axle_load_category
+        std::string axle_load_category;//la valeur stockée
+
+        size_t traction_system; //ATTENTION donnée inconnue //DONNEE NON MODIFIABLE
+
+        bool train_fitted_with_airtight_system;
+
+        std::vector<std::string> list_of_national_systems_available_on_board{"TVM", "FR", "EN"};//DONNEE NON MODIFIABLE
+
+        int axle_number;//DONNEE NON MODIFIABLE
+
+	public :
+
+	//GET ET SET A FAIRE SI NECESSAIRE
+};
+
+class TrainRelatedInputs
+{
+    public :
+
+    Train_Data data;
+    Fixed_Value_Data FVD;
 
 };
 

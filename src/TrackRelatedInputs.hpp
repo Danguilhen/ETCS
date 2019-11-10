@@ -1,13 +1,6 @@
 #ifndef TRI
 #define TRI
 
-class TrackRelatedInputs
-{
-	private :
-	National_Value_Data NVD;
-	TracksideSpeedRestriction TSR;
-}
-
 class National_Value_Data
 {
 private:
@@ -96,12 +89,21 @@ class TracksideSpeedRestriction
 {
 	private :
 
-	vector< vector< int > > vitesse_tab_futur{{200, 10000}};//Chaque accolade correspond à une vitesse et la distance sur laquelle cette V s'applique
+	std::vector<std::vector<int>> vitesse_tab_futur {{200, 10000}};//Chaque accolade correspond à une vitesse et la distance sur laquelle cette V s'applique
 
 	public :
-	int x;
+	int test;
 
 	//void actualisation_vitesse();//Si une vitesse vient se rajouter
 
-}
+};
+
+class TrackRelatedInputs
+{
+	public :
+	National_Value_Data NVD;
+	TracksideSpeedRestriction TSR;
+};
+
+
 #endif
