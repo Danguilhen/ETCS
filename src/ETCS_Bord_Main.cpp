@@ -10,6 +10,7 @@
 #include <algorithm>
 #include "TrackRelatedInputs.hpp"
 #include "TrainRelatedInputs.hpp"
+#include "SpeedAndDistanceMonitoring.hpp"
 
 using namespace std;
 

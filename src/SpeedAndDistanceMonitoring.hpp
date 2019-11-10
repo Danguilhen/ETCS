@@ -1,8 +1,9 @@
 #ifndef SDM
 #define SDM
 
-class MRSP : class TrackRelatedInputs
+class MRSP : public TrackRelatedInputs
 {
+	public :
 	
 }
 

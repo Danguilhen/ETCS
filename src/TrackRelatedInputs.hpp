@@ -5,7 +5,7 @@ class TrackRelatedInputs
 {
 	public :
 	National_Value_Data NVD;
-	TracksideSpeedRestriction TSD;
+	TracksideSpeedRestriction TSR;
 }
 
 class National_Value_Data
@@ -99,6 +99,7 @@ class TracksideSpeedRestriction
 	vector< vector< int > > vitesse_tab_futur{{200, 10000}};//Chaque accolade correspond à une vitesse et la distance sur laquelle cette V s'applique
 
 	public :
+	int x;
 
 	//void actualisation_vitesse();//Si une vitesse vient se rajouter
 
