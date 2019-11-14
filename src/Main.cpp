@@ -1,3 +1,9 @@
+#include "Statique.hpp"
+#include "Dynamique.hpp"
+#include "ETCS_bord.hpp"
+#include "KVB.hpp"
+#include "TVM.hpp"
+
 class Data
 {
 	private :
@@ -10,24 +16,25 @@ class Data
 class Train
 {
 	private :
-		int signalisation;
-		Data data;
-		ETCS_BORD bord{data};
+		Data *data;
+		ETCS_bord bord{data};
 		Dynamique dynamique;
 		Statique statique;
+		KVB kvb;
+		TVM tvm;
 	public :
-		Train();
+		Train(Data &data);
 		void update();
 };
 
-Train::Train()
+Train::Train(Data &data)
 {
-
+	this->data = &data;
 }
 
 void Train::update()
 {
-	data.update();
+	data->update();
 	bord.update();
 	dynamique.update();
 	statique.update();
@@ -36,7 +43,8 @@ void Train::update()
 //Main -----------------------------------------------------------------------------------------------------------------------------------
 int main()
 {
-	Train virtuel;
+	Data data;
+	Train virtuel{data};
 	virtuel.update();
 	return 0;
 }
