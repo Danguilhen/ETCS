@@ -20,6 +20,12 @@ class ETCS_Bord
 	public :
 	TrackRelatedInputs TrackRI;
 	TrackRelatedInputs TrainRI;
+	SpeedAndDistanceMonitoring SDM;
+
+	etcs_bord_update()
+	{
+		
+	}
 };
 
 

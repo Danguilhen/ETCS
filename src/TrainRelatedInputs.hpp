@@ -15,6 +15,7 @@ class Train_Categories
             cant_deficiency_train_category_value = C;
             other_international_train_category_value = O;
         }
+        Train_Categories(){}
 
     //friend class Train_Data;
 
@@ -31,6 +32,7 @@ class Loading_gauge
             Loading_gauge_label = LGL;
             //Loading_gauge_value = LGV; n'a pas d'importance dans la suite
         }
+        Loading_gauge(){}
     friend class Train_Data;
 };
 
@@ -165,6 +167,7 @@ class Train_Data
         tab_TC_list.push_back(FG3);
         tab_TC_list.push_back(FG4);
     }
+    int Vtrain;
 
 	//GET ET SET A FAIRE SI NECESSAIRE
 };

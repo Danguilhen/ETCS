@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <algorithm>
 #include "TrainRelatedInputs.hpp"
+#include "SpeedAndDistanceMonitoring.hpp"
 
 using namespace std;
 

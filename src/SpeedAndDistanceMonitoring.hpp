@@ -1,9 +1,14 @@
 #ifndef SDM
 #define SDM
 
-class MRSP : public TrackRelatedInputs
+class SpeedAndDistanceMonitoring
 {
+	public :
+	//int MRSP;
 	
+
 };
+
+
 
 #endif
