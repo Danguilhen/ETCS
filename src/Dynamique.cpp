@@ -265,8 +265,8 @@ void Dynamique::setTrac()
 
 void Dynamique::setFrein()
 {
-	// ATP NE RIEN FAIRE
-	if (atpAction == 2) {
+	if (atpAction == 2) // ATP NE RIEN FAIRE
+	{
 		if (bpUrgence == "true") //BPURG ON
 			consigneFrein = 3;
 		else if (manipSerrageFreinage == "false" && manipDesserrageFreinage == "true") //manip frein Desserrage
@@ -276,49 +276,56 @@ void Dynamique::setFrein()
 		else if (manipSerrageFreinage == "false" && manipDesserrageFreinage == "false") //manip frein Neutre
 			consigneFrein = 1;
 	}
-	//ATP URG
-	else if (atpAction == 0)
+	else if (atpAction == 0) //ATP URG
 		consigneFrein = 3;
-	//ATP FREINAGE SERVICE
-	else if (atpAction == 1)
+	else if (atpAction == 1) //ATP FREINAGE SERVICE
 		consigneFrein = 4;
 	timer2F = world.GetWorld()->GetTimeSeconds();
 	deltaTF = timer2F - timerF;
 	lastCgPressure = cgPressure;
 
 	//On fait tomber la CG à l'atmosphère lors d'un FU
-	if (lastConsigneFrein == 3 && consigneFrein == 3 && cgPressure > 0) {
+	if (lastConsigneFrein == 3 && consigneFrein == 3 && cgPressure > 0)
+	{
 		consigneFrein = 3;
 		cgPressure = cgPressure - deltaTF * 1;
 	}
 	// Freinage de service qu'on va placer à 3.4 bar
-	else if (lastConsigneFrein == 4 && cgPressure > 3.5) {
+	else if (lastConsigneFrein == 4 && cgPressure > 3.5)
+	{
 		consigneFrein = 4;
 		cgPressure = cgPressure - deltaTF * 1;
 		if (cgPressure < 3.5)
 			cgPressure = 3.5;
 	}
-	else if (lastConsigneFrein == 4 && cgPressure < 3.5) {
+	else if (lastConsigneFrein == 4 && cgPressure < 3.5)
+	{
 		consigneFrein = 4;
 		cgPressure = cgPressure + deltaTF * 1;
 		if (cgPressure > 3.5)
 			cgPressure = 3.5;
 	}
 	//desserrage
-	else if (consigneFrein == 2) {
-		if (cgPressure >= 5.1) { //blocage CG à 5.1 (l'aiguille du mano en Dasye est à 5.1)
+	else if (consigneFrein == 2)
+	{
+		if (cgPressure >= 5.1) //blocage CG à 5.1 (l'aiguille du mano en Dasye est à 5.1)
+		{
 			cgPressure = 5.1;
 		}
-		else {
+		else
+		{
 			cgPressure = cgPressure + deltaTF * 1;
 		}
 	}
 	//serrage
-	else if (consigneFrein == 0) { //blocage CG à 0
-		if (cgPressure <= 0) {
+	else if(consigneFrein == 0) //blocage CG à 0
+	{
+		if(cgPressure <= 0)
+		{
 			cgPressure = 0;
 		}
-		else {
+		else
+		{
 			cgPressure = cgPressure - deltaTF * 1;
 		}
 	}
@@ -343,24 +350,29 @@ void Dynamique::calculCylindre()
 		if (tracvalue < 0) //utilisation du manip traction/freinage
 			cfConsigneMotriceTrac = 3.8 * (-tracvalue);
 	}//supérieur à 25 km/h, pas de pression dans les cylindres de frein de motrice
-	else {
+	else
+	{
 		cfConsigneMotrice = 0;
 		cfConsigneMotriceTrac = 0;
 	}
 	//bridage pression max à 3,8 bar en dessous de 220 km/h
-	if (cgPressure <= 4.5 && absspeed < 59.7) {
+	if (cgPressure <= 4.5 && absspeed < 59.7)
+	{
 		cfConsigne = 3.8;
 	}
 	//bridage pression max à 2,6 bar au dela de 220 km/h
-	else if (cgPressure <= 4.5 && absspeed >= 59.7) {
+	else if (cgPressure <= 4.5 && absspeed >= 59.7)
+	{
 		cfConsigne = 2.6;
 	}
 	//bridage pression max en motrice à 3,8 bar en dessous de 25 km/h
-	if (cgPressure <= 4.5 && absspeed < 6.94) {
+	if (cgPressure <= 4.5 && absspeed < 6.94)
+	{
 		cfConsigneMotrice = 3.8;
 	}
 	//on fait en sorte que la pression ne descende pas sous 0 bar
-	if (cgPressure >= 5.1) {
+	if (cgPressure >= 5.1)
+	{
 		cfConsigne = 0;
 		cfConsigneMotrice = 0;
 	}
@@ -368,27 +380,34 @@ void Dynamique::calculCylindre()
 	//si la différence entre la pression actuelle et la pression consigne est de moins de 0,1 bar
 	//alors cfPressure = cfConsigne
 	//depend de la reactivité du systeme et cette valeur pourra etre abaissée
-	if (cfPressure - cfConsigne > -0.1 &&  cfPressure - cfConsigne < 0.1) {
+	if (cfPressure - cfConsigne > -0.1 &&  cfPressure - cfConsigne < 0.1)
+	{
 		cfPressure = cfConsigne;
 	}
 	//sinon on fait tendre la pression vers la pression consigne
-	else if (cfPressure < cfConsigne) {
+	else if (cfPressure < cfConsigne)
+	{
 		cfPressure = cfPressure + 2.64*deltaCF;
 	}
-	else if (cfPressure > cfConsigne) {
+	else if (cfPressure > cfConsigne)
+	{
 		cfPressure = cfPressure - 2.64*deltaCF;
 	}
 
 	//on fait pareil pour la pression des cylindres en motrice
 	//le cas suivant est celui d'un freinage au manip frein
-	if (cfConsigneMotrice >= cfConsigneMotriceTrac) {
-		if (cfPressureMotrice - cfConsigneMotrice > -0.1 &&  cfPressureMotrice - cfConsigneMotrice < 0.1) {
+	if (cfConsigneMotrice >= cfConsigneMotriceTrac)
+	{
+		if (cfPressureMotrice - cfConsigneMotrice > -0.1 &&  cfPressureMotrice - cfConsigneMotrice < 0.1)
+		{
 			cfPressureMotrice = cfConsigneMotrice;
 		}
-		else if (cfPressureMotrice < cfConsigneMotrice) {
+		else if (cfPressureMotrice < cfConsigneMotrice)
+		{
 			cfPressureMotrice = cfPressureMotrice + 2.64*deltaCF;
 		}
-		else if (cfPressureMotrice > cfConsigneMotrice) {
+		else if (cfPressureMotrice > cfConsigneMotrice)
+		{
 			cfPressureMotrice = cfPressureMotrice - 2.64*deltaCF;
 		}
 
@@ -396,14 +415,18 @@ void Dynamique::calculCylindre()
 		cfPressureAff = cfPressureMotrice;
 	}
 	//ici, au manip traction freinage
-	if (cfConsigneMotrice < cfConsigneMotriceTrac) {
-		if (cfPressureMotriceTrac - cfConsigneMotriceTrac > -0.1 &&  cfPressureMotriceTrac - cfConsigneMotriceTrac < 0.1) {
+	if (cfConsigneMotrice < cfConsigneMotriceTrac)
+	{
+		if(cfPressureMotriceTrac - cfConsigneMotriceTrac > -0.1 &&  cfPressureMotriceTrac - cfConsigneMotriceTrac < 0.1)
+		{
 			cfPressureMotriceTrac = cfConsigneMotriceTrac;
 		}
-		else if (cfPressureMotriceTrac < cfConsigneMotriceTrac) {
+		else if(cfPressureMotriceTrac < cfConsigneMotriceTrac)
+		{
 			cfPressureMotriceTrac = cfPressureMotriceTrac + 2.64*deltaCF;
 		}
-		else if (cfPressureMotriceTrac > cfConsigneMotriceTrac) {
+		else if(cfPressureMotriceTrac > cfConsigneMotriceTrac)
+		{
 			cfPressureMotriceTrac = cfPressureMotriceTrac - 2.64*deltaCF;
 		}
 		cfPressureAff = cfPressureMotriceTrac;
