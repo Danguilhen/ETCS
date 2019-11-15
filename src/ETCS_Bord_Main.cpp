@@ -8,6 +8,7 @@
 #include <vector>
 #include <unistd.h>
 #include <algorithm>
+#include <chrono>
 #include "TrackRelatedInputs.hpp"
 #include "TrainRelatedInputs.hpp"
 #include "SpeedAndDistanceMonitoring.hpp"
@@ -17,9 +18,10 @@ using namespace std;
 
 void ETCS_Bord::etcs_bord_update()
 {
+	TrackRI.TSR.TSR_Update();
 	SDM.MSRP(TrackRI, TrainRI);
 	SDM.Supervision_limits(TrainRI);
-	TrackRI
+
 }
 
 int main()

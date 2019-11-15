@@ -96,9 +96,6 @@ class TracksideSpeedRestriction
 	std::vector<std::vector<int>> getVitesseTableau();
 	void TSR_Update();
 
-	TracksideSpeedRestriction();
-	TracksideSpeedRestriction(clock)
-
 	//void actualisation_vitesse();//Si une vitesse vient se rajouter
 
 };
@@ -108,7 +105,6 @@ class TrackRelatedInputs
 	public :
 	National_Value_Data NVD;
 	TracksideSpeedRestriction TSR;
-	void TrackRI_Update(TracksideSpeedRestriction TSR);
 };
 
 

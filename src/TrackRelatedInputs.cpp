@@ -8,6 +8,7 @@
 #include <vector>
 #include <unistd.h>
 #include <algorithm>
+#include <chrono>
 #include "TrackRelatedInputs.hpp"
 
 using namespace std;
@@ -170,7 +171,7 @@ vector<std::vector<int>> TracksideSpeedRestriction::getVitesseTableau()
 
 void TracksideSpeedRestriction::TSR_Update()
 {
-	
-	tableau_vitesse_ligne[0][1] = tableau_vitesse_ligne[0][1] - delta_ts;
+	//tableau_vitesse_ligne[0][1] = tableau_vitesse_ligne[0][1];
 	//Attention, la distance
 }
+
