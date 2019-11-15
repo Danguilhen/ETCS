@@ -156,5 +156,10 @@ Train_Data::Train_Data()
     tab_TC_list.push_back(FG3);
     tab_TC_list.push_back(FG4);
 }
+int Train_Data::getTrain_length()
+{
+    return train_length;
+}
+
 
 

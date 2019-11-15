@@ -8,10 +8,19 @@
 #include <vector>
 #include <unistd.h>
 #include <algorithm>
+#include "TrackRelatedInputs.hpp"
 #include "TrainRelatedInputs.hpp"
 #include "SpeedAndDistanceMonitoring.hpp"
 
 using namespace std;
+
+void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI)
+{
+	if(TrackRI.TSR.getVitesseTableau()[0][1] + TrainRI.T_data.getTrain_length() == 0)
+		cout<<"ok";
+	else
+		cout<<TrackRI.TSR.getVitesseTableau()[0][1] + TrainRI.T_data.getTrain_length();
+}
 
 void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
 {

@@ -84,12 +84,12 @@ float getM_rotating_max();
 
 class Train_Data
 {
-    public :
+    private :
 
         //création des TC grâce au constructeur de la classe TC et ajout dans le vector
         std::vector<Train_Categories> tab_TC_list;//création des listes de Train categories
         Train_Categories train_categories;//La valeur stockée
-        int train_length;
+        int train_length = 100;
         int maximum_train_speed;
         std::vector<Loading_gauge> tab_LG_list;//création des listes de Loading gauge
         Loading_gauge loading_gauge;//la valeur stockée
@@ -100,7 +100,10 @@ class Train_Data
         std::vector<std::string> list_of_national_systems_available_on_board{"TVM", "FR", "EN"};//DONNEE NON MODIFIABLE
         int axle_number;//DONNEE NON MODIFIABLE
         int Vtrain;
+
+    public :
         Train_Data();
+        int getTrain_length();
 
 	    //GET ET SET A FAIRE SI NECESSAIRE
 };

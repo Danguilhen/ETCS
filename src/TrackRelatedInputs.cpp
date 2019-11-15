@@ -163,3 +163,8 @@ float National_Value_Data::getA_NVP12()
 float National_Value_Data::getA_NVP23()
 {return A_NVP23;}
 
+vector<std::vector<int>> TracksideSpeedRestriction::getVitesseTableau()
+{
+	return tableau_vitesse_ligne;
+}
+
