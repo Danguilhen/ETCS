@@ -15,18 +15,12 @@
 
 using namespace std;
 
-class ETCS_Bord
-{
-	public :
-	TrackRelatedInputs TrackRI;
-	TrackRelatedInputs TrainRI;
-	SpeedAndDistanceMonitoring SDM;
 
-	etcs_bord_update()
-	{
-		
-	}
-};
+
+int main()
+{
+	return 0;
+}
 
 
 

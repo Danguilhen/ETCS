@@ -1,5 +1,5 @@
-#ifndef TRI
-#define TRI
+#ifndef AA
+#define AA
 
 class Train_Categories
 {

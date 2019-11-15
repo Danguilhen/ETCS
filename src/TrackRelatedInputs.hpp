@@ -1,5 +1,5 @@
-#ifndef TRI
-#define TRI
+#ifndef BBB
+#define BBB
 
 class National_Value_Data
 {

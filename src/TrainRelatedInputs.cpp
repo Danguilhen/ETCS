@@ -9,29 +9,28 @@
 #include <unistd.h>
 #include <algorithm>
 #include "TrainRelatedInputs.hpp"
-#include "SpeedAndDistanceMonitoring.hpp"
 
 using namespace std;
 
 Fixed_Value_Data::Fixed_Value_Data()
 {
-dV_ebi_min = 7.5;
-dV_ebi_max = 15;
-V_ebi_min = 110;
-V_ebi_max = 210;
-dV_sbi_min = 5.5;
-dV_sbi_max = 10;
-V_sbi_min = 110;
-V_sbi_max = 210;
-dV_warning_min = 4;
-dV_warning_max = 5;
-V_warning_min = 110;
-V_warning_max = 140;
-T_dispTTI = 14;
-T_warning = 2;
-T_driver = 4;
-M_rotating_min =  0.2;
-M_rotating_max = 0.15;
+	dV_ebi_min = 7.5;
+	dV_ebi_max = 15;
+	V_ebi_min = 110;
+	V_ebi_max = 210;
+	dV_sbi_min = 5.5;
+	dV_sbi_max = 10;
+	V_sbi_min = 110;
+	V_sbi_max = 210;
+	dV_warning_min = 4;
+	dV_warning_max = 5;
+	V_warning_min = 110;
+	V_warning_max = 140;
+	T_dispTTI = 14;
+	T_warning = 2;
+	T_driver = 4;
+	M_rotating_min =  0.2;
+	M_rotating_max = 0.15;
 
 }
 
