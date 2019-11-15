@@ -5,7 +5,7 @@
 class SpeedAndDistanceMonitoring
 {
 	public :
-		int V_MRSP = 200;
+		int V_MRSP = 220;
 		int V_ebi;
 		int V_sbi;
 		int V_warning;
