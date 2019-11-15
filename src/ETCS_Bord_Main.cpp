@@ -15,10 +15,15 @@
 
 using namespace std;
 
-
+void ETCS_Bord::etcs_bord_update()
+{
+	SDM.Supervision_limits(TrainRI);
+}
 
 int main()
 {
+	ETCS_Bord etcs;
+	etcs.etcs_bord_update();
 	return 0;
 }
 

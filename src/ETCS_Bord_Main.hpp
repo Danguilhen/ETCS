@@ -8,10 +8,8 @@ class ETCS_Bord
 	TrainRelatedInputs TrainRI;
 	SpeedAndDistanceMonitoring SDM;
 
-	void etcs_bord_update()
-	{
-		SDM.Supervision_limits(TrainRI);
-	}
+	void etcs_bord_update();
+
 };
 
 
