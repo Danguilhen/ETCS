@@ -14,8 +14,6 @@ class SpeedAndDistanceMonitoring
 		void MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI);
 		void Supervision_limits(TrainRelatedInputs TrainRI);
 
-
-
 };
 
 

@@ -19,6 +19,7 @@ void ETCS_Bord::etcs_bord_update()
 {
 	SDM.MSRP(TrackRI, TrainRI);
 	SDM.Supervision_limits(TrainRI);
+	TrackRI
 }
 
 int main()
