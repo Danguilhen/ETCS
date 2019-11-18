@@ -99,7 +99,7 @@ class Train_Data
         bool train_fitted_with_airtight_system;
         std::vector<std::string> list_of_national_systems_available_on_board{"TVM", "FR", "EN"};//DONNEE NON MODIFIABLE
         int axle_number;//DONNEE NON MODIFIABLE
-        int Vtrain;
+        int Vtrain = 135;
 
     public :
         Train_Data();
