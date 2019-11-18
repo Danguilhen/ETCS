@@ -14,18 +14,10 @@
 #include "SpeedAndDistanceMonitoring.hpp"
 #include "ETCS_Bord_Main.hpp"
 
-using namespace std;
 
-void ETCS_Bord::etcs_bord_update()
+int main()
 {
-	//ATTENTION A L ORDRE LES RELATED INPUTS AVANT LE SDM
-
-	TrackRI.TSR.TSR_Update();//trackspeedrestriction
-	SDM.MSRP(TrackRI, TrainRI);
-	SDM.Supervision_limits(TrainRI);
-	SDM.SpeedAndDistanceMonitoringCommands(TrainRI);
+	ETCS_Bord etcs;
+	etcs.etcs_bord_update();
+	return 0;
 }
-
-
-
-

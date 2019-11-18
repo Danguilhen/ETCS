@@ -104,6 +104,7 @@ class Train_Data
     public :
         Train_Data();
         int getTrain_length();
+        int getVtrain();
 
 	    //GET ET SET A FAIRE SI NECESSAIRE
 };

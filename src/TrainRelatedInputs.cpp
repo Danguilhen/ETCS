@@ -160,6 +160,10 @@ int Train_Data::getTrain_length()
 {
     return train_length;
 }
+int Train_Data::getVtrain()
+{
+    return Vtrain;
+}
 
 
 
