@@ -224,6 +224,7 @@ class Data
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
 		int socketValue = 0;*/
 		//void SocketSend(char buf[]);
+		int signalisation = 1;
 
 	public :
 		Data();
@@ -251,6 +252,7 @@ class Data
 		int getRemainingDistanceTunnel();
 		string getTunnelStoppingArea();
 		void setTunnelStoppingArea(string TSA);
+		int getSignalisation();
 };
 
 Data::Data()
@@ -379,6 +381,7 @@ int Data::getPointKilometrique(){return pointKilometrique;}
 int Data::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
 string Data::getTunnelStoppingArea(){return tunnelStoppingArea;}
 void Data::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
+int Data::getSignalisation(){return signalisation;}
 
 //Button -----------------------------------------------------------------------------------------------------------------------------------
 class Button
@@ -753,7 +756,7 @@ class Cadran : public Tools
 	private :
 		int Vmax;
 		ConvexShape aiguille;
-		DonneesAfficheurVitesse graduations[401];
+		vector<DonneesAfficheurVitesse> graduations;
 		V2f centre;
 		CircleShape Centre;
 		float teta0;
@@ -787,6 +790,10 @@ VertexArray Cadran::Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f
 
 Cadran::Cadran(int Vmax)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
 {
+	for(int i =0; i <= 400; i++)
+	{
+		graduations.push_back(DonneesAfficheurVitesse());
+	}
 	this->Vmax = Vmax;
 	teta0 = 90 - 144;
 	kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
@@ -1695,12 +1702,10 @@ void Fenetre::affichageBoutons()
 class Default : public Fenetre, public LeftSide
 {
 	private :
-		RenderWindow *fenetre;
-		Data *data;
-		vector <Symbol> symbol;
-		vector <Button> buttons;
+		vector <Symbol> *symbol;
+		vector <Button> *buttons;
 		string *ecran;
-		Planning planning{symbol};
+		Planning planning;
 		string geographicalPosition;
 		string S_D_monitoring = "Off";
 		string planningAffichage = "show planning information";
@@ -1709,78 +1714,78 @@ class Default : public Fenetre, public LeftSide
 		void update();
 };
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons): symbol(&symbol), planning(symbol)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
-	this->symbol = symbol;
-	this->buttons = buttons;
+	//this->symbol = &symbol;
+	this->buttons = &buttons;
 }
 
 void Default::update()
 {
 	for(int i = 0; i <= 15; i++)
-		buttons[i].settype("up_type");
-	if(buttons[0].getactivation() == 1)
+		(*buttons)[i].settype("up_type");
+	if((*buttons)[0].getactivation() == 1)
 	{
-		buttons[3].settype("disabled");
-		buttons[10].settype("disabled");
-		buttons[12].settype("disabled");
-		buttons[13].settype("disabled");
-		buttons[14].settype("disabled");
-		buttons[15].settype("disabled");
+		(*buttons)[3].settype("disabled");
+		(*buttons)[10].settype("disabled");
+		(*buttons)[12].settype("disabled");
+		(*buttons)[13].settype("disabled");
+		(*buttons)[14].settype("disabled");
+		(*buttons)[15].settype("disabled");
         *ecran = "mainWindow";
 	}
-	else if(buttons[1].getactivation() == 1)
+	else if((*buttons)[1].getactivation() == 1)
 	{
 		*ecran = "overrideWindow";
 		for(int i = 0; i <= 15; i++)
-			buttons[i].settype("disabled");
-		buttons[0].settype("up_type");
-		buttons[11].settype("up_type");
+			(*buttons)[i].settype("disabled");
+		(*buttons)[0].settype("up_type");
+		(*buttons)[11].settype("up_type");
 	}
-	else if(buttons[2].getactivation() == 1)
+	else if((*buttons)[2].getactivation() == 1)
 	{
 		*ecran = "dataViewWindow";
 		for(int i = 0; i <= 15; i++)
-			buttons[i].settype("disabled");
+			(*buttons)[i].settype("disabled");
 	}
-	else if(buttons[3].getactivation() == 1)
+	else if((*buttons)[3].getactivation() == 1)
 		*ecran = "specialWindow";
-	else if(buttons[4].getactivation() == 1)
+	else if((*buttons)[4].getactivation() == 1)
 		*ecran = "settingsWindow";
-	else if (buttons[5].getactivation() == 1)
+	else if ((*buttons)[5].getactivation() == 1)
     {
         if(data->getTunnelStoppingArea() == "TunnelStoppingArea" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
             data->setTunnelStoppingArea(data->getTunnelStoppingArea() + "-");
         else if (data->getTunnelStoppingArea() == "TunnelStoppingArea-" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
             data->setTunnelStoppingArea(data->getTunnelStoppingArea().substr(0, data->getTunnelStoppingArea().size() - 1));
     }
-	else if (buttons[6].getactivation() == 1)
+	else if ((*buttons)[6].getactivation() == 1)
 	{
 		if(S_D_monitoring == "On")
 			S_D_monitoring = "Off";
 		else if (S_D_monitoring == "Off")
 			S_D_monitoring = "On";
 	}
-	else if (buttons[7].getactivation() == 1)
+	else if ((*buttons)[7].getactivation() == 1)
 	{
 		if(geographicalPosition == "On")
 			geographicalPosition = "Off";
 		else if (geographicalPosition == "Off")
 			geographicalPosition = "On";
 	}
-	else if(buttons[8].getactivation() == 1)
+	else if((*buttons)[8].getactivation() == 1)
 	{
 		if(planning.getScale() < 32000)
 		planning.setScale(planning.getScale() * 2.0);
 	}
-	else if(buttons[9].getactivation() == 1)
+	else if((*buttons)[9].getactivation() == 1)
 	{
 		if(planning.getScale() > 1000)
 			planning.setScale(planning.getScale() / 2.0);
 	}
-	else if (buttons[10].getactivation() == 1 && data->getVersion() == "3.4.0")
+	else if ((*buttons)[10].getactivation() == 1 && data->getVersion() == "3.4.0")
 	{
 		if(planningAffichage == "show planning information")
 			planningAffichage = "Off";
@@ -1791,15 +1796,15 @@ void Default::update()
     {
         if(data->getTunnelStoppingArea() == "TunnelStoppingArea")
         {
-            TC_36.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
+            (*symbol)[152].afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2 - TC36
             creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
         }
         else if(data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
         {
-            TC_37.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
+            (*symbol)[153].afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2 - TC37
             creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
         }
-        DR_05.afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6
+        (*symbol)[4].afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6 - DR05
     }
 	if(geographicalPosition != "Unknown") //Geographical position
 	{
@@ -1808,13 +1813,13 @@ void Default::update()
 			rectangle(V2f(54 + 234 + 46 + 63, 54 + 30 + 191 + 25 + 50 + 50), V2f(120, 30), GREY);//G12
 			creation_texte(to_string(data->getPointKilometrique()), BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), 3);
 		}
-		DR_03.afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8
+		(*symbol)[2].afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8 - DR03
 	}
 	if(planningAffichage != "Unknown")
 	{
 		if(data->getVersion() == "3.4.0")
 		{
-			NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2
+			(*symbol)[48].afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2 - NA02
 			if(planningAffichage == "show planning information" && data->getGeneralMode() == "FS")
 				planning.planningInformation(0);
 		}
@@ -1824,7 +1829,6 @@ void Default::update()
 		}
 	}
 }
-
 
 
 class Main : public Fenetre, public LeftSide
@@ -2125,19 +2129,19 @@ class ETCS
 		vector <Symbol> symbol;
 		vector <Button> button;
 		Event event;
-		Default def{*fenetre, *data, symbol, button};
-		Special special{*fenetre, *data};
-		Settings settings{*fenetre, *data};
-		SRspeed srSpeed{*fenetre, *data};
-		DataView dataView{*fenetre, *data};
-		SystemVersion systemVersion{*fenetre, *data};
+		Default def;
+		Special special;
+		Settings settings;
+		SRspeed srSpeed;
+		DataView dataView;
+		SystemVersion systemVersion;
 		void action();
 	public :
 		ETCS(RenderWindow &fenetre, Data &data);
 		void update();
 };
 
-ETCS::ETCS(RenderWindow &fenetre, Data &data): button(16, data)
+ETCS::ETCS(RenderWindow &fenetre, Data &data): def(fenetre, data, symbol, button), special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)
 {
 	vector<string> nom{"DR_01", "DR_02", "DR_03", "DR_04", "DR_05", "LE_01", "LE_02", "LE_02a", "LE_03", "LE_04", "LE_05", "LE_06", "LE_07", "LE_08", "LE_08a", "LE_09", "LE_09a", "LE_10", "LE_11", "LE_12",
 	"LE_13", "LE_14", "LE_15", "LS_01", "LX_01", "MO_01", "MO_02", "MO_03", "MO_04", "MO_05", "MO_06", "MO_07", "MO_08", "MO_09", "MO_10", "MO_11", "MO_12", "MO_13", "MO_14", "MO_15", "MO_16", "MO_17",
@@ -2155,7 +2159,10 @@ ETCS::ETCS(RenderWindow &fenetre, Data &data): button(16, data)
 	this->fenetre = &fenetre;
 	this->data = &data;
 	for(int i = 0; i <= 15; i++)
+	{
+		button.push_back(data);
 		button[i].settype("up_type");
+	}
 }
 
 void ETCS::update()
@@ -2177,8 +2184,8 @@ void ETCS::action()
     {
 		if (event.type==sf::Event::MouseButtonReleased)
 		{
-            int x=event.mouseButton.x;
-            int y=event.mouseButton.y;
+            int x = event.mouseButton.x;
+            int y = event.mouseButton.y;
 			for(int i = 0; i < 10; i++)
 			{
 				if(x > ((64 * i + data->getEcartX()) * data->getRE()) && x < ((64 * (i + 1) + data->getEcartX()) * data->getRE()) && y > ((430 + data->getEcartY()) * data->getRE()) && y < ((480 + data->getEcartY()) * data->getRE()))
@@ -2383,6 +2390,7 @@ class DMI
 
 DMI::DMI()
 {
+	cout << "hello1" << endl;
 	//creation et affichage de la fenetre
 	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Default, settings);
 	fenetre.setFramerateLimit(60);
@@ -2391,14 +2399,13 @@ DMI::DMI()
 
 void DMI::start()
 {
-	signalisation = 0;
 	while(fenetre.isOpen())
 	{
 		data.update();
-		switch(signalisation)
+		switch(data.getSignalisation())
 		{
-			case 0: etcs.update();
-			case 1: ;
+			case 0: ;
+			case 1: etcs.update();
 			case 2: ;
 			default: ;
 		}
