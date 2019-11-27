@@ -19,7 +19,6 @@
 int main()
 {
 	Virtual_train virtual_train;
-	Virtual_train.
 	virtual_train.update();
 	return 0;
 }
