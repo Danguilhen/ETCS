@@ -191,14 +191,14 @@ using namespace std;
 class Data
 {
 	private :
-		int Vtrain;
+		int Vtrain = 0;
 		string generalMode = "FS";
 		string mode = "CSM";
 		string status = "NoS";
 		string level = "Level 1";
 		double RE;
-		int ecartX;
-		int ecartY;
+		int ecartX = 0;
+		int ecartY = 0;
 		Font arial;
 		int son;
 		//Son :
@@ -209,16 +209,16 @@ class Data
 		//	Mode 1 : Jouer UNE fois
 		//	Mode 2 : Jouer en boucle
 		//	Mode 3 : Stopper la boucle, le son s'arr�te
-		int Vligne;
-		float V_red;
-		float V_orange;
-		float V_yellow;
-		float V_white;
-		float V_medium_grey;
-		float V_dark_grey;
-		Color aiguille;
-		string version;
-		int pointKilometrique;
+		int Vligne = 0;
+		float V_red = 0;
+		float V_orange = 50;
+		float V_yellow = 70;
+		float V_white = 0;
+		float V_medium_grey = 0;
+		float V_dark_grey = 0;
+		Color aiguille = WHITE;
+		string version = "3.6.0";
+		int pointKilometrique = 0;
 		int remainingDistanceTunnel = 500;
 		string tunnelStoppingArea = "TunnelStoppingArea";
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
@@ -766,7 +766,7 @@ class Cadran : public Tools
 		VertexArray Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d);
 		V2f local2globalCoordonates(V2f CoordonneesPolaires);
 	public :
-		Cadran(int Vmax);
+		Cadran(int Vmax, Data &data, RenderWindow &fenetre);
 		void update();
 };
 
@@ -788,8 +788,10 @@ VertexArray Cadran::Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f
 	return Barre;
 }
 
-Cadran::Cadran(int Vmax)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
+Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
 {
+	this->data = &data;
+	this->fenetre = &fenetre;
 	for(int i =0; i <= 400; i++)
 	{
 		graduations.push_back(DonneesAfficheurVitesse());
@@ -799,20 +801,20 @@ Cadran::Cadran(int Vmax)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier
 	kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
 	kmh2degVeleve = kmh2degVfaible / 2.0;
 
-	centre.x = data->getRE() * (54 + 280 / 2.0 + data->getEcartX());
-	centre.y = data->getRE() * (300 / 2.0 + data->getEcartY());
+	centre.x = data.getRE() * (54 + 280 / 2.0 + data.getEcartX());
+	centre.y = data.getRE() * (300 / 2.0 + data.getEcartY());
 
 	aiguille.setPointCount(8);
 	aiguille.setPosition(centre);
 
-	aiguille.setPoint(0,V2f(- (80 + 25) * data->getRE(), - 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(1,V2f(- (80 + 25) * data->getRE(), 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(2,V2f(- (80 + 25 - 15) * data->getRE(), 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(3,V2f(- (57 + 25) * data->getRE(),9 / 2.0 * data->getRE()));
-	aiguille.setPoint(4,V2f(- 20 * data->getRE(),9 / 2.0 * data->getRE()));
-	aiguille.setPoint(5,V2f(- 20 * data->getRE(), - 9 / 2.0 * data->getRE()));
-	aiguille.setPoint(6,V2f(- (57 + 25) * data->getRE(), - 9 / 2.0 * data->getRE()));
-	aiguille.setPoint(7,V2f(- (80 + 25 - 15) * data->getRE(), - 3 / 2.0 * data->getRE()));
+	aiguille.setPoint(0,V2f(- (80 + 25) * data.getRE(), - 3 / 2.0 * data.getRE()));
+	aiguille.setPoint(1,V2f(- (80 + 25) * data.getRE(), 3 / 2.0 * data.getRE()));
+	aiguille.setPoint(2,V2f(- (80 + 25 - 15) * data.getRE(), 3 / 2.0 * data.getRE()));
+	aiguille.setPoint(3,V2f(- (57 + 25) * data.getRE(),9 / 2.0 * data.getRE()));
+	aiguille.setPoint(4,V2f(- 20 * data.getRE(),9 / 2.0 * data.getRE()));
+	aiguille.setPoint(5,V2f(- 20 * data.getRE(), - 9 / 2.0 * data.getRE()));
+	aiguille.setPoint(6,V2f(- (57 + 25) * data.getRE(), - 9 / 2.0 * data.getRE()));
+	aiguille.setPoint(7,V2f(- (80 + 25 - 15) * data.getRE(), - 3 / 2.0 * data.getRE()));
 
 	int Vfaible;
 	teta_origine = 90 + 144; //decalage d'angle par rapport a un repere trigonometrique place la valeur 0
@@ -845,7 +847,7 @@ void Cadran::update()
 	V2f position;
 	CircleShape Centre;
 	Centre.setFillColor(data->getAiguilleColor());
-	Centre.setPosition(V2f(centre.x - 25 * data->getRE(),centre.y - 25 * data->getRE()));
+	Centre.setPosition(V2f(centre.x - 25 * data->getRE(), centre.y - 25 * data->getRE()));
 	Centre.setRadius(25 * data->getRE());
 	fenetre->draw(Centre);
 	float tetaep = 0.5;
@@ -879,7 +881,6 @@ void Cadran::update()
 		}
 		fenetre->draw(Barre);
 	}
-
 	//ecriture des vitesses
 	//position = local2globalCoordonates(centre,V2f(200,graduations[0].teta()));
 	//creation_texte(RE, to_string(graduations[0].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //0km/h
@@ -1008,6 +1009,7 @@ void Cadran::update()
 	else if(graduations[(int)data->getVtrain()].vitesse() > 9)
 	{
 		s = str.at(1);
+
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), 1);
 		s = str.at(0);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0, 300 / 2.0), 1);
@@ -1531,7 +1533,6 @@ Planning::Planning(vector<Symbol> &symbol) : pasp0(400, 40000), pasp1(225, 3000)
 class LeftSide : public virtual Tools
 {
 	protected :
-		Cadran speed{400};
 		void targetDistance(int distance);
 };
 
@@ -1709,12 +1710,13 @@ class Default : public Fenetre, public LeftSide
 		string geographicalPosition;
 		string S_D_monitoring = "Off";
 		string planningAffichage = "show planning information";
+		Cadran cadran;
 	public :
 		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons);
 		void update();
 };
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons): symbol(&symbol), planning(symbol)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons): symbol(&symbol), planning(symbol), cadran(400, data, fenetre)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
@@ -1724,6 +1726,8 @@ Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vect
 
 void Default::update()
 {
+	cadran.update();
+	/*
 	for(int i = 0; i <= 15; i++)
 		(*buttons)[i].settype("up_type");
 	if((*buttons)[0].getactivation() == 1)
@@ -1826,8 +1830,10 @@ void Default::update()
 		if(data->getVersion() == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && S_D_monitoring == "On")))
 		{
 			planning.planningInformation(0);
+			cout << fenetre << " " << "hello" << " " << "" << " " << data << endl;
 		}
 	}
+	*/
 }
 
 
@@ -2121,11 +2127,9 @@ SystemVersion::SystemVersion(RenderWindow &fenetre, Data &data)
 }
 
 //ETCS -----------------------------------------------------------------------------------------------------------------------------------
-class ETCS
+class ETCS : public Fenetre
 {
 	private :
-		RenderWindow *fenetre;
-		Data *data;
 		vector <Symbol> symbol;
 		vector <Button> button;
 		Event event;
@@ -2135,6 +2139,7 @@ class ETCS
 		SRspeed srSpeed;
 		DataView dataView;
 		SystemVersion systemVersion;
+		VertexArray fond{Quads,4};
 		void action();
 	public :
 		ETCS(RenderWindow &fenetre, Data &data);
@@ -2168,6 +2173,15 @@ ETCS::ETCS(RenderWindow &fenetre, Data &data): def(fenetre, data, symbol, button
 void ETCS::update()
 {
 	action();
+
+	fond[0].position = V2f(data->getEcartX() * data->getRE(), data->getEcartY() * data->getRE());
+	fond[1].position = V2f((640 + data->getEcartX()) * data->getRE(), data->getEcartY() * data->getRE());
+	fond[2].position = V2f((640 + data->getEcartX()) * data->getRE(), (480 + data->getEcartY()) * data->getRE());
+	fond[3].position = V2f(data->getEcartX() * data->getRE(), (480 + data->getEcartY()) * data->getRE());
+	couleurForme(fond, DARK_BLUE, 4);
+	fenetre->draw(fond);
+
+	affichageBoutons();
 	def.update();
 }
 
@@ -2390,11 +2404,11 @@ class DMI
 
 DMI::DMI()
 {
-	cout << "hello1" << endl;
 	//creation et affichage de la fenetre
 	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Default, settings);
 	fenetre.setFramerateLimit(60);
 	settings.antialiasingLevel = 8;
+	cout << "original : " << &fenetre << " " << &data << endl;
 }
 
 void DMI::start()
@@ -2402,6 +2416,7 @@ void DMI::start()
 	while(fenetre.isOpen())
 	{
 		data.update();
+		fenetre.clear();
 		switch(data.getSignalisation())
 		{
 			case 0: ;
@@ -2409,6 +2424,7 @@ void DMI::start()
 			case 2: ;
 			default: ;
 		}
+		fenetre.display();
 	};
 }
 

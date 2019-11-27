@@ -86,7 +86,6 @@ int main()
 		aiguille.setFillColor(data->getCouleurAiguille());
        	fenetre.clear();
 
-		fondEcran();
 
 		affichageBoutons();
 
@@ -228,21 +227,7 @@ int main()
     return 0;
 }
 
-void fondEcran()
-{
-	// definition d'un Vertex array
-	VertexArray fond(Quads,4);
-	//definition des points
 
-	fond[0].position = V2f(ecart[0] * RE[1] * RE);
-	fond[1].position = V2f((640 + ecart[0]) * RE[1] * RE);
-	fond[2].position = V2f((640 + ecart[0]) * RE, (480 + ecart[1]) * RE);
-	fond[3].position = V2f(ecart[0] * RE, (480 + ecart[1]) * RE);
-
-	couleurForme(fond, DARK_BLUE, 4);
-
-	fenetre->draw(fond);
-}
 
 //Prototypes -----------------------------------------------------------------------------------------------------------------------------
 void affichageRectangle(string ecran);
