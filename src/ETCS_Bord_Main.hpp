@@ -3,12 +3,11 @@
 
 class ETCS_Bord
 {
-	private :
+	public :
 		TrackRelatedInputs TrackRI;
 		TrainRelatedInputs TrainRI;
 		SpeedAndDistanceMonitoring SDM;
 
-	public :
 	void update();
 };
 
