@@ -13,11 +13,13 @@
 #include "TrainRelatedInputs.hpp"
 #include "SpeedAndDistanceMonitoring.hpp"
 #include "ETCS_Bord_Main.hpp"
-
+#include "DMI.hpp"
+#include "Virtual_train.hpp"
 
 int main()
 {
-	ETCS_Bord etcs;
-	etcs.etcs_bord_update();
+	Virtual_train virtual_train;
+	Virtual_train.
+	virtual_train.update();
 	return 0;
 }

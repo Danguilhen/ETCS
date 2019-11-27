@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void ETCS_Bord::etcs_bord_update()
+void ETCS_Bord::update()
 {
 	//ATTENTION A L ORDRE LES RELATED INPUTS AVANT LE SDM
 
