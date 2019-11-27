@@ -23,7 +23,7 @@ void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI, TrainRelatedIn
 		TrackRI.TSR.getVitesseTableau().erase(TrackRI.TSR.getVitesseTableau().begin());
 	}
 	else
-		//cout << TrackRI.TSR.getVitesseTableau()[0][1] + TrainRI.T_data.getTrain_length() << " " << endl;
+		cout << TrackRI.TSR.getVitesseTableau()[0][1] + TrainRI.T_data.getTrain_length() << " " << endl;
 }
 
 void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
