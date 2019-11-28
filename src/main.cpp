@@ -20,8 +20,9 @@
 
 int main()
 {
+	cout << "debut" << endl;
 	Data data;
-	Virtual_train virtual_train{data};
+	Virtual_train virtual_train(data);
 	while(!data.getEteindre())
 	{
 		data.update();

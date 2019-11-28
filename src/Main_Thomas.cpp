@@ -1,9 +1,9 @@
-#include <cstdlib>
+/*#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include <SFML/System.hpp>
+#include <SFML/System.hpp>*/
 /*#include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -12,7 +12,7 @@
 #include <netdb.h>*/
 
 // Texte --------------------------------------------------------------------------------------------------------------------------
-
+/*
 class Texte_DMI : public Tools
 {
 	private :
@@ -569,274 +569,6 @@ Planning::Planning(vector<Symbol> &symbol) : pasp0(400, 40000), pasp1(225, 3000)
 }
 
 
-
-
-class Fenetre : public virtual Tools
-{
-	protected :
-		void creation_rectangle(V2f pos, V2f dim, int mode);
-		void affichageBoutons();
-};
-
-//RESUME DE LA FONCTION
-//Besoin de la position de point en haut � gauche et de la dimension du quadrilat�re
-//RE permet de modifier l'�paisseur en fct du rapport d'�cran
-//mode 1=case mode 2=bouton mode 3=rappelle de la fonction pour cr�ation du carr� int�rieur
-void Fenetre::creation_rectangle(V2f pos, V2f dim, int mode)
-{
-	if(mode == 1)
-	{
-		rectangle(pos, dim, SHADOW);
-		rectangle(pos, V2f(dim.x - 1, dim.y - 1), BLACK);
-		rectangle(V2f(pos.x + 1, pos.y + 1), V2f(dim.x - 2, dim.y - 2), DARK_BLUE);
-	}
-	if(mode == 2)
-	{
-		rectangle(pos, dim, SHADOW);
-		rectangle(pos, V2f(dim.x - 1, dim.y - 1), BLACK);
-		rectangle(V2f(pos.x + 1, pos.y + 1), V2f(dim.x - 3, dim.y - 3), SHADOW);
-		rectangle(V2f(pos.x + 2, pos.y + 2), V2f(dim.x - 4, dim.y - 4), DARK_BLUE);
-	}
-	/*
-	int epaisseur = RE;
-	VertexArray bande(Quads,4);
-	pos.x = pos.x * RE;
-	pos.y = pos.y * RE;
-	dim.x = dim.x * RE;
-	dim.y = dim.y * RE;
-
-	//Creation 1 ere bande
-	bande[0].position=pos;
-	bande[1].position=V2f(pos.x + dim.x - epaisseur, pos.y);
-	bande[2].position=V2f(pos.x + dim.x - epaisseur, pos.y + epaisseur);
-	bande[3].position=V2f(pos.x, pos.y + epaisseur);
-
-	if(mode == 3)
-	{
-		couleurForme(bande, SHADOW, 4);
-	}
-	else
-	{
-		couleurForme(bande, BLACK, 4);
-	}
-	fenetre.draw(bande);
-
-	//Creation 2eme bande
-	bande[0].position= pos;
-	bande[1].position=V2f(pos.x + epaisseur, pos.y);
-	bande[2].position=V2f(pos.x + epaisseur, pos.y + dim.y - epaisseur);
-	bande[3].position=V2f(pos.x, pos.y + dim.y - epaisseur);
-
-	if(mode == 3)
-	{
-		couleurForme(bande, SHADOW, 4);
-	}
-	else
-	{
-		couleurForme(bande, BLACK, 4);
-	}
-	fenetre.draw(bande);
-
-	//Creation 3eme bande
-	bande[0].position= V2f(pos.x, pos.y + dim.y - epaisseur);
-	bande[1].position=V2f(pos.x + dim.x, pos.y + dim.y - epaisseur);
-	bande[2].position=V2f(pos.x + dim.x, pos.y + dim.y);
-	bande[3].position=V2f(pos.x, pos.y + dim.y);
-
-	if(mode == 3)
-	{
-		couleurForme(bande, BLACK, 4);
-	}
-	else
-	{
-		couleurForme(bande, SHADOW, 4);
-	}
-
-	fenetre.draw(bande);
-
-	//Creation 4eme bande
-	bande[0].position= V2f(pos.x+ dim.x - epaisseur, pos.y);
-	bande[1].position=V2f(pos.x + dim.x, pos.y);
-	bande[2].position=V2f(pos.x + dim.x, pos.y + dim.y);
-	bande[3].position=V2f(pos.x+ dim.x - epaisseur, pos.y + dim.y);
-
-	if(mode == 3)
-	{
-		couleurForme(bande, BLACK, 4);
-	}
-	else
-	{
-		couleurForme(bande, SHADOW, 4);
-	}
-	fenetre.draw(bande);
-
-	if(mode == 2)		//CREER LE CARRE INTERIEUR POUR UN BOUTON
-	{
-		pos.x = pos.x + epaisseur;
-		pos.y = pos.y + epaisseur;
-		dim.x = dim.x - 2 * epaisseur;
-		dim.y = dim.y - 2 * epaisseur;
-
-		creation_rectangle(pos, dim,3, 3, fenetre, ecart);
-	}
-	*/
-}
-
-void Fenetre::affichageBoutons()
-{
-	creation_rectangle(V2f(0, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);			//F1
-	creation_rectangle(V2f(64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);			//F2
-	creation_rectangle(V2f(2 *64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F3
-	creation_rectangle(V2f(3 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F4
-	creation_rectangle(V2f(4 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F5
-	creation_rectangle(V2f(5 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F6
-	creation_rectangle(V2f(6 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F7
-	creation_rectangle(V2f(7 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F8
-	creation_rectangle(V2f(8 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F9
-	creation_rectangle(V2f(9 * 64, (54 + 30 + 191 + 25 * 5 + 30)), V2f(64, 50), 2);		//F10
-	creation_rectangle(V2f((640 - 40), 28), V2f(40, 64), 2);							//H2
-	creation_rectangle(V2f((640 - 40), (28 + 64)), V2f(40, 64), 2);						//H3
-	creation_rectangle(V2f((640 - 40), (28 + 2 * 64)), V2f(40, 64), 2);					//H4
-	creation_rectangle(V2f((640 - 40), (28 + 3 * 64)), V2f(40, 64), 2);					//H5
-	creation_rectangle(V2f((640 - 40), (28 + 4 * 64)), V2f(40, 64), 2);					//H6
-	creation_rectangle(V2f((640 - 40), (28 + 5 * 64)), V2f(40, 82), 2);					//H7
-}
-
-class Default : public Fenetre, public LeftSide
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-		vector <Symbol> symbol;
-		vector <Button> buttons;
-		string *ecran;
-		Planning planning{symbol};
-		string geographicalPosition;
-		string S_D_monitoring = "Off";
-		string planningAffichage = "show planning information";
-	public :
-		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons);
-		void update();
-};
-
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-	this->symbol = symbol;
-	this->buttons = buttons;
-}
-
-void Default::update()
-{
-	for(int i = 0; i <= 15; i++)
-		buttons[i].settype("up_type");
-	if(buttons[0].getactivation() == 1)
-	{
-		buttons[3].settype("disabled");
-		buttons[10].settype("disabled");
-		buttons[12].settype("disabled");
-		buttons[13].settype("disabled");
-		buttons[14].settype("disabled");
-		buttons[15].settype("disabled");
-        *ecran = "mainWindow";
-	}
-	else if(buttons[1].getactivation() == 1)
-	{
-		*ecran = "overrideWindow";
-		for(int i = 0; i <= 15; i++)
-			buttons[i].settype("disabled");
-		buttons[0].settype("up_type");
-		buttons[11].settype("up_type");
-	}
-	else if(buttons[2].getactivation() == 1)
-	{
-		*ecran = "dataViewWindow";
-		for(int i = 0; i <= 15; i++)
-			buttons[i].settype("disabled");
-	}
-	else if(buttons[3].getactivation() == 1)
-		*ecran = "specialWindow";
-	else if(buttons[4].getactivation() == 1)
-		*ecran = "settingsWindow";
-	else if (buttons[5].getactivation() == 1)
-    {
-        if(data->getTunnelStoppingArea() == "TunnelStoppingArea" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
-            data->setTunnelStoppingArea(data->getTunnelStoppingArea() + "-");
-        else if (data->getTunnelStoppingArea() == "TunnelStoppingArea-" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
-            data->setTunnelStoppingArea(data->getTunnelStoppingArea().substr(0, data->getTunnelStoppingArea().size() - 1));
-    }
-	else if (buttons[6].getactivation() == 1)
-	{
-		if(S_D_monitoring == "On")
-			S_D_monitoring = "Off";
-		else if (S_D_monitoring == "Off")
-			S_D_monitoring = "On";
-	}
-	else if (buttons[7].getactivation() == 1)
-	{
-		if(geographicalPosition == "On")
-			geographicalPosition = "Off";
-		else if (geographicalPosition == "Off")
-			geographicalPosition = "On";
-	}
-	else if(buttons[8].getactivation() == 1)
-	{
-		if(planning.getScale() < 32000)
-		planning.setScale(planning.getScale() * 2.0);
-	}
-	else if(buttons[9].getactivation() == 1)
-	{
-		if(planning.getScale() > 1000)
-			planning.setScale(planning.getScale() / 2.0);
-	}
-	else if (buttons[10].getactivation() == 1 && data->getVersion() == "3.4.0")
-	{
-		if(planningAffichage == "show planning information")
-			planningAffichage = "Off";
-		else if(planningAffichage == "Off")
-			planningAffichage = "show planning information";
-	}
-	if(data->getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
-    {
-        if(data->getTunnelStoppingArea() == "TunnelStoppingArea")
-        {
-            TC_36.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
-            creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
-        }
-        else if(data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
-        {
-            TC_37.afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2
-            creation_texte(to_string(data->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
-        }
-        DR_05.afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6
-    }
-	if(geographicalPosition != "Unknown") //Geographical position
-	{
-		if(geographicalPosition == "On") //toggled on
-		{
-			rectangle(V2f(54 + 234 + 46 + 63, 54 + 30 + 191 + 25 + 50 + 50), V2f(120, 30), GREY);//G12
-			creation_texte(to_string(data->getPointKilometrique()), BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), 3);
-		}
-		DR_03.afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8
-	}
-	if(planningAffichage != "Unknown")
-	{
-		if(data->getVersion() == "3.4.0")
-		{
-			NA_02.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2
-			if(planningAffichage == "show planning information" && data->getGeneralMode() == "FS")
-				planning.planningInformation(0);
-		}
-		if(data->getVersion() == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && S_D_monitoring == "On")))
-		{
-			planning.planningInformation(0);
-		}
-	}
-}
-
-
-
 class Main : public Fenetre, public LeftSide
 {
 	private :
@@ -877,7 +609,7 @@ class DataEntry : public Fenetre
 {
 	protected :
 		//void dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Button> & boutons, string & ecran);
-};
+};*/
 /*
 void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Button> & boutons, string & ecran)
 {
@@ -1050,7 +782,7 @@ void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & s
 		creation_texte(to_string(i + 1) + " - " + selection[i], GREY, 12, 0, V2f(54 + 280 + 15, 200 + 15 + 6 + i * 20), 4);
 }
 */
-
+/*
 class Special : public Menu
 {
 	private :
@@ -1125,3 +857,6 @@ SystemVersion::SystemVersion(RenderWindow &fenetre, Data &data)
 	this->fenetre = &fenetre;
 	this->data = &data;
 }
+
+
+*/
