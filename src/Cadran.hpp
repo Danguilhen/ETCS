@@ -7,8 +7,8 @@
 class DonneesAfficheurVitesse
 {
     public:
-		DonneesAfficheurVitesse();
-		DonneesAfficheurVitesse(V2f cartesiens, V2f polaire, int vitesse);
+		DonneesAfficheurVitesse(V2f & centre);
+		DonneesAfficheurVitesse(V2f cartesiens, V2f polaire, int vitesse, V2f & centre);
 
 		//definition des get
 		void cartesiens(V2f cartesiens);

@@ -24,7 +24,7 @@ Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre)	//aiguille = dessinA
 	this->fenetre = &fenetre;
 	for(int i =0; i <= 400; i++)
 	{
-		graduations.push_back(DonneesAfficheurVitesse());
+		graduations.push_back(DonneesAfficheurVitesse(centre));
 	}
 	this->Vmax = Vmax;
 	teta0 = 90 - 144;
@@ -251,8 +251,9 @@ void Cadran::update()
 	}
 }
 
-DonneesAfficheurVitesse::DonneesAfficheurVitesse()
+DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f &centre)
 {
+	this->centre = &centre;
 	m_cartesiens.x = 0;
 	m_cartesiens.y = 0;
 	m_polaire.x = 0;
@@ -260,8 +261,9 @@ DonneesAfficheurVitesse::DonneesAfficheurVitesse()
 	m_vitesse = 0;
 }
 
-DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f cartesiens, V2f polaire, int vitesse)
+DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f cartesiens, V2f polaire, int vitesse, V2f &centre)
 {
+	this->centre = &centre;
 	m_cartesiens = cartesiens;
 	m_polaire = polaire;
 	m_vitesse = vitesse;
