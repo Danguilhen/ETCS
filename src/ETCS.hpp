@@ -1,6 +1,10 @@
 #ifndef ERTMS
 #define ERTMS
 
+#include "Data.hpp"
+#include "Symbol.hpp"
+#include "Button.hpp"
+
 class ETCS
 {
 	private :

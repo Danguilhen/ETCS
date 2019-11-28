@@ -6,7 +6,7 @@
 
 #include "Virtual_train.hpp"
 
-Virtual_train::Virtual_train(Data &data)
+Virtual_train::Virtual_train(Data &data) : dmi(data, etcs_bord)
 {
 	this->data = &data;
 }

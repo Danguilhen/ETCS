@@ -1,6 +1,9 @@
 #ifndef DATA
 #define DATA
 
+using namespace std;
+using namespace sf;
+
 class Data
 {
 	private :
@@ -34,8 +37,8 @@ class Data
 		int pointKilometrique;
 		int remainingDistanceTunnel = 500;
 		string tunnelStoppingArea = "TunnelStoppingArea";
-		bool eteindre = False;
-		bool allumage = False;
+		bool eteindre = false;
+		bool allumage = false;
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
 		int socketValue = 0;*/
 		//void SocketSend(char buf[]);

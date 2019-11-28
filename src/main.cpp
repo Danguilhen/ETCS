@@ -18,10 +18,12 @@
 #include "Virtual_train.hpp"
 #include "Data.hpp"
 
+
+
 int main()
 {
-	Virtual_train virtual_train;
 	Data data;
+	Virtual_train virtual_train{data};
 	while(!data.getEteindre())
 	{
 		data.update();

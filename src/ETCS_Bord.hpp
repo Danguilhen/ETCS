@@ -1,5 +1,5 @@
-#ifndef ETCS
-#define ETCS
+#ifndef ETCS_BORD
+#define ETCS_BORD
 
 #include "TrackRelatedInputs.hpp"
 #include "TrainRelatedInputs.hpp"
