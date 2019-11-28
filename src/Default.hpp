@@ -16,7 +16,7 @@ class Default : public Fenetre, public LeftSide
 		string geographicalPosition;
 		string S_D_monitoring = "Off";
 		string planningAffichage = "show planning information";
-		Cadran cadran;
+		//Cadran cadran;
 	public :
 		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons);
 		void update();

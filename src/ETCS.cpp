@@ -34,7 +34,6 @@ void ETCS::update()
 	fond[3].position = V2f(data->getEcartX() * data->getRE(), (480 + data->getEcartY()) * data->getRE());
 	couleurForme(fond, DARK_BLUE, 4);
 	fenetre->draw(fond);
-
 	affichageBoutons();
 	def.update();
 }

@@ -1,6 +1,6 @@
 #include "Default.hpp"
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons): symbol(&symbol), /*planning(symbol), */cadran(400, data, fenetre)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons): symbol(&symbol)//, /*planning(symbol), */cadran(400, data, fenetre)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
@@ -10,7 +10,7 @@ Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vect
 
 void Default::update()
 {
-	cadran.update();
+	//cadran.update();
 	/*
 	for(int i = 0; i <= 15; i++)
 		(*buttons)[i].settype("up_type");

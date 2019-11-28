@@ -36,6 +36,7 @@ class DonneesAfficheurVitesse
     	float m_vitesse;
 };
 
+
 class Cadran : public Tools
 {
 	private :

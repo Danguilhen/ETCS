@@ -22,8 +22,9 @@ void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI, TrainRelatedIn
 		V_MRSP = TrackRI.TSR.getVitesseTableau()[0][0];
 		TrackRI.TSR.getVitesseTableau().erase(TrackRI.TSR.getVitesseTableau().begin());
 	}
-	else
+	/*else
 		cout << TrackRI.TSR.getVitesseTableau()[0][1] + TrainRI.T_data.getTrain_length() << " " << endl;
+		*/
 }
 
 void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
@@ -47,7 +48,7 @@ void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
 	else
 		V_warning = V_MRSP + TrainRI.FVD.getdV_warning_max();
 
-	std::cout << " MSRP " << V_MRSP << " EBI  " << V_ebi << " SBI " << V_sbi << " WARNING " << V_warning << " VTRAIN " << TrainRI.T_data.getVtrain() << endl ;
+	//std::cout << " MSRP " << V_MRSP << " EBI  " << V_ebi << " SBI " << V_sbi << " WARNING " << V_warning << " VTRAIN " << TrainRI.T_data.getVtrain() << endl ;
 }
 
 void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelatedInputs TrainRI)
@@ -84,6 +85,6 @@ void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelated
 			command_triggered = "";
 		}
 	}
-	std::cout << supervision_status << " " << command_triggered << endl;
+	//std::cout << supervision_status << " " << command_triggered << endl;
 }
 

@@ -15,8 +15,9 @@
 //#include "ETCS_Bord.hpp"
 //#include "DMI.hpp"
 
-#include "Virtual_train.hpp"
 #include "Data.hpp"
+#include "Virtual_train.hpp"
+
 
 int main()
 {

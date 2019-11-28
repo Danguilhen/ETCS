@@ -12,7 +12,6 @@ class DMI
 		ETCS_Bord *bord;
 		RenderWindow fenetre;
 		ContextSettings settings;
-		int signalisation = 0;
 		Data *data;
 		ETCS etcs;
 		BASIC basic;

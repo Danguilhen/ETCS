@@ -12,7 +12,7 @@ DMI::DMI(Data &data, ETCS_Bord &bord) : etcs(fenetre, data), basic(fenetre, data
 
 void DMI::update()
 {
-	switch(signalisation)
+	switch(data->getSignalisation())
 	{
 		case 0:
 			;
