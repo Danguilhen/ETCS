@@ -1,6 +1,10 @@
 #ifndef ETCS
 #define ETCS
 
+#include "TrackRelatedInputs.hpp"
+#include "TrainRelatedInputs.hpp"
+#include "SpeedAndDistanceMonitoring.hpp"
+
 class ETCS_Bord
 {
 	public :
@@ -10,6 +14,5 @@ class ETCS_Bord
 
 	void update();
 };
-
 
 #endif

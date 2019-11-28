@@ -12,21 +12,19 @@
 //#include "TrackRelatedInputs.hpp"
 //#include "TrainRelatedInputs.hpp"
 //#include "SpeedAndDistanceMonitoring.hpp"
-//#include "ETCS_Bord.hpp"
-//#include "DMI.hpp"
 
-#include "Virtual_train.hpp"
-#include "Data.hpp"
+#include "ETCS_Bord.hpp"
 
-int main()
+void ETCS_Bord::update()
 {
-	Virtual_train virtual_train;
-	Data data;
-	while(!data.getEteindre())
-	{
-		data.update();
-		if(data.getAllumage())
-			virtual_train.update();
-	}
-	return 0;
+	//ATTENTION A L ORDRE LES RELATED INPUTS AVANT LE SDM
+
+	TrackRI.TSR.TSR_Update();//trackspeedrestriction
+	SDM.MSRP(TrackRI, TrainRI);
+	SDM.Supervision_limits(TrainRI);
+	SDM.SpeedAndDistanceMonitoringCommands(TrainRI);
 }
+
+
+
+
