@@ -126,5 +126,6 @@ int Data::getPointKilometrique(){return pointKilometrique;}
 int Data::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
 string Data::getTunnelStoppingArea(){return tunnelStoppingArea;}
 void Data::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
+int Data::getSignalisation(){return signalisation;}
 bool Data::getEteindre(){return eteindre;}
 bool Data::getAllumage(){return allumage;}

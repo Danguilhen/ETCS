@@ -2,9 +2,7 @@
 #define TOOLS
 
 #include "Data.hpp"
-
-#define V2f Vector2f
-#define BLACK Color(0,0,0)
+#include "define.hpp"
 
 class Tools
 {

@@ -14,9 +14,15 @@ void DMI::update()
 {
 	switch(signalisation)
 	{
-		case 0: ;
-		case 1: basic.update();
-		case 2: etcs.update();
+		case 0:
+			;
+			break;
+		case 1:
+			basic.update();
+			break;
+		case 2:
+			etcs.update();
+			break;
 		default: ;
 	}
 }

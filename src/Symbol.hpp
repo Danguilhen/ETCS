@@ -2,8 +2,7 @@
 #define SYMBOL
 
 #include "Data.hpp"
-
-#define V2f Vector2f
+#include "define.hpp"
 
 using namespace std;
 
@@ -16,11 +15,12 @@ class Symbol
 		Texture texture;
 		Color m_color;
 		vector<Sprite> sprite;
-		void loadSymbol(string chemin_dacces);
+
 	public :
+		Symbol(RenderWindow &fenetre, Data &data);
+		void loadSymbol(string chemin_dacces);
 		void afficher(V2f position);
 		void effacer();
-		void init(RenderWindow &fenetre, Data &data);
 };
 
 #endif

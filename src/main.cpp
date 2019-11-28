@@ -18,8 +18,6 @@
 #include "Virtual_train.hpp"
 #include "Data.hpp"
 
-
-
 int main()
 {
 	Data data;

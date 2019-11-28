@@ -4,21 +4,22 @@
 #include "Data.hpp"
 #include "Symbol.hpp"
 #include "Button.hpp"
+#include "Default.hpp"
+#include "define.hpp"
 
-class ETCS
+class ETCS : public Fenetre
 {
 	private :
-		RenderWindow *fenetre;
-		Data *data;
 		vector <Symbol> symbol;
 		vector <Button> button;
 		Event event;
-		Default def{*fenetre, *data, symbol, button};
-		Special special{*fenetre, *data};
-		Settings settings{*fenetre, *data};
-		SRspeed srSpeed{*fenetre, *data};
-		DataView dataView{*fenetre, *data};
-		SystemVersion systemVersion{*fenetre, *data};
+		Default def;
+		//Special special;
+		//Settings settings;
+		//SRspeed srSpeed;
+		//DataView dataView;
+		//SystemVersion systemVersion;
+		VertexArray fond{Quads,4};
 		void action();
 	public :
 		ETCS(RenderWindow &fenetre, Data &data);

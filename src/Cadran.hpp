@@ -2,19 +2,7 @@
 #define CADRAN
 
 #include "Tools.hpp"
-
-using namespace std;
-using namespace sf;
-
-#define V2f Vector2f
-#define PI 3.14159265
-#define BLACK Color(0,0,0)
-#define WHITE Color(255,255,255)
-#define RED Color(191,0,2)
-#define ORANGE Color(234,145,0)
-#define YELLOW Color(223,223,0)
-#define GREY Color(195,195,195)
-#define DARK_GREY Color(85,85,85)
+#include "define.hpp"
 
 class DonneesAfficheurVitesse
 {
@@ -53,7 +41,7 @@ class Cadran : public Tools
 	private :
 		int Vmax;
 		ConvexShape aiguille;
-		DonneesAfficheurVitesse graduations[401];
+		vector<DonneesAfficheurVitesse> graduations;
 		V2f centre;
 		CircleShape Centre;
 		float teta0;
@@ -63,7 +51,7 @@ class Cadran : public Tools
 		VertexArray Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d);
 		V2f local2globalCoordonates(V2f CoordonneesPolaires);
 	public :
-		Cadran(int Vmax);
+		Cadran(int Vmax, Data &data, RenderWindow &fenetre);
 		void update();
 };
 

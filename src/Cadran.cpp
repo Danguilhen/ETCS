@@ -18,27 +18,33 @@ VertexArray Cadran::Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f
 	return Barre;
 }
 
-Cadran::Cadran(int Vmax)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
+Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
 {
+	this->data = &data;
+	this->fenetre = &fenetre;
+	for(int i =0; i <= 400; i++)
+	{
+		graduations.push_back(DonneesAfficheurVitesse());
+	}
 	this->Vmax = Vmax;
 	teta0 = 90 - 144;
 	kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
 	kmh2degVeleve = kmh2degVfaible / 2.0;
 
-	centre.x = data->getRE() * (54 + 280 / 2.0 + data->getEcartX());
-	centre.y = data->getRE() * (300 / 2.0 + data->getEcartY());
+	centre.x = data.getRE() * (54 + 280 / 2.0 + data.getEcartX());
+	centre.y = data.getRE() * (300 / 2.0 + data.getEcartY());
 
 	aiguille.setPointCount(8);
 	aiguille.setPosition(centre);
 
-	aiguille.setPoint(0,V2f(- (80 + 25) * data->getRE(), - 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(1,V2f(- (80 + 25) * data->getRE(), 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(2,V2f(- (80 + 25 - 15) * data->getRE(), 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(3,V2f(- (57 + 25) * data->getRE(),9 / 2.0 * data->getRE()));
-	aiguille.setPoint(4,V2f(- 20 * data->getRE(),9 / 2.0 * data->getRE()));
-	aiguille.setPoint(5,V2f(- 20 * data->getRE(), - 9 / 2.0 * data->getRE()));
-	aiguille.setPoint(6,V2f(- (57 + 25) * data->getRE(), - 9 / 2.0 * data->getRE()));
-	aiguille.setPoint(7,V2f(- (80 + 25 - 15) * data->getRE(), - 3 / 2.0 * data->getRE()));
+	aiguille.setPoint(0,V2f(- (80 + 25) * data.getRE(), - 3 / 2.0 * data.getRE()));
+	aiguille.setPoint(1,V2f(- (80 + 25) * data.getRE(), 3 / 2.0 * data.getRE()));
+	aiguille.setPoint(2,V2f(- (80 + 25 - 15) * data.getRE(), 3 / 2.0 * data.getRE()));
+	aiguille.setPoint(3,V2f(- (57 + 25) * data.getRE(),9 / 2.0 * data.getRE()));
+	aiguille.setPoint(4,V2f(- 20 * data.getRE(),9 / 2.0 * data.getRE()));
+	aiguille.setPoint(5,V2f(- 20 * data.getRE(), - 9 / 2.0 * data.getRE()));
+	aiguille.setPoint(6,V2f(- (57 + 25) * data.getRE(), - 9 / 2.0 * data.getRE()));
+	aiguille.setPoint(7,V2f(- (80 + 25 - 15) * data.getRE(), - 3 / 2.0 * data.getRE()));
 
 	int Vfaible;
 	teta_origine = 90 + 144; //decalage d'angle par rapport a un repere trigonometrique place la valeur 0
@@ -71,7 +77,7 @@ void Cadran::update()
 	V2f position;
 	CircleShape Centre;
 	Centre.setFillColor(data->getAiguilleColor());
-	Centre.setPosition(V2f(centre.x - 25 * data->getRE(),centre.y - 25 * data->getRE()));
+	Centre.setPosition(V2f(centre.x - 25 * data->getRE(), centre.y - 25 * data->getRE()));
 	Centre.setRadius(25 * data->getRE());
 	fenetre->draw(Centre);
 	float tetaep = 0.5;
@@ -105,7 +111,6 @@ void Cadran::update()
 		}
 		fenetre->draw(Barre);
 	}
-
 	//ecriture des vitesses
 	//position = local2globalCoordonates(centre,V2f(200,graduations[0].teta()));
 	//creation_texte(RE, to_string(graduations[0].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //0km/h
@@ -234,6 +239,7 @@ void Cadran::update()
 	else if(graduations[(int)data->getVtrain()].vitesse() > 9)
 	{
 		s = str.at(1);
+
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 3.0, 300 / 2.0), 1);
 		s = str.at(0);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0, 300 / 2.0), 1);

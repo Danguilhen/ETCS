@@ -1,7 +1,6 @@
 #ifndef CCC
 #define CCC
 
-
 class SpeedAndDistanceMonitoring
 {
 	private :
