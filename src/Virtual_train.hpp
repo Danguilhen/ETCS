@@ -1,4 +1,4 @@
-#ifndef VT
+#ifndef VI
 #define VI
 
 #include "ETCS_Bord.hpp"
