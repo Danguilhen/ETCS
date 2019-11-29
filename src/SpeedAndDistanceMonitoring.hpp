@@ -15,7 +15,13 @@ class SpeedAndDistanceMonitoring
 		void MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI);
 		void Supervision_limits(TrainRelatedInputs TrainRI);
 		void SpeedAndDistanceMonitoringCommands(TrainRelatedInputs TrainRI);
-
+		int getV_MRSP();
+		int getV_ebi();
+		int getV_sbi();
+		int getV_warning();
+		std::string getStatus();
+		std::string getSupervision_status();
+		std::string getCommand_triggered();
 };
 
 
