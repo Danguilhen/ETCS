@@ -251,6 +251,186 @@ void Cadran::update()
 	}
 }
 
+void Cadran::convertisseurVitesses()
+{
+	if(bord.getGeneralMode() == "FS" || train.getGeneralMode() == "OS")
+	{
+		if(train.getMode() == "CSM")
+		{
+			if(train.getStatus() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
+			{
+				if(train.getVtrain()<= train.getVitessePSL())
+					train.setCouleurAiguille(GREY);
+				else
+					train.setCouleurAiguille(RED);
+				actualisationDonnees(train, "IntS", train.getVitesseFLOISL(), 0, 0, 0, 0, train.getVitessePSL());
+				if(train.getVtrain() < train.getVitessePSL())
+					train.setStatus("NoS");
+			}
+			else if(train.getStatus() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
+			{
+				train.setCouleurAiguille(ORANGE);
+				actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
+				if(train.getVtrain() < train.getVitessePSL())
+					train.setStatus("NoS");
+			}
+			else if(train.getStatus() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
+			{
+				train.setCouleurAiguille(ORANGE);
+				actualisationDonnees(train, "OvS", 0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
+				if(train.getVtrain() < train.getVitessePSL())
+					train.setStatus("NoS");
+			}
+			else if(train.getStatus() == "NoS")
+			{
+				train.setCouleurAiguille(GREY);
+				actualisationDonnees(train, "OvS", 0, 0, 0, 0, 0, train.getVitessePSL());
+				if(train.getVtrain() < train.getVitessePSL())
+					train.setStatus("NoS");
+			}
+		}
+        else if(train.getMode() == "PIM")
+        {
+            if(train.getStatus() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
+            {
+            	if(train.getVtrain()<= train.getVbut())
+            		train.setCouleurAiguille(GREY);
+            	else if(train.getVtrain()<= train.getVitessePSL())
+            		train.setCouleurAiguille(WHITE);
+            	else
+            		train.setCouleurAiguille(RED);
+            	actualisationDonnees(train, "IntS", train.getVitesseFLOISL(), 0,0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
+
+                if(train.getVtrain() < train.getVitessePSL())
+                    train.setStatus("NoS");
+            }
+            else if(train.getStatus() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
+            {
+            	train.setCouleurAiguille(ORANGE);
+                actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), 0, train.getVitessePSL(), train.getVrelease(),train.getVbut());
+                if(train.getVtrain() < train.getVitessePSL())
+                    train.setStatus("NoS");
+            }
+            else if(train.getStatus() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
+            {
+            	train.setCouleurAiguille(ORANGE);
+                actualisationDonnees(train, "OvS", 0, train.getVitesseFLOISL(), 0,train.getVitessePSL(), train.getVrelease(), train.getVbut());
+                if(train.getVtrain() < train.getVitessePSL())
+                    train.setStatus("NoS");
+            }
+            else if(train.getStatus() == "NoS")
+            {
+				if(train.getVtrain()<= train.getVbut())
+					train.setCouleurAiguille(GREY);
+				else
+					train.setCouleurAiguille(WHITE);
+                actualisationDonnees(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
+                if(train.getVtrain() < train.getVitessePSL())
+                    train.setStatus("NoS");
+            }
+        }
+
+		else if(train.getMode() == "TSM")
+		{
+			if(train.getStatus() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
+			{
+				if(train.getVtrain()<= train.getVbut())
+					train.setCouleurAiguille(GREY);
+				else if(train.getVtrain()<= train.getVitessePSL())
+					train.setCouleurAiguille(YELLOW);
+				else
+					train.setCouleurAiguille(RED);
+				actualisationDonnees(train, "IntS",train.getVitesseFLOISL(), 0,train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
+				if(train.getVtrain() < train.getVbut())
+					train.setStatus("NoS");
+			}
+			else if(train.getStatus() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
+			{
+				train.setCouleurAiguille(ORANGE);
+				actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), train.getVitessePSL(), 0, train.getVrelease(), train.getVbut());
+				if(train.getVtrain() < train.getVbut())
+					train.setStatus("NoS");
+			}
+			else if(train.getStatus() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
+			{
+				train.setCouleurAiguille(ORANGE);
+				actualisationDonnees(train, "OvS",  0, train.getVitesseFLOISL(), train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
+				if(train.getVtrain() < train.getVbut())
+					train.setStatus("NoS");
+			}
+			else if (train.getStatus() == "IndS"||(train.getVtrain() < train.getVitessePSL() && train.getVtrain() >= train.getVitesseISL()))
+			{
+				actualisationDonnees(train, "IndS", 0, 0, train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut() );//OK
+				if (train.getVtrain() < train.getVbut())
+					train.setStatus("NoS");
+			}
+			else if(train.getStatus() == "NoS")
+			{
+				if(train.getVtrain()<= train.getVbut())
+					train.setCouleurAiguille(GREY);
+				else
+					train.setCouleurAiguille(WHITE);
+				actualisationDonnees(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());//OK
+				if(train.getVtrain() < train.getVbut())
+					train.setStatus("NoS");
+			}
+		}
+		else if(train.getMode() == "RSM")
+		{
+
+		}
+	}
+	else if(train.getGeneralMode() == "LS")
+	{
+		if(train.getMode() == "CSM")
+		{
+
+		}
+		else if(train.getMode() == "PIM")
+		{
+
+		}
+		else if(train.getMode() == "TSM")
+		{
+
+		}
+		else if(train.getMode() == "RSM")
+		{
+
+		}
+	}
+	else if(train.getGeneralMode() == "SR/UN")
+	{
+		if(train.getMode() == "CSM")
+		{
+
+		}
+		else if(train.getMode() == "PIM")
+		{
+
+		}
+		else if(train.getMode() == "TSM")
+		{
+
+		}
+	}
+	else if(train.getGeneralMode() == "SH/RV")
+	{
+		if(train.getMode() == "CSM")
+		{
+
+		}
+	}
+	else if(train.getGeneralMode() == "NL/SB/PT")
+	{
+
+	}
+	else if(train.getGeneralMode() == "TR")
+	{
+
+	}
+}
+
 DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f &centre)
 {
 	this->centre = &centre;

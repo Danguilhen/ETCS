@@ -54,6 +54,7 @@ class Cadran : public Tools
 	public :
 		Cadran(int Vmax, Data &data, RenderWindow &fenetre);
 		void update();
+		void convertisseurVitesses()
 };
 
 #endif
