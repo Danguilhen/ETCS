@@ -79,7 +79,7 @@ void Cadran::update()
 
 	V2f position;
 	CircleShape Centre;
-	Centre.setFillColor(data->getAiguilleColor());
+	Centre.setFillColor(aiguilleColor);
 	Centre.setPosition(V2f(centre.x - 25 * data->getRE(), centre.y - 25 * data->getRE()));
 	Centre.setRadius(25 * data->getRE());
 	fenetre->draw(Centre);
@@ -131,20 +131,20 @@ void Cadran::update()
 	//creation_texte(RE, to_string(graduations[400].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //400km/h
 
 
-	int V1 = max(max(data->getV_orange(), data->getV_red()), max(max(data->getV_dark_grey(), data->getV_yellow()), data->getV_white()));
-	int V2 = max(max(data->getV_dark_grey(), data->getV_yellow()), data->getV_white());
+	int V1 = max(max(Vred, Vred), max(max(VdarkGrey, Vyellow), Vwhite));
+	int V2 = max(max(VdarkGrey, Vyellow), Vwhite);
 
 	float deltateta = abs(graduations[0].teta()-graduations[1].teta());
 	Color couleur2 = GREY;
 	Color couleur4 = BLACK;
 
-	if(data->getV_medium_grey() != 0)
-		creation_texte(to_string((int)data->getV_medium_grey()), GREY, 17, 0, V2f(54 + 26, 274), 1);
+	if(VmediumGrey != 0)
+		creation_texte(to_string((int)VmediumGrey), GREY, 17, 0, V2f(54 + 26, 274), 1);
 	for(int i = V2 + 1; i <= V1; i++)
 	{
-		if(data->getV_red() > data->getV_orange())
+		if(Vred > Vorange)
 			couleurForme(Barre, RED, 4);
-		else if(data->getV_red() < data->getV_orange())
+		else if(Vred < Vorange)
 			couleurForme(Barre, ORANGE, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(137 - 20, deltateta / 2.0), V2f(137 - 20, - deltateta / 2.0));
 		fenetre->draw(Barre);
@@ -157,40 +157,40 @@ void Cadran::update()
 	}
 	for(int i = (V2 - 2 * asin(3 / float(137 - 20))); i <= V2; i++)
 	{
-		if(data->getV_yellow() > data->getV_dark_grey() && data->getV_yellow() > data->getV_white())
+		if(Vyellow > VdarkGrey && Vyellow > Vwhite)
 			couleurForme(Barre, YELLOW, 4);
-		else if(data->getV_white() > data->getV_dark_grey() && data->getV_white() > data->getV_yellow())
+		else if(Vwhite > VdarkGrey && Vwhite > Vyellow)
 			couleurForme(Barre, WHITE, 4);
 		else
 			couleurForme(Barre, DARK_GREY, 4);
 		Barre = Shape(graduations[i], V2f(128, - deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128 - 11, deltateta / 2.0), V2f(128 - 11, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
-	for(int i = V1; i <= data->getV_red(); i++)
+	for(int i = V1; i <= Vred; i++)
 	{
 		couleurForme(Barre, RED, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
-	for(int i = 0; i <= data->getV_yellow(); i++)
+	for(int i = 0; i <= Vyellow; i++)
 	{
 		couleurForme(Barre, YELLOW, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
-	for(int i = 0; i <= data->getV_dark_grey(); i++)
+	for(int i = 0; i <= VdarkGrey; i++)
 	{
 		couleurForme(Barre, DARK_GREY, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
-	for(int i = 1; i <= data->getV_medium_grey(); i++)
+	for(int i = 1; i <= VmediumGrey; i++)
 	{
 		couleurForme(Barre, couleur2, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 4, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
-	if(V1 < data->getV_medium_grey())
+	if(V1 < VmediumGrey)
 	{
 		for(int i = 1; i <= V1; i++)
 		{
@@ -198,7 +198,7 @@ void Cadran::update()
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
 			fenetre->draw(Barre);
 		}
-		for(int i = V1 + 1; i <= data->getV_medium_grey(); i++) //trait noir
+		for(int i = V1 + 1; i <= VmediumGrey; i++) //trait noir
 		{
 			couleurForme(Barre, couleur2, 4);
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
@@ -207,7 +207,7 @@ void Cadran::update()
 	}
 	else
 	{
-		for(int i = 1; i <= data->getV_medium_grey(); i++)
+		for(int i = 1; i <= VmediumGrey; i++)
 		{
 			couleurForme(Barre, couleur4, 4);
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
