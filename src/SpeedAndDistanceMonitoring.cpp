@@ -60,11 +60,11 @@ void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelated
 		supervision_status = "Overspeed";
 	if(TrainRI.T_data.getVtrain() > V_warning)
 		supervision_status = "Warning";
-	if(TrainRI.T_data.getVtrain() > V_sbi)
+	/*if(TrainRI.T_data.getVtrain() > V_sbi)//à voir avec Benoit
 	{
 		supervision_status = "Intervention";
 		command_triggered = "SB";
-	}
+	}*/
 	if(TrainRI.T_data.getVtrain() > V_ebi)
 	{
 		supervision_status = "Intervention";
@@ -72,12 +72,12 @@ void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelated
 	}
 
 	//Revocation conditions
-	if(TrainRI.T_data.getVtrain() == 0 && command_triggered == "EB" && supervision_status == "Intervention")
+	if(TrainRI.T_data.getVtrain() == 0 && supervision_status == "Intervention")
 	{
 		supervision_status = "Normal";
 		command_triggered = "";
 	}
-	if(TrainRI.T_data.getVtrain() <= V_MRSP)
+	if(TrainRI.T_data.getVtrain() <= V_MRSP && supervision_status != "Intervention")
 	{
 		supervision_status = "Normal";
 		if (command_triggered == "SB")
