@@ -67,7 +67,7 @@ void Tools::rectangle(V2f pos, V2f taille, Color col)
 	fenetre->draw(barre);
 }
 
-void Tools::couleurForme(VertexArray & bande,Color col, int n)
+void Tools::couleurForme(VertexArray &bande,Color col, int n)
 {
 	for(int i = 0; i < n; i++)
 	{

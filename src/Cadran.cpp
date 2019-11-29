@@ -80,6 +80,7 @@ void Cadran::update()
 	V2f position;
 	CircleShape Centre;
 	Centre.setFillColor(aiguilleColor);
+	aiguille.setFillColor(aiguilleColor);
 	Centre.setPosition(V2f(centre.x - 25 * data->getRE(), centre.y - 25 * data->getRE()));
 	Centre.setRadius(25 * data->getRE());
 	fenetre->draw(Centre);
@@ -131,7 +132,7 @@ void Cadran::update()
 	//creation_texte(RE, to_string(graduations[400].vitesse()), arial, WHITE, 16, 0, V2f(position.x / RE, position.y / RE), fenetre, 1); //400km/h
 
 
-	int V1 = max(max(Vred, Vred), max(max(VdarkGrey, Vyellow), Vwhite));
+	int V1 = max(max(Vorange, Vred), max(max(VdarkGrey, Vyellow), Vwhite));
 	int V2 = max(max(VdarkGrey, Vyellow), Vwhite);
 
 	float deltateta = abs(graduations[0].teta()-graduations[1].teta());

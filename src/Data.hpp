@@ -6,7 +6,7 @@
 class Data
 {
 	private :
-		int Vtrain = 0;
+		int Vtrain = 135;
 		string generalMode = "FS";
 		string level = "Level 1";
 		double RE;
