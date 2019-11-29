@@ -8,8 +8,6 @@ class Data
 	private :
 		int Vtrain = 0;
 		string generalMode = "FS";
-		string mode = "CSM";
-		string status = "Normal";
 		string level = "Level 1";
 		double RE;
 		int ecartX = 0;
@@ -25,13 +23,6 @@ class Data
 		//	Mode 2 : Jouer en boucle
 		//	Mode 3 : Stopper la boucle, le son s'arr�te
 		int Vligne = 0;
-		float V_red = 0;
-		float V_orange = 50;
-		float V_yellow = 70;
-		float V_white = 0;
-		float V_medium_grey = 0;
-		float V_dark_grey = 0;
-		Color aiguille = WHITE;
 		string version = "3.6.0";
 		int pointKilometrique = 0;
 		int remainingDistanceTunnel = 500;
@@ -48,8 +39,6 @@ class Data
 		void update();
 		int getVtrain();
 		string getGeneralMode();
-		string getMode();
-		string getStatus();
 		string getLevel();
 		double getRE();
 		int getEcartX();
@@ -57,13 +46,6 @@ class Data
 		Font getFont();
 		void setSon(int a);
 		int getVligne();
-		float getV_red();
-		float getV_orange();
-		float getV_yellow();
-		float getV_white();
-		float getV_medium_grey();
-		float getV_dark_grey();
-		Color getAiguilleColor();
 		string getVersion();
 		int getPointKilometrique();
 		int getRemainingDistanceTunnel();

@@ -105,8 +105,6 @@ void Data::update()
 
 int Data::getVtrain(){return Vtrain;}
 string Data::getGeneralMode(){return generalMode;}
-string Data::getMode(){return mode;}
-string Data::getStatus(){return status;}
 string Data::getLevel(){return level;}
 double Data::getRE(){return RE;}
 int Data::getEcartX(){return ecartX;}
@@ -114,13 +112,6 @@ int Data::getEcartY(){return ecartY;}
 Font Data::getFont(){return arial;}
 void Data::setSon(int a){son = a;}
 int Data::getVligne(){return Vligne;}
-float Data::getV_red(){return V_red;}
-float Data::getV_orange(){return V_orange;}
-float Data::getV_yellow(){return V_yellow;}
-float Data::getV_white(){return V_white;}
-float Data::getV_medium_grey(){return V_medium_grey;}
-float Data::getV_dark_grey(){return V_dark_grey;}
-Color Data::getAiguilleColor(){return aiguille;}
 string Data::getVersion(){return version;}
 int Data::getPointKilometrique(){return pointKilometrique;}
 int Data::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}

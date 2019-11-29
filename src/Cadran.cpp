@@ -260,121 +260,121 @@ void Cadran::convertisseurVitesses()
 	{
 		if(bord->SDM.getStatus() == "CSM")
 		{
-			if(bord->SDM.getSupervision_status() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
+			if(bord->SDM.getSupervision_status() == "IntS" || data->getVtrain() >= train.getVitesseFLOISL())
 			{
-				if(train.getVtrain()<= train.getVitessePSL())
-					train.setCouleurAiguille(GREY);
+				if(data->getVtrain()<= train.getVitessePSL())
+					aiguille = GREY;
 				else
-					train.setCouleurAiguille(RED);
-				actualisationDonnees(train, "IntS", train.getVitesseFLOISL(), 0, 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
+					aiguille = RED;
+				actualisationVitesse(train.getVitesseFLOISL(), 0, 0, 0, 0, train.getVitessePSL());
+				if(data->getVtrain() < train.getVitessePSL())
 					train.setStatus("NoS");
 			}
-			else if(bord->SDM.getSupervision_status() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
+			else if(bord->SDM.getSupervision_status() == "WaS" || (data->getVtrain() >= train.getVWaS() && data->getVtrain() < train.getVitesseFLOISL()))
 			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
+				aiguille = ORANGE;
+				actualisationVitesse(0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
+				if(data->getVtrain() < train.getVitessePSL())
 					train.setStatus("NoS");
 			}
-			else if(bord->SDM.getSupervision_status() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
+			else if(bord->SDM.getSupervision_status() == "OvS" || (data->getVtrain() >= train.getVitessePSL() && data->getVtrain() < train.getVWaS()))
 			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "OvS", 0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
+				aiguille = ORANGE;
+				actualisationVitesse(0, train.getVitesseFLOISL(), 0, 0, 0, train.getVitessePSL());
+				if(data->getVtrain() < train.getVitessePSL())
 					train.setStatus("NoS");
 			}
 			else if(bord->SDM.getSupervision_status() == "NoS")
 			{
-				train.setCouleurAiguille(GREY);
-				actualisationDonnees(train, "OvS", 0, 0, 0, 0, 0, train.getVitessePSL());
-				if(train.getVtrain() < train.getVitessePSL())
+				aiguille = GREY;
+				actualisationVitesse(0, 0, 0, 0, 0, train.getVitessePSL());
+				if(data->getVtrain() < train.getVitessePSL())
 					train.setStatus("NoS");
 			}
 		}
         else if(bord->SDM.getStatus() == "PIM")
         {
-            if(bord->SDM.getSupervision_status() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
+            if(bord->SDM.getSupervision_status() == "IntS" || data->getVtrain() >= train.getVitesseFLOISL())
             {
-            	if(train.getVtrain()<= train.getVbut())
-            		train.setCouleurAiguille(GREY);
-            	else if(train.getVtrain()<= train.getVitessePSL())
-            		train.setCouleurAiguille(WHITE);
+            	if(data->getVtrain()<= train.getVbut())
+            		aiguille = GREY;
+            	else if(data->getVtrain()<= train.getVitessePSL())
+            		aiguille = WHITE;
             	else
-            		train.setCouleurAiguille(RED);
-            	actualisationDonnees(train, "IntS", train.getVitesseFLOISL(), 0,0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
+            		aiguille = RED;
+            	actualisationVitesse(train.getVitesseFLOISL(), 0,0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
 
-                if(train.getVtrain() < train.getVitessePSL())
+                if(data->getVtrain() < train.getVitessePSL())
                     train.setStatus("NoS");
             }
-            else if(bord->SDM.getSupervision_status() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
+            else if(bord->SDM.getSupervision_status() == "WaS" || (data->getVtrain() >= train.getVWaS() && data->getVtrain() < train.getVitesseFLOISL()))
             {
-            	train.setCouleurAiguille(ORANGE);
-                actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), 0, train.getVitessePSL(), train.getVrelease(),train.getVbut());
-                if(train.getVtrain() < train.getVitessePSL())
+            	aiguille = ORANGE;
+                actualisationVitesse(0, train.getVitesseFLOISL(), 0, train.getVitessePSL(), train.getVrelease(),train.getVbut());
+                if(data->getVtrain() < train.getVitessePSL())
                     train.setStatus("NoS");
             }
-            else if(bord->SDM.getSupervision_status() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
+            else if(bord->SDM.getSupervision_status() == "OvS" || (data->getVtrain() >= train.getVitessePSL() && data->getVtrain() < train.getVWaS()))
             {
-            	train.setCouleurAiguille(ORANGE);
-                actualisationDonnees(train, "OvS", 0, train.getVitesseFLOISL(), 0,train.getVitessePSL(), train.getVrelease(), train.getVbut());
-                if(train.getVtrain() < train.getVitessePSL())
+            	aiguille = ORANGE;
+                actualisationVitesse(train, "OvS", 0, train.getVitesseFLOISL(), 0,train.getVitessePSL(), train.getVrelease(), train.getVbut());
+                if(data->getVtrain() < train.getVitessePSL())
                     train.setStatus("NoS");
             }
             else if(bord->SDM.getSupervision_status() == "NoS")
             {
-				if(train.getVtrain()<= train.getVbut())
-					train.setCouleurAiguille(GREY);
+				if(data->getVtrain()<= train.getVbut())
+					aiguille = GREY;
 				else
-					train.setCouleurAiguille(WHITE);
-                actualisationDonnees(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
-                if(train.getVtrain() < train.getVitessePSL())
+					aiguille = WHITE;
+                actualisationVitesse(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());
+                if(data->getVtrain() < train.getVitessePSL())
                     train.setStatus("NoS");
             }
         }
 
 		else if(bord->SDM.getStatus() == "TSM")
 		{
-			if(bord->SDM.getSupervision_status() == "IntS" || train.getVtrain() >= train.getVitesseFLOISL())
+			if(bord->SDM.getSupervision_status() == "IntS" || data->getVtrain() >= train.getVitesseFLOISL())
 			{
-				if(train.getVtrain()<= train.getVbut())
-					train.setCouleurAiguille(GREY);
-				else if(train.getVtrain()<= train.getVitessePSL())
-					train.setCouleurAiguille(YELLOW);
+				if(data->getVtrain()<= train.getVbut())
+					aiguille = GREY;
+				else if(data->getVtrain()<= train.getVitessePSL())
+					aiguille = YELLOW;
 				else
-					train.setCouleurAiguille(RED);
-				actualisationDonnees(train, "IntS",train.getVitesseFLOISL(), 0,train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
-				if(train.getVtrain() < train.getVbut())
+					aiguille = RED;
+				actualisationVitesse(train, "IntS",train.getVitesseFLOISL(), 0,train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
+				if(data->getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
-			else if(bord->SDM.getSupervision_status() == "WaS" || (train.getVtrain() >= train.getVWaS() && train.getVtrain() < train.getVitesseFLOISL()))
+			else if(bord->SDM.getSupervision_status() == "WaS" || (data->getVtrain() >= train.getVWaS() && data->getVtrain() < train.getVitesseFLOISL()))
 			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "WaS", 0, train.getVitesseFLOISL(), train.getVitessePSL(), 0, train.getVrelease(), train.getVbut());
-				if(train.getVtrain() < train.getVbut())
+				aiguille = ORANGE;
+				actualisationVitesse(train, "WaS", 0, train.getVitesseFLOISL(), train.getVitessePSL(), 0, train.getVrelease(), train.getVbut());
+				if(data->getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
-			else if(bord->SDM.getSupervision_status() == "OvS" || (train.getVtrain() >= train.getVitessePSL() && train.getVtrain() < train.getVWaS()))
+			else if(bord->SDM.getSupervision_status() == "OvS" || (data->getVtrain() >= train.getVitessePSL() && data->getVtrain() < train.getVWaS()))
 			{
-				train.setCouleurAiguille(ORANGE);
-				actualisationDonnees(train, "OvS",  0, train.getVitesseFLOISL(), train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
-				if(train.getVtrain() < train.getVbut())
+				aiguille = ORANGE;
+				actualisationVitesse(train, "OvS",  0, train.getVitesseFLOISL(), train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut());
+				if(data->getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
-			else if (bord->SDM.getSupervision_status() == "IndS"||(train.getVtrain() < train.getVitessePSL() && train.getVtrain() >= train.getVitesseISL()))
+			else if (bord->SDM.getSupervision_status() == "IndS"||(data->getVtrain() < train.getVitessePSL() && data->getVtrain() >= train.getVitesseISL()))
 			{
-				actualisationDonnees(train, "IndS", 0, 0, train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut() );//OK
-				if (train.getVtrain() < train.getVbut())
+				actualisationVitesse(train, "IndS", 0, 0, train.getVitessePSL(), 0 , train.getVrelease(), train.getVbut() );//OK
+				if (data->getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
 			else if(bord->SDM.getSupervision_status() == "NoS")
 			{
-				if(train.getVtrain()<= train.getVbut())
-					train.setCouleurAiguille(GREY);
+				if(data->getVtrain()<= train.getVbut())
+					aiguille = GREY;
 				else
-					train.setCouleurAiguille(WHITE);
-				actualisationDonnees(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());//OK
-				if(train.getVtrain() < train.getVbut())
+					aiguille = WHITE;
+				actualisationVitesse(train, "NoS", 0, 0, 0, train.getVitessePSL(), train.getVrelease(), train.getVbut());//OK
+				if(data->getVtrain() < train.getVbut())
 					train.setStatus("NoS");
 			}
 		}

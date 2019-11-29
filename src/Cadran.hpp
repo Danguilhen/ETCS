@@ -41,6 +41,13 @@ class DonneesAfficheurVitesse
 class Cadran : public Tools
 {
 	private :
+		float Vred;
+		float Vorange;
+		float Vyellow;
+		float Vwhite;
+		float VmediumGrey;
+		float VdarkGrey;
+		Color aiguille;
 		ETCS_Bord *bord;
 		int Vmax;
 		ConvexShape aiguille;
