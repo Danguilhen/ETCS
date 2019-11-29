@@ -9,7 +9,7 @@ class Data
 		int Vtrain = 0;
 		string generalMode = "FS";
 		string mode = "CSM";
-		string status = "NoS";
+		string status = "Normal";
 		string level = "Level 1";
 		double RE;
 		int ecartX = 0;
