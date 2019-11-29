@@ -47,7 +47,7 @@ class Cadran : public Tools
 		float Vwhite;
 		float VmediumGrey;
 		float VdarkGrey;
-		Color aiguille;
+		Color aiguilleColor;
 		ETCS_Bord *bord;
 		int Vmax;
 		ConvexShape aiguille;
@@ -64,7 +64,7 @@ class Cadran : public Tools
 		Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord);
 		void update();
 		void convertisseurVitesses();
-		void actualisationDonneesVitesses();
+		void actualisationVitesse(float red, float orange, float yellow, float white, float mediumGrey, float darkGrey)
 };
 
 #endif
