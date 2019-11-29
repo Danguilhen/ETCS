@@ -63,7 +63,8 @@ class Cadran : public Tools
 	public :
 		Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord);
 		void update();
-		void convertisseurVitesses()
+		void convertisseurVitesses();
+		void actualisationDonneesVitesses();
 };
 
 #endif
