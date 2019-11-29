@@ -434,6 +434,20 @@ void Cadran::convertisseurVitesses()
 	}
 }
 
+void Cadran::actualisationVitesses(float red, float orange, float yellow, float white, float mediumGrey, float darkGrey)
+{
+	Vred = red;
+	Vorange = orange;
+	Vyellow = yellow;
+	Vwhite = white;
+	if(darkGrey == 0)
+		VmediumGrey = mediumGrey;
+	else
+		VmediumGrey = 0;
+	VdarkGrey = darkGrey;
+}
+
+
 DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f &centre)
 {
 	this->centre = &centre;
