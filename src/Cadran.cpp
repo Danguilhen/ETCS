@@ -18,8 +18,9 @@ VertexArray Cadran::Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f
 	return Barre;
 }
 
-Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
+Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord)	//aiguille = dessinAiguilleIV(centreIV, RE); a modifier !!!!!!    //centreIV = initValeurIndicateurVitesse(Vmax, RE, graduations, ecart); !!
 {
+	this->bord = &bord;
 	this->data = &data;
 	this->fenetre = &fenetre;
 	for(int i =0; i <= 400; i++)

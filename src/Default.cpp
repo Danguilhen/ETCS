@@ -1,11 +1,12 @@
 #include "Default.hpp"
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons): symbol(&symbol), /*planning(symbol), */cadran(400, data, fenetre)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord): symbol(&symbol), /*planning(symbol), */cadran(400, data, fenetre, bord)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
 	this->symbol = &symbol;
 	this->buttons = &buttons;
+	this->bord = &bord;
 }
 
 void Default::update()

@@ -22,7 +22,7 @@ class ETCS : public Fenetre
 		VertexArray fond{Quads,4};
 		void action();
 	public :
-		ETCS(RenderWindow &fenetre, Data &data);
+		ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord);
 		void update();
 };
 
