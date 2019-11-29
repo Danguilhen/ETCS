@@ -3,6 +3,7 @@
 
 #include "Tools.hpp"
 #include "define.hpp"
+#include "ETCS_Bord.hpp"
 
 class DonneesAfficheurVitesse
 {
@@ -40,6 +41,7 @@ class DonneesAfficheurVitesse
 class Cadran : public Tools
 {
 	private :
+		ETCS_Bord *bord;
 		int Vmax;
 		ConvexShape aiguille;
 		vector<DonneesAfficheurVitesse> graduations;
@@ -52,7 +54,7 @@ class Cadran : public Tools
 		VertexArray Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d);
 		V2f local2globalCoordonates(V2f CoordonneesPolaires);
 	public :
-		Cadran(int Vmax, Data &data, RenderWindow &fenetre);
+		Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord);
 		void update();
 		void convertisseurVitesses()
 };

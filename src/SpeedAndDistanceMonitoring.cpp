@@ -95,4 +95,3 @@ int SpeedAndDistanceMonitoring::getV_warning(){return V_warning;}
 std::string SpeedAndDistanceMonitoring::getStatus(){return status;}
 std::string SpeedAndDistanceMonitoring::getSupervision_status(){return supervision_status;}
 std::string SpeedAndDistanceMonitoring::getCommand_triggered(){return command_triggered;}
-

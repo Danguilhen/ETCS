@@ -5,6 +5,7 @@
 #include "LeftSide.hpp"
 #include "Symbol.hpp"
 #include "Button.hpp"
+#include "ETCS_Bord.hpp"
 
 class Default : public Fenetre, public LeftSide
 {
@@ -18,7 +19,7 @@ class Default : public Fenetre, public LeftSide
 		string planningAffichage = "show planning information";
 		Cadran cadran;
 	public :
-		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons);
+		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord);
 		void update();
 };
 
