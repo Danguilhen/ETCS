@@ -64,7 +64,7 @@ class Cadran : public Tools
 		Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord);
 		void update();
 		void convertisseurVitesses();
-		void actualisationVitesse(float red, float orange, float yellow, float white, float mediumGrey, float darkGrey)
+		void actualisationVitesse(float red, float orange, float yellow, float white, float mediumGrey, float darkGrey);
 };
 
 #endif
