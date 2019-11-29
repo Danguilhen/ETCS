@@ -70,11 +70,8 @@ void Buttons::action_type(Son & son)
 				}
 				else
 					button_activation = 0;
-
 			}
 		}
-
-
 	}
 	if (type == "delay_type")
 	{
@@ -84,8 +81,6 @@ void Buttons::action_type(Son & son)
 			chrono.restart();
 		}
 		if(driver_action == 3 && delta_ts > 2)
-		{
 			button_activation = 1;
-		}
 	}
 }
