@@ -79,7 +79,7 @@ void Cadran::update()
 
 	V2f position;
 	CircleShape Centre;
-	Centre.setFillColor(aiguille);
+	Centre.setFillColor(aiguilleColor);
 	Centre.setPosition(V2f(centre.x - 25 * data->getRE(), centre.y - 25 * data->getRE()));
 	Centre.setRadius(25 * data->getRE());
 	fenetre->draw(Centre);
@@ -139,7 +139,7 @@ void Cadran::update()
 	Color couleur4 = BLACK;
 
 	if(VmediumGrey != 0)
-		creation_texte(to_string((int)Vmedium_grey), GREY, 17, 0, V2f(54 + 26, 274), 1);
+		creation_texte(to_string((int)VmediumGrey), GREY, 17, 0, V2f(54 + 26, 274), 1);
 	for(int i = V2 + 1; i <= V1; i++)
 	{
 		if(Vred > Vorange)
