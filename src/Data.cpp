@@ -6,7 +6,6 @@ Data::Data()
 		RE = VideoMode::getDesktopMode().width / 640.0;	//rapport Ecran
 	else
 		RE = VideoMode::getDesktopMode().height / 480.0; //rapport Ecran
-	arial.loadFromFile("ressources/fonts/arial.ttf"); //recuperation de la police
 }
 
 void Data::update()
@@ -109,7 +108,6 @@ string Data::getLevel(){return level;}
 double Data::getRE(){return RE;}
 int Data::getEcartX(){return ecartX;}
 int Data::getEcartY(){return ecartY;}
-Font Data::getFont(){return arial;}
 void Data::setSon(int a){son = a;}
 int Data::getVligne(){return Vligne;}
 string Data::getVersion(){return version;}
@@ -119,4 +117,5 @@ string Data::getTunnelStoppingArea(){return tunnelStoppingArea;}
 void Data::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
 int Data::getSignalisation(){return signalisation;}
 bool Data::getEteindre(){return eteindre;}
+void Data::setEteindre(bool stop){eteindre = stop;}
 bool Data::getAllumage(){return allumage;}

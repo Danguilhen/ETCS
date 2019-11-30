@@ -12,7 +12,6 @@ class Data
 		double RE;
 		int ecartX = 0;
 		int ecartY = 0;
-		Font arial;
 		int son;
 		//Son :
 		//	Num�ro 1 : click
@@ -43,7 +42,6 @@ class Data
 		double getRE();
 		int getEcartX();
 		int getEcartY();
-		Font getFont();
 		void setSon(int a);
 		int getVligne();
 		string getVersion();
@@ -53,6 +51,7 @@ class Data
 		void setTunnelStoppingArea(string TSA);
 		int getSignalisation();
 		bool getEteindre();
+		void setEteindre(bool stop);
 		bool getAllumage();
 };
 

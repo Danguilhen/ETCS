@@ -83,11 +83,17 @@ void ETCS::action()
 			}
         }
 	    if(event.type == Event::Closed)
-            fenetre->close();
+        {
+			fenetre->close();
+			data->setEteindre(true);
+		}
 		if(event.type == Event::KeyPressed)
 		{
 		    if(event.key.code == Keyboard::Escape)
-		        fenetre->close();
+			{
+				fenetre->close();
+				data->setEteindre(true);
+			}
 			else if(event.key.code == Keyboard::A)
 			{
 		        if(button[0].getdriver_action() == 0)
