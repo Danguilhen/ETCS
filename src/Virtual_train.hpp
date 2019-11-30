@@ -12,7 +12,7 @@ class Virtual_train
 		Data *data;
 		DMI dmi;
 		//Train_Dynamique train_dynamique;
-		//Train_Statique train_statique;
+		Train_Statique train_statique;
 
 	public :
 		Virtual_train(Data &data);
