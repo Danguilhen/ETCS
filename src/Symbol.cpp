@@ -10,7 +10,7 @@ void Symbol::loadSymbol(string chemin_dacces)
 {
 	if(!image.loadFromFile(chemin_dacces)) // Si le chargement du fichier a �chou�
 	{
-	     cout << "Erreur durant le chargement de l'image" << endl;
+	    cout << "Erreur durant le chargement de l'image" << endl;
 	}
 	else // Si le chargement de l'image a r�ussi
 	{

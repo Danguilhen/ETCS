@@ -6,18 +6,17 @@
 #include "Symbol.hpp"
 #include "Button.hpp"
 #include "ETCS_Bord.hpp"
+#include "Planning.hpp"
 
 class Default : public Fenetre, public LeftSide
 {
 	private :
-		vector <Symbol> *symbol;
 		vector <Button> *buttons;
 		string *ecran;
-		//Planning planning;
+		Planning planning;
 		string geographicalPosition;
 		string S_D_monitoring = "Off";
 		string planningAffichage = "show planning information";
-		Cadran cadran;
 	public :
 		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord);
 		void update();

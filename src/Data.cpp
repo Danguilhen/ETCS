@@ -2,10 +2,11 @@
 
 Data::Data()
 {
-	if(VideoMode::getDesktopMode().width / 640.0 < VideoMode::getDesktopMode().height / 480.0)
-		RE = VideoMode::getDesktopMode().width / 640.0;	//rapport Ecran
-	else
-		RE = VideoMode::getDesktopMode().height / 480.0; //rapport Ecran
+	//if(VideoMode::getDesktopMode().width / 640.0 < VideoMode::getDesktopMode().height / 480.0)
+	//	RE = VideoMode::getDesktopMode().width / 640.0;	//rapport Ecran
+	//else
+	//	RE = VideoMode::getDesktopMode().height / 480.0; //rapport Ecran
+	RE = 2.0;
 }
 
 void Data::update()

@@ -1,6 +1,6 @@
 #include "Default.hpp"
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord): symbol(&symbol), /*planning(symbol), */cadran(400, data, fenetre, bord)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord): LeftSide(data, fenetre, bord, symbol), planning(symbol, data, fenetre)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
@@ -11,8 +11,12 @@ Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vect
 
 void Default::update()
 {
+	leftSide();
+	creation_rectangle(V2f((54 + 234 + 46), (54 + 30 + 191 + 25 + 50 + 50)), V2f(63, 30), 1);			//G11
+	creation_rectangle(V2f((54 + 234 + 46 + 63), (54 + 30 + 191 + 25 + 50 + 50)), V2f(120, 30), 1);		//G12
+	creation_rectangle(V2f((54 + 234 + 46 + 63 + 120), (54 + 30 + 191 + 25 + 2 * 50)), V2f(63, 30), 1);	//G13
+	targetDistance(1000);
 	cadran.update();
-	/*
 	for(int i = 0; i <= 15; i++)
 		(*buttons)[i].settype("up_type");
 	if((*buttons)[0].getactivation() == 1)
@@ -115,8 +119,6 @@ void Default::update()
 		if(data->getVersion() == "3.6.0" && (data->getGeneralMode() == "FS" || (data->getGeneralMode() == "OS" && S_D_monitoring == "On")))
 		{
 			planning.planningInformation(0);
-			cout << fenetre << " " << "hello" << " " << "" << " " << data << endl;
 		}
 	}
-	*/
 }

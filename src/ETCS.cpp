@@ -66,7 +66,7 @@ void ETCS::action()
 			}
 			for(int i = 10; i < 15; i++)
 			{
-            	if(x > ((54 + 280 + 246 + 20 + data->getEcartX()) * data->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * (i - 10) + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * (i - 9) + data->getEcartY()) * data->getRE()))
+            	if((x > (640 - 40 + data->getEcartX()) * data->getRE()) && (x < (640 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * (i - 10) + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * (i - 9) + data->getEcartY()) * data->getRE()))
             	{
 					if(button[i].getdriver_action() == 0)
 						button[i].setdriver_action(1);

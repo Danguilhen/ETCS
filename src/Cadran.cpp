@@ -142,66 +142,66 @@ void Cadran::update()
 		creation_texte(to_string((int)VmediumGrey), GREY, 17, 0, V2f(54 + 26, 274), 1);
 	for(int i = V2 + 1; i <= V1; i++)
 	{
+		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(137 - 20, deltateta / 2.0), V2f(137 - 20, - deltateta / 2.0));
 		if(Vred > Vorange)
 			couleurForme(Barre, RED, 4);
 		else if(Vred < Vorange)
 			couleurForme(Barre, ORANGE, 4);
-		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(137 - 20, deltateta / 2.0), V2f(137 - 20, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = 0; i<= V2; i++)
 	{
-		couleurForme(Barre, WHITE, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		couleurForme(Barre, WHITE, 4);
 		fenetre->draw(Barre);
 	}
 	for(int i = (V2 - 2 * asin(3 / float(137 - 20))); i <= V2; i++)
 	{
+		Barre = Shape(graduations[i], V2f(128, - deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128 - 11, deltateta / 2.0), V2f(128 - 11, - deltateta / 2.0));
 		if(Vyellow > VdarkGrey && Vyellow > Vwhite)
 			couleurForme(Barre, YELLOW, 4);
 		else if(Vwhite > VdarkGrey && Vwhite > Vyellow)
 			couleurForme(Barre, WHITE, 4);
 		else
 			couleurForme(Barre, DARK_GREY, 4);
-		Barre = Shape(graduations[i], V2f(128, - deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128 - 11, deltateta / 2.0), V2f(128 - 11, - deltateta / 2.0));
 		fenetre->draw(Barre);
 	}
 	for(int i = V1; i <= Vred; i++)
 	{
-		couleurForme(Barre, RED, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		couleurForme(Barre, RED, 4);
 		fenetre->draw(Barre);
 	}
 	for(int i = 0; i <= Vyellow; i++)
 	{
-		couleurForme(Barre, YELLOW, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		couleurForme(Barre, YELLOW, 4);
 		fenetre->draw(Barre);
 	}
 	for(int i = 0; i <= VdarkGrey; i++)
 	{
-		couleurForme(Barre, DARK_GREY, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+		couleurForme(Barre, DARK_GREY, 4);
 		fenetre->draw(Barre);
 	}
 	for(int i = 1; i <= VmediumGrey; i++)
 	{
-		couleurForme(Barre, couleur2, 4);
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 4, - deltateta / 2.0));
+		couleurForme(Barre, couleur2, 4);
 		fenetre->draw(Barre);
 	}
 	if(V1 < VmediumGrey)
 	{
 		for(int i = 1; i <= V1; i++)
 		{
-			couleurForme(Barre, couleur4, 4);
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
+			couleurForme(Barre, couleur4, 4);
 			fenetre->draw(Barre);
 		}
 		for(int i = V1 + 1; i <= VmediumGrey; i++) //trait noir
 		{
-			couleurForme(Barre, couleur2, 4);
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
+			couleurForme(Barre, couleur2, 4);
 			fenetre->draw(Barre);
 		}
 	}
@@ -209,15 +209,15 @@ void Cadran::update()
 	{
 		for(int i = 1; i <= VmediumGrey; i++)
 		{
-			couleurForme(Barre, couleur4, 4);
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
+			couleurForme(Barre, couleur4, 4);
 			fenetre->draw(Barre);
 		}
 	}
 	for(int i = 0; i <= 4; i++) //Affichage fixe
 	{
-		couleurForme(Barre, DARK_GREY, 4);
 		Barre = Shape(graduations[i], V2f(137, - 4 - deltateta / 2.0), V2f(137, - 4 + deltateta / 2.0), V2f(128, - 4 + deltateta / 2.0), V2f(128, - 4 - deltateta / 2.0));
+		couleurForme(Barre, DARK_GREY, 4);
 		fenetre->draw(Barre);
 	}
 
