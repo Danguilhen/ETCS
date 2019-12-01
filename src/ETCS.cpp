@@ -50,7 +50,7 @@ void ETCS::action()
 	}
     while(fenetre->pollEvent(event))
     {
-		if (event.type==sf::Event::MouseButtonReleased)
+		if(event.type==sf::Event::MouseButtonPressed)
 		{
             int x = event.mouseButton.x;
             int y = event.mouseButton.y;
@@ -59,9 +59,9 @@ void ETCS::action()
 				if(x > ((64 * i + data->getEcartX()) * data->getRE()) && x < ((64 * (i + 1) + data->getEcartX()) * data->getRE()) && y > ((430 + data->getEcartY()) * data->getRE()) && y < ((480 + data->getEcartY()) * data->getRE()))
             	{
 					if(button[i].getdriver_action() == 0)
-						button[i].setdriver_action(1);
+						{button[i].setdriver_action(1);cout << i << endl;}
 					else
-						button[i].setdriver_action(2);
+						{button[i].setdriver_action(2);cout << "caca" << endl;}
 				}
 			}
 			for(int i = 10; i < 15; i++)
@@ -81,6 +81,23 @@ void ETCS::action()
 				else
 					button[15].setdriver_action(2);
 			}
+        }
+		if(event.type==sf::Event::MouseButtonReleased)
+		{
+            int x = event.mouseButton.x;
+            int y = event.mouseButton.y;
+			for(int i = 0; i < 10; i++)
+			{
+				if(x > ((64 * i + data->getEcartX()) * data->getRE()) && x < ((64 * (i + 1) + data->getEcartX()) * data->getRE()) && y > ((430 + data->getEcartY()) * data->getRE()) && y < ((480 + data->getEcartY()) * data->getRE()))
+            		button[i].setdriver_action(3);
+			}
+			for(int i = 10; i < 15; i++)
+			{
+            	if((x > (640 - 40 + data->getEcartX()) * data->getRE()) && (x < (640 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * (i - 10) + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * (i - 9) + data->getEcartY()) * data->getRE()))
+					button[i].setdriver_action(3);
+			}
+			if(x > ((54 + 280 + 246 + 20 + data->getEcartX()) * data->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * 5 + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * 5 + 82 + data->getEcartY()) * data->getRE()))
+				button[15].setdriver_action(3);
         }
 	    if(event.type == Event::Closed)
         {

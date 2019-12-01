@@ -4,7 +4,6 @@ Tools::Tools()
 {
 	if(!arial.loadFromFile("ressources/fonts/arial.ttf")) //recuperation de la police
 		cout << "ERREUR chargement police !" << endl;
-	cout << "" << endl;
 }
 
 void Tools::creation_texte(string message, Color couleur, int taille, double OutlineThickness, V2f pos, int mode) //mode 1 : centrer / mode 2 : aligner droite / mode 3 : Geographical position / mode 4 : aligner gauche
