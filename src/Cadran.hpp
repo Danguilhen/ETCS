@@ -62,6 +62,8 @@ class Cadran : public Tools
 		V2f local2globalCoordonates(V2f CoordonneesPolaires);
 	public :
 		Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord);
+		Cadran(int Vmax, Data &data, RenderWindow &fenetre);
+		void creation();
 		void update();
 		void convertisseurVitesses();
 		void actualisationVitesse(float red, float orange, float yellow, float white, float mediumGrey, float darkGrey);

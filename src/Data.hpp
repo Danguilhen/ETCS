@@ -29,7 +29,7 @@ class Data
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
 		int socketValue = 0;*/
 		//void SocketSend(char buf[]);
-		int signalisation = 2;
+		int signalisation = 1;
 		bool eteindre = false;
 		bool allumage = true;
 
