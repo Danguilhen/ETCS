@@ -9,7 +9,7 @@ class SpeedAndDistanceMonitoring
 		int V_sbi;
 		int V_warning;
 		std::string status = "CSM";
-		std::string supervision_status;
+		std::string supervision_status = "Normal";// au démarrage il est en condition normal
 		std::string command_triggered;
 	public :
 		void MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI);

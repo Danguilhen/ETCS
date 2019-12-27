@@ -54,18 +54,18 @@ void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
 void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelatedInputs TrainRI)
 {
 	//Triggering Conditions
-	if(TrainRI.T_data.getVtrain() <= V_MRSP)
+	if(TrainRI.T_data.getVtrain() <= V_MRSP && supervision_status == "Normal")
 		supervision_status = "Normal";
-	if(TrainRI.T_data.getVtrain() > V_MRSP)
+	if(TrainRI.T_data.getVtrain() > V_MRSP && supervision_status == "Normal")
 		supervision_status = "Overspeed";
-	if(TrainRI.T_data.getVtrain() > V_warning)
+	if(TrainRI.T_data.getVtrain() > V_warning && supervision_status == "Overspeed")
 		supervision_status = "Warning";
 	/*if(TrainRI.T_data.getVtrain() > V_sbi)//à voir avec Benoit
 	{
 		supervision_status = "Intervention";
 		command_triggered = "SB";
 	}*/
-	if(TrainRI.T_data.getVtrain() > V_ebi)
+	if(TrainRI.T_data.getVtrain() > V_ebi && supervision_status == "Warning")
 	{
 		supervision_status = "Intervention";
 		command_triggered = "EB";
@@ -85,7 +85,7 @@ void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelated
 			command_triggered = "";
 		}
 	}
-	//std::cout << supervision_status << " " << command_triggered << endl;
+	std::cout << supervision_status << " " << command_triggered << endl;
 }
 
 int SpeedAndDistanceMonitoring::getV_MRSP(){return V_MRSP;}
