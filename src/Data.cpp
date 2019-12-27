@@ -103,6 +103,7 @@ void Data::update()
 }*/
 
 int Data::getVtrain(){return Vtrain;}
+void Data::setVtrain(int V){Vtrain = V;}
 string Data::getGeneralMode(){return generalMode;}
 string Data::getLevel(){return level;}
 double Data::getRE(){return RE;}
