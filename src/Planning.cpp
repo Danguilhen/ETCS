@@ -341,9 +341,10 @@ void Planning::SpeedProfileDiscontinuityInformation(int scale, float delta_dista
 	}
 }
 
-Planning::Planning(vector<Symbol> &symbol, Data &data, RenderWindow &fenetre) : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
+Planning::Planning(vector<Symbol> &symbol, Data &data, RenderWindow &fenetre, ETCS_Bord &bord) : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
 	gradient4(4001, 6000, 0), gradient5(15001, 7000, 35), PA1(1500, 98), PA2(1000, 72), PA3(3000, 97), PA6(4000, 75)
 {
+	this->bord = &bord;
 	this->symbol = &symbol;
 	this->data = &data;
 	this->fenetre = &fenetre;

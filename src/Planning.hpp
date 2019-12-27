@@ -4,6 +4,7 @@
 #include <define.hpp>
 #include "Symbol.hpp"
 #include "Tools.hpp"
+#include "ETCS_Bord.hpp"
 
 class Gradient
 {
@@ -126,6 +127,7 @@ class Planning : public Tools
 		vector<Announcements> tab_paf;//FLÉCHES VITESSE
 
 		vector <Symbol> *symbol;
+		ETCS_Bord *bord;
 
 		void SpeedProfileDiscontinuityInformation(int scale, float delta_distance, vector<Announcements> &tab_paf);
 		void Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa);
@@ -133,7 +135,7 @@ class Planning : public Tools
 		void pasp(int scale, vector<PASP> &tab_pasp, float delta_distance);
 
 	public:
-		Planning(vector<Symbol> &symbol, Data &data, RenderWindow &fentre);
+		Planning(vector<Symbol> &symbol, Data &data, RenderWindow &fentre, ETCS_Bord &bord);
 		void planningInformation(float temps_ecoule);
 		int getScale();
 		void setScale(int S);

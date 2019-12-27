@@ -1,6 +1,6 @@
 #include "DMI.hpp"
 
-DMI::DMI(Data &data, ETCS_Bord &bord) : etcs(fenetre, data, bord), basic(fenetre, data)
+DMI::DMI(Data &data, ETCS_Bord &bord) : etcs(fenetre, data, bord), basic(fenetre, data, bord)
 {
 	this->bord = &bord;
 	this->data = &data;

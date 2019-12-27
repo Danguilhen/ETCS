@@ -6,7 +6,6 @@
 class Data
 {
 	private :
-		int Vtrain = 135;
 		string generalMode = "FS";
 		string level = "Level 1";
 		double RE;
@@ -36,8 +35,6 @@ class Data
 	public :
 		Data();
 		void update();
-		int getVtrain();
-		void setVtrain(int V);
 		string getGeneralMode();
 		string getLevel();
 		double getRE();

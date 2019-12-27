@@ -1,6 +1,6 @@
 #include "Default.hpp"
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord): LeftSide(data, fenetre, bord, symbol), planning(symbol, data, fenetre)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord): LeftSide(data, fenetre, bord, symbol), planning(symbol, data, fenetre, bord)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;

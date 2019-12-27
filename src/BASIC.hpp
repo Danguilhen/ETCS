@@ -14,7 +14,7 @@ class BASIC
 		Cadran cadran;
 		Event event;
 	public :
-		BASIC(RenderWindow &fenetre, Data &data);
+		BASIC(RenderWindow &fenetre, Data &data, ETCS_Bord &bord);
 		void update();
 		void action();
 };

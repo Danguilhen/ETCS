@@ -1,6 +1,6 @@
 #include "BASIC.hpp"
 
-BASIC::BASIC(RenderWindow &fenetre, Data &data) : cadran(400, data, fenetre)
+BASIC::BASIC(RenderWindow &fenetre, Data &data, ETCS_Bord &bord) : cadran(400, data, fenetre, bord)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
@@ -28,10 +28,6 @@ void BASIC::action()
 				fenetre->close();
 				data->setEteindre(true);
 			}
-			if(event.key.code == Keyboard::Up)
-				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() + 1);
-			if(event.key.code == Keyboard::Down)
-				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() - 1);
 		}
     }
 }

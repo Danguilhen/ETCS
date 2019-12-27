@@ -27,15 +27,6 @@ Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord)
 	creation();
 }
 
-Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre)
-{
-	this->bord = 0;
-	this->data = &data;
-	this->fenetre = &fenetre;
-	this->Vmax = Vmax;
-	creation();
-}
-
 void Cadran::creation()
 {
 	for(int i =0; i <= 400; i++)
