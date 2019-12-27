@@ -271,17 +271,18 @@ void Cadran::convertisseurVitesses()
 					aiguilleColor = GREY;
 				else
 					aiguilleColor = RED;
-				actualisationVitesse(bord->SDM.getV_ebi(), 0, 0, 0, 0, bord->SDM.getV_MRSP());
+				actualisationVitesse(bord->SDM.getV_ebi(), 0, bord->SDM.getV_MRSP(), 0, 0, 0);
 			}
 			else if(bord->SDM.getSupervision_status() == "Warning")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.getV_ebi(), 0, 0, 0, bord->SDM.getV_MRSP());
+				actualisationVitesse(0, bord->SDM.getV_ebi(), bord->SDM.getV_MRSP(), 0, 0, 0);
+
 			}
 			else if(bord->SDM.getSupervision_status() == "Overspeed")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.getV_ebi(), 0, 0, 0, bord->SDM.getV_MRSP());
+				actualisationVitesse(0, bord->SDM.getV_ebi(), bord->SDM.getV_MRSP(), 0, 0, 0);
 			}
 			else if(bord->SDM.getSupervision_status() == "Normal")
 			{
