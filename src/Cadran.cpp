@@ -268,10 +268,16 @@ void Cadran::convertisseurVitesses()
 			if(bord->SDM.getSupervision_status() == "Intervention")
 			{
 				if(bord->TrainRI.T_data.getVtrain() <= bord->SDM.getV_MRSP())
+				{
 					aiguilleColor = GREY;
+					actualisationVitesse(0, 0, bord->SDM.getV_MRSP(), 0, 0, 0);
+				}
 				else
+				{
 					aiguilleColor = RED;
-				actualisationVitesse(bord->SDM.getV_ebi(), 0, bord->SDM.getV_MRSP(), 0, 0, 0);
+					actualisationVitesse(bord->SDM.getV_ebi(), 0, bord->SDM.getV_MRSP(), 0, 0, 0);
+				}
+
 			}
 			else if(bord->SDM.getSupervision_status() == "Warning")
 			{
