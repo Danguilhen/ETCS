@@ -3,7 +3,7 @@
 
 #include "Tools.hpp"
 #include "define.hpp"
-#include "ETCS_Bord.hpp"
+#include "Bord/ETCS_Bord.hpp"
 
 class DonneesAfficheurVitesse
 {

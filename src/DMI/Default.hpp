@@ -5,7 +5,7 @@
 #include "LeftSide.hpp"
 #include "Symbol.hpp"
 #include "Button.hpp"
-#include "ETCS_Bord.hpp"
+#include "Bord/ETCS_Bord.hpp"
 #include "Planning.hpp"
 
 class Default : public Fenetre, public LeftSide

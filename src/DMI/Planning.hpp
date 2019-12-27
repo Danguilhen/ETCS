@@ -4,7 +4,7 @@
 #include <define.hpp>
 #include "Symbol.hpp"
 #include "Tools.hpp"
-#include "ETCS_Bord.hpp"
+#include "Bord/ETCS_Bord.hpp"
 
 class Gradient
 {

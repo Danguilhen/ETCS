@@ -2,7 +2,7 @@
 #define DM
 
 #include "ETCS.hpp"
-#include "ETCS_Bord.hpp"
+#include "Bord/ETCS_Bord.hpp"
 #include "BASIC.hpp"
 #include "Data.hpp"
 

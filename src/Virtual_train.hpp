@@ -1,8 +1,8 @@
 #ifndef VI
 #define VI
 
-#include "ETCS_Bord.hpp"
-#include "DMI.hpp"
+#include "Bord/ETCS_Bord.hpp"
+#include "DMI/DMI.hpp"
 #include "Data.hpp"
 
 class Virtual_train
