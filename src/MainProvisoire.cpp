@@ -68,18 +68,18 @@ int main()
         difftemps = chrono.getElapsedTime();
         chrono.restart();
         float delta_ts=difftemps.asSeconds();
-        if((data->getVtrain() > 160 || data->getVtrain() == - 1) && version_test != 1)
+        if((bord->TrainRI.T_data.getVtrain() > 160 || bord->TrainRI.T_data.getVtrain() == - 1) && version_test != 1)
         {
 			demo();
         	calcul(delta_ts);
 		}
-        if(data->getVtrain() < 160 && version_test != 1)
+        if(bord->TrainRI.T_data.getVtrain() < 160 && version_test != 1)
         {
 			demo2();
         	calcul(delta_ts);
 		}
 
-		//data->setVtrain(0);
+		//bord->TrainRI.T_data.setVtrain(0);
         gestionnaireAffichage();
 		aiguille.setFillColor(data->getCouleurAiguille());
        	fenetre.clear();
@@ -186,9 +186,9 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
     for (int i = 0; i <= 9; i++)
         enable[i] = 1;
     enable[3] = 2;
-	if((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && data->getTrainNumber()) ||
-		((data->getVtrain() == 0 && data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
-		data->getLevel() == "Level 3") && data->getConnection() == "Up" && version == "3.6.0" && data->getPending_Emergency_Stop() == false))) || ((data->getVtrain() == 0 &&
+	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && data->getTrainNumber()) ||
+		((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
+		data->getLevel() == "Level 3") && data->getConnection() == "Up" && version == "3.6.0" && data->getPending_Emergency_Stop() == false))) || ((bord->TrainRI.T_data.getVtrain() == 0 &&
 		data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
 		version == "3.4.0" && data->getPending_Emergency_Stop() == false))) || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
 		data->getConnection() == "Up" && version == "3.6.0") || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") && version == "3.4.0"))
@@ -198,8 +198,8 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 	}
 	else
 		boutons[0].settype("disabled");
-	if((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) ||((data->getModif_DriverID_NTC() ||(data->getModif_DriverID_NTC() == false &&
-		data->getVtrain() == 0)) && (data->getGeneralMode() == "SH" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) ||((data->getModif_DriverID_NTC() ||(data->getModif_DriverID_NTC() == false &&
+		bord->TrainRI.T_data.getVtrain() == 0)) && (data->getGeneralMode() == "SH" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
 		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" )))
 	{
 		enable[1] = 0;
@@ -218,7 +218,7 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 	}
 	else
 		boutons[1].settype("disabled");
-	if(data->getVtrain() == 0 && data->getDriverID() && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
+	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
 		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" ||
 		data->getGeneralMode() == "SN" ))
 	{
@@ -237,7 +237,7 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 	}
 	else
 		boutons[2].settype("disabled");
-	if(data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
 		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ))
 	{
 		enable[4] = 0;
@@ -257,7 +257,7 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 	}
 	else
 		boutons[4].settype("disabled");
-	if((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) || ((data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
+	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) || ((data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
 		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"|| data->getGeneralMode() == "UN" ||
 		data->getGeneralMode() == "SN" )))
 	{
@@ -278,23 +278,23 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 	}
 	else
 		boutons[5].settype("disabled");
-	if((data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
 		data->getGeneralMode() == "OS" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ) && data->getETATLevelETCS() && ((data->getLevel() == "Level 0" ||
 		data->getLevel() == "Level 1" || data->getLevel().substr(0,2) == "NTC") || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
-		data->getConnection() == "Up"))) || (data->getVtrain() == 0 && data->getGeneralMode() == "PT" && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
+		data->getConnection() == "Up"))) || (bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "PT" && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
 		data->getLevel() == "Level 3") && data->getConnection() == "Up" && data->getPending_Emergency_Stop() == false))))
 	{
 		enable[6] = 0; //shunting  x
 		boutons[6].settype("up_type");
 	}
-	else if(data->getVtrain() == 0 && data->getGeneralMode() == "SH")
+	else if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SH")
 	{
 		enable[6] = 0;//Exit Shunting
 		boutons[6].settype("up_type");
 	}
 	else
 		boutons[6].settype("disabled");
-	if(data->getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
+	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
 		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "SH") && data->getNon_Leading() == false)
 	{
 		enable[7] = 0;
@@ -311,7 +311,7 @@ void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & bouto
 		boutons[8].settype("disabled");
 	if (version == "3.6.0")
 	{
-		if (data->getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
+		if (bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
 			data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"||
 			data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "PT"))
 		{
@@ -343,10 +343,10 @@ void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & b
     vector <string> selection(1);
     vector <int> enable(1);
     enable[0] = 1;
-    if ((data->getVtrain() <=  data->getVrelease() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
+    if ((bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
         data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "SH"))
-        || (data->getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() &&
-		(data->getLevel() == "Level 2" || data->getLevel() == "Level 3")) || (version =="3.6.0" && (data->getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "PT" &&
+        || (bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() &&
+		(data->getLevel() == "Level 2" || data->getLevel() == "Level 3")) || (version =="3.6.0" && (bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "PT" &&
 		data->getTrainData() && data->getTrainNumber())))
     {
         boutons[0].settype("up_type");
@@ -378,7 +378,7 @@ void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
     vector <int> enable(3);
     for (int i = 0; i <= 2; i++)
         enable[i] = 1;
-    if ((data->getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getmodif_Adhesion() && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS())
+    if ((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getmodif_Adhesion() && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS())
         || (data->getmodif_Adhesion() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
         data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN")))
     {
@@ -387,14 +387,14 @@ void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
     }
     else
         boutons[0].settype("disabled");
-    if(data->getVtrain() == 0 && data->getGeneralMode() == "SR")
+    if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SR")
     {
         enable[1] = 0;
         boutons[1].settype("up_type");
     }
     else
         boutons[1].settype("disabled");
-    if (data->getVtrain() == 0 && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
+    if (bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
 		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"|| data->getGeneralMode() == "PT" || data->getGeneralMode() == "SB"))
     {
         enable[2] = 0;
@@ -429,7 +429,7 @@ void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> 
     vector <int> enable(6);
     for (int i = 0; i <= 5; i++)
         enable[i] = 1;
-    if ((data->getVtrain() == 0 && data->getGeneralMode() == "SB")
+    if ((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB")
         || (data->getGeneralMode() == "SH" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||data->getGeneralMode() == "OS" ||
         data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "TR" || data->getGeneralMode() == "PT" || data->getGeneralMode() == "SN" ||
         data->getGeneralMode() == "RV"))
@@ -453,14 +453,14 @@ void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> 
         for (int i = 0; i <= 3; i++)
             boutons[i].settype("delayed");
     }
-    if(data->getVtrain() == 0 && data->getGeneralMode() == "SB" && vbc.size() < 20)
+    if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && vbc.size() < 20)
     {
         enable[4] = 0;
         boutons[4].settype("up_type");
     }
     else
         boutons[4].settype("delayed");
-    if(data->getVtrain() == 0 && data->getGeneralMode() == "SB" && vbc.size() > 0)
+    if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && vbc.size() > 0)
     {
         enable[5] = 0;
         boutons[5].settype("up_type");
@@ -483,7 +483,7 @@ void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string
     vector <int> enable(4);
     for (int i = 0; i <= 3; i++)
         enable[i] = 1;
-    if(data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+    if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
 		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "PT") && data->getETATLevelETCS() && (data->getLevel() == "Level 2" ||
 		data->getLevel() == "Level 3"))
     {
@@ -498,7 +498,7 @@ void RBCcontactWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string
         for (int i = 0; i <= 2; i++)
             boutons[i].settype("delayed");
     }
-    if(data->getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
+    if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
 		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "PT" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN") &&
 		data->getETATLevelETCS())
     {

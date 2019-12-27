@@ -29,9 +29,9 @@ void BASIC::action()
 				data->setEteindre(true);
 			}
 			if(event.key.code == Keyboard::Up)
-				data->setVtrain(data->getVtrain() + 1);
+				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() + 1);
 			if(event.key.code == Keyboard::Down)
-				data->setVtrain(data->getVtrain() - 1);
+				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() - 1);
 		}
     }
 }
