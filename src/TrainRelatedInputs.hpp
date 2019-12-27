@@ -105,6 +105,7 @@ class Train_Data
         Train_Data();
         int getTrain_length();
         int getVtrain();
+        void setVtrain(int V);
 
 	    //GET ET SET A FAIRE SI NECESSAIRE
 };

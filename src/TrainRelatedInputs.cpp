@@ -164,6 +164,10 @@ int Train_Data::getVtrain()
 {
     return Vtrain;
 }
+void Train_Data::setVtrain(int V)
+{
+    Vtrain = V;
+}
 
 
 
