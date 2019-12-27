@@ -37,6 +37,7 @@ class Data
 		Data();
 		void update();
 		int getVtrain();
+		void setVtrain(int V);
 		string getGeneralMode();
 		string getLevel();
 		double getRE();
