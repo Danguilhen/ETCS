@@ -63,7 +63,7 @@
 #endif // _WIN32
 
 // Utils
-#include "Utility/Types.hpp"
+#include "Technique/Utility/Types.hpp"
 
 // Macros
 #define _UNUSED(x) (void)(x)
