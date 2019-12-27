@@ -235,16 +235,16 @@ void Cadran::update()
 		fenetre->draw(Barre);
 	}
 
-	if(data->getVtrain() < 200)
-		aiguille.setRotation(data->getVtrain() * kmh2degVfaible+teta0);
+	if(bord->TrainRI.T_data.getVtrain() < 200)
+		aiguille.setRotation(bord->TrainRI.T_data.getVtrain() * kmh2degVfaible+teta0);
 	else
-		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + data->getVtrain() * kmh2degVeleve+teta0);
+		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + bord->TrainRI.T_data.getVtrain() * kmh2degVeleve+teta0);
 
 	fenetre->draw(aiguille);
 
-	string str = to_string(graduations[(int)data->getVtrain()].vitesse());
+	string str = to_string(graduations[(int)bord->TrainRI.T_data.getVtrain()].vitesse());
 	string s;
-	if(graduations[(int)data->getVtrain()].vitesse() > 99)
+	if(graduations[(int)bord->TrainRI.T_data.getVtrain()].vitesse() > 99)
 	{
 		s = str.at(2);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 2.0 - 3, 300 / 2.0), 2);
@@ -253,7 +253,7 @@ void Cadran::update()
 		s = str.at(0);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 - 50 / 6.0 - 3, 300 / 2.0), 2);
 	}
-	else if(graduations[(int)data->getVtrain()].vitesse() > 9)
+	else if(graduations[(int)bord->TrainRI.T_data.getVtrain()].vitesse() > 9)
 	{
 		s = str.at(1);
 
@@ -276,7 +276,7 @@ void Cadran::convertisseurVitesses()
 		{
 			if(bord->SDM.getSupervision_status() == "Intervention")
 			{
-				if(data->getVtrain()<= bord->SDM.getV_MRSP())
+				if(bord->TrainRI.T_data.getVtrain()<= bord->SDM.getV_MRSP())
 					aiguilleColor = GREY;
 				else
 					aiguilleColor = RED;
