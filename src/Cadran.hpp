@@ -8,7 +8,7 @@
 class DonneesAfficheurVitesse
 {
     public:
-		DonneesAfficheurVitesse(V2f & centre);
+		DonneesAfficheurVitesse(V2f & centre, float & teta_origine);
 		DonneesAfficheurVitesse(V2f cartesiens, V2f polaire, int vitesse, V2f & centre);
 
 		//definition des get

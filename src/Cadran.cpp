@@ -31,7 +31,7 @@ void Cadran::creation()
 {
 	for(int i =0; i <= 400; i++)
 	{
-		graduations.push_back(DonneesAfficheurVitesse(centre));
+		graduations.push_back(DonneesAfficheurVitesse(centre, teta_origine));
 	}
 	teta0 = 90 - 144;
 	kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
@@ -448,9 +448,10 @@ void Cadran::actualisationVitesse(float red, float orange, float yellow, float w
 }
 
 
-DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f &centre)
+DonneesAfficheurVitesse::DonneesAfficheurVitesse(V2f &centre, float &teta_origine)
 {
 	this->centre = &centre;
+	this->teta_origine = &teta_origine;
 	m_cartesiens.x = 0;
 	m_cartesiens.y = 0;
 	m_polaire.x = 0;
