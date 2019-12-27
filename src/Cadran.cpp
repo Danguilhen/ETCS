@@ -89,8 +89,8 @@ void Cadran::creation()
 
 void Cadran::update()
 {
-	if(!bord)
-	convertisseurVitesses();
+	if(bord)
+		convertisseurVitesses();
 
 	V2f position;
 	CircleShape Centre;
@@ -152,7 +152,6 @@ void Cadran::update()
 	float deltateta = abs(graduations[0].teta()-graduations[1].teta());
 	Color couleur2 = GREY;
 	Color couleur4 = BLACK;
-
 	if(VmediumGrey != 0)
 		creation_texte(to_string((int)VmediumGrey), GREY, 17, 0, V2f(54 + 26, 274), 1);
 	for(int i = V2 + 1; i <= V1; i++)

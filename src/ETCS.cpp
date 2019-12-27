@@ -59,9 +59,9 @@ void ETCS::action()
 				if(x > ((64 * i + data->getEcartX()) * data->getRE()) && x < ((64 * (i + 1) + data->getEcartX()) * data->getRE()) && y > ((430 + data->getEcartY()) * data->getRE()) && y < ((480 + data->getEcartY()) * data->getRE()))
             	{
 					if(button[i].getdriver_action() == 0)
-						{button[i].setdriver_action(1);cout << i << endl;}
+						{button[i].setdriver_action(1);}
 					else
-						{button[i].setdriver_action(2);cout << "caca" << endl;}
+						{button[i].setdriver_action(2);}
 				}
 			}
 			for(int i = 10; i < 15; i++)

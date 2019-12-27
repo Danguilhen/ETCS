@@ -5,7 +5,7 @@ DMI::DMI(Data &data, ETCS_Bord &bord) : etcs(fenetre, data, bord), basic(fenetre
 	this->bord = &bord;
 	this->data = &data;
 	//creation et affichage de la fenetre
-	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Default, settings);
+	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Fullscreen, settings);
 	fenetre.setFramerateLimit(60);
 	settings.antialiasingLevel = 8;
 }

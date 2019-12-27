@@ -12,9 +12,11 @@ class BASIC
 		RenderWindow *fenetre;
 		Data *data;
 		Cadran cadran;
+		Event event;
 	public :
 		BASIC(RenderWindow &fenetre, Data &data);
 		void update();
+		void action();
 };
 
 #endif
