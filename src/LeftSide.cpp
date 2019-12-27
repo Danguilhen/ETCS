@@ -68,7 +68,7 @@ void LeftSide::leftSide()
 
 	if(version == "3.6.0")
 	{
-		data->setTTI((data->getDEOA() - (3 / 5.0)*data->getD_but())/(data->getVtrain()/3.6)); // TEMPORAIRE POUR LA DEMO
+		data->setTTI((data->getDEOA() - (3 / 5.0)*data->getD_but())/(bord->TrainRI.T_data.getVtrain()/3.6)); // TEMPORAIRE POUR LA DEMO
 		//Rappel TTIdisp est à 14 s selon la subset026
 		if((data->getGeneralMode() == "FS" || ((data->getGeneralMode() == "OS" || data->getGeneralMode() == "SR") && TTI == "On")) && (data->getMode() == "CSM" || data->getMode() == "PIM") && data->getTTI() < 14)  //A1 : TTI
 		{

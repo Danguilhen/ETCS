@@ -141,7 +141,7 @@ void Planning::planningInformation(float temps_ecoule)
 	//FOND
 	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 15), V2f(93 + 8, 270), PASP_DARK);
 	//MOUVEMENT
-	delta_distance = (data->getVtrain() / 3.6) * temps_ecoule;
+	delta_distance = (bord->TrainRI.T_data.getVtrain() / 3.6) * temps_ecoule;
 	//LES PASP
 
 	pasp(scale, tab_pasp, delta_distance);
