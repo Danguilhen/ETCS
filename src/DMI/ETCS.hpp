@@ -6,6 +6,8 @@
 #include "Button.hpp"
 #include "Default.hpp"
 #include "define.hpp"
+#include "Menu.hpp"
+#include "Main.hpp"
 
 class ETCS : public Fenetre
 {
