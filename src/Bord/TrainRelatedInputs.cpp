@@ -1,16 +1,5 @@
-#include <cstdlib>
-#include <iostream>
-#include <thread>
-#include <math.h>
-#include <string>
-#include <ctime>
-#include <iostream>
-#include <vector>
-#include <unistd.h>
-#include <algorithm>
 #include "TrainRelatedInputs.hpp"
-
-using namespace std;
+#include "define.hpp"
 
 Fixed_Value_Data::Fixed_Value_Data()
 {
@@ -31,31 +20,29 @@ Fixed_Value_Data::Fixed_Value_Data()
 	T_driver = 4;
 	M_rotating_min =  0.2;
 	M_rotating_max = 0.15;
-
 }
 
 void Fixed_Value_Data::Afficher_Fixed_value_data()
 {
-cout<< "vous trouverez ci-dessous les fixed_value_data" << endl << endl;
-cout << "dV_ebi_min = " <<  dV_ebi_min << " km/h" << endl;
-cout << "dV_ebi_max = " << dV_ebi_max << " km/h" << endl;
-cout << "V_ebi_min = " << V_ebi_min <<  " km/h" << endl;
-cout << "V_ebi_max = " << V_ebi_max <<" km/h" << endl;
-cout << "dV_sbi_min = " << dV_sbi_min <<" km/h" << endl;
-cout << "dV_sbi_max = " << dV_sbi_max <<" km/h" << endl;
-cout << "V_sbi_min = " << V_sbi_min <<" km/h" << endl;
-cout << "V_sbi_max = " << V_sbi_max <<" km/h" << endl;
-cout << "dV_warning_min = " << dV_warning_min << " km/h" << endl;
-cout << "dV_warning_max = " << dV_warning_max << " km/h" << endl;
-cout << "V_warning_min = " << V_warning_min << " km/h" << endl;
-cout << "V_warning_max = " << V_warning_max << " km/h" << endl;
-cout << "T_dispTTI = " << T_dispTTI << " s" << endl;
-cout << "T_warning = " << T_warning << " s" << endl;
-cout << "T_driver = " << T_driver << " s" << endl;
-cout << "M_rotating_min = " << M_rotating_min << " % de masse" << endl;
-cout << "M_rotating_max = " << M_rotating_max << " % de masse" << endl;
-cout<<endl<< "fin fixed_value_data" << endl << endl;
-
+    cout<< "vous trouverez ci-dessous les fixed_value_data" << endl << endl;
+    cout << "dV_ebi_min = " <<  dV_ebi_min << " km/h" << endl;
+    cout << "dV_ebi_max = " << dV_ebi_max << " km/h" << endl;
+    cout << "V_ebi_min = " << V_ebi_min <<  " km/h" << endl;
+    cout << "V_ebi_max = " << V_ebi_max <<" km/h" << endl;
+    cout << "dV_sbi_min = " << dV_sbi_min <<" km/h" << endl;
+    cout << "dV_sbi_max = " << dV_sbi_max <<" km/h" << endl;
+    cout << "V_sbi_min = " << V_sbi_min <<" km/h" << endl;
+    cout << "V_sbi_max = " << V_sbi_max <<" km/h" << endl;
+    cout << "dV_warning_min = " << dV_warning_min << " km/h" << endl;
+    cout << "dV_warning_max = " << dV_warning_max << " km/h" << endl;
+    cout << "V_warning_min = " << V_warning_min << " km/h" << endl;
+    cout << "V_warning_max = " << V_warning_max << " km/h" << endl;
+    cout << "T_dispTTI = " << T_dispTTI << " s" << endl;
+    cout << "T_warning = " << T_warning << " s" << endl;
+    cout << "T_driver = " << T_driver << " s" << endl;
+    cout << "M_rotating_min = " << M_rotating_min << " % de masse" << endl;
+    cout << "M_rotating_max = " << M_rotating_max << " % de masse" << endl;
+    cout<<endl<< "fin fixed_value_data" << endl << endl;
 }
 
 float Fixed_Value_Data::getdV_ebi_min()
@@ -94,13 +81,13 @@ float Fixed_Value_Data::getM_rotating_max()
 {return M_rotating_max;}
 
 Loading_gauge::Loading_gauge(){}
-Loading_gauge::Loading_gauge(std::string LGL)
+Loading_gauge::Loading_gauge(string LGL)
 {
     Loading_gauge_label = LGL;
     //Loading_gauge_value = LGV; n'a pas d'importance dans la suite
 }
 Train_Categories::Train_Categories(){}
-Train_Categories::Train_Categories(std::string L, int C, std::string O)
+Train_Categories::Train_Categories(string L, int C, string O)
 {
     label = L;
     cant_deficiency_train_category_value = C;

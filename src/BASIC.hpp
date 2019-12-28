@@ -3,8 +3,7 @@
 
 #include "Data.hpp"
 #include "Cadran.hpp"
-
-using namespace sf;
+#include "define.hpp"
 
 class BASIC
 {

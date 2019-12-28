@@ -1,18 +1,7 @@
-#include <cstdlib>
-#include <iostream>
-#include <thread>
-#include <math.h>
-#include <string>
-#include <ctime>
-#include <iostream>
-#include <vector>
-#include <unistd.h>
-#include <algorithm>
+#include "define.hpp"
 #include "TrackRelatedInputs.hpp"
 #include "TrainRelatedInputs.hpp"
 #include "SpeedAndDistanceMonitoring.hpp"
-
-using namespace std;
 
 void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI)
 {
@@ -48,7 +37,7 @@ void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
 	else
 		V_warning = V_MRSP + TrainRI.FVD.getdV_warning_max();
 
-	//std::cout << " MSRP " << V_MRSP << " EBI  " << V_ebi << " SBI " << V_sbi << " WARNING " << V_warning << " VTRAIN " << TrainRI.T_data.getVtrain() << endl ;
+	//cout << " MSRP " << V_MRSP << " EBI  " << V_ebi << " SBI " << V_sbi << " WARNING " << V_warning << " VTRAIN " << TrainRI.T_data.getVtrain() << endl ;
 }
 
 void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelatedInputs TrainRI)
@@ -85,13 +74,13 @@ void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelated
 			command_triggered = "";
 		}
 	}
-	std::cout << supervision_status << " " << command_triggered << endl;
+	cout << supervision_status << " " << command_triggered << endl;
 }
 
 int SpeedAndDistanceMonitoring::getV_MRSP(){return V_MRSP;}
 int SpeedAndDistanceMonitoring::getV_ebi(){return V_ebi;}
 int SpeedAndDistanceMonitoring::getV_sbi(){return V_sbi;}
 int SpeedAndDistanceMonitoring::getV_warning(){return V_warning;}
-std::string SpeedAndDistanceMonitoring::getStatus(){return status;}
-std::string SpeedAndDistanceMonitoring::getSupervision_status(){return supervision_status;}
-std::string SpeedAndDistanceMonitoring::getCommand_triggered(){return command_triggered;}
+string SpeedAndDistanceMonitoring::getStatus(){return status;}
+string SpeedAndDistanceMonitoring::getSupervision_status(){return supervision_status;}
+string SpeedAndDistanceMonitoring::getCommand_triggered(){return command_triggered;}

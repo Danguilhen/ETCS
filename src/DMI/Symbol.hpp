@@ -4,8 +4,6 @@
 #include "Data.hpp"
 #include "define.hpp"
 
-using namespace std;
-
 class Symbol
 {
 	private :

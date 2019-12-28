@@ -1,17 +1,5 @@
-#include <cstdlib>
-#include <iostream>
-#include <thread>
-#include <math.h>
-#include <string>
-#include <ctime>
-#include <iostream>
-#include <vector>
-#include <unistd.h>
-#include <algorithm>
-#include <chrono>
+#include "define.hpp"
 #include "TrackRelatedInputs.hpp"
-
-using namespace std;
 
 National_Value_Data::National_Value_Data()
 {
@@ -164,7 +152,7 @@ float National_Value_Data::getA_NVP12()
 float National_Value_Data::getA_NVP23()
 {return A_NVP23;}
 
-vector<std::vector<int>> TracksideSpeedRestriction::getVitesseTableau()
+vector<vector<int>> TracksideSpeedRestriction::getVitesseTableau()
 {
 	return tableau_vitesse_ligne;
 }

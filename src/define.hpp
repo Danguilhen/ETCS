@@ -5,6 +5,15 @@ using namespace sf;
 using namespace std;
 
 #include <iostream>
+#include <cstdlib>
+#include <thread>
+#include <math.h>
+#include <string>
+#include <ctime>
+#include <vector>
+#include <unistd.h>
+#include <algorithm>
+#include <chrono>
 
 #define V2f Vector2f
 #define V2i Vector2i
