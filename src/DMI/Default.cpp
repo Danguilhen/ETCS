@@ -52,7 +52,7 @@ void Default::update()
 	}
 	else if((*buttons)[1].getactivation() == 1)
 	{
-		*ecran = "override";
+		*ecran = "Override";
 		for(int i = 0; i <= 15; i++)
 			(*buttons)[i].settype("disabled");
 		(*buttons)[0].settype("up_type");

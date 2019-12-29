@@ -8,6 +8,7 @@
 #include "define.hpp"
 #include "Menu.hpp"
 #include "Main.hpp"
+#include "Override.hpp"
 
 class ETCS : public Fenetre
 {
@@ -19,6 +20,7 @@ class ETCS : public Fenetre
 		Event event;
 		Default def;
 		Main main;
+		Override overide;
 		//Special special;
 		//Settings settings;
 		//SRspeed srSpeed;

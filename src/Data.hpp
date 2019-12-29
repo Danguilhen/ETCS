@@ -61,6 +61,9 @@ class Data
 		bool getModif_DriverID_NTC();
 		bool getNon_Leading();
 		bool getPassive_Shunting();
+		int getVrelease();
+		bool getEOA();
+		void setEOA(bool EOA);
 };
 
 #endif

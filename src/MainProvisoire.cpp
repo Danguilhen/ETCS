@@ -22,14 +22,11 @@ int main()
 	CircleShape SSI(10 / 2.0 * RE);
 	SSI.setFillColor(WHITE);
 
-
 	//clockMoteurIsole.restart();
 
     //affiche la fenetre tant que l'utilisateur n'appuie pas sur la croix
     while(fenetre.isOpen())
     {
-
-
 
         difftemps = chrono.getElapsedTime();
         chrono.restart();
@@ -49,7 +46,6 @@ int main()
         gestionnaireAffichage();
 		aiguille.setFillColor(data->getCouleurAiguille());
        	fenetre.clear();
-
 
 		affichageBoutons();
 
@@ -142,45 +138,6 @@ void languageWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string &
 void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC> vbc, vector<Buttons> & boutons);
 void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
 
-
-
-
-
-
-
-void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran)
-{
-    vector <string> selection(1);
-    vector <int> enable(1);
-    enable[0] = 1;
-    if ((bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
-        data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "SH"))
-        || (bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() &&
-		(data->getLevel() == "Level 2" || data->getLevel() == "Level 3")) || (version =="3.6.0" && (bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "PT" &&
-		data->getTrainData() && data->getTrainNumber())))
-    {
-        boutons[0].settype("up_type");
-        if(version == "3.4.0" || (version == "3.6.0" && data->getTrainNumber()))
-            enable[0] = 0;
-    }
-    else
-        boutons[0].settype("disabled");
-    if (boutons[0].getactivation())
-    {
-        ecran = "defaultWindow";
-        if(data->getEOA())
-            data->setEOA(false);
-        else
-            data->setEOA(true);
-    }
-    selection = {"EOA"};
-    menuWindows(selection, enable, symbol, "Override");
-	if(boutons[11].getactivation())
-	{
-        page = 1;
-        ecran = "defaultWindow";
-	}
-}
 
 void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
