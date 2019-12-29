@@ -1,17 +1,28 @@
 #include "Default.hpp"
 
-Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord): LeftSide(data, fenetre, bord, symbol), planning(symbol, data, fenetre, bord)
+Default::Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord, string & ecran): left(data, fenetre, bord, symbol), planning(symbol, data, fenetre, bord)
 {
 	this->fenetre = &fenetre;
 	this->data = &data;
 	this->symbol = &symbol;
 	this->buttons = &buttons;
 	this->bord = &bord;
+	this->ecran = &ecran;
 }
 
 void Default::update()
 {
-	leftSide();
+	left.update();
+
+	SE_04.afficher(V2f(64 * 4 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));			//F5
+	DR_01.afficher(V2f(64 * 6 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));			//F7
+	NA_13.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 3 + 64 / 2.0));	//H5
+	NA_14.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 4 + 64 / 2.0));	//H6
+	NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2 + 64 / 2.0));	//H4
+	NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
+	NA_20.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 5 * 64 + 82 / 2.0));	//H7
+	DR_04.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 5 * 64 + 82 / 2.0));	//H7
+
 	creation_rectangle(V2f((54 + 234 + 46), (54 + 30 + 191 + 25 + 50 + 50)), V2f(63, 30), 1);			//G11
 	creation_rectangle(V2f((54 + 234 + 46 + 63), (54 + 30 + 191 + 25 + 50 + 50)), V2f(120, 30), 1);		//G12
 	creation_rectangle(V2f((54 + 234 + 46 + 63 + 120), (54 + 30 + 191 + 25 + 2 * 50)), V2f(63, 30), 1);	//G13
@@ -37,11 +48,11 @@ void Default::update()
 		(*buttons)[13].settype("disabled");
 		(*buttons)[14].settype("disabled");
 		(*buttons)[15].settype("disabled");
-        *ecran = "mainWindow";
+        *ecran = "Main";
 	}
 	else if((*buttons)[1].getactivation() == 1)
 	{
-		*ecran = "overrideWindow";
+		*ecran = "override";
 		for(int i = 0; i <= 15; i++)
 			(*buttons)[i].settype("disabled");
 		(*buttons)[0].settype("up_type");
@@ -49,14 +60,14 @@ void Default::update()
 	}
 	else if((*buttons)[2].getactivation() == 1)
 	{
-		*ecran = "dataViewWindow";
+		*ecran = "dataView";
 		for(int i = 0; i <= 15; i++)
 			(*buttons)[i].settype("disabled");
 	}
 	else if((*buttons)[3].getactivation() == 1)
-		*ecran = "specialWindow";
+		*ecran = "special";
 	else if((*buttons)[4].getactivation() == 1)
-		*ecran = "settingsWindow";
+		*ecran = "settings";
 	else if ((*buttons)[5].getactivation() == 1)
     {
         if(data->getTunnelStoppingArea() == "TunnelStoppingArea" || data->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")

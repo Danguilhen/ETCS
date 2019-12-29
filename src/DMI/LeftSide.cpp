@@ -2,6 +2,8 @@
 
 LeftSide::LeftSide(Data &data, RenderWindow &fenetre, ETCS_Bord &bord, vector<Symbol> &symbol) : cadran(400, data, fenetre, bord), symbol(&symbol)
 {
+	this->fenetre = &fenetre;
+	this->data = &data;
 }
 
 void LeftSide::targetDistance(int distance)
@@ -22,12 +24,12 @@ void LeftSide::targetDistance(int distance)
 		rectangle(V2f(12, 54 + 30 + 185), V2f(13, 2), GREY);
 		if(distance <= 100)
 		{
-			rectangle(V2f(29 , 85 + 185 * ( 1 - (1.722*pow(10,-3)*distance))), V2f(10, 185 * (1.722*pow(10,-3)*distance)), GREY);
+			rectangle(V2f(29 , 85 + 185 * ( 1 - (1.722 * pow(10, - 3) * distance))), V2f(10, 185 * (1.722 * pow(10, - 3) * distance)), GREY);
 		}
 		else if(distance <= 1000)
 		{
 			rectangle(V2f(29, 186 + 54 + 30 - (185 - 152)), V2f(10, 185 - 152), GREY);
-			rectangle(V2f(29 , 85 + 185 * ( 1 - (log(distance*(1/58.8236)) / log(17)))), V2f(10, 185 * (log(distance * (1 / 58.8236)) / log(17))), GREY);
+			rectangle(V2f(29, 85 + 185 * ( 1 - (log(distance*(1/58.8236)) / log(17)))), V2f(10, 185 * (log(distance * (1 / 58.8236)) / log(17))), GREY);
 		}
 		else
 		{
@@ -36,7 +38,7 @@ void LeftSide::targetDistance(int distance)
 	}
 }
 
-void LeftSide::leftSide()
+void LeftSide::update()
 {
 	creation_rectangle(V2f(0, 0), V2f(54, 54), 1);															//A1
 	creation_rectangle(V2f(0, 54), V2f(54, (191 + 30)), 1);													//A2-3
@@ -109,15 +111,6 @@ void LeftSide::leftSide()
 	//	targetDistance(data->getDEOA());
 
 	//TexteMessages();//special class texte
-
-	SE_04.afficher(V2f(64 * 4 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));			//F5
-	DR_01.afficher(V2f(64 * 6 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));			//F7
-	NA_13.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 3 + 64 / 2.0));	//H5
-	NA_14.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 4 + 64 / 2.0));	//H6
-	NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2 + 64 / 2.0));	//H4
-	NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
-	NA_20.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 5 * 64 + 82 / 2.0));	//H7
-	DR_04.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 5 * 64 + 82 / 2.0));	//H7
 
 	targetDistance(1000);
 	cadran.update();

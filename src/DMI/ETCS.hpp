@@ -12,10 +12,13 @@
 class ETCS : public Fenetre
 {
 	private :
+		string version = "3.6.0";
+		string ecran = "Default";
 		vector <Symbol> symbol;
 		vector <Button> button;
 		Event event;
 		Default def;
+		Main main;
 		//Special special;
 		//Settings settings;
 		//SRspeed srSpeed;

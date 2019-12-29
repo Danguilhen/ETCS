@@ -1,5 +1,5 @@
-/*
 
+/*
 int main()
 {
 	Clock chrono;//d�but d�mo (delta_t = 0)
@@ -15,34 +15,9 @@ int main()
 	string ecran = "defaultWindow";
 	vector<VBC> vbc(20);
 
-	int numero = 1;
+	int page = 1;
 	int temp_TTI = 0;
 	int version_test;
-
-	///////////////////////////////////////////////
-	Planning planning;
-
-	///////////////////////////////////////////////////////////////////////////////////////////////
-	string choix;
-	do
-	{
-		cout << "MERCI DE RENTRER LA VERSION A = 3.6.0 B = 3.4.0" << endl;
-		cin >> choix;
-		cout << choix << endl;
-	}while(choix !="A" && choix !="B" && choix != "C" && choix != "D");
-	if(choix == "A" || choix == "C")
-		version = "3.6.0";
-	if(choix == "B" || choix == "D")
-		version = "3.4.0";
-	if(choix == "C" || choix == "D")
-	{
-		version_test = 1;
-		data->mode_test();
-	}
-	else
-	version_test = 0;
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
 
 	CircleShape SSI(10 / 2.0 * RE);
 	SSI.setFillColor(WHITE);
@@ -170,163 +145,7 @@ void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string &
 
 
 
-void MainWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran)
-{
-    vector <string> selection(9);
-    vector <int> enable(9);
-    for (int i = 0; i <= 9; i++)
-        enable[i] = 1;
-    enable[3] = 2;
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && data->getTrainNumber()) ||
-		((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
-		data->getLevel() == "Level 3") && data->getConnection() == "Up" && version == "3.6.0" && data->getPending_Emergency_Stop() == false))) || ((bord->TrainRI.T_data.getVtrain() == 0 &&
-		data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
-		version == "3.4.0" && data->getPending_Emergency_Stop() == false))) || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
-		data->getConnection() == "Up" && version == "3.6.0") || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") && version == "3.4.0"))
-	{
-		enable[0] = 0;
-		boutons[0].settype("up_type");
-	}
-	else
-		boutons[0].settype("disabled");
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) ||((data->getModif_DriverID_NTC() ||(data->getModif_DriverID_NTC() == false &&
-		bord->TrainRI.T_data.getVtrain() == 0)) && (data->getGeneralMode() == "SH" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
-		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" )))
-	{
-		enable[1] = 0;
-		boutons[1].settype("up_type");
-		if(boutons[1].getactivation() == 1)
-		{
-			ecran = "driverIDWindow";
-			for(int i = 0; i <= 10; i++)
-				boutons[i].settype("down_type");
-			boutons[11].settype("up_type");
-			boutons[12].settype("disabled");
-			boutons[13].settype("disabled");
-			boutons[14].settype("disabled");
-			boutons[15].settype("delay_type");
-		}
-	}
-	else
-		boutons[1].settype("disabled");
-	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
-		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" ||
-		data->getGeneralMode() == "SN" ))
-	{
-		enable[2] = 0;
-		boutons[2].settype("up_type");
-		if(boutons[2].getactivation() == 1)
-		{
-			ecran = "trainDataWindow";
-			for(int i = 0; i <= 14; i++)
-				boutons[i].settype("down_type");
-			boutons[10].settype("disabled");
-			boutons[11].settype("up_type");
-			boutons[12].settype("up_type");
-			boutons[15].settype("delay_type");
-		}
-	}
-	else
-		boutons[2].settype("disabled");
-	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
-		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ))
-	{
-		enable[4] = 0;
-		boutons[4].settype("up_type");
-		if(boutons[4].getactivation() == 1)
-		{
-			ecran = "ERTMS_ETCSlevelWindow";
-			for(int i = 0; i <= 14; i++)
-				boutons[i].settype("down_type");
-			boutons[10].settype("disabled");
-			boutons[11].settype("up_type");
-			boutons[12].settype("disabled");
-			boutons[13].settype("disabled");
-			boutons[14].settype("disabled");
-			boutons[15].settype("delay_type");
-		}
-	}
-	else
-		boutons[4].settype("disabled");
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) || ((data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
-		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"|| data->getGeneralMode() == "UN" ||
-		data->getGeneralMode() == "SN" )))
-	{
-		enable[5] = 0;
-		boutons[5].settype("up_type");
-		if(boutons[5].getactivation() == 1)
-		{
-			ecran = "trainRunningNumberWindow";
-			for(int i = 0; i <= 14; i++)
-				boutons[i].settype("down_type");
-			boutons[10].settype("down_type");
-			boutons[11].settype("up_type");
-			boutons[12].settype("disabled");
-			boutons[13].settype("disabled");
-			boutons[14].settype("disabled");
-			boutons[15].settype("delay_type");
-		}
-	}
-	else
-		boutons[5].settype("disabled");
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
-		data->getGeneralMode() == "OS" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ) && data->getETATLevelETCS() && ((data->getLevel() == "Level 0" ||
-		data->getLevel() == "Level 1" || data->getLevel().substr(0,2) == "NTC") || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
-		data->getConnection() == "Up"))) || (bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "PT" && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
-		data->getLevel() == "Level 3") && data->getConnection() == "Up" && data->getPending_Emergency_Stop() == false))))
-	{
-		enable[6] = 0; //shunting  x
-		boutons[6].settype("up_type");
-	}
-	else if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SH")
-	{
-		enable[6] = 0;//Exit Shunting
-		boutons[6].settype("up_type");
-	}
-	else
-		boutons[6].settype("disabled");
-	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
-		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "SH") && data->getNon_Leading() == false)
-	{
-		enable[7] = 0;
-		boutons[7].settype("up_type");
-	}
-	else
-		boutons[7].settype("disabled");
-	if(data->getGeneralMode() == "SH" && data->getPassive_Shunting())
-	{
-		enable[8] = 0;
-		boutons[8].settype("up_type");
-	}
-	else
-		boutons[8].settype("disabled");
-	if (version == "3.6.0")
-	{
-		if (bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
-			data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"||
-			data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "PT"))
-		{
-			enable[9] = 0;
-			boutons[9].settype("up_type");
-		}
-		else
-			boutons[9].settype("disabled");
-	}
-	else
-	{
-		enable[9] = 2;
-		boutons[9].settype("disabled");
-	}
-	selection = {"Start", "Driver ID", "Train data", "", "Level", "Train running number", "Shunting", "Non-Leading", "Maintain Shunting"};
-	if(version == "3.6.0")
-		selection.push_back("Radio data");
-    menuWindows(selection, enable, symbol, "Main");
-	if(boutons[11].getactivation())
-	{
-        numero = 1;
-        ecran = "defaultWindow";
-	}
-}
+
 
 
 void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & boutons, string & ecran)
@@ -358,7 +177,7 @@ void overrideWindow(vector<Symbol> & symbol, string version, vector<Buttons> & b
     menuWindows(selection, enable, symbol, "Override");
 	if(boutons[11].getactivation())
 	{
-        numero = 1;
+        page = 1;
         ecran = "defaultWindow";
 	}
 }
@@ -409,7 +228,7 @@ void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
     menuWindows(selection, enable, symbol, "Special");
     if(boutons[11].getactivation())
 	{
-        numero = 1;
+        page = 1;
         ecran = "defaultWindow";
 	}
 }
@@ -462,7 +281,7 @@ void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> 
     menuWindows(selection, enable, symbol, "Settings");
     if(boutons[11].getactivation())
 	{
-        numero = 1;
+        page = 1;
         ecran = "defaultWindow";
 	}
 }
@@ -572,7 +391,7 @@ void radionetworkIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, st
 void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
     int i = 0;
-    if(numero == 1)
+    if(page == 1)
     {
         if(boutons[0].getactivation())
             data->setTempRBCID(data->getTempRBCID() * 10 + 1);
@@ -606,7 +425,7 @@ void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
         else if(boutons[15].getactivation())
         {
             data->setRBCID(data->getTempRBCID());
-            numero++;
+            page++;
             i = 1;
             dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "1"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
 				"numeric", boutons, ecran);
@@ -655,7 +474,7 @@ void RBCdataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & 
         else if(boutons[15].getactivation())
         {
             data->setRBCphoneNumber(data->getTempRBCphoneNumber());
-            numero--;
+            page--;
             i = 1;
             dataEntryWindows({{"RBC ID", to_string(data->getRBCID()), "1"}, {"RBC phone number", to_string(data->getRBCphoneNumber()), "0"}}, symbol, 1, "RBC data", {},
 				"numeric", boutons, ecran);
@@ -700,19 +519,19 @@ void trainDataWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string 
 		data->getaxle_load_category(), "0"}, {"Airtight", data->getAirtight(), "0"}, {"Loading gauge", data->getloading_gauge(), "0"}};
 	vector <string> selection = {};
 	string keyboard = "";
-	//if(numero == 1)
+	//if(page == 1)
 	//
-	//if(numero == 2)
+	//if(page == 2)
 	//
-	//if(numero == 3)
+	//if(page == 3)
 	//
-	//if(numero == 4)
+	//if(page == 4)
 	//
-	//if(numero == 5)
+	//if(page == 5)
 	//
-	//if(numero == 6)
+	//if(page == 6)
 	//
-	//if(numero == 7)
+	//if(page == 7)
 	//
 	dataEntryWindows(input_field, symbol, 1, "Train data", selection, keyboard, boutons, ecran);
 	for(int i = 0; i < int(input_field.size()); i++)
@@ -758,44 +577,44 @@ void dataViewWindows(vector<Symbol> & symbol, string title, vector<Buttons> & bo
 {
 	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK);
 	if(title == "Data View")
-		title += " (" + to_string(numero) + "/2)";
+		title += " (" + to_string(page) + "/2)";
 	creation_texte(title, GREY, 17, 0, V2f(54 + 280 + 3, 12), 4);
 	for(int i = 0; i <= int(item.size()) - 1; i++)
 	{
 		creation_texte(item[i][0], GREY, 17, 0, V2f(280 + 54 + 176 - 5, 60 + 17 / 2.0 + i * 22), 2);
 		creation_texte(item[i][1], GREY, 17, 0, V2f(280 + 54 + 176 + 5, 60 + 17 / 2.0 + i * 22), 4);
 	}
-	if(numero == 1)
+	if(page == 1)
 	{
 		NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
 		boutons[11].settype("up_type");
 		close(ecran, boutons);
 	}
-	else if(numero == 2)
+	else if(page == 2)
 	{
 		NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
 		boutons[11].settype("up_type");
 		if(boutons[11].getactivation())
-			numero--;
+			page--;
 	}
-	if(numero == 2)
+	if(page == 2)
 	{
 		NA_18_2.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
 		boutons[12].settype("disabled");
 	}
-	else if(numero == 1)
+	else if(page == 1)
 	{
 		boutons[12].settype("up_type");
 		NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
 		if(boutons[12].getactivation())
-			numero++;
+			page++;
 	}
 }
 
 void dataViewWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
 {
     vector<vector<string>> item;
-    if(numero == 1)
+    if(page == 1)
     	item = {{"Driver ID", to_string(data->getDriver_ID())}, {"", ""},{"Train running number", to_string(data->getTrain_running_number()) },
 			{"", ""}, {"Train type", data->getTrain_type()}, {"Train category", data->getTrain_category()}, {"Length (m)", to_string(data->getlength())},
 			{"Brake percentage", to_string(data->getbreaking_percetage())}, {"Max speed (km/h)", to_string(data->getmaximum_train_speed())},
@@ -856,7 +675,7 @@ void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC
 void close(string & ecran, vector<Buttons> & boutons)
 {
     if(boutons[11].getactivation())
-        numero = 1;
+        page = 1;
     if(boutons[11].getactivation() && (ecran == "dataViewWindow"))
         ecran = "defaultWindow";
     else if(boutons[11].getactivation() && (ecran == "languageWindow" || ecran == "volumeWindow" || ecran == "brightnessWindow"))

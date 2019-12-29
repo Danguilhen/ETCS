@@ -8,17 +8,17 @@
 #include "Bord/ETCS_Bord.hpp"
 #include "Planning.hpp"
 
-class Default : public Fenetre, public LeftSide
+class Default : public Fenetre
 {
 	private :
+		LeftSide left;
 		vector <Button> *buttons;
-		string *ecran;
 		Planning planning;
 		string geographicalPosition;
 		string S_D_monitoring = "Off";
 		string planningAffichage = "show planning information";
 	public :
-		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord);
+		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord, string & ecran);
 		void update();
 };
 

@@ -1,6 +1,6 @@
 #include "ETCS.hpp"
 
-ETCS::ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord): def(fenetre, data, symbol, button, bord)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
+ETCS::ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord): def(fenetre, data, symbol, button, bord, ecran), main(fenetre, data, bord, symbol, button, ecran, version)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
 {
 	vector<string> nom{"DR_01", "DR_02", "DR_03", "DR_04", "DR_05", "LE_01", "LE_02", "LE_02a", "LE_03", "LE_04", "LE_05", "LE_06", "LE_07", "LE_08", "LE_08a", "LE_09", "LE_09a", "LE_10", "LE_11", "LE_12",
 	"LE_13", "LE_14", "LE_15", "LS_01", "LX_01", "MO_01", "MO_02", "MO_03", "MO_04", "MO_05", "MO_06", "MO_07", "MO_08", "MO_09", "MO_10", "MO_11", "MO_12", "MO_13", "MO_14", "MO_15", "MO_16", "MO_17",
@@ -36,7 +36,10 @@ void ETCS::update()
 	couleurForme(fond, DARK_BLUE, 4);
 	fenetre->draw(fond);
 	affichageBoutons();
-	def.update();
+	if(ecran == "Default")
+		def.update();
+	else if(ecran == "Main")
+		main.update();
 }
 
 void ETCS::action()
@@ -111,10 +114,17 @@ void ETCS::action()
 				fenetre->close();
 				data->setEteindre(true);
 			}
-			if(event.key.code == Keyboard::Up)
+			else if(event.key.code == Keyboard::Up)
 				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() + 1);
-			if(event.key.code == Keyboard::Down)
+			else if(event.key.code == Keyboard::Down)
 				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() - 1);
+			else if(event.key.code == Keyboard::V)
+			{
+				if(version == "3.6.0")
+					version = "3.4.0";
+				else
+					version = "3.6.0";
+			}
 			else if(event.key.code == Keyboard::A)
 			{
 		        if(button[0].getdriver_action() == 0)

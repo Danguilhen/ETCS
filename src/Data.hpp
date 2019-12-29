@@ -51,6 +51,16 @@ class Data
 		bool getEteindre();
 		void setEteindre(bool stop);
 		bool getAllumage();
+
+		bool getDriverID();
+		bool getTrainData();
+		bool getETATLevelETCS();
+		bool getTrainNumber();
+		string getConnection();
+		bool getPending_Emergency_Stop();
+		bool getModif_DriverID_NTC();
+		bool getNon_Leading();
+		bool getPassive_Shunting();
 };
 
 #endif

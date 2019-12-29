@@ -118,3 +118,13 @@ int Data::getSignalisation(){return signalisation;}
 bool Data::getEteindre(){return eteindre;}
 void Data::setEteindre(bool stop){eteindre = stop;}
 bool Data::getAllumage(){return allumage;}
+
+bool Data::getDriverID(){return 1;}
+bool Data::getTrainData(){return 1;}
+bool Data::getETATLevelETCS(){return 1;}
+bool Data::getTrainNumber(){return 1;}
+string Data::getConnection(){return "Up";}
+bool Data::getPending_Emergency_Stop(){return 0;}
+bool Data::getModif_DriverID_NTC(){return 1;}
+bool Data::getNon_Leading(){return 0;}
+bool Data::getPassive_Shunting(){return 1;}

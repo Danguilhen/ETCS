@@ -6,12 +6,13 @@
 
 class LeftSide : public virtual Tools
 {
-	protected :
+	private :
 		Cadran cadran;
 		vector <Symbol> *symbol;
 		void targetDistance(int distance);
+	public :
 		LeftSide(Data &data, RenderWindow &fenetre, ETCS_Bord &bord, vector<Symbol> &symbol);
-		void leftSide();
+		void update();
 };
 
 #endif
