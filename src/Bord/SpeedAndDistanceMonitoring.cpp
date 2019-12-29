@@ -74,7 +74,7 @@ void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelated
 			command_triggered = "";
 		}
 	}
-	cout << supervision_status << " " << command_triggered << endl;
+	//cout << supervision_status << " " << command_triggered << endl;
 }
 
 int SpeedAndDistanceMonitoring::getV_MRSP(){return V_MRSP;}
