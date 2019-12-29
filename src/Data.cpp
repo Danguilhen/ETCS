@@ -131,3 +131,4 @@ bool Data::getPassive_Shunting(){return 1;}
 int Data::getVrelease(){return 30;}
 bool Data::getEOA(){return 0;}
 void Data::setEOA(bool EOA){(void)EOA;}
+bool Data::getmodif_Adhesion(){return 1;}

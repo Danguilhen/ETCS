@@ -65,7 +65,7 @@ void Default::update()
 			(*buttons)[i].settype("disabled");
 	}
 	else if((*buttons)[3].getactivation() == 1)
-		*ecran = "special";
+		*ecran = "Special";
 	else if((*buttons)[4].getactivation() == 1)
 		*ecran = "settings";
 	else if ((*buttons)[5].getactivation() == 1)

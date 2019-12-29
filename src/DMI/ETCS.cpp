@@ -1,6 +1,6 @@
 #include "ETCS.hpp"
 
-ETCS::ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord): def(fenetre, data, symbol, button, bord, ecran), main(fenetre, data, bord, symbol, button, ecran, version), overide(fenetre, data, bord, symbol, button, ecran, version)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
+ETCS::ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord): def(fenetre, data, symbol, button, bord, ecran), main(fenetre, data, bord, symbol, button, ecran, version), overide(fenetre, data, bord, symbol, button, ecran, version), special(fenetre, data, bord, symbol, button, ecran, version)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
 {
 	vector<string> nom{"DR_01", "DR_02", "DR_03", "DR_04", "DR_05", "LE_01", "LE_02", "LE_02a", "LE_03", "LE_04", "LE_05", "LE_06", "LE_07", "LE_08", "LE_08a", "LE_09", "LE_09a", "LE_10", "LE_11", "LE_12",
 	"LE_13", "LE_14", "LE_15", "LS_01", "LX_01", "MO_01", "MO_02", "MO_03", "MO_04", "MO_05", "MO_06", "MO_07", "MO_08", "MO_09", "MO_10", "MO_11", "MO_12", "MO_13", "MO_14", "MO_15", "MO_16", "MO_17",
@@ -42,6 +42,8 @@ void ETCS::update()
 		main.update();
 	else if(ecran == "Override")
 		overide.update();
+	else if(ecran == "Special")
+		special.update();
 }
 
 void ETCS::action()

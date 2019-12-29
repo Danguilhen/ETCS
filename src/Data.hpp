@@ -64,6 +64,7 @@ class Data
 		int getVrelease();
 		bool getEOA();
 		void setEOA(bool EOA);
+		bool getmodif_Adhesion();
 };
 
 #endif

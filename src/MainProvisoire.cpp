@@ -139,57 +139,6 @@ void windows(string & ecran, vector<Symbol> & symbol, string version, vector<VBC
 void driverIDWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran);
 
 
-void specialWindow(vector<Symbol> & symbol, vector<Buttons> & boutons, string & ecran)
-{
-    vector <string> selection(3);
-    vector <int> enable(3);
-    for (int i = 0; i <= 2; i++)
-        enable[i] = 1;
-    if ((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getmodif_Adhesion() && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS())
-        || (data->getmodif_Adhesion() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
-        data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN")))
-    {
-            enable[0] = 0;
-            boutons[0].settype("up_type");
-    }
-    else
-        boutons[0].settype("disabled");
-    if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SR")
-    {
-        enable[1] = 0;
-        boutons[1].settype("up_type");
-    }
-    else
-        boutons[1].settype("disabled");
-    if (bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
-		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"|| data->getGeneralMode() == "PT" || data->getGeneralMode() == "SB"))
-    {
-        enable[2] = 0;
-        boutons[2].settype("up_type");
-    }
-    else
-        boutons[2].settype("disabled");
-    if (boutons[2].getactivation())
-        ecran = "defaultWindow";
-    else if (boutons[1].getactivation())
-        ecran = "SRspeed/distanceWindow";
-    else if (boutons[0].getactivation())
-    {
-        ecran = "adhesionWindow";
-		boutons[10].settype("disabled");
-		boutons[12].settype("disabled");
-		boutons[13].settype("disabled");
-		boutons[14].settype("disabled");
-    }
-    selection = {"Adhesion", "SR speed / distance", "Train integrity"};
-    menuWindows(selection, enable, symbol, "Special");
-    if(boutons[11].getactivation())
-	{
-        page = 1;
-        ecran = "defaultWindow";
-	}
-}
-
 void settingsWindow(vector<Symbol> & symbol, vector<VBC> & vbc, vector<Buttons> & boutons, string & ecran)
 {
     vector <string> selection(6);
