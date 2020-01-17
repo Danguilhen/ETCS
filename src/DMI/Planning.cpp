@@ -32,7 +32,7 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 	int target = 0;
 	int vitesse = 0;
 	int quart = 0;
-	int plus_petite_V = data->getVligne();
+	int plus_petite_V = soft->getVligne(); // ATTENTION A PRENDRE V_LIGNE DANS soft
 	int distance_plus_petite_V = 40000;
 	int n;
 
@@ -54,7 +54,7 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 		}
 	}
 
-	plus_petite_V = data->getVligne();
+	plus_petite_V = soft->getVligne();
 	for(size_t i = 0; i < tab_pasp.size(); i++)
 	{
 			n = 0;
@@ -65,7 +65,7 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 			else
 				distance = tab_pasp[i].getDistance_but();
 			if(i == 1)
-				vitesse = data->getVligne();
+				vitesse = soft->getVligne();
 			else
 			{
 				do
@@ -74,13 +74,13 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 				}while(tab_pasp[i-n].getVitesse_but() != plus_petite_V);
 				vitesse = tab_pasp[i-n].getVitesse_but();
 			}
-			if(vitesse > 0 && vitesse <= int(data->getVligne()) / 4.0)
+			if(vitesse > 0 && vitesse <= int(soft->getVligne()) / 4.0)
 				quart = 1;
-			else if(vitesse <= int(data->getVligne()) / 2.0)
+			else if(vitesse <= int(soft->getVligne()) / 2.0)
 				quart = 2;
-			else if(vitesse <= 3 * int(data->getVligne()) / 4.0)
+			else if(vitesse <= 3 * int(soft->getVligne()) / 4.0)
 				quart = 3;
-			else if (vitesse >= 3 * int(data->getVligne()) / 4.0)
+			else if (vitesse >= 3 * int(soft->getVligne()) / 4.0)
 				quart = 4;
 			if(distance <= (scale / 40.0) && distance >= 0)
 				target = 283 - (distance * (283 - 250) / (scale / 40.0));
@@ -104,7 +104,7 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 		plus_petite_V = tab_pasp[i].getVitesse_but();
 		if(i==tab_pasp.size()-1)
 		{
-			plus_petite_V = data->getVligne();
+			plus_petite_V = soft->getVligne();
 		}
 	}
 }
@@ -141,7 +141,7 @@ void Planning::planningInformation(float temps_ecoule)
 	//FOND
 	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 15), V2f(93 + 8, 270), PASP_DARK);
 	//MOUVEMENT
-	delta_distance = (bord->TrainRI.T_data.getVtrain() / 3.6) * temps_ecoule;
+	delta_distance = (T_D->getV_train() / 3.6) * temps_ecoule;
 	//LES PASP
 
 	pasp(scale, tab_pasp, delta_distance);
@@ -341,13 +341,14 @@ void Planning::SpeedProfileDiscontinuityInformation(int scale, float delta_dista
 	}
 }
 
-Planning::Planning(vector<Symbol> &symbol, Data &data, RenderWindow &fenetre, ETCS_Bord &bord) : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
+Planning::Planning(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D) : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
 	gradient4(4001, 6000, 0), gradient5(15001, 7000, 35), PA1(1500, 98), PA2(1000, 72), PA3(3000, 97), PA6(4000, 75)
 {
+	cout<<"Pla"<<endl;
 	this->bord = &bord;
 	this->symbol = &symbol;
-	this->data = &data;
-	this->fenetre = &fenetre;
+	this->soft = &soft;
+	this->T_D = &T_D;
 
 	tab_pasp.push_back(pasp0);
 	tab_pasp.push_back(pasp1);

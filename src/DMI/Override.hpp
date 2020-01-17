@@ -7,8 +7,11 @@
 
 class Override : public Menu
 {
+	private :
+
+	Train_dynamique *T_D;
 	public :
-		Override(RenderWindow &fenetre, Data &data, ETCS_Bord &bord, vector<Symbol> & symbol, vector<Button> & buttons, string & ecran, string & version);
+		Override(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran);
 		void update();
 };
 

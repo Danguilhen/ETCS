@@ -1,11 +1,11 @@
 #include "Menu.hpp"
 
-Menu::Menu(Data &data, vector<Symbol> &symbol, ETCS_Bord &bord, RenderWindow & fenetre): left(data, fenetre, bord, symbol)
+Menu::Menu(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): left(symbol, soft, bord, T_D)
 {
-	this->fenetre = &fenetre;
-	this->data = &data;
-	this->symbol = &symbol;
+	cout<< "MENU" <<endl;
+	this->soft = &soft;
 	this->bord = &bord;
+	this->symbol = &symbol;
 }
 
 void Menu::menu(vector <string> selection, vector <int>& enable, string title)

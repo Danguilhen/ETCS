@@ -128,6 +128,7 @@ class Planning : public Tools
 
 		vector <Symbol> *symbol;
 		ETCS_Bord *bord;
+		Train_dynamique *T_D;
 
 		void SpeedProfileDiscontinuityInformation(int scale, float delta_distance, vector<Announcements> &tab_paf);
 		void Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa);
@@ -135,7 +136,7 @@ class Planning : public Tools
 		void pasp(int scale, vector<PASP> &tab_pasp, float delta_distance);
 
 	public:
-		Planning(vector<Symbol> &symbol, Data &data, RenderWindow &fentre, ETCS_Bord &bord);
+		Planning(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);
 		void planningInformation(float temps_ecoule);
 		int getScale();
 		void setScale(int S);

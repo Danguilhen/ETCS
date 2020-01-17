@@ -1,5 +1,5 @@
 #include "TrainRelatedInputs.hpp"
-#include "define.hpp"
+
 
 Fixed_Value_Data::Fixed_Value_Data()
 {
@@ -146,14 +146,6 @@ Train_Data::Train_Data()
 int Train_Data::getTrain_length()
 {
     return train_length;
-}
-int Train_Data::getVtrain()
-{
-    return Vtrain;
-}
-void Train_Data::setVtrain(int V)
-{
-    Vtrain = V;
 }
 
 

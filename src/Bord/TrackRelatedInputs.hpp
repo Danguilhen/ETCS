@@ -1,6 +1,8 @@
 #ifndef BBB
 #define BBB
 
+#include "define.hpp"
+
 class National_Value_Data
 {
 private:

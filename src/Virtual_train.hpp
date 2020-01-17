@@ -1,21 +1,22 @@
 #ifndef VI
 #define VI
 
-#include "Bord/ETCS_Bord.hpp"
-#include "DMI/DMI.hpp"
 #include "Data.hpp"
+#include "ETCS.hpp"
+#include "DMI/BASIC.hpp"
+#include "Train_dynamique.hpp"
+
 
 class Virtual_train
 {
-	private :
-		ETCS_Bord etcs_bord;
-		Data *data;
-		DMI dmi;
-		//Train_Dynamique train_dynamique;
-		//Train_Statique train_statique;
-
 	public :
-		Virtual_train(Data &data);
+		//Data data;
+		Software soft;
+		Train_dynamique train_dynamique;
+		ETCS etcs;
+		BASIC basic;
+		//Train_Statique train_statique;
+		Virtual_train();
 		void update();
 };
 

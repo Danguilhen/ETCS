@@ -4,18 +4,21 @@
 #include "Data.hpp"
 #include "Cadran.hpp"
 #include "define.hpp"
+#include "Tools.hpp"
 
-class BASIC
+class BASIC : public Tools
 {
-	private :
-		RenderWindow *fenetre;
-		Data *data;
+	protected :
+
 		Cadran cadran;
 		Event event;
+		VertexArray fond{Quads,4};
 	public :
-		BASIC(RenderWindow &fenetre, Data &data, ETCS_Bord &bord);
+		BASIC(Train_dynamique &T_D, Software &soft);
 		void update();
-		void action();
+		void Basic_action();
+		void fond_ecran();
+		void affichageBoutons();
 };
 
 #endif

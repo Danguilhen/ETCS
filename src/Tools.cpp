@@ -12,7 +12,7 @@ void Tools::creation_texte(string message, Color couleur, int taille, double Out
 	texte.setFont(arial);
 	texte.setOutlineThickness(OutlineThickness);
 	texte.setOutlineColor(couleur);
-	texte.setCharacterSize(taille * data->getRE());
+	texte.setCharacterSize(taille * soft->getRE());
 	texte.setFillColor(couleur);
 	if(mode == 2)
 		texte.setOrigin(texte.getLocalBounds().left + texte.getLocalBounds().width * 1.0f, texte.getLocalBounds().top + texte.getLocalBounds().height / 2.0f);
@@ -27,7 +27,7 @@ void Tools::creation_texte(string message, Color couleur, int taille, double Out
 		if(message[message.size() - 1] == '_')
 		{
 			message += "_";
-			texte.setOrigin(texte.getLocalBounds().left, (pos.y + data->getEcartY()) * data->getRE());
+			texte.setOrigin(texte.getLocalBounds().left, (pos.y + soft->getEcartY()) * soft->getRE());
 		}
 	}
 	else if(mode == 3 && message.size() > 3)
@@ -46,29 +46,29 @@ void Tools::creation_texte(string message, Color couleur, int taille, double Out
 		metre.setFont(arial);
 		metre.setOutlineThickness(OutlineThickness);
 		metre.setOutlineColor(couleur);
-		metre.setCharacterSize(10 * data->getRE());
+		metre.setCharacterSize(10 * soft->getRE());
 		metre.setFillColor(couleur);
 		texte.setOrigin(texte.getLocalBounds().left + (texte.getLocalBounds().width + metre.getLocalBounds().width) / 2.0f, texte.getLocalBounds().top + texte.getLocalBounds().height / 2.0f);
 		metre.setOrigin(metre.getLocalBounds().left - (texte.getLocalBounds().width - metre.getLocalBounds().width) / 2.0f, metre.getLocalBounds().top - texte.getLocalBounds().height / 2.0f + metre.getLocalBounds().height * 1.0f);
-		metre.setPosition((pos.x + data->getEcartX()) * data->getRE() * 1.0f, (pos.y + data->getEcartY()) * data->getRE() * 1.0f);
-		fenetre->draw(metre);
+		metre.setPosition((pos.x + soft->getEcartX()) * soft->getRE() * 1.0f, (pos.y + soft->getEcartY()) * soft->getRE() * 1.0f);
+		soft->getFenetre()->draw(metre);
 	}
 	else if(mode == 1 || mode == 3)
 	{
 		if(mode == 3)
-			texte.setCharacterSize(10 * data->getRE());
+			texte.setCharacterSize(10 * soft->getRE());
 		texte.setOrigin(texte.getLocalBounds().left + texte.getLocalBounds().width / 2.0f, texte.getLocalBounds().top + texte.getLocalBounds().height / 2.0f);
 	}
-	texte.setPosition((pos.x + data->getEcartX()) * data->getRE() * 1.0f, (pos.y + data->getEcartY()) * data->getRE() * 1.0f);
-	fenetre->draw(texte);
+	texte.setPosition((pos.x + soft->getEcartX()) * soft->getRE() * 1.0f, (pos.y + soft->getEcartY()) * soft->getRE() * 1.0f);
+	soft->getFenetre()->draw(texte);
 }
 
 void Tools::rectangle(V2f pos, V2f taille, Color col)
 {
-	RectangleShape barre(V2f(taille.x * data->getRE(), taille.y * data->getRE()));
-	barre.setPosition((pos.x + data->getEcartX()) * data->getRE(), (pos.y + data->getEcartY()) * data->getRE());
+	RectangleShape barre(V2f(taille.x * soft->getRE(), taille.y * soft->getRE()));
+	barre.setPosition((pos.x + soft->getEcartX()) * soft->getRE(), (pos.y + soft->getEcartY()) * soft->getRE());
 	barre.setFillColor(col);
-	fenetre->draw(barre);
+	soft->getFenetre()->draw(barre);
 }
 
 void Tools::couleurForme(VertexArray &bande,Color col, int n)

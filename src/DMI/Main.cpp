@@ -1,11 +1,13 @@
 #include "Main.hpp"
 
-Main::Main(RenderWindow &fenetre, Data &data, ETCS_Bord &bord, vector<Symbol> & symbol, vector<Button> & buttons, string & ecran, string & version): Menu(data, symbol, bord, fenetre)
+Main::Main(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran): Menu(symbol, soft, bord, T_D)
 {
+	cout<< "MAIN" <<endl;
 	this->buttons = &buttons;
 	this->bord = &bord;
+	this->soft = &soft;
+	this->T_D = &T_D;
 	this->ecran = &ecran;
-	this->version = &version;
 }
 
 void Main::update()
@@ -15,21 +17,21 @@ void Main::update()
     for (int i = 0; i <= 9; i++)
         enable[i] = 1;
     enable[3] = 2;
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && data->getTrainNumber()) ||
-		((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
-		data->getLevel() == "Level 3") && data->getConnection() == "Up" && *version == "3.6.0" && data->getPending_Emergency_Stop() == false))) || ((bord->TrainRI.T_data.getVtrain() == 0 &&
-		data->getGeneralMode() == "PT" && data->getTrainData()) && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
-		*version == "3.4.0" && data->getPending_Emergency_Stop() == false))) || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
-		data->getConnection() == "Up" && *version == "3.6.0") || (data->getGeneralMode() == "SR" && (data->getLevel() == "Level 2" || data->getLevel() == "Level 3") && *version == "3.4.0"))
+	if((T_D->getV_train() == 0 && bord->getGeneralMode() == "SB" && bord->getDriverID() && bord->getTrainData() && bord->getETATLevelETCS() && bord->getTrainNumber()) ||
+		((T_D->getV_train() == 0 && bord->getGeneralMode() == "PT" && bord->getTrainData()) && (bord->getLevel() == "Level 1" || ((bord->getLevel() == "Level 2" ||
+		bord->getLevel() == "Level 3") && bord->getConnection() == "Up" && bord->getVersion() == "3.6.0" && bord->getPending_Emergency_Stop() == false))) || ((T_D->getV_train() == 0 &&
+		bord->getGeneralMode() == "PT" && bord->getTrainData()) && (bord->getLevel() == "Level 1" || ((bord->getLevel() == "Level 2" || bord->getLevel() == "Level 3") &&
+		bord->getVersion() == "3.4.0" && bord->getPending_Emergency_Stop() == false))) || (bord->getGeneralMode() == "SR" && (bord->getLevel() == "Level 2" || bord->getLevel() == "Level 3") &&
+		bord->getConnection() == "Up" && bord->getVersion() == "3.6.0") || (bord->getGeneralMode() == "SR" && (bord->getLevel() == "Level 2" || bord->getLevel() == "Level 3") && bord->getVersion() == "3.4.0"))
 	{
 		enable[0] = 0;
 		(*buttons)[0].settype("up_type");
 	}
 	else
 		(*buttons)[0].settype("disabled");
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) || ((data->getModif_DriverID_NTC() || (data->getModif_DriverID_NTC() == false &&
-		bord->TrainRI.T_data.getVtrain() == 0)) && (data->getGeneralMode() == "SH" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
-		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN")))
+	if((T_D->getV_train() == 0 && bord->getGeneralMode() == "SB" && bord->getDriverID() && bord->getETATLevelETCS()) || ((bord->getModif_DriverID_NTC() || (bord->getModif_DriverID_NTC() == false &&
+		T_D->getV_train() == 0)) && (bord->getGeneralMode() == "SH" || bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" ||
+		bord->getGeneralMode() == "OS" || bord->getGeneralMode() == "NL" || bord->getGeneralMode() == "UN" || bord->getGeneralMode() == "SN")))
 	{
 		enable[1] = 0;
 		(*buttons)[1].settype("up_type");
@@ -47,9 +49,9 @@ void Main::update()
 	}
 	else
 		(*buttons)[1].settype("disabled");
-	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
-		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" ||
-		data->getGeneralMode() == "SN" ))
+	if(T_D->getV_train() == 0 && bord->getDriverID() && bord->getDriverID() && bord->getETATLevelETCS() && (bord->getGeneralMode() == "SB" || bord->getGeneralMode() == "FS" ||
+		bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS" || bord->getGeneralMode() == "NL" || bord->getGeneralMode() == "UN" ||
+		bord->getGeneralMode() == "SN" ))
 	{
 		enable[2] = 0;
 		(*buttons)[2].settype("up_type");
@@ -66,8 +68,8 @@ void Main::update()
 	}
 	else
 		(*buttons)[2].settype("disabled");
-	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
-		data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ))
+	if(T_D->getV_train() == 0 && bord->getDriverID() && (bord->getGeneralMode() == "SB" || bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" ||
+		bord->getGeneralMode() == "OS" || bord->getGeneralMode() == "NL" || bord->getGeneralMode() == "UN" || bord->getGeneralMode() == "SN" ))
 	{
 		enable[4] = 0;
 		(*buttons)[4].settype("up_type");
@@ -86,9 +88,9 @@ void Main::update()
 	}
 	else
 		(*buttons)[4].settype("disabled");
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getDriverID() && data->getETATLevelETCS()) || ((data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
-		data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"|| data->getGeneralMode() == "UN" ||
-		data->getGeneralMode() == "SN" )))
+	if((T_D->getV_train() == 0 && bord->getGeneralMode() == "SB" && bord->getDriverID() && bord->getETATLevelETCS()) || ((bord->getGeneralMode() == "SB" || bord->getGeneralMode() == "FS" ||
+		bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS" || bord->getGeneralMode() == "NL"|| bord->getGeneralMode() == "UN" ||
+		bord->getGeneralMode() == "SN" )))
 	{
 		enable[5] = 0;
 		(*buttons)[5].settype("up_type");
@@ -107,42 +109,42 @@ void Main::update()
 	}
 	else
 		(*buttons)[5].settype("disabled");
-	if((bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" ||
-		data->getGeneralMode() == "OS" || data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" ) && data->getETATLevelETCS() && ((data->getLevel() == "Level 0" ||
-		data->getLevel() == "Level 1" || data->getLevel().substr(0,2) == "NTC") || ((data->getLevel() == "Level 2" || data->getLevel() == "Level 3") &&
-		data->getConnection() == "Up"))) || (bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "PT" && (data->getLevel() == "Level 1" || ((data->getLevel() == "Level 2" ||
-		data->getLevel() == "Level 3") && data->getConnection() == "Up" && data->getPending_Emergency_Stop() == false))))
+	if((T_D->getV_train() == 0 && bord->getDriverID() && (bord->getGeneralMode() == "SB" || bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" ||
+		bord->getGeneralMode() == "OS" || bord->getGeneralMode() == "UN" || bord->getGeneralMode() == "SN" ) && bord->getETATLevelETCS() && ((bord->getLevel() == "Level 0" ||
+		bord->getLevel() == "Level 1" || bord->getLevel().substr(0,2) == "NTC") || ((bord->getLevel() == "Level 2" || bord->getLevel() == "Level 3") &&
+		bord->getConnection() == "Up"))) || (T_D->getV_train() == 0 && bord->getGeneralMode() == "PT" && (bord->getLevel() == "Level 1" || ((bord->getLevel() == "Level 2" ||
+		bord->getLevel() == "Level 3") && bord->getConnection() == "Up" && bord->getPending_Emergency_Stop() == false))))
 	{
 		enable[6] = 0; //shunting  x
 		(*buttons)[6].settype("up_type");
 	}
-	else if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SH")
+	else if(T_D->getV_train() == 0 && bord->getGeneralMode() == "SH")
 	{
 		enable[6] = 0;//Exit Shunting
 		(*buttons)[6].settype("up_type");
 	}
 	else
 		(*buttons)[6].settype("disabled");
-	if(bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
-		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "SH") && data->getNon_Leading() == false)
+	if(T_D->getV_train() == 0 && bord->getDriverID() && bord->getETATLevelETCS() && (bord->getGeneralMode() == "SB" || bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" ||
+		bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS" || bord->getGeneralMode() == "SH") && bord->getNon_Leading() == false)
 	{
 		enable[7] = 0;
 		(*buttons)[7].settype("up_type");
 	}
 	else
 		(*buttons)[7].settype("disabled");
-	if(data->getGeneralMode() == "SH" && data->getPassive_Shunting())
+	if(bord->getGeneralMode() == "SH" && bord->getPassive_Shunting())
 	{
 		enable[8] = 0;
 		(*buttons)[8].settype("up_type");
 	}
 	else
 		(*buttons)[8].settype("disabled");
-	if (*version == "3.6.0")
+	if (bord->getVersion() == "3.6.0")
 	{
-		if (bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getETATLevelETCS() && (data->getGeneralMode() == "SB" || data->getGeneralMode() == "FS" ||
-			data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS" || data->getGeneralMode() == "NL"||
-			data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "PT"))
+		if (T_D->getV_train() == 0 && bord->getDriverID() && bord->getETATLevelETCS() && (bord->getGeneralMode() == "SB" || bord->getGeneralMode() == "FS" ||
+			bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS" || bord->getGeneralMode() == "NL"||
+			bord->getGeneralMode() == "UN" || bord->getGeneralMode() == "SN" || bord->getGeneralMode() == "PT"))
 		{
 			enable[9] = 0;
 			(*buttons)[9].settype("up_type");
@@ -155,9 +157,9 @@ void Main::update()
 		enable[9] = 2;
 		(*buttons)[9].settype("disabled");
 	}
-	selection = {"Start", "Driver ID", "Train data", "", "Level", "Train running number", "Shunting", "Non-Leading", "Maintain Shunting"};
-	if(*version == "3.6.0")
-		selection.push_back("Radio data");
+	selection = {"Start", "Driver ID", "Train bord", "", "Level", "Train running number", "Shunting", "Non-Leading", "Maintain Shunting"};
+	if(bord->getVersion() == "3.6.0")
+		selection.push_back("Radio bord");
     menu(selection, enable, "Main");
 	if((*buttons)[11].getactivation())
 	{

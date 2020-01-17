@@ -4,13 +4,11 @@
 
 int main()
 {
-	Data data;
-	Virtual_train virtual_train(data);
-	while(!data.getEteindre())
+	Virtual_train virtual_train;
+	do
 	{
-		data.update();
-		if(data.getAllumage())
-			virtual_train.update();
-	}
+		virtual_train.update();
+	}while(virtual_train.soft.getEtat() == true);
+
 	return 0;
 }

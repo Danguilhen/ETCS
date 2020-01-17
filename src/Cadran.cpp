@@ -11,21 +11,31 @@ V2f Cadran::local2globalCoordonates(V2f CoordonneesPolaires)
 VertexArray Cadran::Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d)
 {
 	VertexArray Barre(Quads, 4);
-	Barre[0].position = local2globalCoordonates(V2f(a.x * data->getRE(),grad.teta() + a.y));
-	Barre[1].position = local2globalCoordonates(V2f(b.x * data->getRE(),grad.teta() + b.y));
-	Barre[2].position = local2globalCoordonates(V2f(c.x * data->getRE(),grad.teta() + c.y));
-	Barre[3].position = local2globalCoordonates(V2f(d.x * data->getRE(),grad.teta() + d.y));
+	Barre[0].position = local2globalCoordonates(V2f(a.x * soft->getRE(),grad.teta() + a.y));
+	Barre[1].position = local2globalCoordonates(V2f(b.x * soft->getRE(),grad.teta() + b.y));
+	Barre[2].position = local2globalCoordonates(V2f(c.x * soft->getRE(),grad.teta() + c.y));
+	Barre[3].position = local2globalCoordonates(V2f(d.x * soft->getRE(),grad.teta() + d.y));
 	return Barre;
 }
 
-Cadran::Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord)
+Cadran::Cadran(Software &soft, Train_dynamique &T_D, ETCS_Bord &bord)
 {
 	this->bord = &bord;
-	this->data = &data;
-	this->fenetre = &fenetre;
-	this->Vmax = Vmax;
+	this->soft = &soft;
+	this->T_D = &T_D;
+
+
+	creation();
+
+}
+
+Cadran::Cadran(Software &soft, Train_dynamique &T_D)
+{
+	this->soft = &soft;
+	this->T_D = &T_D;
 	creation();
 }
+
 
 void Cadran::creation()
 {
@@ -37,32 +47,34 @@ void Cadran::creation()
 	kmh2degVfaible = 144.0 / 150.0;  //nombre de degre pour 1km/h ici a 144� on a 150km/h
 	kmh2degVeleve = kmh2degVfaible / 2.0;
 
-	centre.x = data->getRE() * (54 + 280 / 2.0 + data->getEcartX());
-	centre.y = data->getRE() * (300 / 2.0 + data->getEcartY());
+
+
+	centre.x = soft->getRE() * (54 + 280 / 2.0 + soft->getEcartX());
+	centre.y = soft->getRE() * (300 / 2.0 + soft->getEcartY());
 
 	aiguille.setPointCount(8);
 	aiguille.setPosition(centre);
 
-	aiguille.setPoint(0,V2f(- (80 + 25) * data->getRE(), - 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(1,V2f(- (80 + 25) * data->getRE(), 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(2,V2f(- (80 + 25 - 15) * data->getRE(), 3 / 2.0 * data->getRE()));
-	aiguille.setPoint(3,V2f(- (57 + 25) * data->getRE(),9 / 2.0 * data->getRE()));
-	aiguille.setPoint(4,V2f(- 20 * data->getRE(),9 / 2.0 * data->getRE()));
-	aiguille.setPoint(5,V2f(- 20 * data->getRE(), - 9 / 2.0 * data->getRE()));
-	aiguille.setPoint(6,V2f(- (57 + 25) * data->getRE(), - 9 / 2.0 * data->getRE()));
-	aiguille.setPoint(7,V2f(- (80 + 25 - 15) * data->getRE(), - 3 / 2.0 * data->getRE()));
+	aiguille.setPoint(0,V2f(- (80 + 25) * soft->getRE(), - 3 / 2.0 * soft->getRE()));
+	aiguille.setPoint(1,V2f(- (80 + 25) * soft->getRE(), 3 / 2.0 * soft->getRE()));
+	aiguille.setPoint(2,V2f(- (80 + 25 - 15) * soft->getRE(), 3 / 2.0 * soft->getRE()));
+	aiguille.setPoint(3,V2f(- (57 + 25) * soft->getRE(),9 / 2.0 * soft->getRE()));
+	aiguille.setPoint(4,V2f(- 20 * soft->getRE(),9 / 2.0 * soft->getRE()));
+	aiguille.setPoint(5,V2f(- 20 * soft->getRE(), - 9 / 2.0 * soft->getRE()));
+	aiguille.setPoint(6,V2f(- (57 + 25) * soft->getRE(), - 9 / 2.0 * soft->getRE()));
+	aiguille.setPoint(7,V2f(- (80 + 25 - 15) * soft->getRE(), - 3 / 2.0 * soft->getRE()));
 
 	int Vfaible;
 	teta_origine = 90 + 144; //decalage d'angle par rapport a un repere trigonometrique place la valeur 0
-	if(Vmax == 400) //petite vitesse : differentes echelles entre 0 et 200 et 200 et 400
+	if(soft->getVmax() == 400) //petite vitesse : differentes echelles entre 0 et 200 et 200 et 400
 	{
 		Vfaible = 200;
 		kmh2degVfaible = 144.0 / 150;
 	}
 	else
 	{
-		Vfaible = Vmax;
-		kmh2degVfaible = 144.0 / (Vmax / 2.0);
+		Vfaible = soft->getVmax();
+		kmh2degVfaible = 144.0 / (soft->getVmax() / 2.0);
 	}
 	float kmh2degVeleve = kmh2degVfaible / 2.0;
 
@@ -71,7 +83,7 @@ void Cadran::creation()
 		graduations[i].polaire(V2f(0, i * kmh2degVfaible));
 		graduations[i].vitesse(i);
 	}
-	for(int i = 1 + Vfaible; i <= Vmax; i++) //i correspond a la vitesse
+	for(int i = 1 + Vfaible; i <= soft->getVmax(); i++) //i correspond a la vitesse
 	{
 		graduations[i].polaire(V2f(0, Vfaible * kmh2degVfaible / 2.0 + i * kmh2degVeleve));
 		graduations[i].vitesse(i);
@@ -87,9 +99,9 @@ void Cadran::update()
 	CircleShape Centre;
 	Centre.setFillColor(aiguilleColor);
 	aiguille.setFillColor(aiguilleColor);
-	Centre.setPosition(V2f(centre.x - 25 * data->getRE(), centre.y - 25 * data->getRE()));
-	Centre.setRadius(25 * data->getRE());
-	fenetre->draw(Centre);
+	Centre.setPosition(V2f(centre.x - 25 * soft->getRE(), centre.y - 25 * soft->getRE()));
+	Centre.setRadius(25 * soft->getRE());
+	soft->getFenetre()->draw(Centre);
 	float tetaep = 0.5;
 
 	VertexArray Barre(Quads, 4);
@@ -102,16 +114,16 @@ void Cadran::update()
 	///////////////////////////////////////////////////////////////////////////////
 	//affichage des graduations
 
-	for(int i = 0; i <= Vmax; i = i + 10) //i correspond a la vitesse
+	for(int i = 0; i <= soft->getVmax(); i = i + 10) //i correspond a la vitesse
 	{
-		if((Vmax == 400 && i % 50 == 0) || (Vmax != 400 && i % 20 == 0))
+		if((soft->getVmax() == 400 && i % 50 == 0) || (soft->getVmax() != 400 && i % 20 == 0))
 		{ //affiche des barres plus longues tous les 50km/h
 			//positionnement de chaque points
 			Barre = Shape(graduations[i], V2f(125, - tetaep / 2.0), V2f(125, tetaep / 2.0), V2f(125 - 25, tetaep / 2.0), V2f(125 - 25, - tetaep / 2.0));
 			if(i != 250 && i != 350)
 			{
-				position = local2globalCoordonates(V2f(83 * data->getRE(), graduations[i].teta()));
-				creation_texte(to_string(graduations[i].vitesse()), WHITE, 16, 0, V2f(position.x / data->getRE() - data->getEcartX(), position.y / data->getRE() - data->getEcartX()), 1);
+				position = local2globalCoordonates(V2f(83 * soft->getRE(), graduations[i].teta()));
+				creation_texte(to_string(graduations[i].vitesse()), WHITE, 16, 0, V2f(position.x / soft->getRE() - soft->getEcartX(), position.y / soft->getRE() - soft->getEcartX()), 1);
 			}
 		}
 		else
@@ -119,7 +131,7 @@ void Cadran::update()
 			//positionnement de chaque points
 			Barre = Shape(graduations[i], V2f(125, - tetaep / 2.0), V2f(125, tetaep / 2.0), V2f(125 - 15, tetaep / 2.0), V2f(125 - 15, - tetaep / 2.0));
 		}
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	//ecriture des vitesses
 	//position = local2globalCoordonates(centre,V2f(200,graduations[0].teta()));
@@ -152,13 +164,13 @@ void Cadran::update()
 			couleurForme(Barre, RED, 4);
 		else if(Vred < Vorange)
 			couleurForme(Barre, ORANGE, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	for(int i = 0; i<= V2; i++)
 	{
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		couleurForme(Barre, WHITE, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	for(int i = (V2 - 2 * asin(3 / float(137 - 20))); i <= V2; i++)
 	{
@@ -169,31 +181,31 @@ void Cadran::update()
 			couleurForme(Barre, WHITE, 4);
 		else
 			couleurForme(Barre, DARK_GREY, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	for(int i = V1; i <= Vred; i++)
 	{
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		couleurForme(Barre, RED, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	for(int i = 0; i <= Vyellow; i++)
 	{
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		couleurForme(Barre, YELLOW, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	for(int i = 0; i <= VdarkGrey; i++)
 	{
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 		couleurForme(Barre, DARK_GREY, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	for(int i = 1; i <= VmediumGrey; i++)
 	{
 		Barre = Shape(graduations[i], V2f(137, - deltateta / 2.0), V2f(137, deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 4, - deltateta / 2.0));
 		couleurForme(Barre, couleur2, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 	if(V1 < VmediumGrey)
 	{
@@ -201,13 +213,13 @@ void Cadran::update()
 		{
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
 			couleurForme(Barre, couleur4, 4);
-			fenetre->draw(Barre);
+			soft->getFenetre()->draw(Barre);
 		}
 		for(int i = V1 + 1; i <= VmediumGrey; i++) //trait noir
 		{
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128, deltateta / 2.0), V2f(128, - deltateta / 2.0));
 			couleurForme(Barre, couleur2, 4);
-			fenetre->draw(Barre);
+			soft->getFenetre()->draw(Barre);
 		}
 	}
 	else
@@ -216,26 +228,26 @@ void Cadran::update()
 		{
 			Barre = Shape(graduations[i], V2f(128 + 4, - deltateta / 2.0), V2f(128 + 4, deltateta / 2.0), V2f(128 + 3, deltateta / 2.0), V2f(128 + 3, - deltateta / 2.0));
 			couleurForme(Barre, couleur4, 4);
-			fenetre->draw(Barre);
+			soft->getFenetre()->draw(Barre);
 		}
 	}
 	for(int i = 0; i <= 4; i++) //Affichage fixe
 	{
 		Barre = Shape(graduations[i], V2f(137, - 4 - deltateta / 2.0), V2f(137, - 4 + deltateta / 2.0), V2f(128, - 4 + deltateta / 2.0), V2f(128, - 4 - deltateta / 2.0));
 		couleurForme(Barre, DARK_GREY, 4);
-		fenetre->draw(Barre);
+		soft->getFenetre()->draw(Barre);
 	}
 
-	if(bord->TrainRI.T_data.getVtrain() < 200)
-		aiguille.setRotation(bord->TrainRI.T_data.getVtrain() * kmh2degVfaible+teta0);
+	if(T_D->getV_train() < 200)
+		aiguille.setRotation(T_D->getV_train() * kmh2degVfaible+teta0);
 	else
-		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + bord->TrainRI.T_data.getVtrain() * kmh2degVeleve+teta0);
+		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + T_D->getV_train() * kmh2degVeleve+teta0);
 
-	fenetre->draw(aiguille);
+	soft->getFenetre()->draw(aiguille);
 
-	string str = to_string(graduations[(int)bord->TrainRI.T_data.getVtrain()].vitesse());
+	string str = to_string(graduations[(int)T_D->getV_train()].vitesse());
 	string s;
-	if(graduations[(int)bord->TrainRI.T_data.getVtrain()].vitesse() > 99)
+	if(graduations[(int)T_D->getV_train()].vitesse() > 99)
 	{
 		s = str.at(2);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 2.0 - 3, 300 / 2.0), 2);
@@ -244,7 +256,7 @@ void Cadran::update()
 		s = str.at(0);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 - 50 / 6.0 - 3, 300 / 2.0), 2);
 	}
-	else if(graduations[(int)bord->TrainRI.T_data.getVtrain()].vitesse() > 9)
+	else if(graduations[(int)T_D->getV_train()].vitesse() > 9)
 	{
 		s = str.at(1);
 
@@ -261,13 +273,13 @@ void Cadran::update()
 
 void Cadran::convertisseurVitesses()
 {
-	if(data->getGeneralMode() == "FS" || data->getGeneralMode() == "OS")
+	if(bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "OS")
 	{
 		if(bord->SDM.getStatus() == "CSM")
 		{
 			if(bord->SDM.getSupervision_status() == "Intervention")
 			{
-				if(bord->TrainRI.T_data.getVtrain() <= bord->SDM.getV_MRSP())
+				if(T_D->getV_train() <= bord->SDM.getV_MRSP())
 				{
 					aiguilleColor = GREY;
 					actualisationVitesse(0, 0, bord->SDM.getV_MRSP(), 0, 0, 0);
@@ -389,7 +401,7 @@ void Cadran::convertisseurVitesses()
 
 		}
 	}
-	else if(data->getGeneralMode() == "LS")
+	else if(bord->getGeneralMode() == "LS")
 	{
 		if(bord->SDM.getStatus() == "CSM")
 		{
@@ -408,7 +420,7 @@ void Cadran::convertisseurVitesses()
 
 		}
 	}
-	else if(data->getGeneralMode() == "SR/UN")
+	else if(bord->getGeneralMode() == "SR/UN")
 	{
 		if(bord->SDM.getStatus() == "CSM")
 		{
@@ -423,18 +435,18 @@ void Cadran::convertisseurVitesses()
 
 		}
 	}
-	else if(data->getGeneralMode() == "SH/RV")
+	else if(bord->getGeneralMode() == "SH/RV")
 	{
 		if(bord->SDM.getStatus() == "CSM")
 		{
 
 		}
 	}
-	else if(data->getGeneralMode() == "NL/SB/PT")
+	else if(bord->getGeneralMode() == "NL/SB/PT")
 	{
 
 	}
-	else if(data->getGeneralMode() == "TR")
+	else if(bord->getGeneralMode() == "TR")
 	{
 
 	}

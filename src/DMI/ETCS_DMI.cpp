@@ -1,7 +1,11 @@
 #include "ETCS.hpp"
 
-ETCS::ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord): def(fenetre, data, symbol, button, bord, ecran), main(fenetre, data, bord, symbol, button, ecran, version), overide(fenetre, data, bord, symbol, button, ecran, version), special(fenetre, data, bord, symbol, button, ecran, version)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
+ETCS_DMI::ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): def(symbol, button, soft, bord, T_D, etat_ecran), main(symbol, button, soft, bord, T_D, etat_ecran), overide(symbol, button, soft, bord, T_D, etat_ecran), special(symbol, button, soft, bord, T_D, etat_ecran)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
 {
+	cout<< "DMI" <<endl;
+	this->soft = &soft;
+	this->bord = &bord;
+	this->T_D = &T_D;
 	vector<string> nom{"DR_01", "DR_02", "DR_03", "DR_04", "DR_05", "LE_01", "LE_02", "LE_02a", "LE_03", "LE_04", "LE_05", "LE_06", "LE_07", "LE_08", "LE_08a", "LE_09", "LE_09a", "LE_10", "LE_11", "LE_12",
 	"LE_13", "LE_14", "LE_15", "LS_01", "LX_01", "MO_01", "MO_02", "MO_03", "MO_04", "MO_05", "MO_06", "MO_07", "MO_08", "MO_09", "MO_10", "MO_11", "MO_12", "MO_13", "MO_14", "MO_15", "MO_16", "MO_17",
 	"MO_18", "MO_19", "MO_20", "MO_21", "MO_22", "NA_01", "NA_02", "NA_03", "NA_04", "NA_05", "NA_06", "NA_07", "NA_08", "NA_09", "NA_10", "NA_11", "NA_12", "NA_13", "NA_14", "NA_15", "NA_16", "NA_17",
@@ -12,41 +16,39 @@ ETCS::ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord): def(fenetre, dat
 	"TC_36", "TC_37"};
 	for(int i = 0; i < int(nom.size()); i++)
 	{
-		symbol.push_back(Symbol(fenetre, data));
+		symbol.push_back(Symbol(soft));
 		symbol[i].loadSymbol("ressources/symbols/" + nom[i] + ".bmp");
 	}
-	this->fenetre = &fenetre;
-	this->data = &data;
 	this->bord = &bord;
 	for(int i = 0; i <= 15; i++)
 	{
-		button.push_back(data);
+		button.push_back(soft);
 		button[i].settype("up_type");
 	}
 }
 
-void ETCS::update()
+void ETCS_DMI::update()
 {
 	action();
 
-	fond[0].position = V2f(data->getEcartX() * data->getRE(), data->getEcartY() * data->getRE());
-	fond[1].position = V2f((640 + data->getEcartX()) * data->getRE(), data->getEcartY() * data->getRE());
-	fond[2].position = V2f((640 + data->getEcartX()) * data->getRE(), (480 + data->getEcartY()) * data->getRE());
-	fond[3].position = V2f(data->getEcartX() * data->getRE(), (480 + data->getEcartY()) * data->getRE());
+	fond[0].position = V2f(soft->getEcartX() * soft->getRE(), soft->getEcartY() * soft->getRE());
+	fond[1].position = V2f((640 + soft->getEcartX()) * soft->getRE(), soft->getEcartY() * soft->getRE());
+	fond[2].position = V2f((640 + soft->getEcartX()) * soft->getRE(), (480 + soft->getEcartY()) * soft->getRE());
+	fond[3].position = V2f(soft->getEcartX() * soft->getRE(), (480 + soft->getEcartY()) * soft->getRE());
 	couleurForme(fond, DARK_BLUE, 4);
-	fenetre->draw(fond);
+	soft->getFenetre()->draw(fond);
 	affichageBoutons();
-	if(ecran == "Default")
+	if(etat_ecran == "Default")
 		def.update();
-	else if(ecran == "Main")
+	else if(etat_ecran == "Main")
 		main.update();
-	else if(ecran == "Override")
+	else if(etat_ecran == "Override")
 		overide.update();
-	else if(ecran == "Special")
+	else if(etat_ecran == "Special")
 		special.update();
 }
 
-void ETCS::action()
+void ETCS_DMI::action()
 {
 	for(int i = 0; i <= 15; i++)
 	{
@@ -55,7 +57,7 @@ void ETCS::action()
 		if(button[i].getdriver_action() == 1)
 			button[i].setdriver_action(2);
 	}
-    while(fenetre->pollEvent(event))
+    while(soft->getFenetre()->pollEvent(event))
     {
 		if(event.type==sf::Event::MouseButtonPressed)
 		{
@@ -63,7 +65,7 @@ void ETCS::action()
             int y = event.mouseButton.y;
 			for(int i = 0; i < 10; i++)
 			{
-				if(x > ((64 * i + data->getEcartX()) * data->getRE()) && x < ((64 * (i + 1) + data->getEcartX()) * data->getRE()) && y > ((430 + data->getEcartY()) * data->getRE()) && y < ((480 + data->getEcartY()) * data->getRE()))
+				if(x > ((64 * i + soft->getEcartX()) * soft->getRE()) && x < ((64 * (i + 1) + soft->getEcartX()) * soft->getRE()) && y > ((430 + soft->getEcartY()) * soft->getRE()) && y < ((480 + soft->getEcartY()) * soft->getRE()))
             	{
 					if(button[i].getdriver_action() == 0)
 						{button[i].setdriver_action(1);}
@@ -73,7 +75,7 @@ void ETCS::action()
 			}
 			for(int i = 10; i < 15; i++)
 			{
-            	if((x > (640 - 40 + data->getEcartX()) * data->getRE()) && (x < (640 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * (i - 10) + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * (i - 9) + data->getEcartY()) * data->getRE()))
+            	if((x > (640 - 40 + soft->getEcartX()) * soft->getRE()) && (x < (640 + soft->getEcartX()) * soft->getRE()) && y > ((28 + 64 * (i - 10) + soft->getEcartY()) * soft->getRE()) && y < ((28 + 64 * (i - 9) + soft->getEcartY()) * soft->getRE()))
             	{
 					if(button[i].getdriver_action() == 0)
 						button[i].setdriver_action(1);
@@ -81,7 +83,7 @@ void ETCS::action()
 						button[i].setdriver_action(2);
 				}
 			}
-			if(x > ((54 + 280 + 246 + 20 + data->getEcartX()) * data->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * 5 + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * 5 + 82 + data->getEcartY()) * data->getRE()))
+			if(x > ((54 + 280 + 246 + 20 + soft->getEcartX()) * soft->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + soft->getEcartX()) * soft->getRE()) && y > ((28 + 64 * 5 + soft->getEcartY()) * soft->getRE()) && y < ((28 + 64 * 5 + 82 + soft->getEcartY()) * soft->getRE()))
             {
 				if(button[15].getdriver_action() == 0)
 					button[15].setdriver_action(1);
@@ -95,39 +97,39 @@ void ETCS::action()
             int y = event.mouseButton.y;
 			for(int i = 0; i < 10; i++)
 			{
-				if(x > ((64 * i + data->getEcartX()) * data->getRE()) && x < ((64 * (i + 1) + data->getEcartX()) * data->getRE()) && y > ((430 + data->getEcartY()) * data->getRE()) && y < ((480 + data->getEcartY()) * data->getRE()))
+				if(x > ((64 * i + soft->getEcartX()) * soft->getRE()) && x < ((64 * (i + 1) + soft->getEcartX()) * soft->getRE()) && y > ((430 + soft->getEcartY()) * soft->getRE()) && y < ((480 + soft->getEcartY()) * soft->getRE()))
             		button[i].setdriver_action(3);
 			}
 			for(int i = 10; i < 15; i++)
 			{
-            	if((x > (640 - 40 + data->getEcartX()) * data->getRE()) && (x < (640 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * (i - 10) + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * (i - 9) + data->getEcartY()) * data->getRE()))
+            	if((x > (640 - 40 + soft->getEcartX()) * soft->getRE()) && (x < (640 + soft->getEcartX()) * soft->getRE()) && y > ((28 + 64 * (i - 10) + soft->getEcartY()) * soft->getRE()) && y < ((28 + 64 * (i - 9) + soft->getEcartY()) * soft->getRE()))
 					button[i].setdriver_action(3);
 			}
-			if(x > ((54 + 280 + 246 + 20 + data->getEcartX()) * data->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + data->getEcartX()) * data->getRE()) && y > ((28 + 64 * 5 + data->getEcartY()) * data->getRE()) && y < ((28 + 64 * 5 + 82 + data->getEcartY()) * data->getRE()))
+			if(x > ((54 + 280 + 246 + 20 + soft->getEcartX()) * soft->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + soft->getEcartX()) * soft->getRE()) && y > ((28 + 64 * 5 + soft->getEcartY()) * soft->getRE()) && y < ((28 + 64 * 5 + 82 + soft->getEcartY()) * soft->getRE()))
 				button[15].setdriver_action(3);
         }
 	    if(event.type == Event::Closed)
         {
-			fenetre->close();
-			data->setEteindre(true);
+			soft->getFenetre()->close();
+			soft->setEtat(false);
 		}
 		if(event.type == Event::KeyPressed)
 		{
 		    if(event.key.code == Keyboard::Escape)
 			{
-				fenetre->close();
-				data->setEteindre(true);
+				soft->getFenetre()->close();
+				soft->setEtat(false);
 			}
 			else if(event.key.code == Keyboard::Up)
-				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() + 1);
+				T_D->setV_train(T_D->getV_train() + 1);
 			else if(event.key.code == Keyboard::Down)
-				bord->TrainRI.T_data.setVtrain(bord->TrainRI.T_data.getVtrain() - 1);
+				T_D->setV_train(T_D->getV_train() - 1);
 			else if(event.key.code == Keyboard::V)
 			{
-				if(version == "3.6.0")
-					version = "3.4.0";
+				if(bord->getVersion() == "3.6.0")
+					bord->setVersion("3.4.0");
 				else
-					version = "3.6.0";
+					bord->setVersion("3.6.0");
 			}
 			else if(event.key.code == Keyboard::A)
 			{

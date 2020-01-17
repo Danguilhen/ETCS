@@ -1,12 +1,7 @@
 #include "Data.hpp"
 
 Data::Data()
-{
-	if(VideoMode::getDesktopMode().width / 640.0 < VideoMode::getDesktopMode().height / 480.0)
-		RE = VideoMode::getDesktopMode().width / 640.0;	//rapport Ecran
-	else
-		RE = VideoMode::getDesktopMode().height / 480.0; //rapport Ecran
-}
+{}
 
 void Data::update()
 {
@@ -102,33 +97,8 @@ void Data::update()
   	} while(true);
 }*/
 
-string Data::getGeneralMode(){return generalMode;}
-string Data::getLevel(){return level;}
-double Data::getRE(){return RE;}
-int Data::getEcartX(){return ecartX;}
-int Data::getEcartY(){return ecartY;}
-void Data::setSon(int a){son = a;}
-int Data::getVligne(){return Vligne;}
-string Data::getVersion(){return version;}
-int Data::getPointKilometrique(){return pointKilometrique;}
-int Data::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
-string Data::getTunnelStoppingArea(){return tunnelStoppingArea;}
-void Data::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
-int Data::getSignalisation(){return signalisation;}
-bool Data::getEteindre(){return eteindre;}
-void Data::setEteindre(bool stop){eteindre = stop;}
-bool Data::getAllumage(){return allumage;}
 
-bool Data::getDriverID(){return 1;}
-bool Data::getTrainData(){return 1;}
-bool Data::getETATLevelETCS(){return 1;}
-bool Data::getTrainNumber(){return 1;}
-string Data::getConnection(){return "Up";}
-bool Data::getPending_Emergency_Stop(){return 0;}
-bool Data::getModif_DriverID_NTC(){return 1;}
-bool Data::getNon_Leading(){return 0;}
-bool Data::getPassive_Shunting(){return 1;}
-int Data::getVrelease(){return 30;}
-bool Data::getEOA(){return 0;}
-void Data::setEOA(bool EOA){(void)EOA;}
-bool Data::getmodif_Adhesion(){return 1;}
+
+
+
+

@@ -1,6 +1,8 @@
 #ifndef AA
 #define AA
 
+#include "define.hpp"
+
 class Train_Categories
 {
     private :
@@ -99,13 +101,10 @@ class Train_Data
         bool train_fitted_with_airtight_system;
         std::vector<std::string> list_of_national_systems_available_on_board{"TVM", "FR", "EN"};//DONNEE NON MODIFIABLE
         int axle_number;//DONNEE NON MODIFIABLE
-        int Vtrain = 135;
 
     public :
         Train_Data();
         int getTrain_length();
-        int getVtrain();
-        void setVtrain(int V);
 
 	    //GET ET SET A FAIRE SI NECESSAIRE
 };

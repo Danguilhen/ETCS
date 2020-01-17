@@ -1,7 +1,6 @@
 #ifndef ERTMS
 #define ERTMS
 
-#include "Data.hpp"
 #include "Symbol.hpp"
 #include "Button.hpp"
 #include "Default.hpp"
@@ -11,13 +10,14 @@
 #include "Override.hpp"
 #include "Special.hpp"
 
-class ETCS : public Fenetre
+
+class ETCS_DMI : public Fenetre
 {
 	private :
-		string version = "3.6.0";
-		string ecran = "Default";
+		string etat_ecran = "Default";
 		vector <Symbol> symbol;
 		vector <Button> button;
+		Train_dynamique *T_D;
 		Event event;
 		Default def;
 		Main main;
@@ -31,7 +31,7 @@ class ETCS : public Fenetre
 		VertexArray fond{Quads,4};
 		void action();
 	public :
-		ETCS(RenderWindow &fenetre, Data &data, ETCS_Bord &bord);
+		ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);
 		void update();
 };
 

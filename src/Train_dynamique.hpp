@@ -1,15 +1,18 @@
 #ifndef TD
 #define TD
 
-#include "Virtual_train.hpp"
+#include "define.hpp"
 
-/*class Train_dynamique
+class Train_dynamique
 {
 	private :
-	Data &data;
+	int V_train = 135;
 
+	public :
 
+	int getV_train();
+	void setV_train(int V);
 
-};*/
+};
 
 #endif

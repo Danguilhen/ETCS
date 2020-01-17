@@ -1,4 +1,4 @@
-#include "define.hpp"
+
 #include "TrackRelatedInputs.hpp"
 
 National_Value_Data::National_Value_Data()

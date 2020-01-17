@@ -1,8 +1,8 @@
 #include "Button.hpp"
 
-Button::Button(Data &data)
+Button::Button(Software &soft)
 {
-	this->data = &data;
+	this->soft = &soft;
 }
 
 string Button::gettype() {return type;}
@@ -20,7 +20,7 @@ void Button::action_type()
 	{
 		if(driver_action == 1)
 		{
-			data->setSon(11);
+			soft->setSon(11);
 		}
 		if(driver_action == 3)
 		{
@@ -31,7 +31,7 @@ void Button::action_type()
 	{
 		if(driver_action == 1)
 		{
-			data->setSon(11);
+			soft->setSon(11);
 			chrono.restart();
 			button_activation = 1;
 			n = 0;
@@ -63,7 +63,7 @@ void Button::action_type()
 	{
 		if(driver_action == 1)
 		{
-			data->setSon(11);
+			soft->setSon(11);
 			chrono.restart();
 		}
 		if(driver_action == 3 && delta_ts > 2)

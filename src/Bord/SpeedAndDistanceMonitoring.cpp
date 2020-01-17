@@ -1,7 +1,13 @@
-#include "define.hpp"
-#include "TrackRelatedInputs.hpp"
-#include "TrainRelatedInputs.hpp"
+
 #include "SpeedAndDistanceMonitoring.hpp"
+#include "TrainRelatedInputs.hpp"
+#include "TrackRelatedInputs.hpp"
+#include "../Train_dynamique.hpp"
+
+SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D)
+{
+	this->T_D = &T_D;
+}
 
 void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI)
 {
@@ -37,36 +43,36 @@ void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
 	else
 		V_warning = V_MRSP + TrainRI.FVD.getdV_warning_max();
 
-	//cout << " MSRP " << V_MRSP << " EBI  " << V_ebi << " SBI " << V_sbi << " WARNING " << V_warning << " VTRAIN " << TrainRI.T_data.getVtrain() << endl ;
+	//cout << " MSRP " << V_MRSP << " EBI  " << V_ebi << " SBI " << V_sbi << " WARNING " << V_warning << " VTRAIN " << T_D.getV_train() << endl ;
 }
 
-void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands(TrainRelatedInputs TrainRI)
+void SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoringCommands()
 {
 	//Triggering Conditions
-	if(TrainRI.T_data.getVtrain() <= V_MRSP && supervision_status == "Normal")
+	if(T_D->getV_train() <= V_MRSP && supervision_status == "Normal")
 		supervision_status = "Normal";
-	if(TrainRI.T_data.getVtrain() > V_MRSP && supervision_status == "Normal")
+	if(T_D->getV_train() > V_MRSP && supervision_status == "Normal")
 		supervision_status = "Overspeed";
-	if(TrainRI.T_data.getVtrain() > V_warning && supervision_status == "Overspeed")
+	if(T_D->getV_train() > V_warning && supervision_status == "Overspeed")
 		supervision_status = "Warning";
-	/*if(TrainRI.T_data.getVtrain() > V_sbi)//à voir avec Benoit
+	/*if(T_D->getV_train() > V_sbi)//à voir avec Benoit
 	{
 		supervision_status = "Intervention";
 		command_triggered = "SB";
 	}*/
-	if(TrainRI.T_data.getVtrain() > V_ebi && supervision_status == "Warning")
+	if(T_D->getV_train() > V_ebi && supervision_status == "Warning")
 	{
 		supervision_status = "Intervention";
 		command_triggered = "EB";
 	}
 
 	//Revocation conditions
-	if(TrainRI.T_data.getVtrain() == 0 && supervision_status == "Intervention")
+	if(T_D->getV_train() == 0 && supervision_status == "Intervention")
 	{
 		supervision_status = "Normal";
 		command_triggered = "";
 	}
-	if(TrainRI.T_data.getVtrain() <= V_MRSP && supervision_status != "Intervention")
+	if(T_D->getV_train() <= V_MRSP && supervision_status != "Intervention")
 	{
 		supervision_status = "Normal";
 		if (command_triggered == "SB")
