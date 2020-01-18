@@ -33,6 +33,7 @@ class ETCS_DMI : public Fenetre
 	public :
 		ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);
 		void update();
+		void affichage();
 };
 
 #endif

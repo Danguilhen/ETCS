@@ -30,14 +30,7 @@ ETCS_DMI::ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): def(s
 void ETCS_DMI::update()
 {
 	action();
-
-	fond[0].position = V2f(soft->getEcartX() * soft->getRE(), soft->getEcartY() * soft->getRE());
-	fond[1].position = V2f((640 + soft->getEcartX()) * soft->getRE(), soft->getEcartY() * soft->getRE());
-	fond[2].position = V2f((640 + soft->getEcartX()) * soft->getRE(), (480 + soft->getEcartY()) * soft->getRE());
-	fond[3].position = V2f(soft->getEcartX() * soft->getRE(), (480 + soft->getEcartY()) * soft->getRE());
-	couleurForme(fond, DARK_BLUE, 4);
-	soft->getFenetre()->draw(fond);
-	affichageBoutons();
+	affichage();
 	if(etat_ecran == "Default")
 		def.update();
 	else if(etat_ecran == "Main")
@@ -282,4 +275,15 @@ void ETCS_DMI::action()
     }
 	for(int i = 0; i <= 15; i++)
 		button[i].action_type();
+}
+
+void ETCS_DMI::affichage()
+{
+	fond[0].position = V2f(soft->getEcartX() * soft->getRE(), soft->getEcartY() * soft->getRE());
+	fond[1].position = V2f((640 + soft->getEcartX()) * soft->getRE(), soft->getEcartY() * soft->getRE());
+	fond[2].position = V2f((640 + soft->getEcartX()) * soft->getRE(), (480 + soft->getEcartY()) * soft->getRE());
+	fond[3].position = V2f(soft->getEcartX() * soft->getRE(), (480 + soft->getEcartY()) * soft->getRE());
+	couleurForme(fond, DARK_BLUE, 4);
+	soft->getFenetre()->draw(fond);
+	affichageBoutons();
 }

@@ -152,6 +152,12 @@ float National_Value_Data::getA_NVP12()
 float National_Value_Data::getA_NVP23()
 {return A_NVP23;}
 
+TracksideSpeedRestriction::TracksideSpeedRestriction()
+{
+	step(tableau_vitesse_ligne, 0, 1000, 200);
+	step(tableau_vitesse_ligne, 1000, 10000, 130);
+}
+
 vector<vector<int>> TracksideSpeedRestriction::getVitesseTableau()
 {
 	return tableau_vitesse_ligne;
@@ -159,7 +165,19 @@ vector<vector<int>> TracksideSpeedRestriction::getVitesseTableau()
 
 void TracksideSpeedRestriction::TSR_Update()
 {
-	//tableau_vitesse_ligne[0][1] = tableau_vitesse_ligne[0][1];
-	//Attention, la distance
+	/*for(size_t i = 0; i < tableau_vitesse_ligne.size(); i++)
+	{
+		if(tableau_vitesse_ligne[i][0] != -1)
+			tableau_vitesse_ligne[i][0] -= distance parcourue;
+		tableau_vitesse_ligne[i][1] -= distance parcourue;
+		if(tableau_vitesse_ligne[i][0] < 0)
+			tableau_vitesse_ligne[i][0] = -1;
+		if(tableau_vitesse_ligne[i][1] < 0)
+			tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
+	}*/
+
+	if(tableau_vitesse_ligne[0][2] < 0)
+		tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
+
 }
 

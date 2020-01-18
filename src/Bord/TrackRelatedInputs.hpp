@@ -2,6 +2,7 @@
 #define BBB
 
 #include "define.hpp"
+#include "Tools.hpp"
 
 class National_Value_Data
 {
@@ -87,13 +88,14 @@ float getA_NVP23();
 };
 
 
-class TracksideSpeedRestriction
+class TracksideSpeedRestriction : public Tools
 {
 	private :
 
-	std::vector<std::vector<int>> tableau_vitesse_ligne {{200, 1000}, {130, 10000}};//Chaque accolade correspond à une vitesse et la distance sur laquelle cette V s'applique
-	//Tableau == vitesse[0] et distance dans laquelle est s'applique [1]
+	std::vector<std::vector<int>> tableau_vitesse_ligne ;//[distance debut][distance fin][vitesse]
 	public :
+
+	TracksideSpeedRestriction();
 	int test;
 	std::vector<std::vector<int>> getVitesseTableau();
 	void TSR_Update();

@@ -7,7 +7,7 @@ Software::Software()
 	else
 		RE = VideoMode::getDesktopMode().height / 480.0; //rapport Ecran
 	//creation et affichage de la fenetre
-	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Fullscreen, settings);
+	fenetre.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"Ecran central", Style::Default, settings);
 	fenetre.setFramerateLimit(60);
 	settings.antialiasingLevel = 8;
 }//constructeur

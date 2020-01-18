@@ -11,15 +11,7 @@ SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D)
 
 void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI)
 {
-	if(TrackRI.TSR.getVitesseTableau()[0][1] + TrainRI.T_data.getTrain_length() < 0)
-	{
-		//cout << "changement";
-		V_MRSP = TrackRI.TSR.getVitesseTableau()[0][0];
-		TrackRI.TSR.getVitesseTableau().erase(TrackRI.TSR.getVitesseTableau().begin());
-	}
-	/*else
-		cout << TrackRI.TSR.getVitesseTableau()[0][1] + TrainRI.T_data.getTrain_length() << " " << endl;
-		*/
+	V_MRSP = TrackRI.TSR.getVitesseTableau()[0][2];
 }
 
 void SpeedAndDistanceMonitoring::Supervision_limits(TrainRelatedInputs TrainRI)
