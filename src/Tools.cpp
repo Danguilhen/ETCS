@@ -182,3 +182,9 @@ void Tools::creation_rectangle(V2f pos, V2f dim, int mode)
 	}
 	*/
 }
+
+void Tools::step(vector<vector<int>> tab, int distance_debut, int distance_fin, int valeur)
+{
+	vector<int> ligne {distance_debut, distance_fin, valeur};
+	tab.push_back(ligne);
+}
