@@ -13,7 +13,7 @@ void ETCS_Bord::bord_update()
 	//ATTENTION A L ORDRE LES RELATED INPUTS AVANT LE SDM
 
 	TrackRI.TSR.TSR_Update();//trackspeedrestriction
-	SDM.MSRP(TrackRI, TrainRI);
+	SDM.MSRP(TrackRI);
 	SDM.Supervision_limits(TrainRI);
 	SDM.SpeedAndDistanceMonitoringCommands();
 }

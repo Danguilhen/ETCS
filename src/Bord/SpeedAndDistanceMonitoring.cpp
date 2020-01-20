@@ -9,7 +9,7 @@ SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D)
 	this->T_D = &T_D;
 }
 
-void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI)
+void SpeedAndDistanceMonitoring::MSRP(TrackRelatedInputs TrackRI)
 {
 	V_MRSP = TrackRI.TSR.getVitesseTableau()[0][2];
 }

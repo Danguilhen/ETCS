@@ -19,7 +19,7 @@ class SpeedAndDistanceMonitoring
 		std::string command_triggered;
 	public :
 		SpeedAndDistanceMonitoring(Train_dynamique &T_D);
-		void MSRP(TrackRelatedInputs TrackRI, TrainRelatedInputs TrainRI);
+		void MSRP(TrackRelatedInputs TrackRI);
 		void Supervision_limits(TrainRelatedInputs TrainRI);
 		void SpeedAndDistanceMonitoringCommands();
 		int getV_MRSP();
