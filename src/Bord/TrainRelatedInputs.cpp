@@ -1,5 +1,5 @@
 #include "TrainRelatedInputs.hpp"
-#include "define.hpp"
+
 
 Fixed_Value_Data::Fixed_Value_Data()
 {
@@ -47,33 +47,33 @@ void Fixed_Value_Data::Afficher_Fixed_value_data()
 
 float Fixed_Value_Data::getdV_ebi_min()
 {return dV_ebi_min;}
-int Fixed_Value_Data::getdV_ebi_max()
+float Fixed_Value_Data::getdV_ebi_max()
 {return dV_ebi_max;}
-int Fixed_Value_Data::getV_ebi_min()
+float Fixed_Value_Data::getV_ebi_min()
 {return V_ebi_min;}
-int Fixed_Value_Data::getV_ebi_max()
+float Fixed_Value_Data::getV_ebi_max()
 {return V_ebi_max;}
-int Fixed_Value_Data::getdV_sbi_min()
+float Fixed_Value_Data::getdV_sbi_min()
 {return dV_sbi_min;}
-int Fixed_Value_Data::getdV_sbi_max()
+float Fixed_Value_Data::getdV_sbi_max()
 {return dV_sbi_max;}
-int Fixed_Value_Data::getV_sbi_min()
+float Fixed_Value_Data::getV_sbi_min()
 {return V_sbi_min;}
-int Fixed_Value_Data::getV_sbi_max()
+float Fixed_Value_Data::getV_sbi_max()
 {return V_sbi_max;}
-int Fixed_Value_Data::getdV_warning_min()
+float Fixed_Value_Data::getdV_warning_min()
 {return dV_warning_min;}
-int Fixed_Value_Data::getdV_warning_max()
+float Fixed_Value_Data::getdV_warning_max()
 {return dV_warning_max;}
-int Fixed_Value_Data::getV_warning_min()
+float Fixed_Value_Data::getV_warning_min()
 {return V_warning_min;}
-int Fixed_Value_Data::getV_warning_max()
+float Fixed_Value_Data::getV_warning_max()
 {return V_warning_max;}
-int Fixed_Value_Data::getT_dispTTI()
+float Fixed_Value_Data::getT_dispTTI()
 {return T_dispTTI;}
-int Fixed_Value_Data::getT_warning()
+float Fixed_Value_Data::getT_warning()
 {return T_warning;}
-int Fixed_Value_Data::getT_driver()
+float Fixed_Value_Data::getT_driver()
 {return T_driver;}
 float Fixed_Value_Data::getM_rotating_min()
 {return M_rotating_min;}
@@ -143,18 +143,9 @@ Train_Data::Train_Data()
     tab_TC_list.push_back(FG3);
     tab_TC_list.push_back(FG4);
 }
-int Train_Data::getTrain_length()
-{
-    return train_length;
-}
-int Train_Data::getVtrain()
-{
-    return Vtrain;
-}
-void Train_Data::setVtrain(int V)
-{
-    Vtrain = V;
-}
+int Train_Data::getTrain_length(){return train_length;}
+
+int Train_Data::getM_rotating_nom(){return M_rotating_nom;}
 
 
 

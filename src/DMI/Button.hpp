@@ -1,12 +1,13 @@
 #ifndef BUTTON
 #define BUTTON
 
-#include "Data.hpp"
+#include "define.hpp"
+#include "Software.hpp"
 
 class Button
 {
 	private :
-		Data *data;
+		Software *soft;
 		string type;
 		int driver_action;//press� ou non
 		int button_activation = 0;//nombre de fois activ�
@@ -16,7 +17,7 @@ class Button
 		int n; // variable utilis�e pour le down_type
 
 	public :
-		Button(Data &data);
+		Button(Software &soft);
 		string gettype();
 		void settype(string P);
 		int getdriver_action();

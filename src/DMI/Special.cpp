@@ -1,11 +1,13 @@
 #include "Special.hpp"
 
-Special::Special(RenderWindow &fenetre, Data &data, ETCS_Bord &bord, vector<Symbol> & symbol, vector<Button> & buttons, string & ecran, string & version): Menu(data, symbol, bord, fenetre)
+Special::Special(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran): Menu(symbol, soft, bord, T_D)
 {
+    //cout<< "DMI" <<endl;
 	this->buttons = &buttons;
 	this->bord = &bord;
-	this->ecran = &ecran;
-	this->version = &version;
+    this->soft = &soft;
+    this->T_D = &T_D;
+    this->ecran = &ecran;
 }
 
 void Special::update()
@@ -14,24 +16,24 @@ void Special::update()
     vector <int> enable(3);
     for (int i = 0; i <= 2; i++)
         enable[i] = 1;
-    if ((bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SB" && data->getmodif_Adhesion() && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS())
-        || (data->getmodif_Adhesion() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
-        data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN")))
+    if ((T_D->getV_train() == 0 && bord->getGeneralMode() == "SB" && bord->getmodif_Adhesion() && bord->getDriverID() && bord->getTrainData() && bord->getETATLevelETCS())
+        || (bord->getmodif_Adhesion() && (bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS"||
+        bord->getGeneralMode() == "UN" || bord->getGeneralMode() == "SN")))
     {
         enable[0] = 0;
         (*buttons)[0].settype("up_type");
     }
     else
         (*buttons)[0].settype("disabled");
-    if(bord->TrainRI.T_data.getVtrain() == 0 && data->getGeneralMode() == "SR")
+    if(T_D->getV_train() == 0 && bord->getGeneralMode() == "SR")
     {
         enable[1] = 0;
         (*buttons)[1].settype("up_type");
     }
     else
         (*buttons)[1].settype("disabled");
-    if (bord->TrainRI.T_data.getVtrain() == 0 && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" ||
-		data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"|| data->getGeneralMode() == "PT" || data->getGeneralMode() == "SB"))
+    if (T_D->getV_train() == 0 && bord->getDriverID() && bord->getTrainData() && bord->getETATLevelETCS() && (bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" ||
+		bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS"|| bord->getGeneralMode() == "PT" || bord->getGeneralMode() == "SB"))
     {
         enable[2] = 0;
         (*buttons)[2].settype("up_type");

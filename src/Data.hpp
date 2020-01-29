@@ -6,65 +6,15 @@
 class Data
 {
 	private :
-		string generalMode = "FS";
-		string level = "Level 1";
-		double RE;
-		int ecartX = 0;
-		int ecartY = 0;
-		int son;
-		//Son :
-		//	Num�ro 1 : click
-		//	Num�ro 2 : S-info
-		//	Num�ro 3 : S1_toofast
-		//	Num�ro 4 : S2_warning
-		//	Mode 1 : Jouer UNE fois
-		//	Mode 2 : Jouer en boucle
-		//	Mode 3 : Stopper la boucle, le son s'arr�te
-		int Vligne = 0;
-		string version = "3.6.0";
-		int pointKilometrique = 0;
-		int remainingDistanceTunnel = 500;
-		string tunnelStoppingArea = "TunnelStoppingArea";
+
 		/*int sock = socket(AF_INET, SOCK_STREAM,0);
 		int socketValue = 0;*/
 		//void SocketSend(char buf[]);
-		int signalisation = 2;
-		bool eteindre = false;
-		bool allumage = true;
+
 
 	public :
 		Data();
 		void update();
-		string getGeneralMode();
-		string getLevel();
-		double getRE();
-		int getEcartX();
-		int getEcartY();
-		void setSon(int a);
-		int getVligne();
-		string getVersion();
-		int getPointKilometrique();
-		int getRemainingDistanceTunnel();
-		string getTunnelStoppingArea();
-		void setTunnelStoppingArea(string TSA);
-		int getSignalisation();
-		bool getEteindre();
-		void setEteindre(bool stop);
-		bool getAllumage();
-
-		bool getDriverID();
-		bool getTrainData();
-		bool getETATLevelETCS();
-		bool getTrainNumber();
-		string getConnection();
-		bool getPending_Emergency_Stop();
-		bool getModif_DriverID_NTC();
-		bool getNon_Leading();
-		bool getPassive_Shunting();
-		int getVrelease();
-		bool getEOA();
-		void setEOA(bool EOA);
-		bool getmodif_Adhesion();
 };
 
 #endif

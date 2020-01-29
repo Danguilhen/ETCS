@@ -1,9 +1,10 @@
 #include "Symbol.hpp"
 
-Symbol::Symbol(RenderWindow &fenetre, Data &data)
+
+Symbol::Symbol(Software &soft)
 {
-	this->fenetre = &fenetre;
-	this->data = &data;
+	//cout<< "SYMBOL" <<endl;
+	this->soft = &soft;
 }
 
 void Symbol::loadSymbol(string chemin_dacces)
@@ -24,14 +25,14 @@ void Symbol::afficher(V2f position)
 	sprite.push_back(spr);
 	int m = sprite.size() - 1;
 	sprite[m].setTexture(texture);
-	sprite[m].setScale(data->getRE(), data->getRE());
-	position.x = position.x * data->getRE() - sprite[m].getGlobalBounds().width / 2 + data->getEcartX() * data->getRE();
-	position.y = position.y * data->getRE() - sprite[m].getGlobalBounds().height / 2 + data->getEcartY() * data->getRE();
+	sprite[m].setScale(soft->getRE(), soft->getRE());
+	position.x = position.x * soft->getRE() - sprite[m].getGlobalBounds().width / 2 + soft->getEcartX() * soft->getRE();
+	position.y = position.y * soft->getRE() - sprite[m].getGlobalBounds().height / 2 + soft->getEcartY() * soft->getRE();
 	sprite[m].setPosition(position);
 	m_color = sprite[m].getColor();
 	m_color.a = 255;
 	sprite[m].setColor(m_color);
-	fenetre->draw(sprite[m]);
+	soft->getFenetre()->draw(sprite[m]);
 }
 
 void Symbol::effacer()

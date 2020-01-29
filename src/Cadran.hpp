@@ -49,7 +49,7 @@ class Cadran : public Tools
 		float VdarkGrey = 0;
 		Color aiguilleColor = GREY;
 		ETCS_Bord *bord;
-		int Vmax;
+		Train_dynamique *T_D;
 		ConvexShape aiguille;
 		vector<DonneesAfficheurVitesse> graduations;
 		V2f centre;
@@ -61,8 +61,8 @@ class Cadran : public Tools
 		VertexArray Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d);
 		V2f local2globalCoordonates(V2f CoordonneesPolaires);
 	public :
-		Cadran(int Vmax, Data &data, RenderWindow &fenetre, ETCS_Bord &bord);
-		Cadran(int Vmax, Data &data, RenderWindow &fenetre);
+		Cadran(Software &soft, Train_dynamique &T_D, ETCS_Bord &bord);
+		Cadran(Software &soft, Train_dynamique &T_D);
 		void creation();
 		void update();
 		void convertisseurVitesses();

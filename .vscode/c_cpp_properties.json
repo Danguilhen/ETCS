@@ -7,7 +7,7 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"~/SFML-2.5.1/include/**",
+				"${workspaceFolder}/SFML-2.5.1/include/**",
 				"/usr/local/include/**",
 				"/usr/include/**"
 			],
@@ -33,7 +33,7 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"/usr/local/include/**"
+				"/usr/local/include/**" 
 			],
 			"defines": [
 				"_DEBUG"
@@ -52,7 +52,8 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"C:/SFML-2.5.1/include"
+				"${workspaceFolder}/SFML-2.5.1/include/**",
+				"${workspaceFolder}/mingw32/bin/gcc.exe"
 			],
 			"defines": [
 				"_DEBUG",

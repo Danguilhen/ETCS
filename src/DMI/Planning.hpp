@@ -6,7 +6,7 @@
 #include "Tools.hpp"
 #include "Bord/ETCS_Bord.hpp"
 
-class Gradient
+class Gradient_DMI
 {
 	private :
 
@@ -16,7 +16,7 @@ class Gradient
 
 	public :
 
-	Gradient(float D_debut, float T, int V)
+	Gradient_DMI(float D_debut, float T, int V)
 	{
 		distance_debut = D_debut;
 		taille = T;
@@ -103,13 +103,13 @@ class Planning : public Tools
 
 		vector<PASP> tab_pasp;
 
-		Gradient gradient1;
-		Gradient gradient2;
-		Gradient gradient3;
-		Gradient gradient4;
-		Gradient gradient5;
+		Gradient_DMI gradient1;
+		Gradient_DMI gradient2;
+		Gradient_DMI gradient3;
+		Gradient_DMI gradient4;
+		Gradient_DMI gradient5;
 
-		vector<Gradient> tab_grad;
+		vector<Gradient_DMI> tab_grad;
 
 		Announcements PA1;
 		Announcements PA2;
@@ -128,14 +128,15 @@ class Planning : public Tools
 
 		vector <Symbol> *symbol;
 		ETCS_Bord *bord;
+		Train_dynamique *T_D;
 
 		void SpeedProfileDiscontinuityInformation(int scale, float delta_distance, vector<Announcements> &tab_paf);
 		void Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa);
-		void gradientProfile(int scale, float delta_distance, vector<Gradient> &tab_grad);
+		void gradientProfile(int scale, float delta_distance, vector<Gradient_DMI> &tab_grad);
 		void pasp(int scale, vector<PASP> &tab_pasp, float delta_distance);
 
 	public:
-		Planning(vector<Symbol> &symbol, Data &data, RenderWindow &fentre, ETCS_Bord &bord);
+		Planning(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);
 		void planningInformation(float temps_ecoule);
 		int getScale();
 		void setScale(int S);

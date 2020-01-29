@@ -1,11 +1,13 @@
 #include "Override.hpp"
 
-Override::Override(RenderWindow &fenetre, Data &data, ETCS_Bord &bord, vector<Symbol> & symbol, vector<Button> & buttons, string & ecran, string & version): Menu(data, symbol, bord, fenetre)
+Override::Override(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran): Menu(symbol, soft, bord, T_D)
 {
+    //cout<< "OVER" <<endl;
 	this->buttons = &buttons;
 	this->bord = &bord;
-	this->ecran = &ecran;
-	this->version = &version;
+    this->soft = &soft;
+    this->T_D = &T_D;
+    this->ecran = &ecran;
 }
 
 void Override::update()
@@ -13,14 +15,14 @@ void Override::update()
     vector <string> selection(1);
     vector <int> enable(1);
     enable[0] = 1;
-    if ((bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && (data->getGeneralMode() == "FS" || data->getGeneralMode() == "LS" || data->getGeneralMode() == "SR" || data->getGeneralMode() == "OS"||
-        data->getGeneralMode() == "UN" || data->getGeneralMode() == "SN" || data->getGeneralMode() == "SH"))
-        || (bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "SB" && data->getDriverID() && data->getTrainData() && data->getETATLevelETCS() &&
-		(data->getLevel() == "Level 2" || data->getLevel() == "Level 3")) || (*version =="3.6.0" && (bord->TrainRI.T_data.getVtrain() <=  data->getVrelease() && data->getGeneralMode() == "PT" &&
-		data->getTrainData() && data->getTrainNumber())))
+    if ((T_D->getV_train() <=  bord->getVrelease() && (bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS"||
+        bord->getGeneralMode() == "UN" || bord->getGeneralMode() == "SN" || bord->getGeneralMode() == "SH"))
+        || (T_D->getV_train() <=  bord->getVrelease() && bord->getGeneralMode() == "SB" && bord->getDriverID() && bord->getTrainData() && bord->getETATLevelETCS() &&
+		(bord->getLevel() == "Level 2" || bord->getLevel() == "Level 3")) || (bord->getVersion() =="3.6.0" && (T_D->getV_train() <=  bord->getVrelease() && bord->getGeneralMode() == "PT" &&
+		bord->getTrainData() && bord->getTrainNumber())))
     {
         (*buttons)[0].settype("up_type");
-        if(*version == "3.4.0" || (*version == "3.6.0" && data->getTrainNumber()))
+        if( bord->getVersion() == "3.4.0" || (bord->getVersion() == "3.6.0" && bord->getTrainNumber()))
             enable[0] = 0;
     }
     else
@@ -28,10 +30,10 @@ void Override::update()
     if ((*buttons)[0].getactivation())
     {
         *ecran = "Default";
-        if(data->getEOA())
-            data->setEOA(false);
+        if(bord->getEOA())
+            bord->setEOA(false);
         else
-            data->setEOA(true);
+            bord->setEOA(true);
     }
     selection = {"EOA"};
     menu(selection, enable, "Override");

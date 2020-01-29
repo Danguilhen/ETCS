@@ -9,9 +9,10 @@ class LeftSide : public virtual Tools
 	private :
 		Cadran cadran;
 		vector <Symbol> *symbol;
+		ETCS_Bord *bord;
 		void targetDistance(int distance);
 	public :
-		LeftSide(Data &data, RenderWindow &fenetre, ETCS_Bord &bord, vector<Symbol> &symbol);
+		LeftSide(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);
 		void update();
 };
 

@@ -1,5 +1,5 @@
-#ifndef DEFAULT
-#define DEFAULT
+#ifndef DEF
+#define DEF
 
 #include "Fenetre.hpp"
 #include "LeftSide.hpp"
@@ -18,7 +18,7 @@ class Default : public Fenetre
 		string S_D_monitoring = "Off";
 		string planningAffichage = "show planning information";
 	public :
-		Default(RenderWindow &fenetre, Data &data, vector<Symbol> &symbol, vector<Button> &buttons, ETCS_Bord &bord, string & ecran);
+		Default(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran);
 		void update();
 };
 

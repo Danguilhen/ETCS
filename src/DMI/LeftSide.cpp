@@ -1,9 +1,10 @@
 #include "LeftSide.hpp"
 
-LeftSide::LeftSide(Data &data, RenderWindow &fenetre, ETCS_Bord &bord, vector<Symbol> &symbol) : cadran(400, data, fenetre, bord), symbol(&symbol)
+LeftSide::LeftSide(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D) : cadran(soft, T_D, bord), symbol(&symbol)
 {
-	this->fenetre = &fenetre;
-	this->data = &data;
+	//cout<< "LEFT" <<endl;
+	this->soft = &soft;
+	this->bord = &bord;
 }
 
 void LeftSide::targetDistance(int distance)
@@ -98,13 +99,13 @@ void LeftSide::update()
 		creation_texte(to_string(LSSMA), GREY, 16, 0, V2f(54 / 2.0, 54 / 2.0), 1); //400km/h
 	}*/
 
-	if(data->getLevel() == "Level 0")
+	if(bord->getLevel() == "Level 0")
         LE_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
-    else if(data->getLevel()  == "Level 1")
+    else if(bord->getLevel()  == "Level 1")
         LE_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
-    else if(data->getLevel()  == "Level 2")
+    else if(bord->getLevel()  == "Level 2")
         LE_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
-    else if(data->getLevel()  == "Level 3")
+    else if(bord->getLevel()  == "Level 3")
         LE_05.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
 
 	//if((data->getGeneralMode() == "FS" && (data->getMode() == "PIM" || data->getMode() == "TSM" || data->getMode() == "RSM")) || data->getGeneralMode() == "RV")
