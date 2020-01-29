@@ -2,7 +2,7 @@
 
 Default::Default(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string & ecran): left(symbol, soft, bord, T_D), planning(symbol, soft, bord, T_D)
 {
-	cout<< "DEF" <<endl;
+	//cout<< "DEF" <<endl;
 	this->soft = &soft;
 	this->symbol = &symbol;
 	this->buttons = &buttons;
@@ -71,10 +71,10 @@ void Default::update()
 		*ecran = "settings";
 	else if ((*buttons)[5].getactivation() == 1)
     {
-        if(bord->getTunnelStoppingArea() == "TunnelStoppingArea" || bord->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
-            bord->setTunnelStoppingArea(bord->getTunnelStoppingArea() + "-");
-        else if (bord->getTunnelStoppingArea() == "TunnelStoppingArea-" || bord->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
-            bord->setTunnelStoppingArea(bord->getTunnelStoppingArea().substr(0, bord->getTunnelStoppingArea().size() - 1));
+        if(bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingArea" || bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
+            bord->TrackRI.setTunnelStoppingArea(bord->TrackRI.getTunnelStoppingArea() + "-");
+        else if (bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingArea-" || bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
+            bord->TrackRI.setTunnelStoppingArea(bord->TrackRI.getTunnelStoppingArea().substr(0, bord->TrackRI.getTunnelStoppingArea().size() - 1));
     }
 	else if ((*buttons)[6].getactivation() == 1)
 	{
@@ -107,17 +107,17 @@ void Default::update()
 		else if(planningAffichage == "Off")
 			planningAffichage = "show planning information";
 	}
-	if(bord->getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
+	if(bord->TrackRI.getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
     {
-        if(bord->getTunnelStoppingArea() == "TunnelStoppingArea")
+        if(bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingArea")
         {
             (*symbol)[152].afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2 - TC36
-            creation_texte(to_string(bord->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
+            creation_texte(to_string(bord->TrackRI.getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
         }
-        else if(bord->getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
+        else if(bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
         {
             (*symbol)[153].afficher(V2f(54 + 37 / 2.0, 54 + 30 + 191 + 25 + 50 / 2.0));  //C2 - TC37
-            creation_texte(to_string(bord->getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
+            creation_texte(to_string(bord->TrackRI.getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
         }
         (*symbol)[4].afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6 - DR05
     }
@@ -126,7 +126,7 @@ void Default::update()
 		if(geographicalPosition == "On") //toggled on
 		{
 			rectangle(V2f(54 + 234 + 46 + 63, 54 + 30 + 191 + 25 + 50 + 50), V2f(120, 30), GREY);//G12
-			creation_texte(to_string(bord->getPointKilometrique()), BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), 3);
+			creation_texte(to_string(bord->TrackRI.getPointKilometrique()), BLACK, 12, 0, V2f(54 + 234 + 46 + 63 + 120 / 2.0, 54 + 30 + 191 + 25 + 50 + 50 + 30 / 2.0), 3);
 		}
 		(*symbol)[2].afficher(V2f(64 * 7 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0));	//F8 - DR03
 	}

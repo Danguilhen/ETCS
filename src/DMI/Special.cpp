@@ -2,7 +2,7 @@
 
 Special::Special(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran): Menu(symbol, soft, bord, T_D)
 {
-    cout<< "DMI" <<endl;
+    //cout<< "DMI" <<endl;
 	this->buttons = &buttons;
 	this->bord = &bord;
     this->soft = &soft;

@@ -183,12 +183,12 @@ void Tools::creation_rectangle(V2f pos, V2f dim, int mode)
 	*/
 }
 
-void Tools::step(vector<vector<int>> tab, int valeur_debut, int valeur_fin, int valeur)
+void Tools::step(vector<vector<float>> &tab, float valeur_debut, float valeur_fin, float valeur)
 //1 renseigner le vector à 2 dimensions
 //2 renseigner la valeur du début (plus petit)
 //3 renseigner la valeur de la fin (plus grand)
 //4 renseigner la valeur (acceleration, vitesse, ...)
 {
-	vector<int> ligne {valeur_debut, valeur_fin, valeur};
+	vector<float> ligne {valeur_debut, valeur_fin, valeur};
 	tab.push_back(ligne);
 }

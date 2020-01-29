@@ -18,6 +18,7 @@ using namespace std;
 #define V2f Vector2f
 #define V2i Vector2i
 #define PI 3.14159265
+#define Constant_G 9.81
 
 #define DARK_BLUE Color(3,17,34)
 #define SHADOW Color(8,24,57)

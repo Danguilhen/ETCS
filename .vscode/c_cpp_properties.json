@@ -52,7 +52,8 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"C:/SFML-2.5.1/include"
+				"${workspaceFolder}/SFML-2.5.1/include/**",
+				"${workspaceFolder}/mingw32/bin/gcc.exe"
 			],
 			"defines": [
 				"_DEBUG",

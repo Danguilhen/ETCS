@@ -152,11 +152,7 @@ float National_Value_Data::getA_NVP12()
 float National_Value_Data::getA_NVP23()
 {return A_NVP23;}
 
-TracksideSpeedRestriction::TracksideSpeedRestriction()
-{
-	step(tableau_vitesse_ligne, 0, 1000, 200);
-	step(tableau_vitesse_ligne, 1000, 10000, 130);
-}
+TracksideSpeedRestriction::TracksideSpeedRestriction(){}
 
 vector<vector<int>> TracksideSpeedRestriction::getVitesseTableau()
 {
@@ -176,8 +172,50 @@ void TracksideSpeedRestriction::TSR_Update()
 			tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
 	}*/
 
-	if(tableau_vitesse_ligne[0][2] < 0)
-		tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
+	/*if(tableau_vitesse_ligne[0][2] < 0)
+		tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());*/
 
 }
 
+Gradient::Gradient(TrainRelatedInputs &TrainRI)
+{
+	this->TrainRI = &TrainRI;
+}
+
+vector<vector<int>> Gradient::getTab_Gradient(){return tableau_gradient;}
+
+void Gradient::Gradient_Update()
+{
+	////RECEPTION DES NOUVEAUX GRADIENTS
+	/////
+	////DETERMINATION DU GRADIENT LE PLUS CRITIQUE
+	//for(size_t i = 0; i< tableau_gradient.size() - 1; i++)//pour éviter de comparer avec une case non existante
+	//{
+	//	if(tableau_gradient[i][2] < tableau_gradient[i+1][2])
+	//	{
+	//		tableau_gradient[i][1] = tableau_gradient[i][1] + TrainRI->T_data.getTrain_length(); // Le gradient le plus critique sera allongé jusqu'au moment où le train dégagera la zone avec se gradient
+	//		if(tableau_gradient[i+1][0] + TrainRI->T_data.getTrain_length() > tableau_gradient[i+1][1] + TrainRI->T_data.getTrain_length())
+	//			tableau_gradient.erase(tableau_gradient.begin() + i + 1 ) //on supprime ce gradient si le décalage est plus grand que la logueur de la zone du gradient lui-même
+	//		else
+	//			tableau_gradient[i+1][0] = tableau_gradient[i+1][0] + TrainRI->T_data.getTrain_length();//SI le cas précédent n"est pas rencontré, on réduit la zone de ce gradient de la taille du train en décallant son début.
+	//	}
+	//}
+}
+
+TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI) : gradient_ligne(TrainRI)
+{
+	//
+}
+
+void TrackRelatedInputs::TrackRI_Update()
+{
+	TSR.TSR_Update();
+	gradient_ligne.Gradient_Update();
+}
+
+int TrackRelatedInputs::getPointKilometrique(){return pointKilometrique;}
+int TrackRelatedInputs::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
+string TrackRelatedInputs::getTunnelStoppingArea(){return tunnelStoppingArea;}
+void TrackRelatedInputs::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
+int TrackRelatedInputs::getTargetDistance(){return target_distance;}
+void TrackRelatedInputs::SetTargetDistance(int D){target_distance = D;}

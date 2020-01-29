@@ -16,7 +16,7 @@ class Tools
 		virtual void rectangle(V2f pos, V2f taille, Color col);
 		virtual void couleurForme(VertexArray & bande,Color col, int n);
 		virtual void creation_rectangle(V2f pos, V2f dim, int mode);
-		virtual void step(vector<vector<int>> tab, int distance_debut, int distance_fin, int valeur);
+		virtual void step(vector<vector<float>> &tab, float valeur_debut, float valeur_fin, float valeur);
 };
 
 #endif

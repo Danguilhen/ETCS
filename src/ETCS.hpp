@@ -8,7 +8,7 @@
 class ETCS
 {
 	private :
-		ETCS_Bord bord;
+		ETCS_Bord Bord;
 		ETCS_DMI EDMI;
 
 	public :

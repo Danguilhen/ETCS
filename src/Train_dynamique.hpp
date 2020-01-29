@@ -3,13 +3,19 @@
 
 #include "define.hpp"
 
-//class Train_dynamique
-//{
-//	private :
-//	int V_train = 135;
-//
-//	public :
+class Train_dynamique
+{
+	private :
+	int V_train = 135;
 
+	public :
+
+	int getV_train();
+	void setV_train(int V);
+
+};
+
+/*
 class Train_dynamique {
 
 	private :
@@ -375,14 +381,8 @@ class Train_dynamique {
 			timerCF = timer2CF;
 		} // Fin While
 	} // Fin calculCylindre
+};
 
-
-} // Fin class Train_dynamique
-
-
-//	int getV_train();
-//	void setV_train(int V);
-
-//};
+*/
 
 #endif

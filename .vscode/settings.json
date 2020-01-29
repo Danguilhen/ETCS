@@ -114,5 +114,6 @@
 		"files.encoding": "utf8"
 	},
 	"peacock.color": "#8ac242",
-	"C_Cpp.errorSquiggles": "Disabled"
+	"C_Cpp.errorSquiggles": "Disabled",
+	"git.ignoreLimitWarning": true
 }

@@ -2,7 +2,7 @@
 
 Override::Override(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran): Menu(symbol, soft, bord, T_D)
 {
-    cout<< "OVER" <<endl;
+    //cout<< "OVER" <<endl;
 	this->buttons = &buttons;
 	this->bord = &bord;
     this->soft = &soft;

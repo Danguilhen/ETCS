@@ -2,7 +2,7 @@
 
 ETCS_DMI::ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): def(symbol, button, soft, bord, T_D, etat_ecran), main(symbol, button, soft, bord, T_D, etat_ecran), overide(symbol, button, soft, bord, T_D, etat_ecran), special(symbol, button, soft, bord, T_D, etat_ecran)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
 {
-	cout<< "DMI" <<endl;
+	//cout<< "DMI" <<endl;
 	this->soft = &soft;
 	this->bord = &bord;
 	this->T_D = &T_D;

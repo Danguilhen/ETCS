@@ -2,7 +2,7 @@
 
 LeftSide::LeftSide(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D) : cadran(soft, T_D, bord), symbol(&symbol)
 {
-	cout<< "LEFT" <<endl;
+	//cout<< "LEFT" <<endl;
 	this->soft = &soft;
 	this->bord = &bord;
 }

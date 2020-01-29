@@ -15,26 +15,18 @@ class ETCS_Bord
 		string generalMode = "FS";
 		string level = "Level 1";
 		string version = "3.6.0";
-		int pointKilometrique = 0;
-		int remainingDistanceTunnel = 500;
-		string tunnelStoppingArea = "TunnelStoppingArea";
 		Train_dynamique *T_D;
 
 	public :
+		SpeedAndDistanceMonitoring SDM;
 		TrackRelatedInputs TrackRI;
 		TrainRelatedInputs TrainRI;
-		SpeedAndDistanceMonitoring SDM;
-
 		ETCS_Bord(Train_dynamique &T_D);
 		void bord_update();
 		string getGeneralMode();
 		string getLevel();
 		string getVersion();
 		void setVersion(string V);
-		int getPointKilometrique();
-		int getRemainingDistanceTunnel();
-		string getTunnelStoppingArea();
-		void setTunnelStoppingArea(string TSA);
 		bool getDriverID();
 		bool getTrainData();
 		bool getETATLevelETCS();

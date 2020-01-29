@@ -3,7 +3,7 @@
 
 Symbol::Symbol(Software &soft)
 {
-	cout<< "SYMBOL" <<endl;
+	//cout<< "SYMBOL" <<endl;
 	this->soft = &soft;
 }
 

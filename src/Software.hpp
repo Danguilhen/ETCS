@@ -6,7 +6,7 @@
 class Software
 {
 	private :
-		string type_signalisation = "ETCS"; //ETCS OU A VIDE
+		string type_signalisation = "ETCS"; //ETCS OU A_VIDE
 		RenderWindow fenetre;
 		ContextSettings settings;
 		Event event;

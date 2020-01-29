@@ -1,11 +1,11 @@
 #include "Planning.hpp"
 
-float Gradient::getDistance_debut(){return distance_debut;}
-void Gradient::setDistance_debut(float D){distance_debut = D;}
-float Gradient::getTaille(){return taille;}
-void Gradient::setTaille(float T){taille = T;}
-int Gradient::getValeur(){return valeur;}
-void Gradient::setValeur(int V){valeur = V;}
+float Gradient_DMI::getDistance_debut(){return distance_debut;}
+void Gradient_DMI::setDistance_debut(float D){distance_debut = D;}
+float Gradient_DMI::getTaille(){return taille;}
+void Gradient_DMI::setTaille(float T){taille = T;}
+int Gradient_DMI::getValeur(){return valeur;}
+void Gradient_DMI::setValeur(int V){valeur = V;}
 
 int PASP::getVitesse_but(){return vitesse_but;}
 void PASP::setVitesse_but(int V){vitesse_but = V;}
@@ -230,7 +230,7 @@ void Planning::Orders_and_announcements(int scale, float delta_distance, vector<
 	}
 }
 
-void Planning::gradientProfile(int scale, float delta_distance, vector<Gradient> &tab_grad)
+void Planning::gradientProfile(int scale, float delta_distance, vector<Gradient_DMI> &tab_grad)
 {
 	Color couleur;
 	string sens;
@@ -344,7 +344,7 @@ void Planning::SpeedProfileDiscontinuityInformation(int scale, float delta_dista
 Planning::Planning(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D) : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
 	gradient4(4001, 6000, 0), gradient5(15001, 7000, 35), PA1(1500, 98), PA2(1000, 72), PA3(3000, 97), PA6(4000, 75)
 {
-	cout<<"Pla"<<endl;
+	//cout<<"Pla"<<endl;
 	this->bord = &bord;
 	this->symbol = &symbol;
 	this->soft = &soft;

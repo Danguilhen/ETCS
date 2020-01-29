@@ -2,7 +2,7 @@
 
 Menu::Menu(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): left(symbol, soft, bord, T_D)
 {
-	cout<< "MENU" <<endl;
+	//cout<< "MENU" <<endl;
 	this->soft = &soft;
 	this->bord = &bord;
 	this->symbol = &symbol;

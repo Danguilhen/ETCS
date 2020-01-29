@@ -1,31 +1,23 @@
 #include "ETCS_Bord.hpp"
 
 
-ETCS_Bord::ETCS_Bord(Train_dynamique &T_D) : SDM(T_D)
+ETCS_Bord::ETCS_Bord(Train_dynamique &T_D) : SDM(T_D, TrainRI, TrackRI), TrackRI(TrainRI)
 {
-	cout<< "BORD" <<endl;
+	//cout<< "BORD" <<endl;
 	this->T_D = &T_D;
 }
 
 
 void ETCS_Bord::bord_update()
 {
-	//ATTENTION A L ORDRE LES RELATED INPUTS AVANT LE SDM
-
-	TrackRI.TSR.TSR_Update();//trackspeedrestriction
-	SDM.MSRP(TrackRI);
-	SDM.Supervision_limits(TrainRI);
-	SDM.SpeedAndDistanceMonitoringCommands();
+	SDM.SDM_Update();
+	TrackRI.TrackRI_Update();
 }
 
 string ETCS_Bord::getGeneralMode(){return generalMode;}
 string ETCS_Bord::getLevel(){return level;}
 string ETCS_Bord::getVersion(){return version;}
 void ETCS_Bord::setVersion(string V){version = V;}
-int ETCS_Bord::getPointKilometrique(){return pointKilometrique;}
-int ETCS_Bord::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
-string ETCS_Bord::getTunnelStoppingArea(){return tunnelStoppingArea;}
-void ETCS_Bord::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
 bool ETCS_Bord::getDriverID(){return 1;}
 bool ETCS_Bord::getTrainData(){return 1;}
 bool ETCS_Bord::getETATLevelETCS(){return 1;}

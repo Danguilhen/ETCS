@@ -3,7 +3,7 @@
 
 Virtual_train::Virtual_train() : etcs(soft, train_dynamique), basic(train_dynamique, soft)
 {
-	cout<< "VT" <<endl;
+	//cout<< "VT" <<endl;
 	//constructeur
 }
 
