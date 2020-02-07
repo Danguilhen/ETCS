@@ -52,7 +52,7 @@ void ETCS_DMI::action()
 	}
     while(soft->getFenetre()->pollEvent(event))
     {
-		if(event.type==sf::Event::MouseButtonPressed)
+		if(event.type == sf::Event::MouseButtonPressed)
 		{
             int x = event.mouseButton.x;
             int y = event.mouseButton.y;
