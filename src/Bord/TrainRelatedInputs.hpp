@@ -1,7 +1,7 @@
 #ifndef AA
 #define AA
 
-#include "define.hpp"
+#include "../define.hpp"
 #include "../Tools.hpp"
 
 class Train_Categories
@@ -112,12 +112,32 @@ class Train_Data : public Tools
 	    //GET ET SET A FAIRE SI NECESSAIRE
 };
 
+
+class OnBoardCorrectionFactors
+{
+    private :
+    	float K_dry = 0.75; //valeur provenant de la doc ERA COURBES
+		float K_wet = 0.95;
+        bool dry = 1; // le rail est sec -> 1 sinon -> 0
+    public:
+        OnBoardCorrectionFactors();
+        float getK_dry();
+        void setK_dry(float K);
+        float getK_wet();
+        void setK_wet(float K);
+        bool getDry();
+        void setDry(bool D);
+
+};
+
+
 class TrainRelatedInputs
 {
     public :
 
     Train_Data T_data;
     Fixed_Value_Data FVD;
+    OnBoardCorrectionFactors OBCF;
 
 };
 

@@ -3,6 +3,7 @@
 
 using namespace sf;
 using namespace std;
+using namespace std::literals::chrono_literals;
 
 #include <iostream>
 #include <cstdlib>
@@ -14,11 +15,13 @@ using namespace std;
 #include <unistd.h>
 #include <algorithm>
 #include <chrono>
+#include <thread>
 
 #define V2f Vector2f
 #define V2i Vector2i
 #define PI 3.14159265
 #define Constant_G 9.81
+#define TMAJ 15
 
 #define DARK_BLUE Color(3,17,34)
 #define SHADOW Color(8,24,57)

@@ -26,7 +26,7 @@ T_NVCONTAC = INFINITY;
 D_NVPOTRP = 200;
 D_NVSTFF = INFINITY;
 Q_NVLOCACC = 12;
-M_NVAVADH = 0;
+M_NVAVADH = 1;
 M_NVEBCL = 0.999999999;
 L_NVKRINT = 0;
 M_NVKRINT = 0.9;
@@ -152,9 +152,9 @@ float National_Value_Data::getA_NVP12()
 float National_Value_Data::getA_NVP23()
 {return A_NVP23;}
 
-TracksideSpeedRestriction::TracksideSpeedRestriction(){}
+TracksideSpeedRestriction::TracksideSpeedRestriction(){/*cout << "TBS" << endl;*/}
 
-vector<vector<int>> TracksideSpeedRestriction::getVitesseTableau()
+vector<vector<float>> TracksideSpeedRestriction::getVitesseTableau()
 {
 	return tableau_vitesse_ligne;
 }
@@ -180,9 +180,13 @@ void TracksideSpeedRestriction::TSR_Update()
 Gradient::Gradient(TrainRelatedInputs &TrainRI)
 {
 	this->TrainRI = &TrainRI;
+	//cout << "gradient" << endl;
 }
 
-vector<vector<int>> Gradient::getTab_Gradient(){return tableau_gradient;}
+vector<vector<float>> Gradient::getTab_Gradient()
+{
+	return tableau_gradient;
+}
 
 void Gradient::Gradient_Update()
 {
@@ -201,21 +205,40 @@ void Gradient::Gradient_Update()
 	//	}
 	//}
 }
-
-TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI) : gradient_ligne(TrainRI)
+SpeedAndDistanceLimits::SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR)
 {
-	//
+	this->TSR = &TSR;
+	target();
+	//cout << "SADL" << endl;
+}
+
+void SpeedAndDistanceLimits::target()
+{
+	target_distance = TSR->getVitesseTableau()[1][0]; // on obtient la prochaine target distance
+	speed_target = TSR->getVitesseTableau()[1][2]; // on obtient la prochaine vitesse à respecter
+}
+void SpeedAndDistanceLimits::SADL_update()
+{
+	target();
+}
+float SpeedAndDistanceLimits::getTargetDistance(){return target_distance;}
+void SpeedAndDistanceLimits::SetTargetDistance(float D){target_distance = D;}
+float SpeedAndDistanceLimits::getSpeedTarget(){return speed_target;}
+void SpeedAndDistanceLimits::setSpeedTarget(float S){speed_target = S;}
+
+TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI) : gradient_ligne(TrainRI), SADL(TSR)
+{
+	//cout << "TrackRI" << endl;
 }
 
 void TrackRelatedInputs::TrackRI_Update()
 {
 	TSR.TSR_Update();
 	gradient_ligne.Gradient_Update();
+	SADL.SADL_update();
 }
 
 int TrackRelatedInputs::getPointKilometrique(){return pointKilometrique;}
 int TrackRelatedInputs::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
 string TrackRelatedInputs::getTunnelStoppingArea(){return tunnelStoppingArea;}
 void TrackRelatedInputs::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}
-int TrackRelatedInputs::getTargetDistance(){return target_distance;}
-void TrackRelatedInputs::SetTargetDistance(int D){target_distance = D;}

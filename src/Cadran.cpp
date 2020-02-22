@@ -275,182 +275,177 @@ void Cadran::convertisseurVitesses()
 {
 	if(bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "OS")
 	{
-		if(bord->SDM.getStatus() == "CSM")
+		if(bord->SDM.SL.getStatus() == "CSM")
 		{
-			if(bord->SDM.getSupervision_status() == "Intervention")
+			if(bord->SDM.SADMC.getSupervision_status() == "Intervention")
 			{
-				if(T_D->getV_train() <= bord->SDM.getV_MRSP())
+				if(T_D->getV_train() <= bord->SDM.MRSP.getV_MRSP())
 				{
 					aiguilleColor = GREY;
-					actualisationVitesse(0, 0, bord->SDM.getV_MRSP(), 0, 0, 0);
+					actualisationVitesse(0, 0, bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
 				}
 				else
 				{
 					aiguilleColor = RED;
-					actualisationVitesse(bord->SDM.getV_ebi(), 0, bord->SDM.getV_MRSP(), 0, 0, 0);
+					//actualisationVitesse(bord->SDM.SL.getV_ebi(), 0, bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
+					actualisationVitesse(T_D->getV_train(), 0, bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
 				}
 
 			}
-			else if(bord->SDM.getSupervision_status() == "Warning")
+			else if(bord->SDM.SADMC.getSupervision_status() == "Warning")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.getV_ebi(), bord->SDM.getV_MRSP(), 0, 0, 0);
+				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
 
 			}
-			else if(bord->SDM.getSupervision_status() == "Overspeed")
+			else if(bord->SDM.SADMC.getSupervision_status() == "Overspeed")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.getV_ebi(), bord->SDM.getV_MRSP(), 0, 0, 0);
+				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
 			}
-			else if(bord->SDM.getSupervision_status() == "Normal")
+			else if(bord->SDM.SADMC.getSupervision_status() == "Normal")
 			{
 				aiguilleColor = GREY;
-				actualisationVitesse(0, 0, 0, 0, 0, bord->SDM.getV_MRSP());
+				actualisationVitesse(0, 0, 0, 0, 0, bord->SDM.MRSP.getV_MRSP());
 			}
 		}
-	}
-		/* REFLECHIR A L AVENIR DE PIM ET LA COULEUR JAUNE DANS TSM
-        else if(bord->SDM.getStatus() == "PIM")
-        {
-            if(bord->SDM.getSupervision_status() == "IntS" || bord->TrainRI.T_data.getVtrain() >= bord->SDM.getV_ebi())
-            {
-            	if(bord->TrainRI.T_data.getVtrain()<= train.getVbut())
-            		aiguilleColor = GREY;
-            	else if(bord->TrainRI.T_data.getVtrain()<= bord->SDM.getV_MRSP())
-            		aiguilleColor = WHITE;
-            	else
-            		aiguilleColor = RED;
-            	actualisationVitesse(bord->SDM.getV_ebi(), 0,0, bord->SDM.getV_MRSP(), train.getVrelease(), train.getVbut());
 
-                if(bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_MRSP())
-                    train.setStatus("NoS");
-            }
-            else if(bord->SDM.getSupervision_status() == "WaS" || (bord->TrainRI.T_data.getVtrain() >= train.getVWaS() && bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_ebi()))
-            {
-            	aiguilleColor = ORANGE;
-                actualisationVitesse(0, bord->SDM.getV_ebi(), 0, bord->SDM.getV_MRSP(), train.getVrelease(),train.getVbut());
-                if(bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_MRSP())
-                    train.setStatus("NoS");
-            }
-            else if(bord->SDM.getSupervision_status() == "OvS" || (bord->TrainRI.T_data.getVtrain() >= bord->SDM.getV_MRSP() && bord->TrainRI.T_data.getVtrain() < train.getVWaS()))
-            {
-            	aiguilleColor = ORANGE;
-                actualisationVitesse(0, bord->SDM.getV_ebi(), 0,bord->SDM.getV_MRSP(), train.getVrelease(), train.getVbut());
-                if(bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_MRSP())
-                    train.setStatus("NoS");
-            }
-            else if(bord->SDM.getSupervision_status() == "NoS")
-            {
-				if(bord->TrainRI.T_data.getVtrain()<= train.getVbut())
-					aiguilleColor = GREY;
-				else
-					aiguilleColor = WHITE;
-                actualisationVitesse(0, 0, 0, bord->SDM.getV_MRSP(), train.getVrelease(), train.getVbut());
-                if(bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_MRSP())
-                    train.setStatus("NoS");
-            }
-        }
+		//REFLECHIR A L AVENIR DE PIM ET LA COULEUR JAUNE DANS TSM
+        //else if(bord->SDM.getStatus() == "PIM")
+        //{
+        //    if(bord->SDM.SADMC.getSupervision_status() == "IntS" || bord->TrainRI.T_data.getVtrain() >= bord->SDM.getV_ebi())
+        //    {
+        //    	if(bord->TrainRI.T_data.getVtrain()<= train.getVbut())
+        //    		aiguilleColor = GREY;
+        //    	else if(bord->TrainRI.T_data.getVtrain()<= bord->SDM.MRSP.getV_MRSP())
+        //    		aiguilleColor = WHITE;
+        //    	else
+        //    		aiguilleColor = RED;
+        //    	actualisationVitesse(bord->SDM.getV_ebi(), 0,0, bord->SDM.MRSP.getV_MRSP(), train.getVrelease(), train.getVbut());
+//
+        //        if(bord->TrainRI.T_data.getVtrain() < bord->SDM.MRSP.getV_MRSP())
+        //            train.setStatus("NoS");
+        //    }
+        //    else if(bord->SDM.SADMC.getSupervision_status() == "WaS" || (bord->TrainRI.T_data.getVtrain() >= train.getVWaS() && bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_ebi()))
+        //    {
+        //    	aiguilleColor = ORANGE;
+        //        actualisationVitesse(0, bord->SDM.getV_ebi(), 0, bord->SDM.MRSP.getV_MRSP(), train.getVrelease(),train.getVbut());
+        //        if(bord->TrainRI.T_data.getVtrain() < bord->SDM.MRSP.getV_MRSP())
+        //            train.setStatus("NoS");
+        //    }
+        //    else if(bord->SDM.SADMC.getSupervision_status() == "OvS" || (bord->TrainRI.T_data.getVtrain() >= bord->SDM.MRSP.getV_MRSP() && bord->TrainRI.T_data.getVtrain() < train.getVWaS()))
+        //    {
+        //    	aiguilleColor = ORANGE;
+        //        actualisationVitesse(0, bord->SDM.getV_ebi(), 0,bord->SDM.MRSP.getV_MRSP(), train.getVrelease(), train.getVbut());
+        //        if(bord->TrainRI.T_data.getVtrain() < bord->SDM.MRSP.getV_MRSP())
+        //            train.setStatus("NoS");
+        //    }
+        //    else if(bord->SDM.SADMC.getSupervision_status() == "NoS")
+        //    {
+		//		if(bord->TrainRI.T_data.getVtrain()<= train.getVbut())
+		//			aiguilleColor = GREY;
+		//		else
+		//			aiguilleColor = WHITE;
+        //        actualisationVitesse(0, 0, 0, bord->SDM.MRSP.getV_MRSP(), train.getVrelease(), train.getVbut());
+        //        if(bord->TrainRI.T_data.getVtrain() < bord->SDM.MRSP.getV_MRSP())
+        //            train.setStatus("NoS");
+        //    }
+        //}
 
-		else if(bord->SDM.getStatus() == "TSM")
+		else if(bord->SDM.SL.getStatus() == "TSM")
 		{
-			if(bord->SDM.getSupervision_status() == "IntS" || bord->TrainRI.T_data.getVtrain() >= bord->SDM.getV_ebi())
+			if(bord->SDM.SADMC.getSupervision_status() == "Intervention")
 			{
-				if(bord->TrainRI.T_data.getVtrain()<= train.getVbut())
-					aiguilleColor = GREY;
-				else if(bord->TrainRI.T_data.getVtrain()<= bord->SDM.getV_MRSP())
-					aiguilleColor = YELLOW;
-				else
+				//if(T_D->getV_train() <= bord->SDM.MRSP.getV_MRSP())
+				//{
+				//	aiguilleColor = GREY;
+				//	actualisationVitesse(0, 0, bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
+				//}
+				//else
+				//{
 					aiguilleColor = RED;
-				actualisationVitesse(bord->SDM.getV_ebi(), 0,bord->SDM.getV_MRSP(), 0 , train.getVrelease(), train.getVbut());
-				if(bord->TrainRI.T_data.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
+					//actualisationVitesse(bord->SDM.SL.getV_ebi(), 0, bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
+					actualisationVitesse(T_D->getV_train(), 0, bord->SDM.SL.getV_permitted(), 0, 0, 0);
+				//}
+
 			}
-			else if(bord->SDM.getSupervision_status() == "WaS" || (bord->TrainRI.T_data.getVtrain() >= train.getVWaS() && bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_ebi()))
+			else if(bord->SDM.SADMC.getSupervision_status() == "Warning")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.getV_ebi(), bord->SDM.getV_MRSP(), 0, train.getVrelease(), train.getVbut());
-				if(bord->TrainRI.T_data.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
+				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.SL.getV_permitted(), 0, 0, 0);
+
 			}
-			else if(bord->SDM.getSupervision_status() == "OvS" || (bord->TrainRI.T_data.getVtrain() >= bord->SDM.getV_MRSP() && bord->TrainRI.T_data.getVtrain() < train.getVWaS()))
+			else if(bord->SDM.SADMC.getSupervision_status() == "Overspeed")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.getV_ebi(), bord->SDM.getV_MRSP(), 0 , train.getVrelease(), train.getVbut());
-				if(bord->TrainRI.T_data.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
+				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.SL.getV_permitted(), 0, 0, 0);
 			}
-			else if (bord->SDM.getSupervision_status() == "IndS"||(bord->TrainRI.T_data.getVtrain() < bord->SDM.getV_MRSP() && bord->TrainRI.T_data.getVtrain() >= train.getVitesseISL()))
+			else if(bord->SDM.SADMC.getSupervision_status() == "Indication")
 			{
-				actualisationVitesse(0, 0, bord->SDM.getV_MRSP(), 0 , train.getVrelease(), train.getVbut() );//OK
-				if (bord->TrainRI.T_data.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
+				aiguilleColor = YELLOW;
+				actualisationVitesse(0,0,bord->SDM.SL.getV_permitted(),0,0, bord->SDM.SL.getV_indication());
 			}
-			else if(bord->SDM.getSupervision_status() == "NoS")
+			else if(bord->SDM.SADMC.getSupervision_status() == "Normal")
 			{
-				if(bord->TrainRI.T_data.getVtrain()<= train.getVbut())
-					aiguilleColor = GREY;
-				else
-					aiguilleColor = WHITE;
-				actualisationVitesse(0, 0, 0, bord->SDM.getV_MRSP(), train.getVrelease(), train.getVbut());//OK
-				if(bord->TrainRI.T_data.getVtrain() < train.getVbut())
-					train.setStatus("NoS");
+				aiguilleColor = GREY;
+				actualisationVitesse(0, 0, 0, 0, 0, bord->SDM.SL.getV_permitted());
 			}
 		}
-		else if(bord->SDM.getStatus() == "RSM")
-		{
-
-		}
+	//	else if(bord->SDM.getStatus() == "RSM")
+	//	{
+//
+	//	}
 	}
-	else if(bord->getGeneralMode() == "LS")
-	{
-		if(bord->SDM.getStatus() == "CSM")
-		{
+	//else if(bord->getGeneralMode() == "LS")
+	//{
+	//	if(bord->SDM.getStatus() == "CSM")
+	//	{
+//
+	//	}
+	//	else if(bord->SDM.getStatus() == "PIM")
+	//	{
+//
+	//	}
+	//	else if(bord->SDM.getStatus() == "TSM")
+	//	{
+//
+	//	}
+	//	else if(bord->SDM.getStatus() == "RSM")
+	//	{
+//
+	//	}
+	//}
+	//else if(bord->getGeneralMode() == "SR/UN")
+	//{
+	//	if(bord->SDM.getStatus() == "CSM")
+	//	{
+//
+	//	}
+	//	else if(bord->SDM.getStatus() == "PIM")
+	//	{
+//
+	//	}
+	//	else if(bord->SDM.getStatus() == "TSM")
+	//	{
+//
+	//	}
+	//}
+	//else if(bord->getGeneralMode() == "SH/RV")
+	//{
+	//	if(bord->SDM.getStatus() == "CSM")
+	//	{
+//
+	//	}
+	//}
+	//else if(bord->getGeneralMode() == "NL/SB/PT")
+	//{
+//
+	//}
+	//else if(bord->getGeneralMode() == "TR")
+	//{
+//
+	//}
 
-		}
-		else if(bord->SDM.getStatus() == "PIM")
-		{
-
-		}
-		else if(bord->SDM.getStatus() == "TSM")
-		{
-
-		}
-		else if(bord->SDM.getStatus() == "RSM")
-		{
-
-		}
-	}
-	else if(bord->getGeneralMode() == "SR/UN")
-	{
-		if(bord->SDM.getStatus() == "CSM")
-		{
-
-		}
-		else if(bord->SDM.getStatus() == "PIM")
-		{
-
-		}
-		else if(bord->SDM.getStatus() == "TSM")
-		{
-
-		}
-	}
-	else if(bord->getGeneralMode() == "SH/RV")
-	{
-		if(bord->SDM.getStatus() == "CSM")
-		{
-
-		}
-	}
-	else if(bord->getGeneralMode() == "NL/SB/PT")
-	{
-
-	}
-	else if(bord->getGeneralMode() == "TR")
-	{
-
-	}
-	*/
 }
 
 void Cadran::actualisationVitesse(float red, float orange, float yellow, float white, float mediumGrey, float darkGrey)

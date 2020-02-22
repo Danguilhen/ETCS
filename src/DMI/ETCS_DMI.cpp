@@ -29,16 +29,17 @@ ETCS_DMI::ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): def(s
 
 void ETCS_DMI::update()
 {
-	action();
-	affichage();
-	if(etat_ecran == "Default")
-		def.update();
-	else if(etat_ecran == "Main")
-		main.update();
-	else if(etat_ecran == "Override")
-		overide.update();
-	else if(etat_ecran == "Special")
-		special.update();
+		action();
+		affichage();
+		if(etat_ecran == "Default")
+			def.update();
+		else if(etat_ecran == "Main")
+			main.update();
+		else if(etat_ecran == "Override")
+			overide.update();
+		else if(etat_ecran == "Special")
+			special.update();
+
 }
 
 void ETCS_DMI::action()

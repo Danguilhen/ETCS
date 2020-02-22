@@ -113,6 +113,6 @@ void LeftSide::update()
 
 	//TexteMessages();//special class texte
 
-	targetDistance(1000);
+	targetDistance(bord->TrackRI.SADL.getTargetDistance());
 	cadran.update();
 }

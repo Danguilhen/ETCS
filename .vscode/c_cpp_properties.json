@@ -33,7 +33,7 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"/usr/local/include/**" 
+				"/usr/local/include/**"
 			],
 			"defines": [
 				"_DEBUG"

@@ -4,6 +4,7 @@
 
 int main()
 {
+	sf::Context cont;
 	Virtual_train virtual_train;
 	do
 	{

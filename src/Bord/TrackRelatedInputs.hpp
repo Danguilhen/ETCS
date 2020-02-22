@@ -1,7 +1,7 @@
 #ifndef BBB
 #define BBB
 
-#include "define.hpp"
+#include "../define.hpp"
 #include "Tools.hpp"
 #include "TrainRelatedInputs.hpp"
 
@@ -92,10 +92,10 @@ private:
 class TracksideSpeedRestriction : public Tools
 {
 	private :
-		std::vector<std::vector<int>> tableau_vitesse_ligne{{0, 1000, 200}, {1000, 10000, 130}};//[distance debut][distance fin][vitesse]
+		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 1500, 100}, {1500, 5000, 90}, {5000, 7000, 50}};//[distance debut][distance fin][vitesse]
 	public :
 		TracksideSpeedRestriction();
-		std::vector<std::vector<int>> getVitesseTableau();
+		std::vector<std::vector<float>> getVitesseTableau();
 		void TSR_Update();
 
 	//void actualisation_vitesse();//Si une vitesse vient se rajouter
@@ -106,16 +106,34 @@ class TracksideSpeedRestriction : public Tools
 class Gradient : public Tools
 {
 	private :
-		std::vector<std::vector<int>> tableau_gradient{{0, 10000, 15}} ;//[distance debut][distance fin][gradient]
+		std::vector<std::vector<float>> tableau_gradient{{0, 2000, 0}, {2000, 4000, -5}, {4000, 5000, 10}, {5000, 12500, 20}, {12500, 20000, -5} } ;//[distance debut][distance fin][gradient]
 		TrainRelatedInputs *TrainRI;
 	public :
 		Gradient(TrainRelatedInputs &TrainRI);
-		std::vector<std::vector<int>> getTab_Gradient();
+		std::vector<std::vector<float>> getTab_Gradient();
 		void Gradient_Update();//permet de déterminer le gradient à prendre en compte
 
 		//void actualisation_vitesse();//Si une vitesse vient se rajouter
 
 };
+
+
+class SpeedAndDistanceLimits
+{
+	private :
+		float target_distance;
+		float speed_target;
+		TracksideSpeedRestriction *TSR;
+	public :
+		SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR);
+		void target();
+		void SADL_update();
+		float getTargetDistance();
+		void SetTargetDistance(float D);
+		float getSpeedTarget();
+		void setSpeedTarget(float S);
+};
+
 
 class TrackRelatedInputs
 {
@@ -123,19 +141,18 @@ class TrackRelatedInputs
 		int pointKilometrique = 0;
 		int remainingDistanceTunnel = 500;
 		string tunnelStoppingArea = "TunnelStoppingArea";
-		int target_distance = 0;
+
 	public :
 		National_Value_Data NVD;
 		TracksideSpeedRestriction TSR;
 		Gradient gradient_ligne;
+		SpeedAndDistanceLimits SADL;
 		TrackRelatedInputs(TrainRelatedInputs &TrainRI);
 		void TrackRI_Update();
 		int getPointKilometrique();
 		int getRemainingDistanceTunnel();
 		string getTunnelStoppingArea();
 		void setTunnelStoppingArea(string TSA);
-		int getTargetDistance();
-		void SetTargetDistance(int D);
 };
 
 

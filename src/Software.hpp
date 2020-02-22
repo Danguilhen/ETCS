@@ -24,8 +24,9 @@ class Software
 		//	Mode 3 : Stopper la boucle, le son s'arr�te
 		int Vmax = 400;//vmax affichée sur le compteur (ici 400)
 		bool en_marche = true;
+		bool s_Finished = false; //Utiliser pour faire fonctionner le multithreading affichage calcul
 
-		int Vligne = 50; // reçoit informations de la ligne
+		int Vligne = 50; // reçoit informations de la ligne A SUPPRIMER
 
 
 	public :
@@ -44,6 +45,8 @@ class Software
 		void setType_signalisation(string T);
 		int getVligne();
 		void setVligne(int V);
+		bool getS_Finished();
+		void setS_Finished(bool S);
 
 };
 

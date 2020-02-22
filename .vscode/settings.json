@@ -95,12 +95,27 @@
 		"streambuf": "cpp",
 		"typeinfo": "cpp",
 		"variant": "cpp",
-		"fstream": "cpp"
+		"fstream": "cpp",
+		"cfenv": "cpp",
+		"cinttypes": "cpp",
+		"codecvt": "cpp",
+		"complex": "cpp",
+		"csetjmp": "cpp",
+		"csignal": "cpp",
+		"cuchar": "cpp",
+		"forward_list": "cpp",
+		"unordered_set": "cpp",
+		"rope": "cpp",
+		"slist": "cpp",
+		"scoped_allocator": "cpp",
+		"shared_mutex": "cpp",
+		"typeindex": "cpp",
+		"valarray": "cpp"
 	},
 
 	"terminal.integrated.shell.windows": "C:/Program Files/Git/bin/bash.exe",
 	"terminal.integrated.env.windows": {
-		"Path": "C:/mingw32/bin;C:/SFML-2.5.1/bin"
+		"Path": "C:/mingw32/bin;C:/SFML-2.5.1/bin;"
 	},
 	"terminal.integrated.env.linux": {
 		"PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"

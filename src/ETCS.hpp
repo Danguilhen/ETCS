@@ -10,6 +10,7 @@ class ETCS
 	private :
 		ETCS_Bord Bord;
 		ETCS_DMI EDMI;
+		Software *soft;
 
 	public :
 

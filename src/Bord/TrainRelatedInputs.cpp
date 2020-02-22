@@ -20,6 +20,7 @@ Fixed_Value_Data::Fixed_Value_Data()
 	T_driver = 4;
 	M_rotating_min =  0.2;
 	M_rotating_max = 0.15;
+    //cout << "FV" << endl;
 }
 
 void Fixed_Value_Data::Afficher_Fixed_value_data()
@@ -86,7 +87,7 @@ Loading_gauge::Loading_gauge(string LGL)
     Loading_gauge_label = LGL;
     //Loading_gauge_value = LGV; n'a pas d'importance dans la suite
 }
-Train_Categories::Train_Categories(){}
+Train_Categories::Train_Categories(){ /*cout << "TC" << endl;*/}
 Train_Categories::Train_Categories(string L, int C, string O)
 {
     label = L;
@@ -142,10 +143,30 @@ Train_Data::Train_Data()
     tab_TC_list.push_back(FG2);
     tab_TC_list.push_back(FG3);
     tab_TC_list.push_back(FG4);
+    //cout << "TrainData"<< endl;
 }
 int Train_Data::getTrain_length(){return train_length;}
 
 int Train_Data::getM_rotating_nom(){return M_rotating_nom;}
 
+OnBoardCorrectionFactors::OnBoardCorrectionFactors()
+{
+    //cout << "OBCF" << endl;
+}
 
+float OnBoardCorrectionFactors::getK_dry()
+{
+    return K_dry;
+}
+void OnBoardCorrectionFactors::setK_dry(float K){K_dry = K;}
+float OnBoardCorrectionFactors::getK_wet()
+{
+    if(!dry)
+        return K_wet;
+    else
+        return 0;
+}
+void OnBoardCorrectionFactors::setK_wet(float K){K_wet = K;}
+bool OnBoardCorrectionFactors::getDry(){return dry;}
+void OnBoardCorrectionFactors::setDry(bool D){dry = D;}
 

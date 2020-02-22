@@ -29,3 +29,5 @@ string Software::getType_signalisation(){return type_signalisation;}
 void Software::setType_signalisation(string T){type_signalisation = T;}
 int Software::getVligne(){return Vligne;}
 void Software::setVligne(int V){Vligne = V;}
+bool Software::getS_Finished(){return s_Finished;}
+void Software::setS_Finished(bool S){s_Finished = S;}

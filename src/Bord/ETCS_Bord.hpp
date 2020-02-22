@@ -18,10 +18,11 @@ class ETCS_Bord
 		Train_dynamique *T_D;
 
 	public :
-		SpeedAndDistanceMonitoring SDM;
 		TrackRelatedInputs TrackRI;
 		TrainRelatedInputs TrainRI;
-		ETCS_Bord(Train_dynamique &T_D);
+		SpeedAndDistanceMonitoring SDM;
+		Software *soft;
+		ETCS_Bord(Train_dynamique &T_D, Software &soft);
 		void bord_update();
 		string getGeneralMode();
 		string getLevel();

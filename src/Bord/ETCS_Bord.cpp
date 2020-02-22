@@ -1,17 +1,18 @@
 #include "ETCS_Bord.hpp"
 
 
-ETCS_Bord::ETCS_Bord(Train_dynamique &T_D) : SDM(T_D, TrainRI, TrackRI), TrackRI(TrainRI)
+ETCS_Bord::ETCS_Bord(Train_dynamique &T_D, Software &soft) : TrackRI(TrainRI), SDM(T_D, TrainRI, TrackRI)
 {
 	//cout<< "BORD" <<endl;
 	this->T_D = &T_D;
+	this->soft = &soft;
 }
 
 
 void ETCS_Bord::bord_update()
 {
-	SDM.SDM_Update();
 	TrackRI.TrackRI_Update();
+	SDM.SDM_Update();
 }
 
 string ETCS_Bord::getGeneralMode(){return generalMode;}

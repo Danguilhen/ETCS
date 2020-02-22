@@ -6,12 +6,17 @@
 class Train_dynamique
 {
 	private :
-	int V_train = 135;
+	int V_train = 80;
+	//Clock chrono;//créer le chrono
+	//Time diftime;//créer la varaible qui stocke le temps écoulé
+	//float deltats;//créer la variable qui stocke le temps écoulé en seconde*/
 
 	public :
 
+	//void TD_update();
 	int getV_train();
 	void setV_train(int V);
+	//void mouvementTrain();
 
 };
 
