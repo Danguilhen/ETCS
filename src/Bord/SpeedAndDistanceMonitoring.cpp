@@ -4,7 +4,7 @@
 #include "TrackRelatedInputs.hpp"
 #include "../Train_dynamique.hpp"
 
-SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI) : TBS(TrainRI, TrackRI), MRSP(TrackRI), DODC(TrackRI, T_D, TBS), SL(T_D, TrainRI, TrackRI, MRSP, DODC), SADMC(T_D, MRSP, SL)
+SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI) : TBS(TrainRI, TrackRI), MRSP(TrackRI), DODC(TrackRI,TrainRI, T_D, TBS), SL(T_D, TrainRI, TrackRI, MRSP, DODC), SADMC(T_D, MRSP, SL, TrackRI)
 {
 	this->T_D = &T_D;
 	this->TrainRI = &TrainRI;
@@ -14,22 +14,24 @@ SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, Tra
 
 void SpeedAndDistanceMonitoring::SDM_Update()
 {
-	diftimeSDM = chronoSDM.getElapsedTime();
-	deltatsSDM = diftimeSDM.asSeconds();
+	//diftimeSDM = chronoSDM.getElapsedTime();
+	//deltatsSDM = diftimeSDM.asSeconds();
 	MRSP.function_MRSP();
-	SL.Supervision_limits();
-	SADMC.SpeedAndDistanceMonitoringCommands_update();
-	if (deltatsSDM >= TMAJ)
+	if (TrackRI->SADL.getTarget_update())
 	{
 		//cout << "start" << endl;
 		//chronoSDM.restart();
 		TBS.TBS_Update();
 		DODC.calculEBD();
+		SL.Curves();
 		//diftimeSDM = chronoSDM.getElapsedTime();
 		//deltatsSDM = diftimeSDM.asSeconds();
 		//cout << "fait en : " << deltatsSDM << endl;
 		chronoSDM.restart();
+		TrackRI->SADL.setTarget_update(false);
 	}
+	SL.Supervision_limits();
+	SADMC.SpeedAndDistanceMonitoringCommands_update();
 }
 
 Traction_Braking_system::Traction_Braking_system(TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI)
@@ -83,67 +85,168 @@ SupervisionLimits::SupervisionLimits(Train_dynamique &T_D, TrainRelatedInputs &T
 	this->TrackRI = &TrackRI;
 	this->MRSP = &MRSP;
 	this->DODC = &DODC;
+	Curves();
 	//cout << "SL" << endl;
 }
 float SupervisionLimits::getV_ebi(){return V_ebi;}
 float SupervisionLimits::getV_sbi(){return V_sbi;}
-float SupervisionLimits::getV_indication(){return V_indication;}
-float SupervisionLimits::getV_permitted(){return V_permited;}
 float SupervisionLimits::getV_warning(){return V_warning;}
+float SupervisionLimits::getV_permitted(){return V_permited;}
+float SupervisionLimits::getV_indication(){return V_indication;}
 string SupervisionLimits::getStatus(){return status;}
-void SupervisionLimits::Supervision_limits()
+float SupervisionLimits::getd_indication(){return d_indication;}
+float SupervisionLimits::getd_permitted(){return d_permitted;}
+float SupervisionLimits::getd_ebi(){return d_ebi;}
+float SupervisionLimits::getd_warning(){return d_warning;}
+void SupervisionLimits::Curves()
 {
-	if(status == "CSM")
+	vector<float> ligne;
+	for(size_t vitesse = TrackRI->SADL.getSpeedTarget(); vitesse < DODC->getEBD()[DODC->getEBD().size() - 1][1] ; vitesse++)
 	{
-		float Cebi = (TrainRI->FVD.getdV_ebi_max() - TrainRI->FVD.getdV_ebi_min()) / (TrainRI->FVD.getV_ebi_max() - TrainRI->FVD.getV_ebi_min() );
-		float Csbi = (TrainRI->FVD.getdV_sbi_max() - TrainRI->FVD.getdV_sbi_min()) / (TrainRI->FVD.getV_sbi_max() - TrainRI->FVD.getV_sbi_min() );
-		float Cwarning = (TrainRI->FVD.getdV_warning_max() - TrainRI->FVD.getdV_warning_min()) / (TrainRI->FVD.getV_warning_max() - TrainRI->FVD.getV_warning_min() );
-		float DV_ebi;
-		float DV_sbi;
-		float DV_warning;
+		Vbec = 3.6*(max((vitesse/3.6 + V_delta0 + V_delta1), TrackRI->SADL.getSpeedTarget()/3.6) + V_delta2);
+		Dbec = max((vitesse/3.6 + V_delta0 + V_delta1/2), TrackRI->SADL.getSpeedTarget()/3.6)*T_traction + (max((vitesse/3.6 + V_delta0 + V_delta1), TrackRI->SADL.getSpeedTarget()/3.6) + V_delta2/2)*T_berem;
+		//cout << Vbec << " " << Dbec << " " << DODC->getDistanceEBD(Vbec) << endl;
+		if(DODC->getDistanceEBD(Vbec) + Dbec > 0)
+			d_ebi = DODC->getDistanceEBD(Vbec) + Dbec;
+		else
+			d_ebi = 0;
+		if(d_ebi + TrainRI->FVD.getT_warning()*vitesse/3.6 > 0)
+			d_warning = d_ebi + TrainRI->FVD.getT_warning()*vitesse/3.6;
+		else
+			d_warning = 0;
+		if(d_ebi + TrainRI->FVD.getT_driver()*vitesse/3.6 > 0)
+			d_permitted = d_ebi + TrainRI->FVD.getT_driver()*vitesse/3.6;
+		else
+			d_permitted = 0;
+		if(d_permitted + T_indication*vitesse/3.6 > 0)
+			d_indication = d_permitted + T_indication*vitesse/3.6;
+		else
+			d_indication = 0;
+		ligne = {float(vitesse), d_ebi, d_warning, d_permitted, d_indication};
+		curvestab.push_back(ligne);
+	}
+}
 
-		if(MRSP->getV_MRSP() > TrainRI->FVD.getV_ebi_min())
-		{
-			DV_ebi = min(TrainRI->FVD.getdV_ebi_min() + Cebi*(MRSP->getV_MRSP()  - TrainRI->FVD.getV_ebi_min()), TrainRI->FVD.getdV_ebi_max());
-		}
-		else
+float SupervisionLimits::getV_ebi_CSM(float vitesse) // utiliser pour comparer V_ebi but et calculée avec la TSM
+{
+	float DV_ebi;
+	float Cebi = (TrainRI->FVD.getdV_ebi_max() - TrainRI->FVD.getdV_ebi_min()) / (TrainRI->FVD.getV_ebi_max() - TrainRI->FVD.getV_ebi_min() );
+	if(vitesse > TrainRI->FVD.getV_ebi_min())
+	{
+		DV_ebi = min(TrainRI->FVD.getdV_ebi_min() + Cebi*(vitesse  - TrainRI->FVD.getV_ebi_min()), TrainRI->FVD.getdV_ebi_max());
+	}
+	else
 		DV_ebi = TrainRI->FVD.getdV_ebi_min();
-		if(MRSP->getV_MRSP()  > TrainRI->FVD.getV_sbi_min())
+	return vitesse + DV_ebi;
+}
+
+float SupervisionLimits::getV_warning_CSM(float vitesse)
+{
+		float Cwarning = (TrainRI->FVD.getdV_warning_max() - TrainRI->FVD.getdV_warning_min()) / (TrainRI->FVD.getV_warning_max() - TrainRI->FVD.getV_warning_min() );
+		float DV_warning;
+		if(vitesse  > TrainRI->FVD.getV_warning_min())
 		{
-			DV_sbi = min(TrainRI->FVD.getdV_sbi_min() + Csbi*(MRSP->getV_MRSP()  - TrainRI->FVD.getV_sbi_min()), TrainRI->FVD.getdV_sbi_max());
-		}
-		else
-		DV_sbi = TrainRI->FVD.getdV_sbi_min();
-		if(MRSP->getV_MRSP()  > TrainRI->FVD.getV_warning_min())
-		{
-			DV_warning = min(TrainRI->FVD.getdV_warning_min() + Cwarning*(MRSP->getV_MRSP()  - TrainRI->FVD.getV_warning_min()), TrainRI->FVD.getdV_warning_max());
+			DV_warning = min(TrainRI->FVD.getdV_warning_min() + Cwarning*(vitesse - TrainRI->FVD.getV_warning_min()), TrainRI->FVD.getdV_warning_max());
 		}
 		else
 		DV_warning = TrainRI->FVD.getdV_warning_min();
+		return vitesse  + DV_warning;
+}
 
-		V_ebi = MRSP->getV_MRSP()  + DV_ebi;
-		V_sbi =	MRSP->getV_MRSP()  + DV_sbi;
-		V_warning = MRSP->getV_MRSP()  + DV_warning;
+void SupervisionLimits::Supervision_limits()
+{
+	cout << status << endl;
+	cout << TrackRI->SADL.getTargetDistance() << endl;
+
+	if(status == "CSM")
+	{
+		//float Csbi = (TrainRI->FVD.getdV_sbi_max() - TrainRI->FVD.getdV_sbi_min()) / (TrainRI->FVD.getV_sbi_max() - TrainRI->FVD.getV_sbi_min() );
+		//float DV_sbi;
+		int n_ligne = 0;
+
+		//if(MRSP->getV_MRSP()  > TrainRI->FVD.getV_sbi_min())
+		//{
+		//	DV_sbi = min(TrainRI->FVD.getdV_sbi_min() + Csbi*(MRSP->getV_MRSP()  - TrainRI->FVD.getV_sbi_min()), TrainRI->FVD.getdV_sbi_max());
+		//}
+		//else
+		//DV_sbi = TrainRI->FVD.getdV_sbi_min();
+
+		V_ebi = getV_ebi_CSM(MRSP->getV_MRSP());
+		//V_sbi =	MRSP->getV_MRSP()  + DV_sbi;
+		V_warning = getV_warning_CSM(MRSP->getV_MRSP());
+
+		while(TrackRI->SADL.getTargetDistance() > curvestab[n_ligne][4])
+		{
+			n_ligne ++;
+		}
+		V_indication = curvestab[n_ligne][0];
+		if(V_indication < MRSP->getV_MRSP()) // condition pour passer de CSM à TSM
+		{
+			status = "TSM";
+		}
 	}
+
 	if(status == "TSM")
 	{
-		bool V_i_ok = false;
-		bool V_p_ok = false;
-		bool V_w_ok = false;
-		bool V_ebi_ok = false;
+		int n_ligne = 0;
+		while(TrackRI->SADL.getTargetDistance() > curvestab[n_ligne][1])
+		{
+			n_ligne ++;
+		}
+		V_ebi = max(min(curvestab[n_ligne][0], getV_ebi_CSM(MRSP->getV_MRSP())), getV_ebi_CSM(TrackRI->SADL.getSpeedTarget()));
+		d_ebi = curvestab[n_ligne][1];
+		n_ligne = 0;
+		while(TrackRI->SADL.getTargetDistance() > curvestab[n_ligne][2])
+		{
+			n_ligne ++;
+		}
+		V_warning = max(min(curvestab[n_ligne][0], getV_warning_CSM(MRSP->getV_MRSP())), getV_warning_CSM(TrackRI->SADL.getSpeedTarget()));
+		d_warning = curvestab[n_ligne][2];
+		n_ligne = 0;
+		while(TrackRI->SADL.getTargetDistance() > curvestab[n_ligne][3])
+		{
+			n_ligne ++;
+		}
+		V_permited = max(min(curvestab[n_ligne][0], MRSP->getV_MRSP()), TrackRI->SADL.getSpeedTarget());
+		d_permitted = curvestab[n_ligne][3];
+		n_ligne = 0;
+		while(TrackRI->SADL.getTargetDistance() > curvestab[n_ligne][4])
+		{
+			n_ligne ++;
+		}
+		V_indication = max(curvestab[n_ligne][0], TrackRI->SADL.getSpeedTarget());
+		d_indication = curvestab[n_ligne][4];
+		//cout << V_ebi << " " << V_warning << " " << V_permited << " " << V_indication << endl;
+		if(int(TrackRI->SADL.getTargetDistance()) == 0) // lorsque la EBD croise la EBI de la csm, alors on change de status
+		{
+			status = "CSM";
+		}
+
+		//cout << d_indication << " " << d_permitted << " " << d_ebi << endl;
+
+		/*
+		//bool V_i_ok = false;
+		//bool V_p_ok = false;
+		//bool V_w_ok = false;
+		//bool V_ebi_ok = false;
 		T_be = T_brake_emergency; // seulement dans le cas où le freinage n'est pas fait avec le conversion model
 		T_berem = max(T_be - T_traction, float(0));
-		float distance = TrackRI->SADL.getTargetDistance();
+		float vitesse = T_D->getV_train();
+		float Dbedisplay;
 		for(float vitesse = 0; vitesse < DODC->getEBD()[DODC->getEBD().size() - 1][1]; vitesse ++)
 		{
 			Vbec = 3.6*(max((vitesse/3.6 + V_delta0 + V_delta1), TrackRI->SADL.getSpeedTarget()/3.6) + V_delta2);
 			Dbec = max((vitesse/3.6 + V_delta0 + V_delta1/2), TrackRI->SADL.getSpeedTarget()/3.6)*T_traction + (max((vitesse/3.6 + V_delta0 + V_delta1), TrackRI->SADL.getSpeedTarget()/3.6) + V_delta2/2)*T_berem;
 			//cout << Vbec << " " << Dbec << " " << DODC->getDistanceEBD(Vbec) << endl;
 			d_ebi = DODC->getDistanceEBD(Vbec) + Dbec;
+			//V_ebi = DODC->getVitesseEBD(TrackRI->SADL.getTargetDistance());
 			d_warning = d_ebi + TrainRI->FVD.getT_warning()*vitesse/3.6;
 			d_permitted = d_ebi + TrainRI->FVD.getT_driver()*vitesse/3.6;
+			//Dbedisplay = (T_D->getV_train() + V_delta0 + V_delta1/2)*T_traction + (T_D->getV_train() + V_delta0 + V_delta1 + V_delta2/2)*T_berem; // page 125
+			//V_permited = max(DODC->getVitesseEBD(TrackRI->SADL.getTargetDistance() - vitesse*(TrainRI->FVD.getT_driver()) - Dbedisplay) - (V_delta0 + V_delta1 + V_delta2), TrackRI->SADL.getSpeedTarget());
 			d_indication = d_permitted + T_indication*vitesse/3.6;
-			//cout<< d_ebi << " " << d_permitted << " " << d_indication << endl;
+			//V_indication = V_permited - 1 * T_indication; // test
+			cout<< "vitesse : " << vitesse << " " << d_ebi << " " << d_permitted << " " << d_indication << endl;
 			if(distance <= d_indication && V_i_ok == false)
 			{
 				V_indication = vitesse;
@@ -165,7 +268,7 @@ void SupervisionLimits::Supervision_limits()
 				V_ebi_ok = true;
 			}
 		}
-		//cout << V_ebi << " " << V_permited << " " << V_indication << endl;
+		cout << V_ebi << " " << V_permited << " " << V_indication << endl;*/
 	}
 }
 
@@ -181,11 +284,12 @@ void MostRestrictiveSpeedLimit::function_MRSP()
 float MostRestrictiveSpeedLimit::getV_MRSP(){return V_MRSP;}
 
 
-DeterminationOfDecelerationCurves::DeterminationOfDecelerationCurves(TrackRelatedInputs &TrackRI, Train_dynamique &T_D, Traction_Braking_system &TBS)
+DeterminationOfDecelerationCurves::DeterminationOfDecelerationCurves(TrackRelatedInputs &TrackRI, TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Traction_Braking_system &TBS)
 {
 	this->TrackRI = &TrackRI;
 	this->T_D = &T_D;
 	this->TBS = &TBS;
+	this->TrainRI = &TrainRI;
 	calculEBD();
 	//cout << "DODC" << endl;
 }
@@ -200,9 +304,19 @@ void DeterminationOfDecelerationCurves::calculEBD()
 	//bool stop_for = false;
 	EBD.clear();
 	init.push_back(0);
-	init.push_back(0);
+	init.push_back(getV_start());
 	init.push_back(0);
 	EBD.push_back(init);//initialisation de la première ligne de EBD
+
+
+	if(TrackRI->SADL.getSpeedTarget() > 0)
+	{
+		while(TrackRI->SADL.getSpeedTarget() >= TBS->getA_brake_safe()[n_A_brake_safe][1])
+		{
+			n_A_brake_safe++;
+		}
+	}
+	vitesse = TrackRI->SADL.getSpeedTarget();
 	for(distance = 0; distance < TrackRI->SADL.getTargetDistance(); distance++)
 	{
 		if (n_A_gradient == TBS->getA_gradient().size() || n_A_brake_safe == TBS->getA_brake_safe().size())//on vérifie qu'on à pas atteint la limite des vector freinage et gradient
@@ -211,11 +325,28 @@ void DeterminationOfDecelerationCurves::calculEBD()
 		}
 		vitesse = 3.6*(sqrtf(2*(TBS->getA_brake_safe()[n_A_brake_safe][2] + TBS->getA_gradient()[n_A_gradient][2]) + pow(EBD[EBD.size() - 1][1]/3.6, 2)));//calcul de la vitesse entre les deux distance par rapport à la décélération à la distance D
 		step(EBD, distance, vitesse, TBS->getA_brake_safe()[n_A_brake_safe][2] + TBS->getA_gradient()[n_A_gradient][2]);//rajout de cette vitesse à la distance d
-		if(distance == size_t( TBS->getA_gradient()[n_A_gradient][1]))
+		if(distance == size_t(TBS->getA_gradient()[n_A_gradient][1]))
 			n_A_gradient++; // si on a atteint la distance à laquelle le gradient change, alors nous prendrons la nouvelle valeur de A_gradient
 		if(vitesse >= TBS->getA_brake_safe()[n_A_brake_safe][1])
 			n_A_brake_safe++;// si on a atteint la vitesse à laquelle la valeur de décélération du train change, alors nous prendrons une nouvelle valeur de A_brake_safe
+		//cout << distance << " : " << vitesse << " " << TBS->getA_brake_safe()[n_A_brake_safe][2] + TBS->getA_gradient()[n_A_gradient][2] << endl;
 	}
+}
+
+float DeterminationOfDecelerationCurves::getV_start()
+{
+	float DV_ebi;
+	float Cebi = (TrainRI->FVD.getdV_ebi_max() - TrainRI->FVD.getdV_ebi_min()) / (TrainRI->FVD.getV_ebi_max() - TrainRI->FVD.getV_ebi_min() );
+	if(TrackRI->SADL.getSpeedTarget() > TrainRI->FVD.getV_ebi_min())
+	{
+		DV_ebi = min(TrainRI->FVD.getdV_ebi_min() + Cebi*(TrackRI->SADL.getSpeedTarget()  - TrainRI->FVD.getV_ebi_min()), TrainRI->FVD.getdV_ebi_max());
+	}
+	else
+		DV_ebi = TrainRI->FVD.getdV_ebi_min();
+	if(TrackRI->SADL.getSpeedTarget() == 0)
+		return 0;
+	else
+		return TrackRI->SADL.getSpeedTarget() + DV_ebi;
 }
 
 vector<vector<float>> DeterminationOfDecelerationCurves::getEBD()
@@ -228,16 +359,32 @@ float DeterminationOfDecelerationCurves::getDistanceEBD(float vitesse)
 	size_t i = 0;
 	while (vitesse > EBD[i][1])
 	{
-		i++;
 		if(i == EBD.size())
 		{
 			cout << "erreur dans getDistanceEBD" << endl;
 			break;
 		}
+		i++;
 	}
 	return EBD[i][0];
 }
-float DeterminationOfDecelerationCurves::getVistanceEBD(float distance)
+
+float DeterminationOfDecelerationCurves::getVitesseEBD(float distance)
+{
+	size_t i = 0;
+	while (distance > EBD[i][0])
+	{
+		i++;
+		if(i == EBD.size())
+		{
+			cout << "erreur dans getVitesseEBD, distance = "<< distance << endl;
+			break;
+		}
+	}
+	return EBD[i][1];
+}
+
+float DeterminationOfDecelerationCurves::getAccEBD(float distance)
 {
 	size_t i = 0;
 	while (distance > EBD[i][0])
@@ -249,12 +396,13 @@ float DeterminationOfDecelerationCurves::getVistanceEBD(float distance)
 			break;
 		}
 	}
-	return EBD[i][1];
+	return EBD[i][2];
 }
 
-SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL)
+SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL, TrackRelatedInputs &TrackRI)
 {
 	this->T_D = &T_D;
+	this->TrackRI = &TrackRI;
 	this->MRSP = &MRSP;
 	this->SL = &SL;
 	//cout << "SADMC" << endl;
@@ -299,7 +447,7 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 	}	//cout << supervision_status << " " << command_triggered << endl;
 	if(SL->getStatus() == "TSM")
 	{
-		if(T_D->getV_train() < int(SL->getV_indication()) && supervision_status != "Intervention")
+		if(T_D->getV_train() < SL->getV_indication()  && supervision_status != "Intervention")
 			supervision_status = "Normal";
 		if(T_D->getV_train() >= int(SL->getV_indication()) && supervision_status == "Normal")
 			supervision_status = "Indication";

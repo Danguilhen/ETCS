@@ -159,22 +159,21 @@ vector<vector<float>> TracksideSpeedRestriction::getVitesseTableau()
 	return tableau_vitesse_ligne;
 }
 
-void TracksideSpeedRestriction::TSR_Update()
+
+void TracksideSpeedRestriction::TSR_Update(float distance_update)
 {
-	/*for(size_t i = 0; i < tableau_vitesse_ligne.size(); i++)
+	for(size_t i = 0; i < tableau_vitesse_ligne.size(); i++)
 	{
 		if(tableau_vitesse_ligne[i][0] != -1)
-			tableau_vitesse_ligne[i][0] -= distance parcourue;
-		tableau_vitesse_ligne[i][1] -= distance parcourue;
+			tableau_vitesse_ligne[i][0] -= distance_update;
+		tableau_vitesse_ligne[i][1] -= distance_update;
 		if(tableau_vitesse_ligne[i][0] < 0)
 			tableau_vitesse_ligne[i][0] = -1;
 		if(tableau_vitesse_ligne[i][1] < 0)
 			tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
-	}*/
-
-	/*if(tableau_vitesse_ligne[0][2] < 0)
-		tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());*/
-
+	if(tableau_vitesse_ligne[0][2] < 0)
+		tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
+	}
 }
 
 Gradient::Gradient(TrainRelatedInputs &TrainRI)
@@ -188,22 +187,29 @@ vector<vector<float>> Gradient::getTab_Gradient()
 	return tableau_gradient;
 }
 
-void Gradient::Gradient_Update()
+void Gradient::Gradient_Update(float distance_update)
 {
-	////RECEPTION DES NOUVEAUX GRADIENTS
-	/////
-	////DETERMINATION DU GRADIENT LE PLUS CRITIQUE
-	//for(size_t i = 0; i< tableau_gradient.size() - 1; i++)//pour éviter de comparer avec une case non existante
-	//{
-	//	if(tableau_gradient[i][2] < tableau_gradient[i+1][2])
-	//	{
-	//		tableau_gradient[i][1] = tableau_gradient[i][1] + TrainRI->T_data.getTrain_length(); // Le gradient le plus critique sera allongé jusqu'au moment où le train dégagera la zone avec se gradient
-	//		if(tableau_gradient[i+1][0] + TrainRI->T_data.getTrain_length() > tableau_gradient[i+1][1] + TrainRI->T_data.getTrain_length())
-	//			tableau_gradient.erase(tableau_gradient.begin() + i + 1 ) //on supprime ce gradient si le décalage est plus grand que la logueur de la zone du gradient lui-même
-	//		else
-	//			tableau_gradient[i+1][0] = tableau_gradient[i+1][0] + TrainRI->T_data.getTrain_length();//SI le cas précédent n"est pas rencontré, on réduit la zone de ce gradient de la taille du train en décallant son début.
-	//	}
-	//}
+	//RECEPTION DES NOUVEAUX GRADIENTS
+	///
+	//DETERMINATION DU GRADIENT LE PLUS CRITIQUE
+	for(size_t i = 0; i < tableau_gradient.size() - 1; i++)//pour éviter de comparer avec une case non existante
+	{
+		if(tableau_gradient[i][2] < tableau_gradient[i+1][2])
+		{
+			tableau_gradient[i][1] = tableau_gradient[i][1] + TrainRI->T_data.getTrain_length(); // Le gradient le plus critique sera allongé jusqu'au moment où le train dégagera la zone avec se gradient
+			if(tableau_gradient[i+1][0] + TrainRI->T_data.getTrain_length() > tableau_gradient[i+1][1] + TrainRI->T_data.getTrain_length())
+				tableau_gradient.erase(tableau_gradient.begin() + i + 1 ); //on supprime ce gradient si le décalage est plus grand que la logueur de la zone du gradient lui-même
+			else
+				tableau_gradient[i+1][0] = tableau_gradient[i+1][0] + TrainRI->T_data.getTrain_length();//SI le cas précédent n"est pas rencontré, on réduit la zone de ce gradient de la taille du train en décallant son début.
+		}
+		if(tableau_gradient[i][0] != -1)
+			tableau_gradient[i][0] -= distance_update;
+		tableau_gradient[i][1] -= distance_update;
+		if(tableau_gradient[i][0] < 0)
+			tableau_gradient[i][0] = -1;
+		if(tableau_gradient[i][1] < 0)
+			tableau_gradient.erase(tableau_gradient.begin());
+	}
 }
 SpeedAndDistanceLimits::SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR)
 {
@@ -214,7 +220,13 @@ SpeedAndDistanceLimits::SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR)
 
 void SpeedAndDistanceLimits::target()
 {
+	float temp = target_distance;
 	target_distance = TSR->getVitesseTableau()[1][0]; // on obtient la prochaine target distance
+	if(temp < target_distance)
+	{
+		target_update = true;  // on va recalculer une nouvelle EBD, on a donc besoin de remettre à jour lors de l exe de la méthode SDM_update
+		cout << "mise à jour de la target" << endl;
+	}
 	speed_target = TSR->getVitesseTableau()[1][2]; // on obtient la prochaine vitesse à respecter
 }
 void SpeedAndDistanceLimits::SADL_update()
@@ -225,17 +237,23 @@ float SpeedAndDistanceLimits::getTargetDistance(){return target_distance;}
 void SpeedAndDistanceLimits::SetTargetDistance(float D){target_distance = D;}
 float SpeedAndDistanceLimits::getSpeedTarget(){return speed_target;}
 void SpeedAndDistanceLimits::setSpeedTarget(float S){speed_target = S;}
+bool SpeedAndDistanceLimits::getTarget_update(){return target_update;}
+void SpeedAndDistanceLimits::setTarget_update(bool B){target_update = B;}
 
-TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI) : gradient_ligne(TrainRI), SADL(TSR)
+TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D) : gradient_ligne(TrainRI), SADL(TSR)
 {
-	//cout << "TrackRI" << endl;
+	this->T_D = &T_D;
 }
 
 void TrackRelatedInputs::TrackRI_Update()
 {
-	TSR.TSR_Update();
-	gradient_ligne.Gradient_Update();
+	diftimeTRI = chronoTRI.getElapsedTime();
+	deltatsTRI = diftimeTRI.asSeconds();
+	distance_update = deltatsTRI * T_D->getV_train()/3.6;
+	TSR.TSR_Update(distance_update);
+	gradient_ligne.Gradient_Update(distance_update);
 	SADL.SADL_update();
+	chronoTRI.restart();
 }
 
 int TrackRelatedInputs::getPointKilometrique(){return pointKilometrique;}

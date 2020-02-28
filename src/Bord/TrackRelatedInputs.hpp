@@ -4,6 +4,7 @@
 #include "../define.hpp"
 #include "Tools.hpp"
 #include "TrainRelatedInputs.hpp"
+#include "Train_dynamique.hpp"
 
 class National_Value_Data
 {
@@ -92,11 +93,11 @@ private:
 class TracksideSpeedRestriction : public Tools
 {
 	private :
-		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 1500, 100}, {1500, 5000, 90}, {5000, 7000, 50}};//[distance debut][distance fin][vitesse]
+		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 2000, 150}, {2000, 10000, 90}, {10000, 140000, 0}};//[distance debut][distance fin][vitesse]
 	public :
 		TracksideSpeedRestriction();
 		std::vector<std::vector<float>> getVitesseTableau();
-		void TSR_Update();
+		void TSR_Update(float distance_update);
 
 	//void actualisation_vitesse();//Si une vitesse vient se rajouter
 
@@ -111,7 +112,7 @@ class Gradient : public Tools
 	public :
 		Gradient(TrainRelatedInputs &TrainRI);
 		std::vector<std::vector<float>> getTab_Gradient();
-		void Gradient_Update();//permet de déterminer le gradient à prendre en compte
+		void Gradient_Update(float distance_update);//permet de déterminer le gradient à prendre en compte
 
 		//void actualisation_vitesse();//Si une vitesse vient se rajouter
 
@@ -123,6 +124,7 @@ class SpeedAndDistanceLimits
 	private :
 		float target_distance;
 		float speed_target;
+		bool target_update = false;
 		TracksideSpeedRestriction *TSR;
 	public :
 		SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR);
@@ -132,6 +134,9 @@ class SpeedAndDistanceLimits
 		void SetTargetDistance(float D);
 		float getSpeedTarget();
 		void setSpeedTarget(float S);
+		bool getTarget_update();
+		void setTarget_update(bool B);
+
 };
 
 
@@ -141,13 +146,18 @@ class TrackRelatedInputs
 		int pointKilometrique = 0;
 		int remainingDistanceTunnel = 500;
 		string tunnelStoppingArea = "TunnelStoppingArea";
+		Clock chronoTRI;//créer le chrono
+		Time diftimeTRI;//créer la varaible qui stocke le temps écoulé
+		float deltatsTRI;//créer la variable qui stocke le temps écoulé en seconde
+		float distance_update; // distance parcourue entre chaque mise à jour
 
 	public :
+		Train_dynamique *T_D;
 		National_Value_Data NVD;
 		TracksideSpeedRestriction TSR;
 		Gradient gradient_ligne;
 		SpeedAndDistanceLimits SADL;
-		TrackRelatedInputs(TrainRelatedInputs &TrainRI);
+		TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D);
 		void TrackRI_Update();
 		int getPointKilometrique();
 		int getRemainingDistanceTunnel();

@@ -1,7 +1,7 @@
 #include "ETCS_Bord.hpp"
 
 
-ETCS_Bord::ETCS_Bord(Train_dynamique &T_D, Software &soft) : TrackRI(TrainRI), SDM(T_D, TrainRI, TrackRI)
+ETCS_Bord::ETCS_Bord(Train_dynamique &T_D, Software &soft) : TrackRI(TrainRI, T_D), SDM(T_D, TrainRI, TrackRI)
 {
 	//cout<< "BORD" <<endl;
 	this->T_D = &T_D;

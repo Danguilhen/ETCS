@@ -25,9 +25,7 @@ class Software
 		int Vmax = 400;//vmax affichée sur le compteur (ici 400)
 		bool en_marche = true;
 		bool s_Finished = false; //Utiliser pour faire fonctionner le multithreading affichage calcul
-
-		int Vligne = 50; // reçoit informations de la ligne A SUPPRIMER
-
+		int Vligne = 150;
 
 	public :
 		Software();

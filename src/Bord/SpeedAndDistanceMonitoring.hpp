@@ -48,18 +48,21 @@ class DeterminationOfDecelerationCurves : public Tools
 	private :
 		vector<vector<float>> EBD; // [distance][vitesse][deceleration]
 		TrackRelatedInputs *TrackRI;
+		TrainRelatedInputs *TrainRI;
 		Train_dynamique *T_D;
 		Traction_Braking_system *TBS;
 
 	public :
-	DeterminationOfDecelerationCurves(TrackRelatedInputs &TrackRI, Train_dynamique &T_D, Traction_Braking_system &TBS);
+	DeterminationOfDecelerationCurves(TrackRelatedInputs &TrackRI, TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Traction_Braking_system &TBS);
 	void calculEBD();
 	vector<vector<float>> getEBD();
 	float getDistanceEBD(float speed);
-	float getVistanceEBD(float distance);
+	float getVitesseEBD(float distance);
+	float getAccEBD(float distance);
+	float getV_start();
 };
 
-class SupervisionLimits
+class SupervisionLimits : public Tools
 {
 	private :
 		Train_dynamique *T_D;
@@ -67,6 +70,7 @@ class SupervisionLimits
 		TrackRelatedInputs *TrackRI;
 		MostRestrictiveSpeedLimit *MRSP;
 		DeterminationOfDecelerationCurves *DODC;
+		vector<vector<float>> curvestab;// [vitesse][ebi][warning][permitted][indication]
 		float V_ebi;
 		float V_sbi;
 		float V_warning;
@@ -76,8 +80,7 @@ class SupervisionLimits
 		float d_warning;
 		float d_permitted;
 		float d_indication;
-		std::string status = "TSM"; // "TSM" "CSM"
-		float *V_MRSP;
+		std::string status = "CSM"; // "TSM" "CSM"
 		float V_delta0 = 0; //en m/s
 		float V_delta1 = 0; //en m/s
 		float V_delta2 = 0; //en m/s
@@ -92,12 +95,19 @@ class SupervisionLimits
 		float Dbec;
 	public :
 		SupervisionLimits(Train_dynamique &T_R, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, MostRestrictiveSpeedLimit &MRSP, DeterminationOfDecelerationCurves &DODC);
+		void Curves();
 		void Supervision_limits();
 		float getV_ebi();
-		float getV_indication();
-		float getV_permitted();
 		float getV_sbi();
 		float getV_warning();
+		float getV_permitted();
+		float getV_indication();
+		float getd_indication();
+		float getd_permitted();
+		float getd_ebi();
+		float getd_warning();
+		float getV_ebi_CSM(float vitesse);
+		float getV_warning_CSM(float vitesse);
 		std::string getStatus();
 };
 
@@ -105,13 +115,14 @@ class SpeedAndDistanceMonitoringCommands
 {
 	private :
 		Train_dynamique *T_D;
+		TrackRelatedInputs *TrackRI;
 		MostRestrictiveSpeedLimit *MRSP;
 		SupervisionLimits *SL;
 		std::string supervision_status = "Normal";// au démarrage il est en condition normal
 		std::string command_triggered;
 
 	public :
-		SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL);
+		SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL, TrackRelatedInputs &TrackRI);
 		void SpeedAndDistanceMonitoringCommands_update();
 		std::string getSupervision_status();
 		std::string getCommand_triggered();
