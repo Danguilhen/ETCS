@@ -59,7 +59,7 @@ class DeterminationOfDecelerationCurves : public Tools
 	float getDistanceEBD(float speed);
 	float getVitesseEBD(float distance);
 	float getAccEBD(float distance);
-	float getV_start();
+	//float getV_start();
 };
 
 class SupervisionLimits : public Tools

@@ -93,11 +93,14 @@ private:
 class TracksideSpeedRestriction : public Tools
 {
 	private :
-		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 2000, 150}, {2000, 10000, 90}, {10000, 140000, 0}};//[distance debut][distance fin][vitesse]
+		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 800, 150}, {800, 10000, 120}, {10000, 140000, 0}};//[distance debut][distance fin][vitesse]
+		bool speed_change = false;
 	public :
 		TracksideSpeedRestriction();
 		std::vector<std::vector<float>> getVitesseTableau();
 		void TSR_Update(float distance_update);
+		bool getSpeed_change();
+		void setSpeed_change(bool S);
 
 	//void actualisation_vitesse();//Si une vitesse vient se rajouter
 
@@ -128,7 +131,8 @@ class SpeedAndDistanceLimits
 		TracksideSpeedRestriction *TSR;
 	public :
 		SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR);
-		void target();
+		void target_determination();
+		void Target_update();
 		void SADL_update();
 		float getTargetDistance();
 		void SetTargetDistance(float D);

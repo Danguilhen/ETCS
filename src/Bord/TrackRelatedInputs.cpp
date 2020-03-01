@@ -167,14 +167,18 @@ void TracksideSpeedRestriction::TSR_Update(float distance_update)
 		if(tableau_vitesse_ligne[i][0] != -1)
 			tableau_vitesse_ligne[i][0] -= distance_update;
 		tableau_vitesse_ligne[i][1] -= distance_update;
-		if(tableau_vitesse_ligne[i][0] < 0)
+		if(int(tableau_vitesse_ligne[i][0]) < 0)
 			tableau_vitesse_ligne[i][0] = -1;
-		if(tableau_vitesse_ligne[i][1] < 0)
+		if(tableau_vitesse_ligne[i][1] <= 0)
+		{
 			tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
-	if(tableau_vitesse_ligne[0][2] < 0)
-		tableau_vitesse_ligne.erase(tableau_vitesse_ligne.begin());
+			cout << "passs" << endl;
+			speed_change = true;
+		}
 	}
 }
+bool TracksideSpeedRestriction::getSpeed_change(){return speed_change;}
+void TracksideSpeedRestriction::setSpeed_change(bool S){speed_change = S;}
 
 Gradient::Gradient(TrainRelatedInputs &TrainRI)
 {
@@ -214,24 +218,29 @@ void Gradient::Gradient_Update(float distance_update)
 SpeedAndDistanceLimits::SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR)
 {
 	this->TSR = &TSR;
-	target();
+	target_determination();
 	//cout << "SADL" << endl;
 }
 
-void SpeedAndDistanceLimits::target()
+void SpeedAndDistanceLimits::target_determination()
 {
-	float temp = target_distance;
 	target_distance = TSR->getVitesseTableau()[1][0]; // on obtient la prochaine target distance
-	if(temp < target_distance)
-	{
-		target_update = true;  // on va recalculer une nouvelle EBD, on a donc besoin de remettre à jour lors de l exe de la méthode SDM_update
-		cout << "mise à jour de la target" << endl;
-	}
 	speed_target = TSR->getVitesseTableau()[1][2]; // on obtient la prochaine vitesse à respecter
+}
+void SpeedAndDistanceLimits::Target_update()
+{
+	target_update = false;
+	if(TSR->getSpeed_change()) // AJOUTER TOUTES CONDITIONS QUI FONT CHANGER LA EOA (VITESSE, SIGNALISATION, ...) EN METTANT || + LA NOUVELLE CONDITION
+	{
+		target_update = true;
+		cout << "passs" << endl;
+		TSR->setSpeed_change(false);
+	}
 }
 void SpeedAndDistanceLimits::SADL_update()
 {
-	target();
+	target_determination();
+	Target_update();
 }
 float SpeedAndDistanceLimits::getTargetDistance(){return target_distance;}
 void SpeedAndDistanceLimits::SetTargetDistance(float D){target_distance = D;}
