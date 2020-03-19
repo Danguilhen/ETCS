@@ -1,10 +1,6 @@
 #ifndef DEFINE
 #define DEFINE
 
-using namespace sf;
-using namespace std;
-using namespace std::literals::chrono_literals;
-
 #include <iostream>
 #include <cstdlib>
 #include <thread>
@@ -12,13 +8,22 @@ using namespace std::literals::chrono_literals;
 #include <string>
 #include <ctime>
 #include <vector>
-#include <unistd.h>
 #include <algorithm>
 #include <chrono>
 #include <thread>
 
-#define V2f Vector2f
-#define V2i Vector2i
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+
+using namespace sf;
+using namespace std;
+using namespace std::literals::chrono_literals;
+
+#define V2f sf::Vector2f
+#define V2i sf::Vector2i
 #define PI 3.14159265
 #define Constant_G 9.81
 #define TMAJ 15

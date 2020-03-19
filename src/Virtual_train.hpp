@@ -14,7 +14,8 @@ class Virtual_train
 		Software soft;
 		Train_dynamique train_dynamique;
 		ETCS etcs;
-		BASIC basic;
+		BASIC basic; // écran affichage restreint
+		BASIC auxiliaire; // écran avec affichage information auxiliaire
 		//Train_Statique train_statique;
 		Virtual_train();
 		void update();

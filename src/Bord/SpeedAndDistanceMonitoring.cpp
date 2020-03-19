@@ -4,7 +4,7 @@
 #include "TrackRelatedInputs.hpp"
 #include "../Train_dynamique.hpp"
 
-SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI) : TBS(TrainRI, TrackRI), MRSP(TrackRI), DODC(TrackRI,TrainRI, T_D, TBS), SL(T_D, TrainRI, TrackRI, MRSP, DODC), SADMC(T_D, MRSP, SL, TrackRI)
+SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft) : TBS(TrainRI, TrackRI), MRSP(TrackRI), DODC(TrackRI,TrainRI, T_D, TBS), SL(T_D, TrainRI, TrackRI, MRSP, DODC), SADMC(T_D, MRSP, SL, TrackRI, soft)
 {
 	this->T_D = &T_D;
 	this->TrainRI = &TrainRI;
@@ -180,6 +180,7 @@ void SupervisionLimits::Supervision_limits()
 		if(V_indication <= MRSP->getV_MRSP()) // condition pour passer de CSM à TSM
 		{
 			status = "TSM";
+			playfunction(2);
 		}
 	}
 
@@ -215,8 +216,10 @@ void SupervisionLimits::Supervision_limits()
 		d_indication = curvestab[n_ligne][4];
 		if(TrackRI->SADL.getTarget_update() == true) // lorsque la EBD croise la EBI de la csm, alors on change de status
 		{
+
 			status = "CSM";
-			cout << "changement" << endl;
+			playfunction(2);
+			//cout << "changement" << endl;
 		}
 	}
 }
@@ -228,9 +231,13 @@ MostRestrictiveSpeedLimit::MostRestrictiveSpeedLimit(TrackRelatedInputs &TrackRI
 }
 void MostRestrictiveSpeedLimit::function_MRSP()
 {
+	//cette fonction devra évoluer afin de répondre à la vraie définition de la MRSP, mais, dans le but
+	//de simplifier l'execution, on appliquera la vitesse [0]
 	V_MRSP = TrackRI->TSR.getVitesseTableau()[0][2];
+	distance = TrackRI->TSR.getVitesseTableau()[0][1];
 }
 float MostRestrictiveSpeedLimit::getV_MRSP(){return V_MRSP;}
+float MostRestrictiveSpeedLimit::getDistance(){return distance;}
 
 
 DeterminationOfDecelerationCurves::DeterminationOfDecelerationCurves(TrackRelatedInputs &TrackRI, TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Traction_Braking_system &TBS)
@@ -352,12 +359,13 @@ float DeterminationOfDecelerationCurves::getAccEBD(float distance)
 	return EBD[i][2];
 }
 
-SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL, TrackRelatedInputs &TrackRI)
+SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL, TrackRelatedInputs &TrackRI, Software &soft)
 {
 	this->T_D = &T_D;
 	this->TrackRI = &TrackRI;
 	this->MRSP = &MRSP;
 	this->SL = &SL;
+	this->soft = &soft;
 	//cout << "SADMC" << endl;
 }
 
@@ -369,9 +377,16 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 		if(T_D->getV_train() <= MRSP->getV_MRSP() && supervision_status == "Normal")
 			supervision_status = "Normal";
 		if(T_D->getV_train() > MRSP->getV_MRSP() && supervision_status == "Normal")
+		{
 			supervision_status = "Overspeed";
+			playfunction(3); // on démarre le son du dépassement de vitesse
+		}
 		if(T_D->getV_train() > SL->getV_warning() && supervision_status == "Overspeed")
+		{
 			supervision_status = "Warning";
+			stopfunction(); // on arrête le son de la vitesse dépassée
+			playfunction(4); // on démarre le warning son
+		}
 		/*if(T_D->getV_train() > V_sbi)//à voir avec Benoit
 		{
 			supervision_status = "Intervention";
@@ -392,6 +407,7 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 		if(T_D->getV_train() <= MRSP->getV_MRSP() && supervision_status != "Intervention")
 		{
 			supervision_status = "Normal";
+			stopfunction();
 			if (command_triggered == "SB")
 			{
 				command_triggered = "";
@@ -405,9 +421,16 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 		if(T_D->getV_train() >= int(SL->getV_indication()) && supervision_status == "Normal")
 			supervision_status = "Indication";
 		if(T_D->getV_train() >= int(SL->getV_permitted()) && supervision_status == "Indication")
+		{
 			supervision_status = "Overspeed";
+			playfunction(3); // on démarre le son du dépassement de vitesse
+		}
 		if(T_D->getV_train() >= int(SL->getV_warning()) && supervision_status == "Overspeed")
+		{
 			supervision_status = "Warning";
+			stopfunction(); // on arrête le son de la vitesse dépassée
+			playfunction(4); // on démarre le warning son
+		}
 		if(T_D->getV_train() >= int(SL->getV_ebi()))
 		{
 			supervision_status = "Intervention";
@@ -418,6 +441,7 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 		{
 			supervision_status = "Normal";
 			command_triggered = "";
+			stopfunction();
 		}
 		if(supervision_status != "Intervention")
 		{
@@ -425,7 +449,10 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 				supervision_status = "Normal";
 			else
 			if(T_D->getV_train() <= SL->getV_permitted())
+			{
 				supervision_status = "Indication";
+				stopfunction();
+			}
 			if(command_triggered == "SB")
 			{
 				command_triggered = "";

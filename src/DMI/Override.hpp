@@ -11,7 +11,7 @@ class Override : public Menu
 
 	Train_dynamique *T_D;
 	public :
-		Override(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran);
+		Override(std::vector<Symbol> &symbol, std::vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, std::string &ecran);
 		void update();
 };
 

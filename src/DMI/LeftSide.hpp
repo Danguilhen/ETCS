@@ -8,7 +8,7 @@ class LeftSide : public virtual Tools
 {
 	private :
 		Cadran cadran;
-		vector <Symbol> *symbol;
+		std::vector <Symbol> *symbol;
 		ETCS_Bord *bord;
 		void targetDistance(int distance);
 	public :

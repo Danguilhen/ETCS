@@ -66,3 +66,8 @@ void BASIC::affichageBoutons()
 	creation_rectangle(V2f(0, 0), V2f(54, (54 + 30 + 191 + 25)), 1);
 	creation_rectangle(V2f(0, (54 + 30 + 191 + 25)), V2f(54, 25), 1);
 }
+
+void BASIC::affichageFreinage()
+{
+	creation_rectangle(V2f((54 + 280 + 40 + 166 + 40 + 20 + 40), 0), V2f(440, (54 + 30 + 191 + 25 + 25 + 25  + 25 + 25 + 25 + 30 + 50)), 1);
+}

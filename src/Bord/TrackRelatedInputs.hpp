@@ -1,7 +1,7 @@
 #ifndef BBB
 #define BBB
 
-#include "../define.hpp"
+#include "define.hpp"
 #include "Tools.hpp"
 #include "TrainRelatedInputs.hpp"
 #include "Train_dynamique.hpp"
@@ -93,7 +93,7 @@ private:
 class TracksideSpeedRestriction : public Tools
 {
 	private :
-		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 800, 150}, {800, 10000, 120}, {10000, 140000, 0}};//[distance debut][distance fin][vitesse]
+		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 3000, 150}, {3000, 10000, 50}, {10000, 14000, 80}, {14000, 14000, 0}};//[distance debut][distance fin][vitesse]
 		bool speed_change = false;
 	public :
 		TracksideSpeedRestriction();
@@ -149,11 +149,11 @@ class TrackRelatedInputs
 	private :
 		int pointKilometrique = 0;
 		int remainingDistanceTunnel = 500;
-		string tunnelStoppingArea = "TunnelStoppingArea";
-		Clock chronoTRI;//créer le chrono
-		Time diftimeTRI;//créer la varaible qui stocke le temps écoulé
-		float deltatsTRI;//créer la variable qui stocke le temps écoulé en seconde
-		float distance_update; // distance parcourue entre chaque mise à jour
+		std::string tunnelStoppingArea = "TunnelStoppingArea";
+		//Clock chronoTRI;//créer le chrono
+		//Time diftimeTRI;//créer la varaible qui stocke le temps écoulé
+		//float deltatsTRI;//créer la variable qui stocke le temps écoulé en seconde
+		//float distance_update; // distance parcourue entre chaque mise à jour
 
 	public :
 		Train_dynamique *T_D;
@@ -165,8 +165,8 @@ class TrackRelatedInputs
 		void TrackRI_Update();
 		int getPointKilometrique();
 		int getRemainingDistanceTunnel();
-		string getTunnelStoppingArea();
-		void setTunnelStoppingArea(string TSA);
+		std::string getTunnelStoppingArea();
+		void setTunnelStoppingArea(std::string TSA);
 };
 
 

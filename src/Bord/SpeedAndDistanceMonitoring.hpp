@@ -1,8 +1,9 @@
 #ifndef CCC
 #define CCC
 
-#include "../define.hpp"
-#include "../Tools.hpp"
+#include "define.hpp"
+#include "Tools.hpp"
+#include "Sound.hpp"
 
 class TrackRelatedInputs;
 class TrainRelatedInputs;
@@ -36,11 +37,13 @@ class MostRestrictiveSpeedLimit
 {
 	private :
 		float V_MRSP;
+		float distance;
 		TrackRelatedInputs *TrackRI;
 	public :
 		MostRestrictiveSpeedLimit(TrackRelatedInputs &TrackRI);
 		void function_MRSP();
 		float getV_MRSP();
+		float getDistance();
 };
 
 class DeterminationOfDecelerationCurves : public Tools
@@ -62,7 +65,7 @@ class DeterminationOfDecelerationCurves : public Tools
 	//float getV_start();
 };
 
-class SupervisionLimits : public Tools
+class SupervisionLimits : public Tools, public Son
 {
 	private :
 		Train_dynamique *T_D;
@@ -111,18 +114,19 @@ class SupervisionLimits : public Tools
 		std::string getStatus();
 };
 
-class SpeedAndDistanceMonitoringCommands
+class SpeedAndDistanceMonitoringCommands : public Son
 {
 	private :
 		Train_dynamique *T_D;
 		TrackRelatedInputs *TrackRI;
 		MostRestrictiveSpeedLimit *MRSP;
 		SupervisionLimits *SL;
+		Software *soft;
 		std::string supervision_status = "Normal";// au démarrage il est en condition normal
 		std::string command_triggered;
 
 	public :
-		SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL, TrackRelatedInputs &TrackRI);
+		SpeedAndDistanceMonitoringCommands(Train_dynamique &T_D, MostRestrictiveSpeedLimit &MRSP, SupervisionLimits &SL, TrackRelatedInputs &TrackRI, Software &soft);
 		void SpeedAndDistanceMonitoringCommands_update();
 		std::string getSupervision_status();
 		std::string getCommand_triggered();
@@ -144,7 +148,7 @@ class SpeedAndDistanceMonitoring
 		DeterminationOfDecelerationCurves DODC;
 		SupervisionLimits SL;
 		SpeedAndDistanceMonitoringCommands SADMC;
-		SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI);
+		SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft);
 		void SDM_Update();
 };
 

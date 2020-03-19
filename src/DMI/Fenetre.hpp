@@ -9,9 +9,9 @@
 class Fenetre : public virtual Tools
 {
 	protected :
-		vector <Symbol> *symbol;
+		std::vector <Symbol> *symbol;
 		ETCS_Bord *bord;
-		string *ecran;
+		std::string *ecran;
 		void affichageBoutons();
 };
 

@@ -1,12 +1,5 @@
 #include "Planning.hpp"
 
-float Gradient_DMI::getDistance_debut(){return distance_debut;}
-void Gradient_DMI::setDistance_debut(float D){distance_debut = D;}
-float Gradient_DMI::getTaille(){return taille;}
-void Gradient_DMI::setTaille(float T){taille = T;}
-int Gradient_DMI::getValeur(){return valeur;}
-void Gradient_DMI::setValeur(int V){valeur = V;}
-
 int PASP::getVitesse_but(){return vitesse_but;}
 void PASP::setVitesse_but(int V){vitesse_but = V;}
 int PASP::getDistance_but(){return distance_but;}
@@ -26,61 +19,52 @@ int Planning::getScale(){return scale;}
 void Planning::setScale(int S){scale = S;}
 
 
-void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
+void Planning::pasp()
 {
 	int distance = 0;
 	int target = 0;
 	int vitesse = 0;
 	int quart = 0;
-	int plus_petite_V = soft->getVligne(); // ATTENTION A PRENDRE V_LIGNE DANS soft
+	int plus_petite_V = bord->SDM.MRSP.getV_MRSP(); // ATTENTION A PRENDRE V_LIGNE DANS soft
 	int distance_plus_petite_V = 40000;
 	int n;
 
-	for (size_t i = 0; i < tab_pasp.size(); i++)
+	for (size_t i = 0; i < bord->TrackRI.TSR.getVitesseTableau().size(); i++)
 	{
-		if(i != 0)
+		if(bord->TrackRI.TSR.getVitesseTableau()[i][2] < plus_petite_V)
 		{
-			tab_pasp[i].setDistance_but(tab_pasp[i].getDistance_but() - delta_distance);
-			if(tab_pasp[i].getDistance_but()<0)
-			{
-				//train.setVligne(tab_pasp[i].getVitesse_but());
-				tab_pasp.erase(tab_pasp.begin() + i);
-			}
-		}
-		if(tab_pasp[i].getVitesse_but() < plus_petite_V)
-		{
-			plus_petite_V = tab_pasp[i].getVitesse_but();
-			distance_plus_petite_V = tab_pasp[i].getDistance_but();
+			plus_petite_V = bord->TrackRI.TSR.getVitesseTableau()[i][2];
+			distance_plus_petite_V = bord->TrackRI.TSR.getVitesseTableau()[i][1];
 		}
 	}
 
-	plus_petite_V = soft->getVligne();
-	for(size_t i = 0; i < tab_pasp.size(); i++)
+	//plus_petite_V = soft->getVligne();
+	for(size_t i = 0; i < bord->TrackRI.TSR.getVitesseTableau().size(); i++)
 	{
 			n = 0;
-		if(tab_pasp[i].getVitesse_but() <= plus_petite_V && tab_pasp[i].getDistance_but() > 0 && i > 0)
+		if(bord->TrackRI.TSR.getVitesseTableau()[i][2] <= plus_petite_V && bord->TrackRI.TSR.getVitesseTableau()[i][1] > 0 && i > 0)
 		{
-			if(tab_pasp[i].getDistance_but() == distance_plus_petite_V && tab_pasp[i].getVitesse_but() != 0)
+			if(bord->TrackRI.TSR.getVitesseTableau()[i][1] == distance_plus_petite_V && bord->TrackRI.TSR.getVitesseTableau()[i][2] != 0)
 				distance = 40000;
 			else
-				distance = tab_pasp[i].getDistance_but();
+				distance = bord->TrackRI.TSR.getVitesseTableau()[i][1];
 			if(i == 1)
-				vitesse = soft->getVligne();
+				vitesse = bord->SDM.MRSP.getV_MRSP();
 			else
 			{
 				do
 				{
 					n++;
-				}while(tab_pasp[i-n].getVitesse_but() != plus_petite_V);
-				vitesse = tab_pasp[i-n].getVitesse_but();
+				}while(bord->TrackRI.TSR.getVitesseTableau()[i - n][2]!= plus_petite_V);
+				vitesse = bord->TrackRI.TSR.getVitesseTableau()[i - n][2];
 			}
-			if(vitesse > 0 && vitesse <= int(soft->getVligne()) / 4.0)
+			if(vitesse > 0 && vitesse <= int(bord->SDM.MRSP.getV_MRSP()) / 4.0)
 				quart = 1;
-			else if(vitesse <= int(soft->getVligne()) / 2.0)
+			else if(vitesse <= int(bord->SDM.MRSP.getV_MRSP()) / 2.0)
 				quart = 2;
-			else if(vitesse <= 3 * int(soft->getVligne()) / 4.0)
+			else if(vitesse <= 3 * int(bord->SDM.MRSP.getV_MRSP()) / 4.0)
 				quart = 3;
-			else if (vitesse >= 3 * int(soft->getVligne()) / 4.0)
+			else if (vitesse >= 3 * int(bord->SDM.MRSP.getV_MRSP()) / 4.0)
 				quart = 4;
 			if(distance <= (scale / 40.0) && distance >= 0)
 				target = 283 - (distance * (283 - 250) / (scale / 40.0));
@@ -90,7 +74,7 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 				target = 15;
 			rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, target), V2f(quart * 93 / 4.0, 283 - target), PASP_LIGHT);
 		}
-		else if (tab_pasp.size() == 1)
+		else if (bord->SDM.MRSP.getV_MRSP() == 1)
 		{
 			quart = 4;
 			distance = 40000;
@@ -101,17 +85,17 @@ void Planning::pasp(int scale, vector<PASP> &tab_pasp, float delta_distance)
 			else
 				target = 15;
 		}
-		plus_petite_V = tab_pasp[i].getVitesse_but();
-		if(i==tab_pasp.size()-1)
+		plus_petite_V = bord->TrackRI.TSR.getVitesseTableau()[i][2];
+		if(i==bord->TrackRI.TSR.getVitesseTableau().size() - 1)
 		{
-			plus_petite_V = soft->getVligne();
+			plus_petite_V = bord->TrackRI.TSR.getVitesseTableau()[i][2];
 		}
 	}
 }
 
-void Planning::planningInformation(float temps_ecoule)
+void Planning::planningInformation()
 {
-	float delta_distance;
+	//int delta_distance = 0;
 	if(scale == 1000)
 	{
 		NA_05.afficher(V2f(54 + 280 + 40 / 2.0, 15 + 270 + 15 / 2.0));	//D9
@@ -140,13 +124,12 @@ void Planning::planningInformation(float temps_ecoule)
 	creation_texte("0", MEDIUM_GREY, 10, 0, V2f(54 + 280 + 40 - 3, 283 + 1), 2);
 	//FOND
 	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 15), V2f(93 + 8, 270), PASP_DARK);
-	//MOUVEMENT
-	delta_distance = (T_D->getV_train() / 3.6) * temps_ecoule;
+
 	//LES PASP
 
-	pasp(scale, tab_pasp, delta_distance);
-	Orders_and_announcements(scale, delta_distance, tab_pa);
-	SpeedProfileDiscontinuityInformation(scale, delta_distance, tab_paf);
+	pasp();
+	//Orders_and_announcements(scale, delta_distance, tab_pa);
+	SpeedProfileDiscontinuityInformation();
 	//LES GRADUATIONS
 	rectangle(V2f(54 + 280 + 40, 283), V2f(200, 2), MEDIUM_GREY);
 	rectangle(V2f(54 + 280 + 40, 250), V2f(200, 1), DARK_GREY);
@@ -165,10 +148,10 @@ void Planning::planningInformation(float temps_ecoule)
 	//	rectangle(V2f(54 + 280 + 40 + 25 * 3 + 18 + 14, 283 - (283 - 250) - log10(TSMstart / (scale / 40.0)) * (250 - 21) / log10(scale / (scale / 40.0))), V2f(93, 2), YELLOW, RE,
 	//		fenetre, ecart); //Indication Marker
 	//LES GRADIENT
-	gradientProfile(scale, delta_distance, tab_grad);
+	gradientProfile();
 }
 
-void Planning::Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa)
+/*void Planning::Orders_and_announcements(int scale, float delta_distance, vector<Announcements> &tab_pa)
 {
 	int target = 0;
 	int distance;
@@ -228,36 +211,37 @@ void Planning::Orders_and_announcements(int scale, float delta_distance, vector<
 			tab_pa.erase(tab_pa.begin()+i);
 		}
 	}
-}
+}*/
 
-void Planning::gradientProfile(int scale, float delta_distance, vector<Gradient_DMI> &tab_grad)
+void Planning::gradientProfile()
 {
 	Color couleur;
 	string sens;
 	float taille;
 	float hauteur;
 	int valeur;
-	for(size_t i=0; i<tab_grad.size(); i++)
+	for(size_t i=0; i < bord->TrackRI.gradient_ligne.getTab_Gradient().size(); i++)
 		{
-			tab_grad[i].setDistance_debut(tab_grad[i].getDistance_debut() - delta_distance);
-			if(tab_grad[i].getDistance_debut() > 0)
+			if(bord->TrackRI.gradient_ligne.getTab_Gradient()[i][0] > 0)
 			{
-				hauteur = tab_grad[i].getDistance_debut();
-				taille = tab_grad[i].getTaille();
+				hauteur = bord->TrackRI.gradient_ligne.getTab_Gradient()[i][0];
+				taille = bord->TrackRI.gradient_ligne.getTab_Gradient()[i][1];
 			}
 		else
 		{
 			hauteur = 0;
-			tab_grad[i].setTaille(tab_grad[i].getTaille() - delta_distance);
-			taille = tab_grad[i].getTaille();
+			taille = bord->TrackRI.gradient_ligne.getTab_Gradient()[i][1];
 		}
-		if(tab_grad[i].getTaille() < 0)
-		taille = 0;
-		valeur = tab_grad[i].getValeur();
+		if(taille < 0)
+			taille = 0;
+		valeur = bord->TrackRI.gradient_ligne.getTab_Gradient()[i][2];
+		if(i == 2)
+		{
+			//cout << "hauteur : " << hauteur << "taille : " << taille <<endl;
+		}
 
 		if(hauteur < scale)
 		{
-			taille = hauteur + taille;
 			if(hauteur <= (scale / 40.0) && hauteur >= 0)
 				hauteur = hauteur * (283 - 250) / (scale / 40.0);
 			else if(hauteur <= scale && hauteur >= 0)
@@ -299,15 +283,16 @@ void Planning::gradientProfile(int scale, float delta_distance, vector<Gradient_
 	}
 }
 
-void Planning::SpeedProfileDiscontinuityInformation(int scale, float delta_distance, vector<Announcements> &tab_paf)
+void Planning::SpeedProfileDiscontinuityInformation()
 {
 	int distance;
 	int target;
 	int position;
+	int indice;
 
-	for (size_t i = 0; i < tab_paf.size(); i++)
+	for (size_t i = 1; i < bord->TrackRI.TSR.getVitesseTableau().size(); i++)
 	{
-		distance = tab_paf[i].getDistance();
+		distance = bord->TrackRI.TSR.getVitesseTableau()[i][0];
 		if(distance <= (scale / 40.0) && distance >= 0)
 			target = 283 - (distance * (283 - 250) / (scale / 40.0));
 		else if(distance <= scale && distance >= 0)
@@ -315,34 +300,29 @@ void Planning::SpeedProfileDiscontinuityInformation(int scale, float delta_dista
 		else
 			target = 15;
 		target = target - 5;
-		tab_paf[i].setnumero(92);
+		if(bord->TrackRI.TSR.getVitesseTableau()[i][2] > bord->TrackRI.TSR.getVitesseTableau()[i - 1][2])
+			indice = 91;
+		else
+			indice = 92;
 
-		//Dans le futur faire comparer la première case avec la vitesse ligne puis comparer les cases entre elles afin de voir si il y aura une augmentation ou une diminution
-
-		if(tab_paf[i].getDistance() <= scale)
+		if(bord->TrackRI.TSR.getVitesseTableau()[i][0] <= scale)
 		{
-			(*symbol)[tab_paf[i].getnumero()].afficher(V2f(54 + 280 + 40 + 3 * 25 + 18 + 13, target + 10));
-			if(tab_paf[i].getVitesse() > 99)
+			(*symbol)[indice].afficher(V2f(54 + 280 + 40 + 3 * 25 + 18 + 13, target + 10));
+			if(int(bord->TrackRI.TSR.getVitesseTableau()[i][2]) > 99)
 				position = 19;
-			else if(tab_paf[i].getVitesse() > 9)
+			else if(int(bord->TrackRI.TSR.getVitesseTableau()[i][2]) > 9)
 				position = 20 - 4;
 			else
 				position = 20 - 7;
-			if(tab_paf[i].getnumero() == 92)
-				creation_texte(to_string(tab_paf[i].getVitesse()), GREY, 11, 0, V2f(54 + 280 + 40 + 3 * 25 + 18 + 13 + position, target + 9), 1);
-			if(tab_paf[i].getnumero() == 91)
-				creation_texte(to_string(tab_paf[i].getVitesse()), GREY, 11, 0, V2f(54 + 280 + 40 + 3 * 25 + 18 + 13 + position, target + 14), 1);
-		}
-		tab_paf[i].setDistance(tab_paf[i].getDistance() - delta_distance);
-		if(tab_paf[i].getDistance() <= 0)
-		{
-			tab_paf.erase(tab_paf.begin()+i);
+			if(indice == 92)
+				creation_texte(to_string(int(bord->TrackRI.TSR.getVitesseTableau()[i][2])), GREY, 11, 0, V2f(54 + 280 + 40 + 3 * 25 + 18 + 13 + position, target + 9), 1);
+			if(indice == 91)
+				creation_texte(to_string(int(bord->TrackRI.TSR.getVitesseTableau()[i][2])), GREY, 11, 0, V2f(54 + 280 + 40 + 3 * 25 + 18 + 13 + position, target + 14), 1);
 		}
 	}
 }
 
-Planning::Planning(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D) : pasp0(400, 40000), pasp1(225, 3000), pasp2(150, 5000), pasp5(0, 8000), gradient1(2001, 2000, 20), gradient2(0, 2000, 0), gradient3(10000, 5000, -5),
-	gradient4(4001, 6000, 0), gradient5(15001, 7000, 35), PA1(1500, 98), PA2(1000, 72), PA3(3000, 97), PA6(4000, 75)
+Planning::Planning(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D)  /* PA1(1500, 98), PA2(1000, 72), PA3(3000, 97), PA6(4000, 75)*/
 {
 	//cout<<"Pla"<<endl;
 	this->bord = &bord;
@@ -350,27 +330,12 @@ Planning::Planning(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Trai
 	this->soft = &soft;
 	this->T_D = &T_D;
 
-	tab_pasp.push_back(pasp0);
-	tab_pasp.push_back(pasp1);
-	tab_pasp.push_back(pasp2);
-	tab_pasp.push_back(pasp5);
-
-	tab_grad.push_back(gradient1);
-	tab_grad.push_back(gradient2);
-	tab_grad.push_back(gradient3);
-	tab_grad.push_back(gradient4);
-	tab_grad.push_back(gradient5);
+/*
 
 	tab_pa.push_back(PA1);
 	tab_pa.push_back(PA2);
 	tab_pa.push_back(PA3);
 	tab_pa.push_back(PA6);
-
-	PAF1.PAF(225, 3000);
-	PAF2.PAF(150, 5000);
-	PAF3.PAF(0,8000);
-
-	tab_paf.push_back(PAF1);
-	tab_paf.push_back(PAF2);
-	tab_paf.push_back(PAF3);
+	*/
 }
+

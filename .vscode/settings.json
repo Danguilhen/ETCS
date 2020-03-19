@@ -110,7 +110,8 @@
 		"scoped_allocator": "cpp",
 		"shared_mutex": "cpp",
 		"typeindex": "cpp",
-		"valarray": "cpp"
+		"valarray": "cpp",
+		"*.idl": "cpp"
 	},
 
 	"terminal.integrated.shell.windows": "C:/Program Files/Git/bin/bash.exe",

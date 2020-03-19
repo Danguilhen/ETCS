@@ -1,8 +1,8 @@
 #ifndef AA
 #define AA
 
-#include "../define.hpp"
-#include "../Tools.hpp"
+#include "define.hpp"
+#include "Tools.hpp"
 
 class Train_Categories
 {

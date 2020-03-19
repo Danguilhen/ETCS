@@ -47,18 +47,18 @@ class Cadran : public Tools
 		float Vwhite = 0;
 		float VmediumGrey = 0;
 		float VdarkGrey = 0;
-		Color aiguilleColor = GREY;
+		sf::Color aiguilleColor = GREY;
 		ETCS_Bord *bord;
 		Train_dynamique *T_D;
-		ConvexShape aiguille;
-		vector<DonneesAfficheurVitesse> graduations;
+		sf::ConvexShape aiguille;
+		std::vector<DonneesAfficheurVitesse> graduations;
 		V2f centre;
-		CircleShape Centre;
+		sf::CircleShape Centre;
 		float teta0;
 		float kmh2degVfaible;
 		float kmh2degVeleve = kmh2degVfaible;
 		float teta_origine;
-		VertexArray Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d);
+		sf::VertexArray Shape(DonneesAfficheurVitesse grad, V2f a, V2f b, V2f c, V2f d);
 		V2f local2globalCoordonates(V2f CoordonneesPolaires);
 	public :
 		Cadran(Software &soft, Train_dynamique &T_D, ETCS_Bord &bord);

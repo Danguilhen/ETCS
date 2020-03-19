@@ -8,14 +8,14 @@ class Symbol
 {
 	private :
 		Software *soft;
-		Image image;
-		Texture texture;
-		Color m_color;
-		vector<Sprite> sprite;
+		sf::Image image;
+		sf::Texture texture;
+		sf::Color m_color;
+		std::vector<sf::Sprite> sprite;
 
 	public :
 		Symbol(Software &soft);
-		void loadSymbol(string chemin_dacces);
+		void loadSymbol(std::string chemin_dacces);
 		void afficher(V2f position);
 		void effacer();
 };

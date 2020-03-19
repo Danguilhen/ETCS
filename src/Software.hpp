@@ -6,10 +6,10 @@
 class Software
 {
 	private :
-		string type_signalisation = "ETCS"; //ETCS OU A_VIDE
-		RenderWindow fenetre;
-		ContextSettings settings;
-		Event event;
+		std::string type_signalisation = "ETCS"; //ETCS OU A_VIDE
+		sf::RenderWindow fenetre;
+		sf::ContextSettings settings;
+		sf::Event event;
 		double RE ;
 		int ecartX = 0;
 		int ecartY = 0;
@@ -36,11 +36,11 @@ class Software
 		void setSon(int a);
 		bool getEtat();
 		void setEtat(bool stop);
-		RenderWindow *getFenetre();
+		sf::RenderWindow *getFenetre();
 		int getVmax();
 		void setVmax(int V);
-		string getType_signalisation();
-		void setType_signalisation(string T);
+		std::string getType_signalisation();
+		void setType_signalisation(std::string T);
 		int getVligne();
 		void setVligne(int V);
 		bool getS_Finished();

@@ -7,16 +7,23 @@ class Train_dynamique
 {
 	private :
 	float V_train = 80;
-	//Clock chrono;//créer le chrono
-	//Time diftime;//créer la varaible qui stocke le temps écoulé
-	//float deltats;//créer la variable qui stocke le temps écoulé en seconde*/
+	sf::Clock chrono;//créer le chrono
+	sf::Time diftime;//créer la varaible qui stocke le temps écoulé
+	float deltats;//créer la variable qui stocke le temps écoulé en seconde
+	float distance_update; // distance parcourue entre chaque mise à jour
+	float acceleration;
+	int traction;
+
 
 	public :
 
-	//void TD_update();
+	void update();
 	float getV_train();
 	void setV_train(float V);
-
+	void mouvementTrain();
+	float getDistance_Uptdate();
+	float getTraction();
+	void setTraction(float A);
 };
 
 /*

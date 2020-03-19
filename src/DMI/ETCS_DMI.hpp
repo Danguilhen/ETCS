@@ -14,11 +14,11 @@
 class ETCS_DMI : public Fenetre
 {
 	private :
-		string etat_ecran = "Default";
-		vector <Symbol> symbol;
-		vector <Button> button;
+		std::string etat_ecran = "Default";
+		std::vector <Symbol> symbol;
+		std::vector <Button> button;
 		Train_dynamique *T_D;
-		Event event;
+		sf::Event event;
 		Default def;
 		Main main;
 		Override overide;
@@ -28,7 +28,7 @@ class ETCS_DMI : public Fenetre
 		//SRspeed srSpeed;
 		//DataView dataView;
 		//SystemVersion systemVersion;
-		VertexArray fond{Quads,4};
+		sf::VertexArray fond{Quads,4};
 		void action();
 	public :
 		ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);

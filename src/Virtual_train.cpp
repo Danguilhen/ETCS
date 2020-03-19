@@ -1,7 +1,7 @@
 
 #include "Virtual_train.hpp"
 
-Virtual_train::Virtual_train() : etcs(soft, train_dynamique), basic(train_dynamique, soft)
+Virtual_train::Virtual_train() : etcs(soft, train_dynamique), basic(train_dynamique, soft), auxiliaire(train_dynamique, soft)
 {
 	//cout<< "VT" <<endl;
 	//constructeur
@@ -10,7 +10,8 @@ Virtual_train::Virtual_train() : etcs(soft, train_dynamique), basic(train_dynami
 void Virtual_train::update()
 {
 	soft.getFenetre()->clear();
-	//soft.software_update();
+	soft.software_update();
+	train_dynamique.update();
 	//data.update();
 	if(soft.getType_signalisation() == "ETCS")
 	{
@@ -20,5 +21,6 @@ void Virtual_train::update()
 	{
 		basic.update();
 	}
+	auxiliaire.affichageFreinage();
 	soft.getFenetre()->display();
 }

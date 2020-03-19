@@ -136,11 +136,11 @@ void Default::update()
 		{
 			(*symbol)[48].afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));		//H2 - NA02
 			if(planningAffichage == "show planning information" && bord->getGeneralMode() == "FS")
-				planning.planningInformation(0);
+				planning.planningInformation();
 		}
 		if(bord->getVersion() == "3.6.0" && (bord->getGeneralMode() == "FS" || (bord->getGeneralMode() == "OS" && S_D_monitoring == "On")))
 		{
-			planning.planningInformation(0);
+			planning.planningInformation();
 		}
 	}
 }

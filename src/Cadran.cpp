@@ -365,25 +365,25 @@ void Cadran::convertisseurVitesses()
 				//{
 					aiguilleColor = RED;
 					//actualisationVitesse(bord->SDM.SL.getV_ebi(), 0, bord->SDM.MRSP.getV_MRSP(), 0, 0, 0);
-					actualisationVitesse(T_D->getV_train(), 0, bord->SDM.SL.getV_permitted(), 0, 0, 0);
+					actualisationVitesse(T_D->getV_train(), 0, bord->SDM.SL.getV_permitted(), 0, 0, bord->TrackRI.SADL.getSpeedTarget());
 				//}
 
 			}
 			else if(bord->SDM.SADMC.getSupervision_status() == "Warning")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.SL.getV_permitted(), 0, 0, 0);
+				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.SL.getV_permitted(), 0, 0, bord->TrackRI.SADL.getSpeedTarget());
 
 			}
 			else if(bord->SDM.SADMC.getSupervision_status() == "Overspeed")
 			{
 				aiguilleColor = ORANGE;
-				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.SL.getV_permitted(), 0, 0, 0);
+				actualisationVitesse(0, bord->SDM.SL.getV_ebi(), bord->SDM.SL.getV_permitted(), 0, 0, bord->TrackRI.SADL.getSpeedTarget());
 			}
 			else if(bord->SDM.SADMC.getSupervision_status() == "Indication")
 			{
 				aiguilleColor = YELLOW;
-				actualisationVitesse(0,0,bord->SDM.SL.getV_permitted(),0,0, bord->SDM.SL.getV_indication());
+				actualisationVitesse(0,0,bord->SDM.SL.getV_permitted(),0,0, bord->TrackRI.SADL.getSpeedTarget());
 			}
 			else if(bord->SDM.SADMC.getSupervision_status() == "Normal")
 			{

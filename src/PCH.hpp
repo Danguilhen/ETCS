@@ -47,6 +47,7 @@
 #include <sstream>
 #include <thread>
 #include <type_traits>
+#include "define.hpp"
 
 // Windows
 #ifdef _WIN32

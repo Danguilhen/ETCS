@@ -12,13 +12,13 @@ class Default : public Fenetre
 {
 	private :
 		LeftSide left;
-		vector <Button> *buttons;
+		std::vector <Button> *buttons;
 		Planning planning;
-		string geographicalPosition;
-		string S_D_monitoring = "Off";
-		string planningAffichage = "show planning information";
+		std::string geographicalPosition;
+		std::string S_D_monitoring = "Off";
+		std::string planningAffichage = "show planning information";
 	public :
-		Default(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran);
+		Default(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, std::string & ecran);
 		void update();
 };
 
