@@ -1,22 +1,22 @@
 #ifndef DEFINE
 #define DEFINE
 
-//#include <iostream>
-//#include <cstdlib>
-//#include <thread>
-//#include <math.h>
-//#include <string>
-//#include <ctime>
-//#include <vector>
-//#include <algorithm>
-//#include <chrono>
-//#include <thread>
+#include <iostream>
+#include <cstdlib>
+#include <thread>
+#include <math.h>
+#include <string>
+#include <ctime>
+#include <vector>
+#include <algorithm>
+#include <chrono>
+#include <thread>
 
-//#include <SFML/Audio.hpp>
-//#include <SFML/Graphics.hpp>
-//#include <SFML/Network.hpp>
-//#include <SFML/System.hpp>
-//#include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 
 using namespace sf;
 using namespace std;

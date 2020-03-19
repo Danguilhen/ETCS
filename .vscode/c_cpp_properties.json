@@ -7,14 +7,13 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"${workspaceFolder}/SFML-2.5.1/include/**",
+				"~/SFML-2.5.1/include",
 				"/usr/local/include/**",
 				"/usr/include/**"
 			],
 			"defines": [
 				"_DEBUG"
 			],
-			"compilerPath": "/usr/bin/g++",
 			"cStandard": "c11",
 			"cppStandard": "c++17",
 			"forcedInclude": [
@@ -52,8 +51,7 @@
 				"${workspaceFolder}/src",
 				"${workspaceFolder}/lib",
 				"${workspaceFolder}/test",
-				"${workspaceFolder}/SFML-2.5.1/include/**",
-				"${workspaceFolder}/mingw32/bin/gcc.exe"
+				"C:/SFML-2.5.1/include"
 			],
 			"defines": [
 				"_DEBUG",
@@ -61,10 +59,7 @@
 				"_UNICODE"
 			],
 			"cStandard": "c11",
-			"cppStandard": "c++17",
-			"forcedInclude": [
-				"${workspaceFolder}/src/PCH.hpp"
-			]
+			"cppStandard": "c++17"
 		}
 	],
 	"version": 4
