@@ -23,6 +23,7 @@ class Train_dynamique
 	void mouvementTrain();
 	float getDistance_Uptdate();
 	float getTraction();
+// test 
 	void setTraction(float A);
 };
 
