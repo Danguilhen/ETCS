@@ -5,12 +5,14 @@
 #include "ETCS.hpp"
 #include "DMI/BASIC.hpp"
 #include "Train_dynamique.hpp"
+#include "Reseau.hpp"
 
 
 class Virtual_train
 {
 	public :
 		//Data data;
+		Reseau reseau;
 		Software soft;
 		Train_dynamique train_dynamique;
 		ETCS etcs;

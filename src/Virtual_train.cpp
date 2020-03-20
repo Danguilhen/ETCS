@@ -1,7 +1,7 @@
 
 #include "Virtual_train.hpp"
 
-Virtual_train::Virtual_train() : etcs(soft, train_dynamique), basic(train_dynamique, soft), auxiliaire(train_dynamique, soft)
+Virtual_train::Virtual_train() : reseau(),etcs(soft, train_dynamique), basic(train_dynamique, soft), auxiliaire(train_dynamique, soft)
 {
 	//cout<< "VT" <<endl;
 	//constructeur
