@@ -16,12 +16,12 @@ class ETCS_Bord
 		std::string level = "Level 1";
 		std::string version = "3.6.0";
 		Train_dynamique *T_D;
+		Software *soft;
 
 	public :
 		TrackRelatedInputs TrackRI;
 		TrainRelatedInputs TrainRI;
 		SpeedAndDistanceMonitoring SDM;
-		Software *soft;
 		ETCS_Bord(Train_dynamique &T_D, Software &soft);
 		void bord_update();
 		std::string getGeneralMode();
