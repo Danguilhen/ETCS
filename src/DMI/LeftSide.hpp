@@ -10,10 +10,11 @@ class LeftSide : public virtual Tools
 		Cadran cadran;
 		std::vector <Symbol> *symbol;
 		ETCS_Bord *bord;
-		void targetDistance(int distance);
+
 	public :
 		LeftSide(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);
 		void update();
+		void targetDistance(int distance);
 };
 
 #endif

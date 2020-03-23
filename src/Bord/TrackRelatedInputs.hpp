@@ -5,6 +5,7 @@
 #include "Tools.hpp"
 #include "TrainRelatedInputs.hpp"
 #include "Train_dynamique.hpp"
+#include "Reseau.hpp"
 
 class National_Value_Data
 {
@@ -154,14 +155,15 @@ class TrackRelatedInputs
 		//Time diftimeTRI;//créer la varaible qui stocke le temps écoulé
 		//float deltatsTRI;//créer la variable qui stocke le temps écoulé en seconde
 		//float distance_update; // distance parcourue entre chaque mise à jour
+		Train_dynamique *T_D;
+		Reseau *Res;
 
 	public :
-		Train_dynamique *T_D;
 		National_Value_Data NVD;
 		TracksideSpeedRestriction TSR;
 		Gradient gradient_ligne;
 		SpeedAndDistanceLimits SADL;
-		TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D);
+		TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Reseau &Res);
 		void TrackRI_Update();
 		int getPointKilometrique();
 		int getRemainingDistanceTunnel();

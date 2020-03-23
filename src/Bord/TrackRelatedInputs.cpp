@@ -206,6 +206,7 @@ vector<vector<float>> Gradient::getTab_Gradient()
 void Gradient::Gradient_Update(float distance_update)
 {
 	//RECEPTION DES NOUVEAUX GRADIENTS
+	//
 	/*for(size_t i; i < tableau_gradient.size() ; i++)
 	{
 		if(tableau_gradient[i][2] < tableau_gradient[i+1][2])
@@ -266,9 +267,10 @@ void SpeedAndDistanceLimits::setSpeedTarget(float S){speed_target = S;}
 bool SpeedAndDistanceLimits::getTarget_update(){return target_update;}
 void SpeedAndDistanceLimits::setTarget_update(bool B){target_update = B;}
 
-TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D) : gradient_ligne(TrainRI), SADL(TSR)
+TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Reseau &Res) : gradient_ligne(TrainRI), SADL(TSR)
 {
 	this->T_D = &T_D;
+	this->Res = &Res;
 }
 
 void TrackRelatedInputs::TrackRI_Update()

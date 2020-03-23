@@ -4,6 +4,7 @@
 #include "define.hpp"
 #include "Tools.hpp"
 #include "Sound.hpp"
+#include "Reseau.hpp"
 
 class TrackRelatedInputs;
 class TrainRelatedInputs;
@@ -138,6 +139,7 @@ class SpeedAndDistanceMonitoring
 		Train_dynamique *T_D;
 		TrainRelatedInputs *TrainRI;
 		TrackRelatedInputs *TrackRI;
+		Reseau *Res;
 		Clock chronoSDM;//créer le chrono
 		Time diftimeSDM;//créer la varaible qui stocke le temps écoulé
 		float deltatsSDM = TMAJ;//créer la variable qui stocke le temps écoulé en seconde
@@ -148,7 +150,7 @@ class SpeedAndDistanceMonitoring
 		DeterminationOfDecelerationCurves DODC;
 		SupervisionLimits SL;
 		SpeedAndDistanceMonitoringCommands SADMC;
-		SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft);
+		SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft, Reseau &Res);
 		void SDM_Update();
 };
 

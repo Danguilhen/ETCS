@@ -9,7 +9,7 @@ LeftSide::LeftSide(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Trai
 
 void LeftSide::targetDistance(int distance)
 {
-	if(distance >= 0)
+	if(distance >= 0 && bord->getGeneralMode() == "FS" && (bord->SDM.SL.getStatus() == "TSM" || bord->SDM.SL.getStatus() == "RSM"))
 	{
 		creation_texte(to_string((int)round((distance / 10.0)) * 10), GREY, 10, 0, V2f(54 / 2.0, 54 + 30 / 2.0), 1);
 		rectangle(V2f(12, 54 + 30 - 1), V2f(13, 2), GREY);
@@ -98,7 +98,7 @@ void LeftSide::update()
 		LS_01.afficher(V2f(54 / 2.0, 54 / 2.0));	//A1
 		creation_texte(to_string(LSSMA), GREY, 16, 0, V2f(54 / 2.0, 54 / 2.0), 1); //400km/h
 	}*/
-
+	//pictrogrammes
 	if(bord->getLevel() == "Level 0")
         LE_01.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
     else if(bord->getLevel()  == "Level 1")
@@ -107,12 +107,16 @@ void LeftSide::update()
         LE_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
     else if(bord->getLevel()  == "Level 3")
         LE_05.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 + 25 / 2.0));
-
-	//if((data->getGeneralMode() == "FS" && (data->getMode() == "PIM" || data->getMode() == "TSM" || data->getMode() == "RSM")) || data->getGeneralMode() == "RV")
-	//	targetDistance(data->getDEOA());
-
+	if(bord->SDM.SADMC.getCommand_triggered() ==  "EB")
+	{
+		ST_01.afficher(V2f(54/2, 54+30+191+25+25+12.5)); // Emergency Brake
+	}
+	if(bord->getGeneralMode() == "FS")
+		MO_11.afficher(V2f((54 + 254 - 36 / 2.0 + 17), (274 - 36 / 2.0 + 17)));
+	if(bord->getGeneralMode() == "SR")
+		MO_09.afficher(V2f((54 + 254 - 36 / 2.0 + 17), (274 - 36 / 2.0 + 17)));
+	//
 	//TexteMessages();//special class texte
-
 	targetDistance(bord->TrackRI.SADL.getTargetDistance());
 	cadran.update();
 }

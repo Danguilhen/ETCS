@@ -4,11 +4,12 @@
 #include "TrackRelatedInputs.hpp"
 #include "../Train_dynamique.hpp"
 
-SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft) : TBS(TrainRI, TrackRI), MRSP(TrackRI), DODC(TrackRI,TrainRI, T_D, TBS), SL(T_D, TrainRI, TrackRI, MRSP, DODC), SADMC(T_D, MRSP, SL, TrackRI, soft)
+SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft, Reseau &Res) : TBS(TrainRI, TrackRI), MRSP(TrackRI), DODC(TrackRI,TrainRI, T_D, TBS), SL(T_D, TrainRI, TrackRI, MRSP, DODC), SADMC(T_D, MRSP, SL, TrackRI, soft)
 {
 	this->T_D = &T_D;
 	this->TrainRI = &TrainRI;
 	this->TrackRI = &TrackRI;
+	this->Res = &Res;
 	//cout << "SADM" << endl;
 }
 

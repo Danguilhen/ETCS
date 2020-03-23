@@ -5,6 +5,7 @@
 #include "TrackRelatedInputs.hpp"
 #include "Train_dynamique.hpp"
 #include "SpeedAndDistanceMonitoring.hpp"
+#include "Reseau.hpp"
 
 class SpeedAndDistanceMonitoring;
 
@@ -12,18 +13,22 @@ class SpeedAndDistanceMonitoring;
 class ETCS_Bord
 {
 	protected :
-		std::string generalMode = "FS";
+		std::string generalMode = "SR";
 		std::string level = "Level 1";
 		std::string version = "3.6.0";
+		std::string connection = "Down";
 		Train_dynamique *T_D;
 		Software *soft;
+		Reseau *Res;
 
 	public :
 		TrackRelatedInputs TrackRI;
 		TrainRelatedInputs TrainRI;
 		SpeedAndDistanceMonitoring SDM;
-		ETCS_Bord(Train_dynamique &T_D, Software &soft);
+		ETCS_Bord(Train_dynamique &T_D, Software &soft, Reseau &Res);
 		void bord_update();
+		void transition_generalMode();
+		void connection_update();
 		std::string getGeneralMode();
 		std::string getLevel();
 		std::string getVersion();
@@ -33,6 +38,7 @@ class ETCS_Bord
 		bool getETATLevelETCS();
 		bool getTrainNumber();
 		std::string getConnection();
+		void setConnection(bool C);
 		bool getPending_Emergency_Stop();
 		bool getModif_DriverID_NTC();
 		bool getNon_Leading();
@@ -41,6 +47,7 @@ class ETCS_Bord
 		bool getEOA();
 		void setEOA(bool EOA);
 		bool getmodif_Adhesion();
+
 
 };
 

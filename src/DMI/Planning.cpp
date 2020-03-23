@@ -19,7 +19,7 @@ int Planning::getScale(){return scale;}
 void Planning::setScale(int S){scale = S;}
 
 
-void Planning::pasp()
+/*void Planning::pasp()
 {
 	int distance = 0;
 	int target = 0;
@@ -91,7 +91,7 @@ void Planning::pasp()
 			plus_petite_V = bord->TrackRI.TSR.getVitesseTableau()[i][2];
 		}
 	}
-}
+}*/
 
 void Planning::planningInformation()
 {
@@ -127,7 +127,7 @@ void Planning::planningInformation()
 
 	//LES PASP
 
-	pasp();
+	//pasp();
 	//Orders_and_announcements(scale, delta_distance, tab_pa);
 	SpeedProfileDiscontinuityInformation();
 	//LES GRADUATIONS
