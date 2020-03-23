@@ -23,10 +23,11 @@ class Train_dynamique
 	void mouvementTrain();
 	float getDistance_Uptdate();
 	float getTraction();
-// test 
+// test
 	void setTraction(float A);
 };
 
+////////////////////////////////////////////////////////code a reprendre
 /*
 class Train_dynamique {
 
@@ -53,7 +54,7 @@ class Train_dynamique {
     void Traction() {                                           // Calcul traction et freinage motrice
         float absspeed = 0;                                     // Initialisation valeurs
         float abstrac = 0;
-        float pass = 0;
+        float pass = 0;									// CALCUL VALEUR ABSOLUE
         float a = abs(acc)
 
         if (speed < 0)                                          // Définition d'une valeure absolue de la vitesse
@@ -66,17 +67,20 @@ class Train_dynamique {
 	    else if (tracvalue < 0)
 		    abstrac = -tracvalue;
 
-        if (tracvalue == 0) {   //pas d'effort de traction si manip TF à 0
+        if (tracvalue == 0)
+		{   //pas d'effort de traction si manip TF à 0
 		    effortchoisi = 0;
             pass=1;
         }
 
-        else if (absspeed == 0 && tracvalue > 0) {   //effort au démarrage
+        else if (absspeed == 0 && tracvalue > 0)
+		{   //effort au démarrage
 		    effortchoisi = effortdem * abstrac;
             pass=2;
         }
 
-        else if (absspeed < 6.94 && tracvalue < 0)   {  //frein pneumatique en dessous de 25 km/h
+        else if (absspeed < 6.94 && tracvalue < 0)
+		{  //frein pneumatique en dessous de 25 km/h
 		    freinDirect = 19.737*cfPressureMotriceTrac;
             pass=3;
         }
@@ -395,6 +399,7 @@ class Train_dynamique {
 	} // Fin calculCylindre
 };
 
+//////////////////////////////////////////////////////
 */
 
 #endif
