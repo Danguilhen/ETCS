@@ -12,11 +12,7 @@ class Virtual_train
 {
 	public :
 		//Data data;
-<<<<<<< HEAD
 		Reseau reseau;
-=======
-		//Reseau reseau;
->>>>>>> b7575f6a74f80a8af54954a7363ecf52eb1a4550
 		Software soft;
 		Train_dynamique train_dynamique;
 		ETCS etcs;
