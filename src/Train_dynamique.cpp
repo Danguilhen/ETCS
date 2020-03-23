@@ -2,11 +2,17 @@
 
 float Train_dynamique::getV_train(){return V_train;}
 void Train_dynamique::setV_train(float V){V_train = V;}
+float Train_dynamique::getDistance_Uptdate(){return distance_update;}
+float Train_dynamique::getTraction(){return traction;}
+void Train_dynamique::setTraction(float A){traction = A;}
+
+
 
 void Train_dynamique::update()
 {
 	mouvementTrain();
 }
+
 
 void Train_dynamique::mouvementTrain()
 {
@@ -23,7 +29,10 @@ void Train_dynamique::mouvementTrain()
 }
 
 
-float Train_dynamique::getDistance_Uptdate(){return distance_update;}
-float Train_dynamique::getTraction(){return traction;}
-void Train_dynamique::setTraction(float A){traction = A;}
+
+void Train_dynamique::effortTraction()
+{
+	
+}
+
 
