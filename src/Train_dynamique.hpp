@@ -6,7 +6,7 @@
 class Train_dynamique
 {
 	private :
-	float V_train = 80;
+	float V_train = 3;
 	sf::Clock chrono;//créer le chrono
 	sf::Time diftime;//créer la varaible qui stocke le temps écoulé
 	float deltats;//créer la variable qui stocke le temps écoulé en seconde
@@ -14,10 +14,21 @@ class Train_dynamique
 	float acceleration;
 	int traction;
 
-	int masse; // masse à récupérer dans la class réseau
-	float A;
-	float B;
-	float C;    // les valeurs A B C seront à récupéré dans la class réseau 
+	int masse=340; // masse à récupérer dans la class réseau
+	float A=2.24;
+	float B=0.037;
+	float C=0.00056;    // les valeurs A B C seront à récupéré dans la class réseau
+	float Ptraction=9;
+	float Pfreinage=5;     // idem
+	int valeurManip;
+	float i=0;          // à convertir en numérique
+	float typeTrain=0;   // pour la formule résistance au décollage =0 -> voyageur        =1 -> fret
+	float k=0.05;
+	float puissance;
+	float Ft=0;
+
+
+
 
 
 
@@ -34,6 +45,8 @@ class Train_dynamique
 
 	void effortTraction();
 	void effortFreinage();
+	void calculVitesse();
+
 };
 
 #endif
