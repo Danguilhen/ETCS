@@ -187,7 +187,6 @@ void SupervisionLimits::Supervision_limits()
 		{
 			n_ligne ++;
 		}
-		cout << curvestab[n_ligne][0] << " " << curvestab[n_ligne][1] << " " << curvestab[n_ligne][2] << " " << curvestab[n_ligne][3] << " " << curvestab[n_ligne][4] << " " << endl;
 		V_ebi = max(min(curvestab[n_ligne][0], getV_ebi_CSM(MRSP->getV_MRSP())), getV_ebi_CSM(TrackRI->SADL.getSpeedTarget()));
 		d_ebi = curvestab[n_ligne][1];
 		n_ligne = 0;
@@ -287,8 +286,6 @@ void DeterminationOfDecelerationCurves::calculEBD()
 
 		if(vitesse >= TBS->getA_brake_safe()[n_A_brake_safe][1])
 			n_A_brake_safe++;// si on a atteint la vitesse à laquelle la valeur de décélération du train change, alors nous prendrons une nouvelle valeur de A_brake_safe
-		if(distance == 4096)
-			cout << distance << " : " << vitesse << endl;
 	}
 }
 
