@@ -14,22 +14,6 @@ void Train_dynamique::update()
 	calculVitesse();
 }
 
-/*
-void Train_dynamique::mouvementTrain()
-{
-	diftime = chrono.getElapsedTime();
-	deltats = diftime.asSeconds();
-	if(traction > 100)
-		traction = 100;
-	if(traction < - 100)
-		traction = -100;
-	V_train = 3.6*(1.2*traction/100*deltats + V_train/3.6); // A TITRE D EXEMPLE ATTENTION
-	distance_update = deltats*V_train/3.6;
-	chrono.restart();
-	//cout << traction << endl;
-}
-*/
-
 
 void Train_dynamique::effortTraction()
 {
@@ -40,6 +24,8 @@ void Train_dynamique::effortTraction()
 	float Fres;
 	float F;
 	float Ft;
+	float Rd0=0;
+//	float Rp0;      // rp corrigé
 
 	valeurManip = traction;
 
@@ -49,25 +35,19 @@ void Train_dynamique::effortTraction()
 	}
 	else if (valeurManip >= 540)
 	{
-		coefManip = (valeurManip - 511);
-		coefManip = coefManip/512;
-		//int test1 = 6;
-		//cout << test1 << endl;
+		coefManip = (valeurManip - 540);
+		coefManip = coefManip/483;
 	}
 	else if (valeurManip < 512)
 	{
 		coefManip = 0;
-		//int test = 5;
-		//cout << test << endl;
 	}
 
-	cout << "coefmanip = " << coefManip << endl;
-	cout << "valeurmanip = " << valeurManip << endl;
-	//cout << "trac = " << traction << endl;
+	cout << valeurManip << endl;
 
 	///////// calcul de RAV
 	Rav = A + B*V_train + C*(V_train*V_train);
-	Rp = masse*9.81*i;
+	Rp = masse*9.81*(i/1000);
 
 	if (V_train == 0)
 	{
@@ -75,22 +55,26 @@ void Train_dynamique::effortTraction()
 		{
 			if (i <= 18)
 			{
-				Rd = (masse/100)*(i*981 + 6.8);
+				Rd = (masse/100)*(i*0.981 + 6.8);
+				Rd0 = (masse/100)*6.8;
 			}
 			else if (i > 17)
 			{
-				Rd = (masse/100)*(1.25*i*981 + 2.75);
+				Rd = (masse/100)*(1.25*i*0.981 + 2.75);
+				Rd0 = (masse/100)*2.75;
 			}
 		}
 		else if (typeTrain == 1)									/// FAIRE ATTENTION UNITE DE i
 		{
 			if (i <= 7)
 			{
-				Rd = (masse/100)*(i*981 + 4.5);
+				Rd = (masse/100)*(i*0.981 + 4.5);
+				Rd0 = (masse/100)*4.5;
 			}
 			else if (i > 7)
 			{
-				Rd = (masse/100)*(1.25*i*981 + 2.75);
+				Rd = (masse/100)*(1.25*i*0.981 + 2.75);
+				Rd0 = (masse/100)*2.75;
 			}
 		}
 	}
@@ -98,24 +82,42 @@ void Train_dynamique::effortTraction()
 	{
 		Rd = 0;
 	}
-
+	cout << Rd << endl;
 	Fres = Rav + Rd + Rp;
-	F = Ptraction / (V_train/3.6);   // en kN
-	if (F > Ftraction)
+
+	if (V_train == 0)
 	{
-		Ft = (Ftraction - Fres)*coefManip;
+		Rp =  Rd - Rd0;
+		if (abs(Ftraction*coefManip - Rp) > Rd0)
+		{
+		Ft = (Ftraction*coefManip - Rd -Rp);
 		gamma = Ft / (masse*k);
-		int passe=1;
-		cout << passe << endl;
+		}
+		else if (abs(Ftraction*coefManip - Rp) <= Rd0)
+		{
+			V_train = 0;
+		}
 	}
-	else if (F < Ftraction)
+	else if (V_train != 0)
 	{
-		Ft = (F - Fres)*coefManip;
+		if (coefManip == 0)
+		{
+			Ft = -Fres;
+			gamma = Ft / (masse*k);
+		}
+		else if (Ptraction*coefManip / (abs(V_train/3.6)) >= Ftraction*coefManip)                     // le train travail à sa force de trction max pour des vitesses relativement faible.
+		{
+		Ft = (Ftraction*coefManip - Fres);
 		gamma = Ft / (masse*k);
-		int passe=2;
-		cout << passe << endl;
+		}
+		else if (Ptraction*coefManip / (V_train/3.6) < Ftraction*coefManip)          // le train travail au max de sa puissance.
+		{
+		F = Ptraction*coefManip / (V_train/3.6);
+		Ft = (F - Fres);
+		gamma = Ft / (masse*k);
+		}
 	}
-	//cout << "gamma = " << gamma << endl;
+	cout << "gamma = " << gamma << endl;
 }
 
 
@@ -125,13 +127,8 @@ void Train_dynamique::calculVitesse()
 	diftime = chrono.getElapsedTime();
 	deltats = diftime.asSeconds();
 	NVitesse = gamma*deltats*3.6;
-	chrono.restart();
 	V_train = NVitesse + V_train;
-
-
-	//cout << "v train =" << V_train << endl << endl;
-
-
-
+	distance_update = deltats*V_train/3.6;
+	chrono.restart();
 }
 

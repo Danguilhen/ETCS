@@ -21,7 +21,7 @@ class Train_dynamique
 	float Ftraction=222; // en kN
 	float Pfreinage=5;     // idem
 	int valeurManip;
-	float i=0;          // à convertir en numérique
+	float i=35;          // en pour mille
 	float typeTrain=0;   // pour la formule résistance au décollage =0 -> voyageur        =1 -> fret
 	float k=1.03;
 	float gamma;
