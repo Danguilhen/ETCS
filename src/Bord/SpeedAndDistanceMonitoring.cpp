@@ -20,15 +20,10 @@ void SpeedAndDistanceMonitoring::SDM_Update()
 	MRSP.function_MRSP();
 	if (TrackRI->SADL.getTarget_update()) // si MAJ de la target (nouvelle MA)
 	{
-		//cout << "start" << endl;
-		//chronoSDM.restart();
-		TBS.TBS_Update();
+		//TBS.TBS_Update();
 		DODC.calculEBD();
 		SL.Curves();
-		//diftimeSDM = chronoSDM.getElapsedTime();
-		//deltatsSDM = diftimeSDM.asSeconds();
-		//cout << "fait en : " << deltatsSDM << endl;
-		//chronoSDM.restart();
+
 	}
 	SL.Supervision_limits();
 	SADMC.SpeedAndDistanceMonitoringCommands_update();
@@ -40,7 +35,7 @@ Traction_Braking_system::Traction_Braking_system(TrainRelatedInputs &TrainRI, Tr
 	this->TrainRI = &TrainRI;
 	calculA_gradient();
 	calculA_brake_safe();
-	//cout << "tbs" << endl;
+	//cout << "tbs" << endl;cout << n_A_gradient << endl;
 }
 
 void Traction_Braking_system::calculA_brake_safe()
@@ -85,7 +80,6 @@ SupervisionLimits::SupervisionLimits(Train_dynamique &T_D, TrainRelatedInputs &T
 	this->TrackRI = &TrackRI;
 	this->MRSP = &MRSP;
 	this->DODC = &DODC;
-	Curves();
 	//cout << "SL" << endl;
 }
 float SupervisionLimits::getV_ebi(){return V_ebi;}
@@ -101,6 +95,7 @@ float SupervisionLimits::getd_warning(){return d_warning;}
 void SupervisionLimits::Curves()
 {
 	vector<float> ligne;
+	curvestab.clear();
 	for(size_t vitesse = TrackRI->SADL.getSpeedTarget(); vitesse < DODC->getEBD()[DODC->getEBD().size() - 1][1] ; vitesse++)
 	{
 		Vbec = 3.6*(max((vitesse/3.6 + V_delta0 + V_delta1), TrackRI->SADL.getSpeedTarget()/3.6) + V_delta2);
@@ -192,6 +187,7 @@ void SupervisionLimits::Supervision_limits()
 		{
 			n_ligne ++;
 		}
+		cout << curvestab[n_ligne][0] << " " << curvestab[n_ligne][1] << " " << curvestab[n_ligne][2] << " " << curvestab[n_ligne][3] << " " << curvestab[n_ligne][4] << " " << endl;
 		V_ebi = max(min(curvestab[n_ligne][0], getV_ebi_CSM(MRSP->getV_MRSP())), getV_ebi_CSM(TrackRI->SADL.getSpeedTarget()));
 		d_ebi = curvestab[n_ligne][1];
 		n_ligne = 0;
@@ -247,7 +243,6 @@ DeterminationOfDecelerationCurves::DeterminationOfDecelerationCurves(TrackRelate
 	this->T_D = &T_D;
 	this->TBS = &TBS;
 	this->TrainRI = &TrainRI;
-	calculEBD();
 	//cout << "DODC" << endl;
 }
 
@@ -266,13 +261,13 @@ void DeterminationOfDecelerationCurves::calculEBD()
 	init.push_back(0);
 	EBD.push_back(init);//initialisation de la première ligne de EBD
 
-
-	if(TrackRI->SADL.getSpeedTarget() > 0)
+	while(TrackRI->SADL.getSpeedTarget() >= TBS->getA_brake_safe()[n_A_brake_safe][1])
 	{
-		while(TrackRI->SADL.getSpeedTarget() >= TBS->getA_brake_safe()[n_A_brake_safe][1])
-		{
-			n_A_brake_safe++;
-		}
+		n_A_brake_safe++;
+	}
+	while(TrackRI->SADL.getTargetDistance() >= TBS->getA_gradient()[n_A_gradient][1])
+	{
+		n_A_gradient++;
 	}
 	vitesse = TrackRI->SADL.getSpeedTarget();
 	for(distance = 0; distance < TrackRI->SADL.getTargetDistance(); distance++)
@@ -283,11 +278,17 @@ void DeterminationOfDecelerationCurves::calculEBD()
 		}
 		vitesse = 3.6*(sqrtf(2*(TBS->getA_brake_safe()[n_A_brake_safe][2] + TBS->getA_gradient()[n_A_gradient][2]) + pow(EBD[EBD.size() - 1][1]/3.6, 2)));//calcul de la vitesse entre les deux distance par rapport à la décélération à la distance D
 		step(EBD, distance, vitesse, TBS->getA_brake_safe()[n_A_brake_safe][2] + TBS->getA_gradient()[n_A_gradient][2]);//rajout de cette vitesse à la distance d
-		if(distance == size_t(TBS->getA_gradient()[n_A_gradient][1]))
-			n_A_gradient++; // si on a atteint la distance à laquelle le gradient change, alors nous prendrons la nouvelle valeur de A_gradient
+		if(TrackRI->SADL.getTargetDistance() - distance < TBS->getA_gradient()[n_A_gradient][0])
+		{
+			cout << n_A_gradient << endl;
+			n_A_gradient--; // si on a atteint la distance à laquelle le gradient change, alors nous prendrons la nouvelle valeur de A_gradient
+			cout << n_A_gradient << endl;
+		}
+
 		if(vitesse >= TBS->getA_brake_safe()[n_A_brake_safe][1])
 			n_A_brake_safe++;// si on a atteint la vitesse à laquelle la valeur de décélération du train change, alors nous prendrons une nouvelle valeur de A_brake_safe
-		//cout << distance << " : " << vitesse << " " << TBS->getA_brake_safe()[n_A_brake_safe][2] + TBS->getA_gradient()[n_A_gradient][2] << endl;
+		if(distance == 4096)
+			cout << distance << " : " << vitesse << endl;
 	}
 }
 
@@ -302,7 +303,7 @@ void DeterminationOfDecelerationCurves::calculEBD()
 //	//	if(TrackRI->SADL.getSpeedTarget() > TrainRI->FVD.getV_ebi_min())
 //	//	{
 //	//		DV_ebi = min(TrainRI->FVD.getdV_ebi_min() + Cebi*(TrackRI->SADL.getSpeedTarget()  - TrainRI->FVD.getV_ebi_min()), TrainRI->FVD.getdV_ebi_max());
-//	//	}
+//	//	}*
 //	//	else
 //	//		DV_ebi = TrainRI->FVD.getdV_ebi_min();
 //	//	return TrackRI->SADL.getSpeedTarget() + DV_ebi;

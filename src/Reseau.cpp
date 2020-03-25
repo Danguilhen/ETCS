@@ -12,7 +12,7 @@ Reseau::Reseau()
     // INITIALISATION DE LA LIAISON RESEAU TCP à UE4
     short int port = 2000;
     // Définition de l'adresse IP de l'ordinateur sur le réseau local
-    string ip = "192.168.2.107";
+    string ip = "192.168.0.31";
     // Définition du nom du client sur le Réseau
     string pseudo = "Train";
     // Connexion du Train au serveur
@@ -53,7 +53,7 @@ Reseau::Reseau()
 
 void Reseau::Reseau_update() // Update des fonctions calculs et affichages de ETCS
 {
-    Reseau::TCPClient_update();
+    TCPClient_update();
    // Reseau::Serial_update();
 
 }

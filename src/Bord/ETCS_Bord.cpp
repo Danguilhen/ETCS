@@ -11,7 +11,12 @@ ETCS_Bord::ETCS_Bord(Train_dynamique &T_D, Software &soft, Reseau &Res) : TrackR
 
 void ETCS_Bord::bord_update()
 {
-	//connection = getconnection; // Permet de savoir si il y a une connection
+	if(connection == "Down" && Res->getEurobalise().MAJ_eurobalise == true)
+	{
+		connection = "Up";
+		cout<<"connection"<<endl;
+	}
+
 	transition_generalMode();
 	if(generalMode == "FS")
 	{
@@ -28,11 +33,12 @@ void ETCS_Bord::transition_generalMode()
 {
 	if(connection == "Up" && generalMode == "SR")
 	{
-		generalMode == "FS";
+		//cout<<"changement FS"<<endl;
+		generalMode = "FS";
 	}
 	if(connection == "Down" && generalMode == "FS")
 	{
-		generalMode == "SR";
+		generalMode = "SR";
 	}
 }
 

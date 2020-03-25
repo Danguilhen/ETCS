@@ -152,7 +152,10 @@ float National_Value_Data::getA_NVP12()
 float National_Value_Data::getA_NVP23()
 {return A_NVP23;}
 
-TracksideSpeedRestriction::TracksideSpeedRestriction(){/*cout << "TBS" << endl;*/}
+TracksideSpeedRestriction::TracksideSpeedRestriction(Reseau &Res)
+{
+	this->Res = &Res;
+}
 
 vector<vector<float>> TracksideSpeedRestriction::getVitesseTableau()
 {
@@ -162,6 +165,21 @@ vector<vector<float>> TracksideSpeedRestriction::getVitesseTableau()
 
 void TracksideSpeedRestriction::TSR_Update(float distance_update)
 {
+	//MAJ vitesse (communication)
+
+	if(Res->getEurobalise().MAJ_eurobalise)
+	{
+		vector<float> temp;
+		temp.push_back(tableau_vitesse_ligne[tableau_vitesse_ligne.size() - 1][1]);
+		temp.push_back(tableau_vitesse_ligne[tableau_vitesse_ligne.size() - 1][1] + float(Res->getEurobalise().longueur));
+		temp.push_back(float(Res->getEurobalise().vitesse));
+		tableau_vitesse_ligne.erase(tableau_vitesse_ligne.end());
+		tableau_vitesse_ligne.push_back(temp);
+		tableau_vitesse_ligne.push_back({tableau_vitesse_ligne[tableau_vitesse_ligne.size() - 1][1], tableau_vitesse_ligne[tableau_vitesse_ligne.size() - 1][1], 0});
+		speed_change = true;
+	}
+
+	//MAJ vitesse (distances)
 	for(size_t i = 0; i < tableau_vitesse_ligne.size(); i++)
 	{
 		if(tableau_vitesse_ligne[i][0] != -1)
@@ -236,13 +254,13 @@ void Gradient::Gradient_Update(float distance_update)
 SpeedAndDistanceLimits::SpeedAndDistanceLimits(TracksideSpeedRestriction &TSR)
 {
 	this->TSR = &TSR;
-	target_determination();
+	//target_determination();
 	//cout << "SADL" << endl;
 }
 
 void SpeedAndDistanceLimits::target_determination()
 {
-	target_distance = TSR->getVitesseTableau()[1][0]; // on obtient la prochaine target distance
+	target_distance = TSR->getVitesseTableau()[0][1]; // on obtient la prochaine target distance
 	speed_target = TSR->getVitesseTableau()[1][2]; // on obtient la prochaine vitesse à respecter
 }
 void SpeedAndDistanceLimits::Target_update()
@@ -267,7 +285,7 @@ void SpeedAndDistanceLimits::setSpeedTarget(float S){speed_target = S;}
 bool SpeedAndDistanceLimits::getTarget_update(){return target_update;}
 void SpeedAndDistanceLimits::setTarget_update(bool B){target_update = B;}
 
-TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Reseau &Res) : gradient_ligne(TrainRI), SADL(TSR)
+TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Reseau &Res) : TSR(Res), gradient_ligne(TrainRI), SADL(TSR)
 {
 	this->T_D = &T_D;
 	this->Res = &Res;
@@ -278,6 +296,7 @@ void TrackRelatedInputs::TrackRI_Update()
 	TSR.TSR_Update(T_D->getDistance_Uptdate());
 	gradient_ligne.Gradient_Update(T_D->getDistance_Uptdate());
 	SADL.SADL_update();
+
 }
 
 int TrackRelatedInputs::getPointKilometrique(){return pointKilometrique;}

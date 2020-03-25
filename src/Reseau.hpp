@@ -9,13 +9,13 @@ struct Eurobalise
 {
     short int longueur;
     short int vitesse;
-    bool MAJ_eurobalise;
+    bool MAJ_eurobalise = false;
 };
 struct Pupitre_entrant
 {
     string pupitre;
     int taille_pupitre;
-    bool MAJ_pupitre;
+    bool MAJ_pupitre = false;
 };
 
 class Reseau

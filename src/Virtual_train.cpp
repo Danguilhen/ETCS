@@ -1,7 +1,7 @@
 
 #include "Virtual_train.hpp"
 
-Virtual_train::Virtual_train() : reseau(),etcs(soft, train_dynamique, reseau), basic(train_dynamique, soft), auxiliaire(train_dynamique, soft)
+Virtual_train::Virtual_train() : etcs(soft, train_dynamique, reseau), basic(train_dynamique, soft), auxiliaire(train_dynamique, soft)
 {
 	//cout<< "VT" <<endl;
 	//constructeur
@@ -12,7 +12,7 @@ void Virtual_train::update()
 	soft.getFenetre()->clear();
 	soft.software_update();
 	train_dynamique.update();
-	//data.update();
+	reseau.Reseau_update();
 	if(soft.getType_signalisation() == "ETCS")
 	{
 		etcs.ETCS_uptade();
