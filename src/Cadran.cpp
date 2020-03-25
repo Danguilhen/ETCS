@@ -238,16 +238,16 @@ void Cadran::update()
 		soft->getFenetre()->draw(Barre);
 	}
 
-	if(T_D->getV_train() < 200)
-		aiguille.setRotation(T_D->getV_train() * kmh2degVfaible+teta0);
+	if(abs(T_D->getV_train()) < 200)
+		aiguille.setRotation(abs(T_D->getV_train()) * kmh2degVfaible+teta0);
 	else
-		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + T_D->getV_train() * kmh2degVeleve+teta0);
+		aiguille.setRotation(200 * kmh2degVfaible / 2.0 + abs(T_D->getV_train()) * kmh2degVeleve+teta0);
 
 	soft->getFenetre()->draw(aiguille);
 
-	string str = to_string(graduations[(int)T_D->getV_train()].vitesse());
+	string str = to_string(graduations[abs((int)T_D->getV_train())].vitesse());
 	string s;
-	if(graduations[(int)T_D->getV_train()].vitesse() > 99)
+	if(graduations[abs((int)T_D->getV_train())].vitesse() > 99)
 	{
 		s = str.at(2);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 + 50 / 2.0 - 3, 300 / 2.0), 2);
@@ -256,7 +256,7 @@ void Cadran::update()
 		s = str.at(0);
 		creation_texte(s, BLACK, 18, 0, V2f(54 + 280 / 2.0 - 50 / 6.0 - 3, 300 / 2.0), 2);
 	}
-	else if(graduations[(int)T_D->getV_train()].vitesse() > 9)
+	else if(graduations[abs(abs((int)T_D->getV_train()))].vitesse() > 9)
 	{
 		s = str.at(1);
 
