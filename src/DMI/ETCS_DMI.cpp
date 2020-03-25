@@ -119,9 +119,9 @@ void ETCS_DMI::action()
 			else if(event.key.code == Keyboard::Down)
 				T_D->setV_train(T_D->getV_train() - 1);
 			else if(event.key.code == Keyboard::Left)
-				T_D->setTraction(T_D->getTraction() - 10);
+				T_D->setTraction(T_D->getTraction() - 20);
 			else if(event.key.code == Keyboard::Right)
-				T_D->setTraction(T_D->getTraction() + 10);
+				T_D->setTraction(T_D->getTraction() + 20);
 			else if(event.key.code == Keyboard::V)
 			{
 				if(bord->getVersion() == "3.6.0")
