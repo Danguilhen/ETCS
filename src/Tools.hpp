@@ -2,6 +2,7 @@
 #define TOOLS
 
 #include "Software.hpp"
+#include "define.hpp"
 
 class Tools
 {

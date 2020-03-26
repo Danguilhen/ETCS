@@ -103,11 +103,15 @@ class Train_Data : public Tools
         std::vector<std::string> list_of_national_systems_available_on_board{"TVM", "KVB", "TPWS/AWS"};//DONNEE NON MODIFIABLE
         int axle_number;//DONNEE NON MODIFIABLE
         int M_rotating_nom = 11;
+        int DriverID = 0;
+        int TrainRunningNumber = 0;
 
     public :
         Train_Data();
         int getTrain_length();
         int getM_rotating_nom();
+        int getDriverID();
+        int getTrainRunningNumber();
 
 	    //GET ET SET A FAIRE SI NECESSAIRE
 };

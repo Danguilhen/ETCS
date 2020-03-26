@@ -13,7 +13,7 @@ class SpeedAndDistanceMonitoring;
 class ETCS_Bord
 {
 	protected :
-		std::string generalMode = "SR";
+		std::string generalMode = "SB";// FS,SR,SB
 		std::string level = "Level 1";
 		std::string version = "3.6.0";
 		std::string connection = "Down";

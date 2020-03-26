@@ -60,16 +60,14 @@ void LeftSide::update()
 	creation_rectangle(V2f((54 + 140 - 36 * 3 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), 1);					//B3
 	creation_rectangle(V2f((54 + 254 - 36 / 2.0), (274 - 36 / 2.0)), V2f(36, 36), 1);						//B7
 
-	/*if(data->getConnection() == "Up") //Connection Up
+	if(bord->getConnection() == "Up") //Connection Up
 	{
 		ST_03.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 * 3 + 25 / 2.0));	//E1
 	}
-	else if(data->getConnection() == "Lost/Set-Up failed") //Connection Lost/Set-Up failed
+	else if(bord->getConnection() == "Down") //Connection Lost/Set-Up failed
 		ST_04.afficher(V2f(54 / 2.0, 54 + 30 + 191 + 25 * 3 + 25 / 2.0));	//E1
-	if(data->getReversing() == "Permitted") //Reversing permitted indication
-		ST_06.afficher(V2f(54 + 37 * 3 + 58 + 37 + 37 / 2.0, 300 + 50 / 2.0));	//C6
 
-	if(version == "3.6.0")
+	/*if(version == "3.6.0")
 	{
 		data->setTTI((data->getDEOA() - (3 / 5.0)*data->getD_but())/(bord->TrainRI.T_data.getVtrain()/3.6)); // TEMPORAIRE POUR LA DEMO
 		//Rappel TTIdisp est à 14 s selon la subset026
@@ -115,6 +113,8 @@ void LeftSide::update()
 		MO_11.afficher(V2f((54 + 254 - 36 / 2.0 + 17), (274 - 36 / 2.0 + 17)));
 	if(bord->getGeneralMode() == "SR")
 		MO_09.afficher(V2f((54 + 254 - 36 / 2.0 + 17), (274 - 36 / 2.0 + 17)));
+	if(bord->getGeneralMode() == "SB")
+		MO_13.afficher(V2f((54 + 254 - 36 / 2.0 + 17), (274 - 36 / 2.0 + 17)));
 	//
 	//TexteMessages();//special class texte
 	targetDistance(bord->TrackRI.SADL.getTargetDistance());

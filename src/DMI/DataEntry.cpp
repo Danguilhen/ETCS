@@ -1,22 +1,12 @@
-/*
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/System.hpp>*/
-/*#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <cstring>
-#include <netdb.h>*/
+/*#include "DataEntry.hpp"
 
-/*
-class DataEntry : public Fenetre
+DataEntry::DataEntry(vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): left(symbol, soft, bord, T_D)
 {
-	protected :
-		//void dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Button> & boutons, string & ecran);
-};*/
-/*
+	this->soft = &soft;
+	this->bord = &bord;
+	this->symbol = &symbol;
+}
+
 void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Button> & boutons, string & ecran)
 {
 	for(int i = 0; i <= 9; i++)
@@ -186,83 +176,4 @@ void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & s
 	}
 	for(int i = 0; i < (int)selection.size(); i++)
 		creation_texte(to_string(i + 1) + " - " + selection[i], GREY, 12, 0, V2f(54 + 280 + 15, 200 + 15 + 6 + i * 20), 4);
-}
-*/
-/*
-class Special : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		Special(RenderWindow &fenetre, Data &data);
-};
-
-Special::Special(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class Settings : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		Settings(RenderWindow &fenetre, Data &data);
-};
-
-Settings::Settings(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class SRspeed : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		SRspeed(RenderWindow &fenetre, Data &data);
-};
-
-SRspeed::SRspeed(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class DataView : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		DataView(RenderWindow &fenetre, Data &data);
-};
-
-DataView::DataView(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class SystemVersion : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		SystemVersion(RenderWindow &fenetre, Data &data);
-};
-
-SystemVersion::SystemVersion(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-
-*/
+}*/

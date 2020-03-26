@@ -43,7 +43,7 @@ void Train_dynamique::effortTraction()
 		coefManip = 0;
 	}
 
-	cout << valeurManip << endl;
+	//cout << valeurManip << endl;
 
 	///////// calcul de RAV
 	Rav = A + B*V_train + C*(V_train*V_train);
@@ -117,7 +117,7 @@ void Train_dynamique::effortTraction()
 		gamma = Ft / (masse*k);
 		}
 	}
-	cout << "gamma = " << gamma << endl;
+	//cout << "gamma = " << gamma << endl;
 }
 
 

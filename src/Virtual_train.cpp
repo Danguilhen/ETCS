@@ -21,6 +21,5 @@ void Virtual_train::update()
 	{
 		basic.update();
 	}
-	auxiliaire.affichageFreinage();
 	soft.getFenetre()->display();
 }

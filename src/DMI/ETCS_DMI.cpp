@@ -31,14 +31,21 @@ void ETCS_DMI::update()
 {
 		action();
 		affichage();
-		if(etat_ecran == "Default")
-			def.update();
-		else if(etat_ecran == "Main")
-			main.update();
-		else if(etat_ecran == "Override")
-			overide.update();
-		else if(etat_ecran == "Special")
-			special.update();
+		if(bord->getGeneralMode() == "SB") // StandBy
+		{
+			start_up();
+		}
+		else
+		{
+			if(etat_ecran == "Default")
+				def.update();
+			else if(etat_ecran == "Main")
+				main.update();
+			else if(etat_ecran == "Override")
+				overide.update();
+			else if(etat_ecran == "Special")
+				special.update();
+		}
 
 }
 
@@ -291,4 +298,20 @@ void ETCS_DMI::affichage()
 	couleurForme(fond, DARK_BLUE, 4);
 	soft->getFenetre()->draw(fond);
 	affichageBoutons();
+}
+
+void ETCS_DMI::start_up()
+{
+	if(etat_ecran == "Default")
+		def.update();
+	else if(etat_ecran == "Main")
+		main.update();
+	else if(etat_ecran == "Override")
+		overide.update();
+	else if(etat_ecran == "Special")
+		special.update();
+
+
+
+	symbol[115].afficher(V2f((54 + 26 - 36 / 2.0 + 36/2), (274 - 36 / 2.0 + 36/2)));
 }

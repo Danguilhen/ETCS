@@ -148,6 +148,9 @@ Train_Data::Train_Data()
 int Train_Data::getTrain_length(){return train_length;}
 
 int Train_Data::getM_rotating_nom(){return M_rotating_nom;}
+int Train_Data::getDriverID(){return DriverID;}
+int Train_Data::getTrainRunningNumber(){return TrainRunningNumber;}
+
 
 OnBoardCorrectionFactors::OnBoardCorrectionFactors()
 {
