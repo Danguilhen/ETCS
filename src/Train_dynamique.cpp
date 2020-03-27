@@ -145,17 +145,34 @@ void Train_dynamique::adherence()
 	float Q;
 	float Freac;     // force de réaction du rail
 	float µ;
-	float F;
-	float gamma;
+	float Ftransmis;
+	float Fessieu;
+	float µdyn;
+	float Q;
 
-	Q = 9.81*masseEssieuMoteur*1000;
+	µdyn = µmax / (1 + glissement);
+	Q = masseEssieuMoteur*9.81;  // en kN
 
-	if (Ft > µmax*Q)
+	if ( Ft > µdyn*Q)
 	{
-		Freac = µ*Q;
-		F = Freac + Ft;
-		gamma2 = F / (masse*k);
+		Freac = µdyn*Q;
+		Fessieu = Ft - Froue;
+
+		if (Ft > Freac)
+		{
+			Ftransmis = Freac;
+		}
+		else if (Ft < Freac)
+		{
+			Ftransmis = Ft;
+		}
+
+		gammaEssieu = Fessieu / (masseEssieuMoteur + mTournanteEssieuMoteur);
+		gamma = gammaEssieu;
+		glissement = (Vessieu - V_train) / V_train;
+
 	}
+
 }
 
 
@@ -166,15 +183,17 @@ void Train_dynamique::adherence()
 void Train_dynamique::calculVitesse()
 {
 	float NVitesse;      // nouvelle vitesse tampon
-	float NVitesse2;
 
 	diftime = chrono.getElapsedTime();
 	deltats = diftime.asSeconds();
-	NVitesse2 = gamma2*deltats*3.6;		// pour calculer la vitesse de glissement de l'essieu
+	Vessieu = gammaEssieu*deltats*3.6;		// pour calculer la vitesse de glissement de l'essieu
 	NVitesse = gamma*deltats*3.6;
 
-	V_train = (NVitesse + V_train) - NVitesse2;
+	V_train = (NVitesse + V_train) - Vessieu;
 	distance_update = deltats*V_train/3.6;
 	chrono.restart();
+
+
+
 }
 

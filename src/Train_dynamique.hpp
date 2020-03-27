@@ -25,10 +25,14 @@ class Train_dynamique
 	float typeTrain=0;   // pour la formule résistance au décollage =0 -> voyageur        =1 -> fret
 	float k=1.03;
 	float gamma;
-	float gamma2;
+	float gammaEssieu;
 	float µmax; // donnée à récupérer
 	float Ft;
 	float masseEssieuMoteur;   // en tonnes
+	float Vessieu = 0;      // voir si je la declare dans la fonction calculvitesse
+	float newGlissement;
+	float glissement;
+	float mTournanteEssieuMoteur;
 
 
 	public :
