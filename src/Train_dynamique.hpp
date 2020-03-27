@@ -6,7 +6,7 @@
 class Train_dynamique
 {
 	private :
-	float V_train = 80;
+	float V_train = 0;
 	sf::Clock chrono;//créer le chrono
 	sf::Time diftime;//créer la varaible qui stocke le temps écoulé
 	float deltats;//créer la variable qui stocke le temps écoulé en seconde
@@ -26,13 +26,19 @@ class Train_dynamique
 	float k=1.03;
 	float gamma;
 	float gammaEssieu;
-	float µmax; // donnée à récupérer
+	float mumax = 0.1; // donnée à récupérer
 	float Ft;
-	float masseEssieuMoteur;   // en tonnes
+	float masseEssieuMoteur = 1.5;   // en tonnes
 	float Vessieu = 0;      // voir si je la declare dans la fonction calculvitesse
-	float newGlissement;
-	float glissement;
-	float mTournanteEssieuMoteur;
+	float newGlissement=0;
+	float glissement=0;
+	float mTournanteEssieuMoteur = 0.9;
+	float nbEssieuMoteur = 8;
+	float masseEssieu = 17;
+	float FtractionAdher=0;
+	float Fres;
+	float Vessieuprece;
+	float Vtrainprece;
 
 
 	public :

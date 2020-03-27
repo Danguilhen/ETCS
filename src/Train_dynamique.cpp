@@ -11,8 +11,9 @@ void Train_dynamique::setTraction(float A){traction = A;}
 void Train_dynamique::update()
 {
 	effortTraction();
+	adherence();
 	calculVitesse();
-	effortFreinage();
+	//effortFreinage();
 }
 
 
@@ -22,7 +23,6 @@ void Train_dynamique::effortTraction()
 	float Rav;			// resistance avancement
 	float Rp;  // resistance profil
 	float Rd=0;
-	float Fres;
 	float F;
 	float Rd0=0;
 //	float Rp0;      // rp corrigé
@@ -82,7 +82,6 @@ void Train_dynamique::effortTraction()
 	{
 		Rd = 0;
 	}
-	cout << Rd << endl;
 	Fres = Rav + Rd + Rp;
 
 	if (V_train == 0)
@@ -92,10 +91,12 @@ void Train_dynamique::effortTraction()
 		{
 			Ft = (Ftraction*coefManip - Rd -Rp);
 			gamma = Ft / (masse*k);
+			FtractionAdher = Ftraction*coefManip;
 		}
 		else if (abs(Ftraction*coefManip - Rp) <= Rd0)
 		{
 			V_train = 0;
+			FtractionAdher = 0;
 		}
 	}
 	else if (V_train != 0)
@@ -104,20 +105,24 @@ void Train_dynamique::effortTraction()
 		{
 			Ft = -Fres;
 			gamma = Ft / (masse*k);
+			FtractionAdher = 0;
 		}
 		else if (Ptraction*coefManip / (abs(V_train/3.6)) >= Ftraction*coefManip)                     // le train travail à sa force de trction max pour des vitesses relativement faible.
 		{
 			Ft = (Ftraction*coefManip - Fres);
 			gamma = Ft / (masse*k);
+			FtractionAdher = Ftraction*coefManip;
 		}
 		else if (Ptraction*coefManip / (V_train/3.6) < Ftraction*coefManip)          // le train travail au max de sa puissance.
 		{
 			F = Ptraction*coefManip / (V_train/3.6);
 			Ft = (F - Fres);
 			gamma = Ft / (masse*k);
+			FtractionAdher = F;
 		}
 	}
-	cout << "gamma = " << gamma << endl;
+
+	//cout << "gamma = " << gamma << endl;
 }
 
 void Train_dynamique::effortFreinage()
@@ -133,7 +138,7 @@ void Train_dynamique::effortFreinage()
 		int passe = 123;
 		cout << passe << endl;
 	}
-	cout << coefManip << endl;
+	//cout << coefManip << endl;
 //======================================================
 
 
@@ -142,36 +147,65 @@ void Train_dynamique::effortFreinage()
 
 void Train_dynamique::adherence()
 {
-	float Q;
-	float Freac;     // force de réaction du rail
-	float µ;
-	float Ftransmis;
-	float Fessieu;
-	float µdyn;
-	float Q;
+	float Q=0;
+	float Freac=0;     // force de réaction du rail
+	float Ftransmis=0;
+	float Fessieu=0;
+	float mudyn=0;
 
-	µdyn = µmax / (1 + glissement);
-	Q = masseEssieuMoteur*9.81;  // en kN
+	mudyn = mumax / (1 + glissement);
+	Q = nbEssieuMoteur*masseEssieu*9.81;  // en kN
+	cout << "glt" << glissement<<endl;
+	cout << "Ft " << Ft <<endl;
+	cout << "Fader" << FtractionAdher << endl;
 
-	if ( Ft > µdyn*Q)
+	if ( FtractionAdher > mudyn*Q )
 	{
-		Freac = µdyn*Q;
-		Fessieu = Ft - Froue;
+		Freac = mudyn*Q;
+		Fessieu = FtractionAdher - Freac;
 
-		if (Ft > Freac)
+		if (FtractionAdher > Freac)
 		{
 			Ftransmis = Freac;
 		}
-		else if (Ft < Freac)
+		else if (FtractionAdher < Freac)
 		{
-			Ftransmis = Ft;
+			Ftransmis = FtractionAdher;
 		}
 
-		gammaEssieu = Fessieu / (masseEssieuMoteur + mTournanteEssieuMoteur);
-		gamma = gammaEssieu;
-		glissement = (Vessieu - V_train) / V_train;
+		gamma = (Ftransmis - Fres) / (k*masse);
+		gammaEssieu = Fessieu / (nbEssieuMoteur*(masseEssieuMoteur + mTournanteEssieuMoteur)) + gamma;
 
+
+		cout << "test2" << endl;
+		//cout << "mudyn" << mudyn << endl;
 	}
+
+
+	else if ( FtractionAdher <= mudyn*Q && glissement != 0 )
+	{
+		Freac = mudyn*Q;
+		Fessieu = FtractionAdher - Freac;
+
+		if (FtractionAdher > Freac)
+		{
+			Ftransmis = Freac;
+		}
+		else if (FtractionAdher < Freac)
+		{
+			Ftransmis = FtractionAdher;
+		}
+
+		gamma = (Ftransmis - Fres) / (k*masse);
+		gammaEssieu = Fessieu / (nbEssieuMoteur*(masseEssieuMoteur + mTournanteEssieuMoteur)) + gamma;
+
+		cout << "test" << endl;
+		//cout << "mudyn" << mudyn << endl;
+	}
+
+	else gammaEssieu = gamma;
+
+
 
 }
 
@@ -183,15 +217,74 @@ void Train_dynamique::adherence()
 void Train_dynamique::calculVitesse()
 {
 	float NVitesse;      // nouvelle vitesse tampon
+	float NVessieu;
 
 	diftime = chrono.getElapsedTime();
 	deltats = diftime.asSeconds();
-	Vessieu = gammaEssieu*deltats*3.6;		// pour calculer la vitesse de glissement de l'essieu
-	NVitesse = gamma*deltats*3.6;
 
-	V_train = (NVitesse + V_train) - Vessieu;
+	NVessieu = gammaEssieu*deltats*3.6;		// pour calculer la vitesse de glissement de l'essieu
+	NVitesse = gamma*deltats*3.6;
+	V_train = NVitesse + V_train;
+	if (gammaEssieu == gamma)
+	{
+		Vessieu = V_train;
+	}
+	else
+	Vessieu = NVessieu + Vessieu;
+
+
+	if (Vessieu < 0 && V_train >= 0)
+	{
+		Vessieu = 0;
+	}
+	else if (Vessieu > 0 && V_train <= 0)
+	{
+		Vessieu = 0;
+	}
+
+	else if (Vessieu > V_train && Vessieuprece < Vtrainprece)
+	{
+		Vessieu = V_train;
+	}
+	else if (Vessieu < V_train && Vessieuprece > Vtrainprece)
+	{
+		Vessieu = V_train;
+	}
+
+
 	distance_update = deltats*V_train/3.6;
+	if (V_train > 0)
+	{
+		newGlissement = (Vessieu - V_train) / V_train;
+	}
+
+
+	if (newGlissement < 0 && glissement > 0)
+	{
+		newGlissement = 0;
+	}
+	else if (newGlissement > 0 && glissement < 0)
+	{
+		newGlissement = 0;
+	}
+
+
+
+	glissement = abs(newGlissement);
+	if (glissement < 0.00001)
+	{
+		glissement = 0;
+	}
+
+	cout << "vessieu"<< Vessieu <<endl;
+	cout << "vtrain"<< V_train <<endl;
+
+	Vessieuprece = Vessieu;
+	Vtrainprece = V_train;
+
 	chrono.restart();
+
+
 
 
 
