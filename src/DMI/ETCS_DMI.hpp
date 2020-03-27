@@ -9,22 +9,25 @@
 #include "Main.hpp"
 #include "Override.hpp"
 #include "Special.hpp"
-
+#include "Texte_DMI.hpp"
+#include "StartUp.hpp"
+#include "Settings.hpp"
 
 class ETCS_DMI : public Fenetre
 {
 	private :
-		std::string etat_ecran = "Default";
+		std::string etat_ecran = "";
 		std::vector <Symbol> symbol;
 		std::vector <Button> button;
+		std::vector <Texte_DMI> T_DMI;
 		Train_dynamique *T_D;
 		sf::Event event;
 		Default def;
 		Main main;
 		Override overide;
 		Special special;
-		//Special special;
-		//Settings settings;
+		StartUp STU;
+		Settings settings;
 		//SRspeed srSpeed;
 		//DataView dataView;
 		//SystemVersion systemVersion;

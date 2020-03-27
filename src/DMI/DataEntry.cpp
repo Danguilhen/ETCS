@@ -1,30 +1,24 @@
-/*
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/System.hpp>*/
-/*#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <cstring>
-#include <netdb.h>*/
+#include "DataEntry.hpp"
 
-/*
-class DataEntry : public Fenetre
+DataEntry::DataEntry(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D, string &ecran): left(symbol, soft, bord, T_D)
 {
-	protected :
-		//void dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Button> & boutons, string & ecran);
-};*/
-/*
-void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & symbol, int complete, string title, vector<string> selection, int & sel, string keyboard, vector<Button> & boutons, string & ecran)
+	this->soft = &soft;
+	this->bord = &bord;
+	this->symbol = &symbol;
+	this->buttons = &buttons;
+	this->T_D = &T_D;
+	this->ecran = &ecran;
+}
+
+void DataEntry::dataEntry(vector<vector<string>> input_field, int complete, string title, vector<string> selection, string keyboard)
 {
+	left.update();
 	for(int i = 0; i <= 9; i++)
-		boutons[i].settype("down_type");
+		(*buttons)[i].settype("down_type");
 	if(keyboard == "numeric")
 	{
 		NA_21.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 / 2.0));			//H2
-		boutons[10].settype("down_type");
+		(*buttons)[10].settype("down_type");
 		for(int i = 1; i <= 10; i++)
 			creation_texte(to_string(i % 10), GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), 1);
 	}
@@ -54,11 +48,11 @@ void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & s
         for(int i = 1; i <= (int)selection.size(); i++)
             creation_texte(to_string(i % 10), GREY, 16, 0, V2f(- 64 / 2.0 + i * 64, 430 + 50 / 2.0), 1);
         if(selection.size() >= 10)
-            boutons[9].settype("up_type");
+            (*buttons)[9].settype("up_type");
     }
-	if(boutons[14].getactivation())
+	if((*buttons)[14].getactivation())
 		sel = sel % input_field.size() + 1;
-	else if(boutons[13].getactivation())
+	else if((*buttons)[13].getactivation())
 	{
 		if(sel != 1)
 			sel--;
@@ -72,17 +66,16 @@ void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & s
 		sequenceNumber = string(" (") + to_string((int)ceil(numero / 4.0)) + "/" + to_string((int)ceil(input_field.size() / 4.0)) + ")";
 	else if(complete == 0 && input_field.size() > 3)
 		sequenceNumber = string(" (") + to_string((int)ceil(numero / 3.0)) + "/" + to_string((int)ceil(input_field.size() / 3.0)) + ")";
-	if(((int)ceil(numero / 4.0) == 1 && complete == 1) || ((int)ceil(numero / 3.0) == 1 && complete == 0))
+	if(((int)ceil(numero / 4.0) < 2 && complete == 1) || ((int)ceil(numero / 3.0) < 2 && complete == 0))
 	{
 		NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
-		boutons[11].settype("up_type");
-		close(ecran, boutons, sel);
+		(*buttons)[11].settype("up_type");
 	}
 	else
 	{
 		NA_18.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));		//H3
-		boutons[11].settype("up_type");
-		if(boutons[11].getactivation())
+		(*buttons)[11].settype("up_type");
+		if((*buttons)[11].getactivation())
 		{
 			while(sel % 4 != 0)
 				sel--;
@@ -93,13 +86,13 @@ void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & s
 		(int)ceil(numero / 3.0) == (int)ceil(input_field.size() / 3.0)))))
 	{
 		NA_18_2.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
-		boutons[12].settype("disabled");
+		(*buttons)[12].settype("disabled");
 	}
 	else if((complete == 1 && input_field.size() > 4) || (complete == 0 && input_field.size() > 3))
 	{
-		boutons[12].settype("up_type");
+		(*buttons)[12].settype("up_type");
 		NA_17.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 * 2+ 64 / 2.0));	//H4
-		if(boutons[12].getactivation())
+		if((*buttons)[12].getactivation())
 		{
 			while(sel % 4 != 0)
 				sel++;
@@ -165,18 +158,19 @@ void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & s
 			creation_texte(input_field[i][0], GREY, 12, 0, V2f(54 + 280 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
 			if(i == sel - 1)
 			{
-				if(train.getClignotementTexte() / 30 <= 1)
+				cout << clignotement << endl;
+				if(clignotement / 30 <= 1.0)
 				{
 					creation_texte(input_field[i][1], BLACK, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
-					train.setClignotementTexte(train.getClignotementTexte() + 1);
+					clignotement++;
 				}
-				else if (train.getClignotementTexte()/30 <= 2)
+				else if (clignotement/30 <= 2.0)
 				{
 					creation_texte(input_field[i][1] + "_", BLACK, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
-					train.setClignotementTexte(train.getClignotementTexte() + 1);
+					clignotement++;
 				}
 				else
-					train.setClignotementTexte(0);
+					clignotement = 0.0;
 			}
 			else if(input_field[i][2] == "1")
 				creation_texte(input_field[i][1], WHITE, 12, 0, V2f(54 + 280 + 164 + 10, 50 * (i - numero) + 25 + 50 * (1 - complete)), 4);
@@ -186,83 +180,5 @@ void DataEntry::dataEntry(vector<vector<string>> input_field, vector<Symbol> & s
 	}
 	for(int i = 0; i < (int)selection.size(); i++)
 		creation_texte(to_string(i + 1) + " - " + selection[i], GREY, 12, 0, V2f(54 + 280 + 15, 200 + 15 + 6 + i * 20), 4);
+
 }
-*/
-/*
-class Special : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		Special(RenderWindow &fenetre, Data &data);
-};
-
-Special::Special(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class Settings : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		Settings(RenderWindow &fenetre, Data &data);
-};
-
-Settings::Settings(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class SRspeed : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		SRspeed(RenderWindow &fenetre, Data &data);
-};
-
-SRspeed::SRspeed(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class DataView : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		DataView(RenderWindow &fenetre, Data &data);
-};
-
-DataView::DataView(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-class SystemVersion : public Menu
-{
-	private :
-		RenderWindow *fenetre;
-		Data *data;
-	public :
-		SystemVersion(RenderWindow &fenetre, Data &data);
-};
-
-SystemVersion::SystemVersion(RenderWindow &fenetre, Data &data)
-{
-	this->fenetre = &fenetre;
-	this->data = &data;
-}
-
-
-*/

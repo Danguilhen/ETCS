@@ -14,10 +14,10 @@ class Virtual_train
 		//Data data;
 		Reseau reseau;
 		Software soft;
-		Train_dynamique train_dynamique;
 		ETCS etcs;
 		BASIC basic; // écran affichage restreint
 		BASIC auxiliaire; // écran avec affichage information auxiliaire
+		Train_dynamique train_dynamique;
 		//Train_Statique train_statique;
 		Virtual_train();
 		void update();

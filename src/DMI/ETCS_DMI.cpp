@@ -1,6 +1,7 @@
 #include "ETCS.hpp"
 
-ETCS_DMI::ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): def(symbol, button, soft, bord, T_D, etat_ecran), main(symbol, button, soft, bord, T_D, etat_ecran), overide(symbol, button, soft, bord, T_D, etat_ecran), special(symbol, button, soft, bord, T_D, etat_ecran)/*, special(fenetre, data), settings(fenetre, data), srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
+ETCS_DMI::ETCS_DMI(Software &soft, ETCS_Bord &bord, Train_dynamique &T_D): def(symbol, button, soft, bord, T_D, etat_ecran), main(symbol, button, soft, bord, T_D, etat_ecran), overide(symbol, button, soft, bord, T_D, etat_ecran), special(symbol, button, soft, bord, T_D, etat_ecran),
+STU(symbol, button, soft, bord, T_D, etat_ecran), settings(symbol, button, soft, bord, T_D, etat_ecran)/*, srSpeed(fenetre, data), dataView(fenetre, data), systemVersion(fenetre, data)*/
 {
 	//cout<< "DMI" <<endl;
 	this->soft = &soft;
@@ -31,14 +32,25 @@ void ETCS_DMI::update()
 {
 		action();
 		affichage();
-		if(etat_ecran == "Default")
-			def.update();
-		else if(etat_ecran == "Main")
-			main.update();
-		else if(etat_ecran == "Override")
-			overide.update();
-		else if(etat_ecran == "Special")
-			special.update();
+		if(bord->getGeneralMode() == "SB") // StandBy
+		{
+			STU.update();
+		}
+		else
+		{
+			if(etat_ecran == "")
+				etat_ecran == "Default";
+			if(etat_ecran == "Default")
+				def.update();
+			else if(etat_ecran == "Main")
+				main.update();
+			else if(etat_ecran == "Override")
+				overide.update();
+			else if(etat_ecran == "Special")
+				special.update();
+			else if(etat_ecran == "Settings")
+				settings.update();
+		}
 
 }
 
@@ -292,3 +304,4 @@ void ETCS_DMI::affichage()
 	soft->getFenetre()->draw(fond);
 	affichageBoutons();
 }
+

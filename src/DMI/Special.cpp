@@ -54,9 +54,5 @@ void Special::update()
     }
     selection = {"Adhesion", "SR speed / distance", "Train integrity"};
     menu(selection, enable, "Special");
-    if((*buttons)[11].getactivation())
-	{
-        page = 1;
-        *ecran = "Default";
-	}
+    close();
 }

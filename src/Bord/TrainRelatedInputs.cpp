@@ -148,6 +148,14 @@ Train_Data::Train_Data()
 int Train_Data::getTrain_length(){return train_length;}
 
 int Train_Data::getM_rotating_nom(){return M_rotating_nom;}
+int Train_Data::getDriverID(){return DriverID;}
+void Train_Data::setDriverID(int D){DriverID = D;}
+int Train_Data::getTrainRunningNumber(){return TrainRunningNumber;}
+void Train_Data::setTrainRunningNumber(int T){TrainRunningNumber = T;}
+std::string Train_Data::getLevel(){return level;}
+void Train_Data::setLevel(std::string L){level = L;}
+std::vector<std::string> Train_Data::getlist_of_national_systems_available_on_board(){return list_of_national_systems_available_on_board;}
+
 
 OnBoardCorrectionFactors::OnBoardCorrectionFactors()
 {

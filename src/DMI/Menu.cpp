@@ -12,7 +12,7 @@ void Menu::menu(vector <string> selection, vector <int>& enable, string title)
 {
 	left.update();
 	Color color;
-	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK);
+	rectangle(V2f(54 + 280, 0), V2f(266, 24), BLACK); // rectangle titre
 	NA_11.afficher(V2f(54 + 280 + 40 + 166 + 40 + 20 + 40 / 2.0, 28 + 64 + 64 / 2.0));	//H5
 	for(int i = 0; i < (int)selection.size(); i++)
 	{

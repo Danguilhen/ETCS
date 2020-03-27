@@ -1,7 +1,7 @@
 
 #include "Virtual_train.hpp"
 
-Virtual_train::Virtual_train() : etcs(soft, train_dynamique, reseau), basic(train_dynamique, soft), auxiliaire(train_dynamique, soft)
+Virtual_train::Virtual_train() : etcs(soft, train_dynamique, reseau), basic(train_dynamique, soft), auxiliaire(train_dynamique, soft), train_dynamique(reseau)
 {
 	//cout<< "VT" <<endl;
 	//constructeur
@@ -21,6 +21,5 @@ void Virtual_train::update()
 	{
 		basic.update();
 	}
-	auxiliaire.affichageFreinage();
 	soft.getFenetre()->display();
 }
