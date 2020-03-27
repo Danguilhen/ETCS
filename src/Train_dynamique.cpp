@@ -154,7 +154,7 @@ void Train_dynamique::adherence()
 	{
 		Freac = µ*Q;
 		F = Freac + Ft;
-		gamma2 = F / (masse*k)
+		gamma2 = F / (masse*k);
 	}
 }
 
@@ -166,10 +166,14 @@ void Train_dynamique::adherence()
 void Train_dynamique::calculVitesse()
 {
 	float NVitesse;      // nouvelle vitesse tampon
+	float NVitesse2;
+
 	diftime = chrono.getElapsedTime();
 	deltats = diftime.asSeconds();
+	NVitesse2 = gamma2*deltats*3.6;		// pour calculer la vitesse de glissement de l'essieu
 	NVitesse = gamma*deltats*3.6;
-	V_train = NVitesse + V_train;
+
+	V_train = (NVitesse + V_train) - NVitesse2;
 	distance_update = deltats*V_train/3.6;
 	chrono.restart();
 }
