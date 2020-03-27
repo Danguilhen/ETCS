@@ -25,6 +25,11 @@ class Train_dynamique
 	float typeTrain=0;   // pour la formule résistance au décollage =0 -> voyageur        =1 -> fret
 	float k=1.03;
 	float gamma;
+	float gamma2;
+	float µmax; // donnée à récupérer
+	float Ft;
+	float masseEssieuMoteur;   // en tonnes
+
 
 	public :
 
@@ -38,6 +43,7 @@ class Train_dynamique
 	void effortTraction();
 	void effortFreinage();
 	void calculVitesse();
+	void adherence();
 
 };
 

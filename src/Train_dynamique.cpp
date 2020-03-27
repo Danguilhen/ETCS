@@ -24,7 +24,6 @@ void Train_dynamique::effortTraction()
 	float Rd=0;
 	float Fres;
 	float F;
-	float Ft;
 	float Rd0=0;
 //	float Rp0;      // rp corrigé
 
@@ -91,8 +90,8 @@ void Train_dynamique::effortTraction()
 		Rp =  Rd - Rd0;
 		if (abs(Ftraction*coefManip - Rp) > Rd0)
 		{
-		Ft = (Ftraction*coefManip - Rd -Rp);
-		gamma = Ft / (masse*k);
+			Ft = (Ftraction*coefManip - Rd -Rp);
+			gamma = Ft / (masse*k);
 		}
 		else if (abs(Ftraction*coefManip - Rp) <= Rd0)
 		{
@@ -108,14 +107,14 @@ void Train_dynamique::effortTraction()
 		}
 		else if (Ptraction*coefManip / (abs(V_train/3.6)) >= Ftraction*coefManip)                     // le train travail à sa force de trction max pour des vitesses relativement faible.
 		{
-		Ft = (Ftraction*coefManip - Fres);
-		gamma = Ft / (masse*k);
+			Ft = (Ftraction*coefManip - Fres);
+			gamma = Ft / (masse*k);
 		}
 		else if (Ptraction*coefManip / (V_train/3.6) < Ftraction*coefManip)          // le train travail au max de sa puissance.
 		{
-		F = Ptraction*coefManip / (V_train/3.6);
-		Ft = (F - Fres);
-		gamma = Ft / (masse*k);
+			F = Ptraction*coefManip / (V_train/3.6);
+			Ft = (F - Fres);
+			gamma = Ft / (masse*k);
 		}
 	}
 	cout << "gamma = " << gamma << endl;
@@ -125,9 +124,8 @@ void Train_dynamique::effortFreinage()
 {
 	float coefManip=0;
 
-
+//====================================================
 	valeurManip = traction;
-
 	if (valeurManip > 0 && valeurManip < 512)
 	{
 		coefManip = (511 - valeurManip);
@@ -136,12 +134,27 @@ void Train_dynamique::effortFreinage()
 		cout << passe << endl;
 	}
 	cout << coefManip << endl;
+//======================================================
 
-	V_train = V_train - (0.1*coefManip);
 
-	if (V_train == 0)
+
+}
+
+void Train_dynamique::adherence()
+{
+	float Q;
+	float Freac;     // force de réaction du rail
+	float µ;
+	float F;
+	float gamma;
+
+	Q = 9.81*masseEssieuMoteur*1000;
+
+	if (Ft > µmax*Q)
 	{
-		V_train = 0;
+		Freac = µ*Q;
+		F = Freac + Ft;
+		gamma2 = F / (masse*k)
 	}
 }
 
