@@ -100,18 +100,24 @@ class Train_Data : public Tools
         std::string axle_load_category;//la valeur stockée
         size_t traction_system; //ATTENTION donnée inconnue //DONNEE NON MODIFIABLE
         bool train_fitted_with_airtight_system;
-        std::vector<std::string> list_of_national_systems_available_on_board{"TVM", "KVB", "TPWS/AWS"};//DONNEE NON MODIFIABLE
+        std::vector<std::string> list_of_national_systems_available_on_board{"Level 1", "Level 2", "Level 3", "TVM", "KVB", "TPWS/AWS"};//DONNEE NON MODIFIABLE
         int axle_number;//DONNEE NON MODIFIABLE
         int M_rotating_nom = 11;
         int DriverID = 0;
         int TrainRunningNumber = 0;
+        std::string level;
 
     public :
         Train_Data();
         int getTrain_length();
         int getM_rotating_nom();
         int getDriverID();
+        void setDriverID(int D);
+        void setTrainRunningNumber(int T);
         int getTrainRunningNumber();
+		std::string getLevel();
+        void setLevel(std::string L);
+        std::vector<std::string> getlist_of_national_systems_available_on_board();
 
 	    //GET ET SET A FAIRE SI NECESSAIRE
 };

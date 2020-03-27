@@ -11,8 +11,6 @@ class Menu : public Fenetre
 {
 	protected :
 		LeftSide left;
-		std::vector <Button> *buttons;
-		int page = 1;
 		Menu(std::vector<Symbol> &symbol, Software &soft, ETCS_Bord &bord, Train_dynamique &T_D);
 		void menu(std::vector <string> selection, std::vector <int>& enable, std::string title);
 };

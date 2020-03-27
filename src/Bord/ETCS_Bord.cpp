@@ -43,7 +43,7 @@ void ETCS_Bord::transition_generalMode()
 }
 
 string ETCS_Bord::getGeneralMode(){return generalMode;}
-string ETCS_Bord::getLevel(){return level;}
+void ETCS_Bord::setGeneralMode(std::string M){generalMode = M;}
 string ETCS_Bord::getVersion(){return version;}
 void ETCS_Bord::setVersion(string V){version = V;}
 bool ETCS_Bord::getDriverID()

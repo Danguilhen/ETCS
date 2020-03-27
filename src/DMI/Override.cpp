@@ -18,7 +18,7 @@ void Override::update()
     if ((T_D->getV_train() <=  bord->getVrelease() && (bord->getGeneralMode() == "FS" || bord->getGeneralMode() == "LS" || bord->getGeneralMode() == "SR" || bord->getGeneralMode() == "OS"||
         bord->getGeneralMode() == "UN" || bord->getGeneralMode() == "SN" || bord->getGeneralMode() == "SH"))
         || (T_D->getV_train() <=  bord->getVrelease() && bord->getGeneralMode() == "SB" && bord->getDriverID() && bord->getTrainData() && bord->getETATLevelETCS() &&
-		(bord->getLevel() == "Level 2" || bord->getLevel() == "Level 3")) || (bord->getVersion() =="3.6.0" && (T_D->getV_train() <=  bord->getVrelease() && bord->getGeneralMode() == "PT" &&
+		(bord->TrainRI.T_data.getLevel() == "Level 2" || bord->TrainRI.T_data.getLevel() == "Level 3")) || (bord->getVersion() =="3.6.0" && (T_D->getV_train() <=  bord->getVrelease() && bord->getGeneralMode() == "PT" &&
 		bord->getTrainData() && bord->getTrainNumber())))
     {
         (*buttons)[0].settype("up_type");
@@ -37,9 +37,5 @@ void Override::update()
     }
     selection = {"EOA"};
     menu(selection, enable, "Override");
-	if((*buttons)[11].getactivation())
-	{
-        page = 1;
-        *ecran = "Default";
-	}
+    close();
 }

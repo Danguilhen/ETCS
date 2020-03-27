@@ -14,7 +14,6 @@ class ETCS_Bord
 {
 	protected :
 		std::string generalMode = "SB";// FS,SR,SB
-		std::string level = "Level 1";
 		std::string version = "3.6.0";
 		std::string connection = "Down";
 		Train_dynamique *T_D;
@@ -30,7 +29,7 @@ class ETCS_Bord
 		void transition_generalMode();
 		void connection_update();
 		std::string getGeneralMode();
-		std::string getLevel();
+		void setGeneralMode(std::string M);
 		std::string getVersion();
 		void setVersion(std::string V);
 		bool getDriverID();

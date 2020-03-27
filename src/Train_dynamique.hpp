@@ -2,6 +2,7 @@
 #define TD
 
 #include "define.hpp"
+#include "Reseau.hpp"
 
 class Train_dynamique
 {
@@ -26,8 +27,11 @@ class Train_dynamique
 	float k=1.03;
 	float gamma;
 
+	Reseau *res;
+
 	public :
 
+	Train_dynamique(Reseau &res);
 	void update();
 	float getV_train();
 	void setV_train(float V);

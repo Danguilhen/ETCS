@@ -5,6 +5,7 @@
 #include "define.hpp"
 #include "Bord/ETCS_Bord.hpp"
 #include "Symbol.hpp"
+#include "Button.hpp"
 
 class Fenetre : public virtual Tools
 {
@@ -12,7 +13,10 @@ class Fenetre : public virtual Tools
 		std::vector <Symbol> *symbol;
 		ETCS_Bord *bord;
 		std::string *ecran;
+		std::vector <Button> *buttons;
+		int page = 1;
 		void affichageBoutons();
+		void close();
 };
 
 #endif

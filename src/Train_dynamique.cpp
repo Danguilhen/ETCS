@@ -1,5 +1,10 @@
 #include "Train_dynamique.hpp"
 
+Train_dynamique::Train_dynamique(Reseau &res)
+{
+	this->res = &res;
+}
+
 float Train_dynamique::getV_train(){return V_train;}
 void Train_dynamique::setV_train(float V){V_train = V;}
 float Train_dynamique::getDistance_Uptdate(){return distance_update;}
