@@ -12,6 +12,7 @@ void Train_dynamique::update()
 {
 	effortTraction();
 	calculVitesse();
+	effortFreinage();
 }
 
 
@@ -119,6 +120,34 @@ void Train_dynamique::effortTraction()
 	}
 	cout << "gamma = " << gamma << endl;
 }
+
+void Train_dynamique::effortFreinage()
+{
+	float coefManip=0;
+
+
+	valeurManip = traction;
+
+	if (valeurManip > 0 && valeurManip < 512)
+	{
+		coefManip = (511 - valeurManip);
+		coefManip = coefManip/511;
+		int passe = 123;
+		cout << passe << endl;
+	}
+	cout << coefManip << endl;
+
+	V_train = V_train - (0.1*coefManip);
+
+	if (V_train == 0)
+	{
+		V_train = 0;
+	}
+}
+
+
+
+
 
 
 void Train_dynamique::calculVitesse()

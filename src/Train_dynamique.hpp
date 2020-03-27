@@ -6,7 +6,7 @@
 class Train_dynamique
 {
 	private :
-	float V_train = 0;
+	float V_train = 80;
 	sf::Clock chrono;//créer le chrono
 	sf::Time diftime;//créer la varaible qui stocke le temps écoulé
 	float deltats;//créer la variable qui stocke le temps écoulé en seconde
@@ -21,7 +21,7 @@ class Train_dynamique
 	float Ftraction=222; // en kN
 	float Pfreinage=5;     // idem
 	int valeurManip;
-	float i=35;          // en pour mille
+	float i=0;          // en pour mille
 	float typeTrain=0;   // pour la formule résistance au décollage =0 -> voyageur        =1 -> fret
 	float k=1.03;
 	float gamma;
