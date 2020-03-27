@@ -155,9 +155,6 @@ void Train_dynamique::adherence()
 
 	mudyn = mumax / (1 + glissement);
 	Q = nbEssieuMoteur*masseEssieu*9.81;  // en kN
-	cout << "glt" << glissement<<endl;
-	cout << "Ft " << Ft <<endl;
-	cout << "Fader" << FtractionAdher << endl;
 
 	if ( FtractionAdher > mudyn*Q )
 	{
@@ -175,12 +172,7 @@ void Train_dynamique::adherence()
 
 		gamma = (Ftransmis - Fres) / (k*masse);
 		gammaEssieu = Fessieu / (nbEssieuMoteur*(masseEssieuMoteur + mTournanteEssieuMoteur)) + gamma;
-
-
-		cout << "test2" << endl;
-		//cout << "mudyn" << mudyn << endl;
 	}
-
 
 	else if ( FtractionAdher <= mudyn*Q && glissement != 0 )
 	{
@@ -202,14 +194,8 @@ void Train_dynamique::adherence()
 		cout << "test" << endl;
 		//cout << "mudyn" << mudyn << endl;
 	}
-
 	else gammaEssieu = gamma;
-
-
-
 }
-
-
 
 
 
@@ -232,7 +218,6 @@ void Train_dynamique::calculVitesse()
 	else
 	Vessieu = NVessieu + Vessieu;
 
-
 	if (Vessieu < 0 && V_train >= 0)
 	{
 		Vessieu = 0;
@@ -251,13 +236,11 @@ void Train_dynamique::calculVitesse()
 		Vessieu = V_train;
 	}
 
-
 	distance_update = deltats*V_train/3.6;
 	if (V_train > 0)
 	{
 		newGlissement = (Vessieu - V_train) / V_train;
 	}
-
 
 	if (newGlissement < 0 && glissement > 0)
 	{
@@ -267,8 +250,6 @@ void Train_dynamique::calculVitesse()
 	{
 		newGlissement = 0;
 	}
-
-
 
 	glissement = abs(newGlissement);
 	if (glissement < 0.00001)
