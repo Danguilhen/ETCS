@@ -38,8 +38,6 @@ void ETCS_DMI::update()
 		}
 		else
 		{
-			if(etat_ecran == "")
-				etat_ecran == "Default";
 			if(etat_ecran == "Default")
 				def.update();
 			else if(etat_ecran == "Main")

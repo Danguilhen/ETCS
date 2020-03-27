@@ -16,7 +16,7 @@
 class ETCS_DMI : public Fenetre
 {
 	private :
-		std::string etat_ecran = "";
+		std::string etat_ecran = "Default";
 		std::vector <Symbol> symbol;
 		std::vector <Button> button;
 		std::vector <Texte_DMI> T_DMI;

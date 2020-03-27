@@ -11,8 +11,8 @@ void StartUp::update()
 {
 	if(status_STU == "S1")
 	{
-		if(*ecran == "")
-			*ecran = "DriverID";
+		if(*ecran == "Default")
+			*ecran = "DriverID"; // si écran Default, alors on considère que c'est le premier lancement de update
 		if(*ecran == "DriverID")
 		{
 			Driver_DMI.update();
