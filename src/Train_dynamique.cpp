@@ -117,7 +117,7 @@ void Train_dynamique::effortTraction()
 		gamma = Ft / (masse*k);
 		}
 	}
-	cout << "gamma = " << gamma << endl;
+	//cout << "gamma = " << gamma << endl;
 }
 
 
