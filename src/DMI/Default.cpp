@@ -68,7 +68,7 @@ void Default::update()
 	else if((*buttons)[3].getactivation() == 1)
 		*ecran = "Special";
 	else if((*buttons)[4].getactivation() == 1)
-		*ecran = "settings";
+		*ecran = "Settings";
 	else if ((*buttons)[5].getactivation() == 1)
     {
         if(bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingArea" || bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")

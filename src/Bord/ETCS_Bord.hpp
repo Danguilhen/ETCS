@@ -13,7 +13,7 @@ class SpeedAndDistanceMonitoring;
 class ETCS_Bord
 {
 	protected :
-		std::string generalMode = "SB";// FS,SR,SB
+		std::string generalMode = "SR";// FS,SR,SB
 		std::string version = "3.6.0";
 		std::string connection = "Down";
 		Train_dynamique *T_D;

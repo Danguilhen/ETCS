@@ -5,13 +5,14 @@ StartUp::StartUp(vector<Symbol> &symbol, vector<Button> &buttons, Software &soft
 	this->ecran = &ecran;
 	this->buttons = &buttons;
 	this->bord = &bord;
-	ecran = "DriverID";
 }
 
 void StartUp::update()
 {
 	if(status_STU == "S1")
 	{
+		if(*ecran == "")
+			*ecran = "DriverID";
 		if(*ecran == "DriverID")
 		{
 			Driver_DMI.update();
