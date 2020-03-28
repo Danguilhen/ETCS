@@ -12,7 +12,7 @@ class Train_dynamique
 	sf::Time diftime;//créer la varaible qui stocke le temps écoulé
 	float deltats;//créer la variable qui stocke le temps écoulé en seconde
 	float distance_update; // distance parcourue entre chaque mise à jour
-	int traction;
+	int traction=510;
 
 	int masse=425; // masse à récupérer dans la class réseau
 	float A=2.7;
