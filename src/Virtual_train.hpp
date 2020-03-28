@@ -7,7 +7,6 @@
 #include "Train_dynamique.hpp"
 #include "Reseau.hpp"
 
-
 class Virtual_train
 {
 	public :
