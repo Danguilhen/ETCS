@@ -9,10 +9,6 @@ Reseau::Reseau()
 // Constructeur
 //**********************************************************
 {
-    // Initialisation de la structure MA
-    eurobalise.vitesse=0;
-    eurobalise.longueur=0;
-
     // Initialisation de la structure dynamique train aux paramètres de la duplex
     dynamique_train.A=2.27;
     dynamique_train.B=0.032;
@@ -53,9 +49,6 @@ Reseau::Reseau()
     cout << "Effort maximal: " << dynamique_train.F_traction << "KN" << endl;
     cout << "Puissance en freinage:" << dynamique_train.P_freinage << "KW" << endl;
     cout << "type de train (1=fret, 0=voyageur): " << dynamique_train.type_train << endl <<endl;
-
-
-
 
     //************************************************************
     // INITIALISATION DE LA LIAISON SERIE SUR LE PORT 7
