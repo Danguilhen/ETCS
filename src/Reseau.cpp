@@ -8,7 +8,12 @@ using namespace std;
 Reseau::Reseau()
 // Constructeur
 //**********************************************************
-{   // Initialisation de la structure dynamique train aux paramètres de la duplex
+{
+    // Initialisation de la structure MA
+    eurobalise.vitesse=0;
+    eurobalise.longueur=0;
+
+    // Initialisation de la structure dynamique train aux paramètres de la duplex
     dynamique_train.A=2.27;
     dynamique_train.B=0.032;
     dynamique_train.C=0.00053;
@@ -85,6 +90,7 @@ void Reseau::TCPClient_update()
     eurobalise.MAJ_eurobalise = false;
     if (client.receive(receivePacket) == Socket::Done)
     {
+        cout<<"mais merde";
         eurobalise.MAJ_eurobalise = true;
         receivePacket >> eurobalise.vitesse >> eurobalise.longueur;
         cout << "la vitesse max est" << eurobalise.vitesse << " km/h\n" << "la longueur de la MA est de " << eurobalise.longueur << " m\n" << endl;
