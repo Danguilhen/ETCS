@@ -4,11 +4,11 @@
 #include "define.hpp"
 #include "Reseau.hpp"
 
-class TrainStatique
+class Train_statique
 {
     private :
-        Reseau *RE;
-        /*int etat_projecteurs;
+        Reseau *res;
+        int etat_projecteurs;
         int etat_disj;
         int etat_sablage;
         bool etat_acquitt;
@@ -32,10 +32,10 @@ class TrainStatique
         int etat_GROG;
         bool etat_TVM_V1;
         bool etat_TVM_V2;
-        bool etat_alarme;*/
+        bool etat_alarme;
 
     public :
-        TrainStatique();
+        Train_statique(Reseau &res);
 /*      void set_projecteurs();
         void set_disj();
         void set_sablage();

@@ -1,33 +1,35 @@
-#include "TrainStatique.hpp"
+#include "Train_statique.hpp"
 
-TrainStatique::TrainStatique()
+Train_statique::Train_statique(Reseau &res)
 {
+	this->res = &res;
+etat_projecteurs = 0;
+etat_disj = 0;
+etat_sablage = 0;
+etat_acquitt = 0;
+etat_essui_glace = 0;
+etat_lave_glace = 0;
+etat_light_cabine = 0;
+etat_light_pupitre = 0;
+etat_sifflet = 0;
+etat_LS_SF = 0;
+etat_BP_SF = 0;
+signalisation = 0;
+etat_VI = 0;
+direction = 0;
+etat_conduct_mod = 0;
+etat_tract_frein = 0;
+etat_porte = 0;
+etat_panto = 0;
+etat_VA = 0;
+etat_cle_BL = 0;
+etat_ventilation = 0;
+etat_GROG = 0;
+etat_TVM_V1 = 0;
+etat_TVM_V2 = 0;
+etat_alarme = 0;
 }
-    /*int etat_projecteurs = 0;
-    int etat_disj = 0;
-    int etat_sablage = 0;
-    bool etat_acquitt = 0;
-    int etat_essui_glace = 0;
-    bool etat_lave_glace = 0;
-    int etat_light_cabine = 0;
-    int etat_light_pupitre = 0;
-    int etat_sifflet = 0;
-    bool etat_LS_F = 0;
-    bool etat_BP_SF = 0;
-    int signalisation = 0;
-    float etat_VI = 0;
-    int direction = 0;
-    int etat_conduct_mod = 0;
-    float etat_tract_frein = 0;
-    int etat_porte = 0;
-    bool etat_panto = 0;
-    bool etat_VA = 0;
-    bool etat_cle_BL = 0;
-    bool etat_ventilation = 0;
-    int etat_GROG = 0;
-    bool etat_TVM_V1 = 0;
-    bool etat_TVM_V2 = 0;
-    bool etat_alarme = 0;*/
+
 
 //
 //// Les seters

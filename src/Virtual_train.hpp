@@ -5,7 +5,7 @@
 #include "ETCS.hpp"
 #include "DMI/BASIC.hpp"
 #include "Train_dynamique.hpp"
-#include "TrainStatique.hpp"
+#include "Train_statique.hpp"
 #include "Reseau.hpp"
 
 class Virtual_train
@@ -18,7 +18,7 @@ class Virtual_train
         BASIC basic; // écran affichage restreint
         BASIC auxiliaire; // écran avec affichage information auxiliaire
         Train_dynamique train_dynamique;
-        TrainStatique trainStatique;
+        Train_statique train_statique;
         Virtual_train();
         void update();
 };
