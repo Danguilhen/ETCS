@@ -3,7 +3,7 @@
 
 #include "define.hpp"
 #include "DataEntry.hpp"
-#include "BORD/ETCS_Bord.hpp"
+#include "../Bord/ETCS_Bord.hpp"
 
 class DriverID_window : public DataEntry
 {
