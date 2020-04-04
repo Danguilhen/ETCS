@@ -36,6 +36,7 @@ class Train_statique
 
     public :
         Train_statique(Reseau &res);
+        void update();
 /*      void set_projecteurs();
         void set_disj();
         void set_sablage();

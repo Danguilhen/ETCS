@@ -1,8 +1,9 @@
 #include "Train_dynamique.hpp"
 
-Train_dynamique::Train_dynamique(Reseau &res)
+Train_dynamique::Train_dynamique(Reseau &res, Train_statique &stat)
 {
 	this->res = &res;
+	this->stat = &stat;
 }
 
 float Train_dynamique::getV_train(){return V_train;}

@@ -29,6 +29,12 @@ etat_TVM_V1 = 0;
 etat_TVM_V2 = 0;
 etat_alarme = 0;
 }
+void Train_statique::update()
+{
+	int a;
+	a=res->getDynamique_train().A;
+	cout<<a;
+}
 
 
 //
