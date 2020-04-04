@@ -33,7 +33,7 @@ void Train_statique::update()
 {
 	int a;
 	a=res->getDynamique_train().A;
-	cout<<a;
+	cout<< "A" << a;
 }
 
 

@@ -16,6 +16,7 @@ void Train_dynamique::setTraction(float A){traction = A;}
 
 void Train_dynamique::update()
 {
+	cout << V_train << endl;
 	effortTraction();
 	calculVitesse();
 }

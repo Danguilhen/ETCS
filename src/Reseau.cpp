@@ -147,61 +147,61 @@ void Reseau::Serial_update()
     //ACTUALISATION DE L'ETAT DES BOUTONS
     //"%0024!0!0!00!0!0!0!00!00!00!00!00!00!00!00%"
 
-    string etat;
-    int i=0;
-    for (i=1;i<=4;i++)
-    {
-    etat = etat + pupitre_entrant.pupitre[i];
-    }
-    pupitre_entrant.commande_tract_frein = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[6];
-    pupitre_entrant.commande_BP_URG_panto = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[8];
-    pupitre_entrant.commande_BP_SF = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[10] + pupitre_entrant.pupitre[11];
-    pupitre_entrant.commande_sifflet = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[13];
-    pupitre_entrant.commande_BP_frein_neutre = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[15];
-    pupitre_entrant.commande_acquitt1 = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[17];
-    pupitre_entrant.commande_acquitt2 = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[19] + pupitre_entrant.pupitre[20];
-    pupitre_entrant.commande_allum_diesel = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[22] + pupitre_entrant.pupitre[23];
-    pupitre_entrant.commande_disj = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[25] + pupitre_entrant.pupitre[26];
-    pupitre_entrant.commande_frein = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[28] + pupitre_entrant.pupitre[29];
-    pupitre_entrant.commande_BP_panto = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[31];
-    pupitre_entrant.commande_TVM_V1 = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[32];
-    pupitre_entrant.commande_TVM_V2 = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[34] + pupitre_entrant.pupitre[35];
-    pupitre_entrant.commande_cle_BL = atoi(etat.c_str());
-
-    etat = pupitre_entrant.pupitre[37] + pupitre_entrant.pupitre[38];
-    pupitre_entrant.commande_VA = atoi(etat.c_str());
-
-
-    cout << "yes" << endl;
-    cout << pupitre_entrant.commande_tract_frein << endl;
-    cout << pupitre_entrant.commande_sifflet << endl;
-    cout << pupitre_entrant.commande_VA << endl;
+    //string etat;
+    //int i=0;
+    //for (i=1;i<=4;i++)
+    //{
+    //etat = etat + pupitre_entrant.pupitre[i];
+    //}
+    //pupitre_entrant.commande_tract_frein = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[6];
+    //pupitre_entrant.commande_BP_URG_panto = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[8];
+    //pupitre_entrant.commande_BP_SF = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[10] + pupitre_entrant.pupitre[11];
+    //pupitre_entrant.commande_sifflet = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[13];
+    //pupitre_entrant.commande_BP_frein_neutre = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[15];
+    //pupitre_entrant.commande_acquitt1 = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[17];
+    //pupitre_entrant.commande_acquitt2 = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[19] + pupitre_entrant.pupitre[20];
+    //pupitre_entrant.commande_allum_diesel = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[22] + pupitre_entrant.pupitre[23];
+    //pupitre_entrant.commande_disj = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[25] + pupitre_entrant.pupitre[26];
+    //pupitre_entrant.commande_frein = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[28] + pupitre_entrant.pupitre[29];
+    //pupitre_entrant.commande_BP_panto = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[31];
+    //pupitre_entrant.commande_TVM_V1 = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[32];
+    //pupitre_entrant.commande_TVM_V2 = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[34] + pupitre_entrant.pupitre[35];
+    //pupitre_entrant.commande_cle_BL = atoi(etat.c_str());
+//
+    //etat = pupitre_entrant.pupitre[37] + pupitre_entrant.pupitre[38];
+    //pupitre_entrant.commande_VA = atoi(etat.c_str());
+//
+//
+    //cout << "yes" << endl;
+    //cout << pupitre_entrant.commande_tract_frein << endl;
+    //cout << pupitre_entrant.commande_sifflet << endl;
+    //cout << pupitre_entrant.commande_VA << endl;
 
 }
 

@@ -17,8 +17,8 @@ class Virtual_train
         ETCS etcs;
         BASIC basic; // écran affichage restreint
         BASIC auxiliaire; // écran avec affichage information auxiliaire
-        Train_dynamique train_dynamique;
         Train_statique train_statique;
+        Train_dynamique train_dynamique;
         Virtual_train();
         void update();
 };
