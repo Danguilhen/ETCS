@@ -63,6 +63,39 @@ void ETCS_DMI::action()
 	}
     while(soft->getFenetre()->pollEvent(event))
     {
+		/*if(event.type == sf::Event::TouchBegan)
+		{
+            int x = event.touch.x;
+            int y = event.touch.y;
+			for(int i = 0; i < 10; i++)
+			{
+				if(x > ((64 * i + soft->getEcartX()) * soft->getRE()) && x < ((64 * (i + 1) + soft->getEcartX()) * soft->getRE()) && y > ((430 + soft->getEcartY()) * soft->getRE()) && y < ((480 + soft->getEcartY()) * soft->getRE()))
+            	{
+					if(button[i].getdriver_action() == 0)
+						{button[i].setdriver_action(1);}
+					else
+						{button[i].setdriver_action(2);}
+				}
+			}
+			for(int i = 10; i < 15; i++)
+			{
+            	if((x > (640 - 40 + soft->getEcartX()) * soft->getRE()) && (x < (640 + soft->getEcartX()) * soft->getRE()) && y > ((28 + 64 * (i - 10) + soft->getEcartY()) * soft->getRE()) && y < ((28 + 64 * (i - 9) + soft->getEcartY()) * soft->getRE()))
+            	{
+					if(button[i].getdriver_action() == 0)
+						button[i].setdriver_action(1);
+					else
+						button[i].setdriver_action(2);
+				}
+			}
+			if(x > ((54 + 280 + 246 + 20 + soft->getEcartX()) * soft->getRE()) && x < ((54 + 280 + 246 + 20 + 40 + soft->getEcartX()) * soft->getRE()) && y > ((28 + 64 * 5 + soft->getEcartY()) * soft->getRE()) && y < ((28 + 64 * 5 + 82 + soft->getEcartY()) * soft->getRE()))
+            {
+				if(button[15].getdriver_action() == 0)
+					button[15].setdriver_action(1);
+				else
+					button[15].setdriver_action(2);
+			}
+        }*/
+
 		if(event.type == sf::Event::MouseButtonPressed)
 		{
             int x = event.mouseButton.x;

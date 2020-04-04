@@ -19,7 +19,6 @@ void Software::software_update()
 double Software::getRE(){return RE;}
 int Software::getEcartX(){return ecartX;}
 int Software::getEcartY(){return ecartY;}
-void Software::setSon(int a){son = a;}
 bool Software::getEtat(){return en_marche;}
 void Software::setEtat(bool stop){en_marche = stop;}
 RenderWindow *Software::getFenetre(){return &fenetre;}
@@ -27,7 +26,5 @@ int Software::getVmax(){return Vmax;}
 void Software::setVmax(int V){Vmax = V;}
 string Software::getType_signalisation(){return type_signalisation;}
 void Software::setType_signalisation(string T){type_signalisation = T;}
-int Software::getVligne(){return Vligne;}
-void Software::setVligne(int V){Vligne = V;}
 bool Software::getS_Finished(){return s_Finished;}
 void Software::setS_Finished(bool S){s_Finished = S;}

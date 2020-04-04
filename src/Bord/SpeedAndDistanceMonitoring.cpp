@@ -436,7 +436,7 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 			command_triggered = "EB";
 		}
 		//Revocation conditions
-		if(T_D->getV_train() == 0)
+		if((int)T_D->getV_train() == 0)
 		{
 			supervision_status = "Normal";
 			command_triggered = "";

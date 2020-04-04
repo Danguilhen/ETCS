@@ -22,7 +22,7 @@ Reseau::Reseau()
     //bool done = false;
     short int port = 2000;
     // Définition de l'adresse IP de l'ordinateur sur le réseau local
-    string ip = "192.168.2.107";
+    string ip = "192.168.0.30";
     // Définition du nom du client sur le Réseau
     string pseudo = "Train";
     // Connexion du Train au serveur

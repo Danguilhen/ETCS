@@ -13,19 +13,9 @@ class Software
 		double RE ;
 		int ecartX = 0;
 		int ecartY = 0;
-		int son;
-		//Son :
-		//	Num�ro 1 : click
-		//	Num�ro 2 : S-info
-		//	Num�ro 3 : S1_toofast
-		//	Num�ro 4 : S2_warning
-		//	Mode 1 : Jouer UNE fois
-		//	Mode 2 : Jouer en boucle
-		//	Mode 3 : Stopper la boucle, le son s'arr�te
 		int Vmax = 400;//vmax affichée sur le compteur (ici 400)
 		bool en_marche = true;
 		bool s_Finished = false; //Utiliser pour faire fonctionner le multithreading affichage calcul
-		int Vligne = 150;
 
 	public :
 		Software();
@@ -33,7 +23,6 @@ class Software
 		double getRE();
 		int getEcartX();
 		int getEcartY();
-		void setSon(int a);
 		bool getEtat();
 		void setEtat(bool stop);
 		sf::RenderWindow *getFenetre();
@@ -41,8 +30,6 @@ class Software
 		void setVmax(int V);
 		std::string getType_signalisation();
 		void setType_signalisation(std::string T);
-		int getVligne();
-		void setVligne(int V);
 		bool getS_Finished();
 		void setS_Finished(bool S);
 
