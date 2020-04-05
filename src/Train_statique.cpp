@@ -7,27 +7,27 @@ etat_projecteurs = 0;
 etat_disj = 0;
 etat_sablage = 0;
 etat_acquitt = 0;
-etat_essui_glace = 0;
-etat_lave_glace = 0;
-etat_light_cabine = 0;
-etat_light_pupitre = 0;
+// etat_essui_glace = 0;
+// etat_lave_glace = 0;
+// etat_light_cabine = 0;
+// etat_light_pupitre = 0;
 etat_sifflet = 0;
-etat_LS_SF = 0;
-etat_BP_SF = 0;
+// etat_LS_SF = 0;
+// etat_BP_SF = 0;
 signalisation = 0;
-etat_VI = 0;
-direction = 0;
-etat_conduct_mod = 0;
+// etat_VI = 0;
+// direction = 0;
+// etat_conduct_mod = 0;
 etat_tract_frein = 0;
-etat_porte = 0;
+//etat_porte = 0;
 etat_panto = 0;
-etat_VA = 0;
-etat_cle_BL = 0;
-etat_ventilation = 0;
+// etat_VA = 0;
+// etat_cle_BL = 0;
+// etat_ventilation = 0;
 etat_GROG = 0;
-etat_TVM_V1 = 0;
-etat_TVM_V2 = 0;
-etat_alarme = 0;
+// etat_TVM_V1 = 0;
+// etat_TVM_V2 = 0;
+// etat_alarme = 0;
 }
 void Train_statique::update()
 {
@@ -47,23 +47,23 @@ void Train_statique::update()
 //void Train_statique::set_projecteurs()
 //{ etat_projecteurs = PE->getCmd_projecteurs();}
 //
-//void TrainStatique::set_disj()
-//{
-//  // Timer : maintien 2s pour l'armement uniquement
-//  // Voir Benoît pour savoir comment gérer le bouton armement et fermeture
-//}
-//
-//void TrainStatique::set_sablage()
-//{
-//  // Timer : maintien
-//
-//}
-//
-//void TrainStatique::set_acquitt()
-//{
-//  // Timer : à voir
-//}
-//
+void Train_statique::set_disj()
+{
+ // Timer : maintien 2s pour l'armement uniquement
+ // Voir Benoît pour savoir comment gérer le bouton armement et fermeture
+}
+
+void Train_statique::set_sablage()
+{
+ // Timer : maintien
+
+}
+
+void Train_statique::set_acquitt()
+{
+ // Timer : à voir
+}
+
 //void TrainStatique::set_essui_glace()
 //{etat_essui_glace = PE->getCmd_essui_glace();}
 //
@@ -85,11 +85,11 @@ void Train_statique::update()
 //
 //}
 //
-//void TrainStatique::set_sifflet()
-//{
-//  ///
-//}
-//
+void Train_statique::set_sifflet()
+{
+
+}
+
 //void TrainStatique::set_LS_SF()
 //{
 //  // C'est la lumière qui est modifiée par l'acquittement
@@ -100,11 +100,11 @@ void Train_statique::update()
 //
 //}
 //
-//void TrainStatique::set_signalisation()
-//{
-//  // C'est écrit dans le manuel de spec comment je dois le coder
-//}
-//
+void Train_statique::set_signalisation()
+{
+ // C'est écrit dans le manuel de spec comment je dois le coder
+}
+
 //void TrainStatique::set_VI()
 //{VI = PE->getCmd_VI();}
 //
@@ -114,19 +114,21 @@ void Train_statique::update()
 //void TrainStatique::set_conduct_mod()
 //{conduct_mod = PE->getCmd_conduct_mod();}
 //
-//void TrainStatique::set_tract_frein()
-//{tract_frein = PE->getCmd_tract_frein();}
-//
+void Train_statique::set_tract_frein()
+{
+	//tract_frein = PE->getCmd_tract_frein();
+}
+
 //void TrainStatique::setPorte()
 //{
 //
 //}
 //
-//void TrainStatique::set_panto()
-//{
-//
-//}
-//
+void Train_statique::set_panto()
+{
+
+}
+
 //void TrainStatique::set_VA()
 //{
 //
@@ -142,12 +144,12 @@ void Train_statique::update()
 //
 //}
 //
-//void TrainStatique::set_GROG()
-//{
+void Train_statique::set_GROG()
+{
 
-//}
-//
-//void TrainStatique::set_TVM_V1()
+}
+
+//void Train_statique::set_TVM_V1()
 //{
 //
 //}
