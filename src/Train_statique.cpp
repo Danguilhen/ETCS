@@ -159,12 +159,20 @@ void Train_statique::set_tract_frein()
 void Train_statique::set_panto()
 {
 	// Timer 2s pour lever/baisser panto
-	if(res->getPupitre_entrant().commande_BP_panto_pin1 == 1 && res->getPupitre_entrant().commande_BP_panto_pin2 == 1)
+	chrono_panto.time = chrono_panto.chrono.getElapsedTime();
+	chrono_panto.time_second = chrono_panto.time.asSeconds();
+	if(res->getPupitre_entrant().commande_BP_panto_pin1==etat_panto && etat_panto==0)
+	{
+	chrono_panto.chrono.restart();
+	chrono_panto.etatChrono=1;
+	}
+	if(chrono_panto.time_second>2 && chrono_panto.etatChrono==1)
+		{
+			etat_sablage = !etat_sablage;
+			chrono_sablage.etatChrono=0;
+		}
+	if(res->getPupitre_entrant().commande_BP_panto_pin1==etat_panto && etat_panto==1)
 	etat_panto = 0;
-
-	if(res->getPupitre_entrant().commande_BP_panto_pin1 == 0 && res->getPupitre_entrant().commande_BP_panto_pin2 == 0)
-	etat_panto = 1;
-
 }
 
 //void TrainStatique::set_VA()

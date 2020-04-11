@@ -40,6 +40,7 @@ class Train_statique
         float etat_tract_frein;
         int etat_porte;
         bool etat_panto;
+        struct Chrono chrono_panto;
         bool etat_VA;
         bool etat_cle_BL;
         bool etat_ventilation;
