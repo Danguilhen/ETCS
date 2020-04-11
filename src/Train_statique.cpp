@@ -57,6 +57,7 @@ void Train_statique::set_sablage()
 {
  // Timer : maintien
 
+
 }
 
 void Train_statique::set_acquitt()

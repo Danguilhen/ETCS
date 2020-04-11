@@ -161,7 +161,7 @@ void Reseau::Serial_update()
     // etat = pupitre_entrant.pupitre[8];
     // pupitre_entrant.commande_BP_SF = atoi(etat.c_str());
 
-    // etat = pupitre_entrant.pupitre[10];
+    //etat = pupitre_entrant.pupitre[10];
     // pupitre_entrant.commande_sifflet_pin1 = atoi(etat.c_str());
 
     // etat = pupitre_entrant.pupitre[11];
