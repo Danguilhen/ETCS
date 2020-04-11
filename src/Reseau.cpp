@@ -26,6 +26,7 @@ Reseau::Reseau()
     // Définition du nom du client sur le Réseau
     string pseudo = "Train";
     // Connexion du Train au serveur
+
     if (client.connect(ip, port) == Socket::Done)
     {
         cout << "Connecte au serveur !\n" << endl;
@@ -74,9 +75,11 @@ Reseau::Reseau()
     // INITIALISATION DES COMMANDES A 0
 
     //pupitre_entrant.commande_projecteurs = 0;
-    pupitre_entrant.commande_disj = 0;
+    pupitre_entrant.commande_disj_pin1 = 0;
+    pupitre_entrant.commande_disj_pin2 = 0;
     pupitre_entrant.commande_BP_urgence = 0;
-    pupitre_entrant.commande_frein = 0;
+    pupitre_entrant.commande_frein_pin1 = 0;
+    pupitre_entrant.commande_frein_pin2 = 0;
     //pupitre_entrant.commande_sablage = 0;
     pupitre_entrant.commande_acquitt1 = 0;
     pupitre_entrant.commande_acquitt2 = 0;
@@ -84,7 +87,8 @@ Reseau::Reseau()
     //pupitre_entrant.commande_lave_glace = 0;
     //pupitre_entrant.commande_light_cabine = 0;
     //pupitre_entrant.commande_light_pupitre = 0;
-    pupitre_entrant.commande_sifflet = 0;
+    pupitre_entrant.commande_sifflet_pin1 = 0;
+    pupitre_entrant.commande_sifflet_pin2 = 0;
     //pupitre_entrant.commande_LS_SF = 0;
     pupitre_entrant.commande_BP_SF = 0;
     //pupitre_entrant.commande_ETCS_release = 0;
@@ -98,16 +102,20 @@ Reseau::Reseau()
     pupitre_entrant.commande_BP_frein_neutre = 0;
     //pupitre_entrant.commande_essai_VA = 0;
     //pupitre_entrant.commande_annul_VA = 0;
-    pupitre_entrant.commande_cle_BL = 0;
+    pupitre_entrant.commande_cle_BL_pin1 = 0;
+    pupitre_entrant.commande_cle_BL_pin2 = 0;
     //pupitre_entrant.commande_ventilation = 0;
     //pupitre_entrant.commande_GROG = 0;
     pupitre_entrant.commande_TVM_V1 = 0;
     pupitre_entrant.commande_TVM_V2 = 0;
     //pupitre_entrant.commande_TVM_desarm = 0;
     pupitre_entrant.commande_BP_alarme = 0;
-    pupitre_entrant.commande_VA = 0;
-    pupitre_entrant.commande_BP_panto = 0;
-    pupitre_entrant.commande_allum_diesel = 0;
+    pupitre_entrant.commande_VA_pin1 = 0;
+    pupitre_entrant.commande_VA_pin2 = 0;
+    pupitre_entrant.commande_BP_panto_pin1 = 0;
+    pupitre_entrant.commande_BP_panto_pin2 = 0;
+    pupitre_entrant.commande_allum_diesel_pin1 = 0;
+    pupitre_entrant.commande_allum_diesel_pin2 = 0;
 
 
     Reseau::Serial_update();

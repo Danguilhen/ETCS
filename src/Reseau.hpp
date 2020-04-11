@@ -55,7 +55,7 @@ struct Pupitre_entrant
     bool commande_VA_pin1;
     bool commande_VA_pin2;
     int commande_BP_panto_pin1;
-    int commande_BP_panto_pin1;
+    int commande_BP_panto_pin2;
     int commande_allum_diesel_pin1;
     int commande_allum_diesel_pin2;
 };

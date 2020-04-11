@@ -88,7 +88,8 @@ void Train_statique::set_acquitt()
 //
 void Train_statique::set_sifflet()
 {
-	if(pupitre)
+	//res->getPupitre_entrant().comm
+
 
 }
 
