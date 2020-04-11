@@ -47,7 +47,6 @@ struct Pupitre_entrant
     bool commande_cle_BL_pin1;
     bool commande_cle_BL_pin2;
     bool commande_ventilation;
-    int commande_GROG;
     bool commande_TVM_V1;
     bool commande_TVM_V2;
     bool commande_TVM_desarm;

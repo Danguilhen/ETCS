@@ -28,6 +28,14 @@ etat_GROG = 0;
 // etat_TVM_V1 = 0;
 // etat_TVM_V2 = 0;
 // etat_alarme = 0;
+chrono_sablage.time_second=0;
+cout << "train statique" << endl;
+cout << etat_sifflet << endl;
+
+Train_statique::set_sifflet();
+cout << "etat commande" << endl;
+cout << etat_sifflet << endl;
+
 }
 void Train_statique::update()
 {
@@ -49,8 +57,15 @@ void Train_statique::update()
 //
 void Train_statique::set_disj()
 {
+
  // Timer : maintien 2s pour l'armement uniquement
  // Voir Benoît pour savoir comment gérer le bouton armement et fermeture
+
+	if(res->getPupitre_entrant().commande_disj_pin1 == 1)
+	etat_disj = 1;
+	if(res->getPupitre_entrant().commande_disj_pin1 == 0)
+	etat_disj = 0;
+
 }
 
 void Train_statique::set_sablage()
@@ -88,9 +103,12 @@ void Train_statique::set_acquitt()
 //
 void Train_statique::set_sifflet()
 {
-	//res->getPupitre_entrant().comm
-
-
+	if (res->getPupitre_entrant().commande_sifflet_pin1 == 1 && res->getPupitre_entrant().commande_sifflet_pin2 == 0)
+	etat_sifflet = 1;
+	if (res->getPupitre_entrant().commande_sifflet_pin1 == 0 && res->getPupitre_entrant().commande_sifflet_pin2 == 0)
+	etat_sifflet = 0;
+	if (res->getPupitre_entrant().commande_sifflet_pin1 == 1 && res->getPupitre_entrant().commande_sifflet_pin2 == 1)
+	etat_sifflet = -1;
 }
 
 //void TrainStatique::set_LS_SF()
@@ -118,9 +136,9 @@ void Train_statique::set_signalisation()
 //{conduct_mod = PE->getCmd_conduct_mod();}
 //
 void Train_statique::set_tract_frein()
-{
-	//tract_frein = PE->getCmd_tract_frein();
-}
+ {
+// 	//tract_frein = PE->getCmd_tract_frein();
+ }
 
 //void TrainStatique::setPorte()
 //{
@@ -129,6 +147,12 @@ void Train_statique::set_tract_frein()
 //
 void Train_statique::set_panto()
 {
+	// Timer 2s pour lever/baisser panto
+	if(res->getPupitre_entrant().commande_BP_panto_pin1 == 1 && res->getPupitre_entrant().commande_BP_panto_pin2 == 1)
+	etat_panto = 0;
+
+	if(res->getPupitre_entrant().commande_BP_panto_pin1 == 0 && res->getPupitre_entrant().commande_BP_panto_pin2 == 0)
+	etat_panto = 1;
 
 }
 
@@ -149,6 +173,10 @@ void Train_statique::set_panto()
 //
 void Train_statique::set_GROG()
 {
+	// Timer 2s pour armement/désarmement
+	// Timer 5s de maintien pour lancer l'allumage
+	if(res->getPupitre_entrant().commande_allum_diesel_pin1 == 0 && res->getPupitre_entrant().commande_allum_diesel_pin2 == 0)
+	etat_GROG = 0;
 
 }
 

@@ -4,6 +4,18 @@
 #include "define.hpp"
 #include "Reseau.hpp"
 
+struct Chrono
+
+{
+
+    sf::Clock chrono;
+
+    sf::Time time;
+
+    float time_second;
+
+};
+
 class Train_statique
 {
     private :
@@ -11,6 +23,7 @@ class Train_statique
         int etat_projecteurs;
         int etat_disj;
         int etat_sablage;
+        struct Chrono chrono_sablage;
         bool etat_acquitt;
         int etat_essui_glace;
         bool etat_lave_glace;
