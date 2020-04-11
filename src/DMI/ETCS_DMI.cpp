@@ -30,6 +30,7 @@ STU(symbol, button, soft, bord, T_D, etat_ecran), settings(symbol, button, soft,
 
 void ETCS_DMI::update()
 {
+		soft->getFenetre()->clear();
 		action();
 		affichage();
 		if(bord->getGeneralMode() == "SB") // StandBy
@@ -49,6 +50,7 @@ void ETCS_DMI::update()
 			else if(etat_ecran == "Settings")
 				settings.update();
 		}
+		soft->getFenetre()->display();
 
 }
 

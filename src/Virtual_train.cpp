@@ -8,7 +8,7 @@ Virtual_train::Virtual_train() : etcs(soft, train_dynamique, reseau), basic(trai
 
 void Virtual_train::update()
 {
-    soft.getFenetre()->clear();
+
     soft.software_update();
     train_statique.update();
     train_dynamique.update();
@@ -21,5 +21,5 @@ void Virtual_train::update()
     {
         basic.update();
     }
-    soft.getFenetre()->display();
+
 }
