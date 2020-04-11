@@ -13,7 +13,7 @@ struct Chrono
     sf::Time time;
 
     float time_second;
-    bool etatChrono;
+    short int etatChrono;
 
 };
 
@@ -44,6 +44,7 @@ class Train_statique
         bool etat_cle_BL;
         bool etat_ventilation;
         int etat_GROG;
+        struct Chrono chrono_GROG;
         bool etat_TVM_V1;
         bool etat_TVM_V2;
         bool etat_alarme;

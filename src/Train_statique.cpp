@@ -184,11 +184,37 @@ void Train_statique::set_panto()
 //
 void Train_statique::set_GROG()
 {
+	chrono_GROG.time = chrono_sablage.chrono.getElapsedTime();
+	chrono_GROG.time_second = chrono_sablage.time.asSeconds();
 	// Timer 2s pour armement/désarmement
 	// Timer 5s de maintien pour lancer l'allumage
-	if(res->getPupitre_entrant().commande_allum_diesel_pin1 == 0 && res->getPupitre_entrant().commande_allum_diesel_pin2 == 0)
-	etat_GROG = 0;
-
+	if(res->getPupitre_entrant().commande_allum_diesel_pin1 == 1 && res->getPupitre_entrant().commande_allum_diesel_pin2 == 1 && chrono_GROG.etatChrono==0)
+	{
+		chrono_GROG.etatChrono=1;
+		chrono_GROG.chrono.restart();
+	}
+	if((res->getPupitre_entrant().commande_allum_diesel_pin1 != 1 || res->getPupitre_entrant().commande_allum_diesel_pin2 != 1) && chrono_GROG.etatChrono==1 && chrono_GROG.time_second<2)
+	{
+		chrono_GROG.etatChrono=0;
+		chrono_GROG.chrono.restart();
+	}
+	if(chrono_GROG.etatChrono==1 && chrono_GROG.time_second>7)
+	{
+		chrono_GROG.etatChrono=0;
+		chrono_GROG.chrono.restart();
+		etat_GROG=1;
+	}
+	if(res->getPupitre_entrant().commande_allum_diesel_pin1 == 0 && res->getPupitre_entrant().commande_allum_diesel_pin2 == 0 && chrono_GROG.etatChrono != -1)
+	{
+		chrono_GROG.etatChrono=-1;
+		chrono_GROG.chrono.restart();
+	}
+	if(chrono_GROG.etatChrono==-1 && chrono_GROG.time_second>3)
+	{
+		chrono_GROG.etatChrono=0;
+		chrono_GROG.chrono.restart();
+		etat_GROG=0;
+	}
 }
 
 //void Train_statique::set_TVM_V1()
