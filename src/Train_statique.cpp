@@ -74,7 +74,7 @@ void Train_statique::set_sablage()
  // Timer : maintien
 chrono_sablage.time = chrono_sablage.chrono.getElapsedTime();
 chrono_sablage.time_second = chrono_sablage.time.asSeconds();
-if(res->getPupitre_entrant().commande_sablage!=etat_sablage)
+if(res->getPupitre_entrant().commande_sablage!=etat_sablage && chrono_sablage.etatChrono==0)
 	{
 	chrono_sablage.chrono.restart();
 	chrono_sablage.etatChrono=1;
