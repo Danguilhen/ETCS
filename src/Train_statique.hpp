@@ -13,6 +13,7 @@ struct Chrono
     sf::Time time;
 
     float time_second;
+    bool etatChrono;
 
 };
 
@@ -22,7 +23,7 @@ class Train_statique
         Reseau *res;
         int etat_projecteurs;
         int etat_disj;
-        int etat_sablage;
+        bool etat_sablage;
         struct Chrono chrono_sablage;
         bool etat_acquitt;
         int etat_essui_glace;

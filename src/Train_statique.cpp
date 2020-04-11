@@ -29,6 +29,7 @@ etat_GROG = 0;
 // etat_TVM_V2 = 0;
 // etat_alarme = 0;
 chrono_sablage.time_second=0;
+chrono_sablage.etatChrono=0;
 cout << "train statique" << endl;
 cout << etat_sifflet << endl;
 
@@ -71,8 +72,18 @@ void Train_statique::set_disj()
 void Train_statique::set_sablage()
 {
  // Timer : maintien
-
-
+chrono_sablage.time = chrono_sablage.chrono.getElapsedTime();
+chrono_sablage.time_second = chrono_sablage.time.asSeconds();
+if(res->getPupitre_entrant().commande_sablage!=etat_sablage)
+	{
+	chrono_sablage.chrono.restart();
+	chrono_sablage.etatChrono=1;
+	}
+if(chrono_sablage.time_second>1 && chrono_sablage.etatChrono==1)
+	{
+		etat_sablage = !etat_sablage;
+		chrono_sablage.etatChrono=0;
+	}
 }
 
 void Train_statique::set_acquitt()
