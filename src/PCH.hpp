@@ -62,8 +62,6 @@
 	#include <windows.h>
 #endif // _WIN32
 
-// Utils
-#include "Utility/Types.hpp"
 
 // Macros
 #define _UNUSED(x) (void)(x)
