@@ -1,15 +1,21 @@
-#include "Data.hpp"
+
 #include "Virtual_train.hpp"
+#include "PCC.hpp"
 
 
 int main()
 {
 	sf::Context cont;
-	Virtual_train virtual_train;
+	Software soft;
+	Virtual_train virtual_train(soft);
+	PCC pcc(soft, virtual_train.train_dynamique);
 	do
 	{
+		soft.software_update();
 		virtual_train.update();
-	}while(virtual_train.soft.getEtat() == true);
+		pcc.update();
+	}while(soft.getEtat() == true);
 
+	cout << "end" ;
 	return 0;
 }
