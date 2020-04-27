@@ -74,6 +74,7 @@ class Train_statique
         //void set_VA();
         //void set_cle_BL();
         //void set_ventilation();
+        void set_GROG();
         //void set_TVM_V1();
         //void set_TVM_V2();
         //void set_alarme();
