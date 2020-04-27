@@ -1,4 +1,4 @@
-#include "PCC.hpp"
+/*#include "PCC.hpp"
 
 PCC::PCC(Software &soft, Train_dynamique &T_D)
 {
@@ -10,7 +10,7 @@ PCC::PCC(Software &soft, Train_dynamique &T_D)
 void PCC::update()
 {
 	soft->getFenPcc()->clear();
-	cout << echelle << endl;
+	//cout << echelle << endl;
 	RectangleShape fond;
 	fond.setSize(V2f(soft->getFenPcc()->getSize().x, soft->getFenPcc()->getSize().y));
 	fond.setFillColor(GREY);
@@ -58,4 +58,4 @@ void PCC::train()
 	//cout << "distance parcourue : " << temp_position_train << endl;
 	soft->getFenPcc()->draw(train);
 
-}
+}*/

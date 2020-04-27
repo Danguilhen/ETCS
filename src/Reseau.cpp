@@ -74,9 +74,11 @@ Reseau::Reseau()
     // INITIALISATION DES COMMANDES A 0
 
     //pupitre_entrant.commande_projecteurs = 0;
-    pupitre_entrant.commande_disj = 0;
+    pupitre_entrant.commande_disj_pin1 = 0;
+    pupitre_entrant.commande_disj_pin2 = 0;
     pupitre_entrant.commande_BP_urgence = 0;
-    pupitre_entrant.commande_frein = 0;
+    pupitre_entrant.commande_frein_pin1 = 0;
+    pupitre_entrant.commande_frein_pin2 = 0;
     //pupitre_entrant.commande_sablage = 0;
     pupitre_entrant.commande_acquitt1 = 0;
     pupitre_entrant.commande_acquitt2 = 0;
@@ -84,7 +86,8 @@ Reseau::Reseau()
     //pupitre_entrant.commande_lave_glace = 0;
     //pupitre_entrant.commande_light_cabine = 0;
     //pupitre_entrant.commande_light_pupitre = 0;
-    pupitre_entrant.commande_sifflet = 0;
+    pupitre_entrant.commande_sifflet_pin1 = 0;
+    pupitre_entrant.commande_sifflet_pin2 = 0;
     //pupitre_entrant.commande_LS_SF = 0;
     pupitre_entrant.commande_BP_SF = 0;
     //pupitre_entrant.commande_ETCS_release = 0;
@@ -98,16 +101,20 @@ Reseau::Reseau()
     pupitre_entrant.commande_BP_frein_neutre = 0;
     //pupitre_entrant.commande_essai_VA = 0;
     //pupitre_entrant.commande_annul_VA = 0;
-    pupitre_entrant.commande_cle_BL = 0;
+    pupitre_entrant.commande_cle_BL_pin1 = 0;
+    pupitre_entrant.commande_cle_BL_pin2 = 0;
     //pupitre_entrant.commande_ventilation = 0;
     //pupitre_entrant.commande_GROG = 0;
     pupitre_entrant.commande_TVM_V1 = 0;
     pupitre_entrant.commande_TVM_V2 = 0;
     //pupitre_entrant.commande_TVM_desarm = 0;
     pupitre_entrant.commande_BP_alarme = 0;
-    pupitre_entrant.commande_VA = 0;
-    pupitre_entrant.commande_BP_panto = 0;
-    pupitre_entrant.commande_allum_diesel = 0;
+    pupitre_entrant.commande_VA_pin1 = 0;
+    pupitre_entrant.commande_VA_pin2 = 0;
+    pupitre_entrant.commande_BP_panto_pin1 = 0;
+    pupitre_entrant.commande_BP_panto_pin2 = 0;
+    pupitre_entrant.commande_allum_diesel_pin1 = 0;
+    pupitre_entrant.commande_allum_diesel_pin2 = 0;
 
 
     Reseau::Serial_update();
@@ -147,61 +154,82 @@ void Reseau::Serial_update()
     //ACTUALISATION DE L'ETAT DES BOUTONS
     //"%0024!0!0!00!0!0!0!00!00!00!00!00!00!00!00%"
 
-    //string etat;
-    //int i=0;
-    //for (i=1;i<=4;i++)
-    //{
-    //etat = etat + pupitre_entrant.pupitre[i];
-    //}
-    //pupitre_entrant.commande_tract_frein = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[6];
-    //pupitre_entrant.commande_BP_URG_panto = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[8];
-    //pupitre_entrant.commande_BP_SF = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[10] + pupitre_entrant.pupitre[11];
-    //pupitre_entrant.commande_sifflet = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[13];
-    //pupitre_entrant.commande_BP_frein_neutre = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[15];
-    //pupitre_entrant.commande_acquitt1 = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[17];
-    //pupitre_entrant.commande_acquitt2 = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[19] + pupitre_entrant.pupitre[20];
-    //pupitre_entrant.commande_allum_diesel = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[22] + pupitre_entrant.pupitre[23];
-    //pupitre_entrant.commande_disj = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[25] + pupitre_entrant.pupitre[26];
-    //pupitre_entrant.commande_frein = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[28] + pupitre_entrant.pupitre[29];
-    //pupitre_entrant.commande_BP_panto = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[31];
-    //pupitre_entrant.commande_TVM_V1 = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[32];
-    //pupitre_entrant.commande_TVM_V2 = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[34] + pupitre_entrant.pupitre[35];
-    //pupitre_entrant.commande_cle_BL = atoi(etat.c_str());
-//
-    //etat = pupitre_entrant.pupitre[37] + pupitre_entrant.pupitre[38];
-    //pupitre_entrant.commande_VA = atoi(etat.c_str());
-//
-//
-    //cout << "yes" << endl;
-    //cout << pupitre_entrant.commande_tract_frein << endl;
-    //cout << pupitre_entrant.commande_sifflet << endl;
-    //cout << pupitre_entrant.commande_VA << endl;
+  // string etat;
+    // int i=0;
+    // for (i=1;i<=4;i++)
+    // {
+    // etat = etat + pupitre_entrant.pupitre[i];
+    // }
+    // pupitre_entrant.commande_tract_frein = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[6];
+    // pupitre_entrant.commande_BP_URG_panto = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[8];
+    // pupitre_entrant.commande_BP_SF = atoi(etat.c_str());
+
+    //etat = pupitre_entrant.pupitre[10];
+    // pupitre_entrant.commande_sifflet_pin1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[11];
+    // pupitre_entrant.commande_sifflet_pin2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[13];
+    // pupitre_entrant.commande_BP_frein_neutre = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[15];
+    // pupitre_entrant.commande_acquitt1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[17];
+    // pupitre_entrant.commande_acquitt2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[19];
+    // pupitre_entrant.commande_allum_diesel_pin1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[20];
+    // pupitre_entrant.commande_allum_diesel_pin2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[22];
+    // pupitre_entrant.commande_disj_pin1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[23];
+    // pupitre_entrant.commande_disj_pin2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[25];
+    // pupitre_entrant.commande_frein_pin1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[26];
+    // pupitre_entrant.commande_frein_pin2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[28];
+    // pupitre_entrant.commande_BP_panto_pin1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[29];
+    // pupitre_entrant.commande_BP_panto_pin2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[31];
+    // pupitre_entrant.commande_TVM_V1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[32];
+    // pupitre_entrant.commande_TVM_V2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[34];
+    // pupitre_entrant.commande_cle_BL_pin1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[35];
+    // pupitre_entrant.commande_cle_BL_pin2 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[37];
+    // pupitre_entrant.commande_VA_pin1 = atoi(etat.c_str());
+
+    // etat = pupitre_entrant.pupitre[38];
+    // pupitre_entrant.commande_VA_pin2 = atoi(etat.c_str());
+
+
+    // cout << "yes" << endl;
+    // cout << pupitre_entrant.commande_tract_frein << endl;
+    // cout << pupitre_entrant.commande_sifflet << endl;
+    // cout << pupitre_entrant.commande_VA << endl;
 
 }
 
@@ -219,38 +247,38 @@ struct Dynamique_train Reseau::getDynamique_train()
     return dynamique_train;
 }
 
-int Reseau::getCmd_projecteurs(){return pupitre_entrant.commande_projecteurs;}
-int Reseau::getCmd_disj(){return pupitre_entrant.commande_disj;}
-bool Reseau::getCmd_BP_urgence(){return pupitre_entrant.commande_BP_urgence;}
-int Reseau::getCmd_frein(){return pupitre_entrant.commande_frein;}
-int Reseau::getCmd_sablage(){return pupitre_entrant.commande_sablage;}
-bool Reseau::getCmd_acquitt1(){return pupitre_entrant.commande_acquitt1;}
-bool Reseau::getCmd_acquitt2(){return pupitre_entrant.commande_acquitt2;}
-int Reseau::getCmd_essui_glace(){return pupitre_entrant.commande_essui_glace;}
-bool Reseau::getCmd_lave_glace(){return pupitre_entrant.commande_lave_glace;}
-int Reseau::getCmd_light_cabine(){return pupitre_entrant.commande_light_cabine;}
-int Reseau::getCmd_light_pupitre(){return pupitre_entrant.commande_light_pupitre;}
-int Reseau::getCmd_sifflet(){return pupitre_entrant.commande_sifflet;}
-bool Reseau::getCmd_LS_SF(){return pupitre_entrant.commande_LS_SF;}
-bool Reseau::getCmd_BP_SF(){return pupitre_entrant.commande_BP_SF;}
-int Reseau::getCmd_ETCS_release(){return pupitre_entrant.commande_ETCS_release;}
-float Reseau::getCmd_VI(){return pupitre_entrant.commande_VI;}
-int Reseau::getCmd_inverseur(){return pupitre_entrant.commande_inverseur;}
-int Reseau::getCmd_conduct_mod(){return pupitre_entrant.commande_conduct_mod;}
-float Reseau::getCmd_tract_frein(){return pupitre_entrant.commande_tract_frein;}
-int Reseau::getCmd_sens_porte(){return pupitre_entrant.commande_sens_porte;}
-bool Reseau::getCmd_annul_ouverture_porte(){return pupitre_entrant.commande_annul_ouverture_porte;}
-bool Reseau::getCmd_BP_URG_panto(){return pupitre_entrant.commande_BP_URG_panto;}
-bool Reseau::getCmd_BP_frein_neutre(){return pupitre_entrant.commande_BP_frein_neutre;}
-bool Reseau::getCmd_essai_VA(){return pupitre_entrant.commande_essai_VA;}
-bool Reseau::getCmd_annul_VA(){return pupitre_entrant.commande_annul_VA;}
-bool Reseau::getCmd_cle_BL(){return pupitre_entrant.commande_cle_BL;}
-bool Reseau::getCmd_ventilation(){return pupitre_entrant.commande_ventilation;}
-int Reseau::getCmd_GROG(){return pupitre_entrant.commande_GROG;}
-bool Reseau::getCmd_TVM_V1(){return pupitre_entrant.commande_TVM_V1;}
-bool Reseau::getCmd_TVM_V2(){return pupitre_entrant.commande_TVM_V2;}
-bool Reseau::getCmd_TVM_desarm(){return pupitre_entrant.commande_TVM_desarm;}
-bool Reseau::getCmd_BP_alarme(){return pupitre_entrant.commande_BP_alarme;}
-bool Reseau::commande_VA(){return pupitre_entrant.commande_VA;}
-int Reseau::getCmd_BP_panto(){return pupitre_entrant.commande_BP_panto;}
-int Reseau::getCmd_allum_diesel(){return pupitre_entrant.commande_allum_diesel;}
+// int Reseau::getCmd_projecteurs(){return pupitre_entrant.commande_projecteurs;}
+// int Reseau::getCmd_disj(){return pupitre_entrant.commande_disj;}
+// bool Reseau::getCmd_BP_urgence(){return pupitre_entrant.commande_BP_urgence;}
+// int Reseau::getCmd_frein(){return pupitre_entrant.commande_frein;}
+// int Reseau::getCmd_sablage(){return pupitre_entrant.commande_sablage;}
+// bool Reseau::getCmd_acquitt1(){return pupitre_entrant.commande_acquitt1;}
+// bool Reseau::getCmd_acquitt2(){return pupitre_entrant.commande_acquitt2;}
+// int Reseau::getCmd_essui_glace(){return pupitre_entrant.commande_essui_glace;}
+// bool Reseau::getCmd_lave_glace(){return pupitre_entrant.commande_lave_glace;}
+// int Reseau::getCmd_light_cabine(){return pupitre_entrant.commande_light_cabine;}
+// int Reseau::getCmd_light_pupitre(){return pupitre_entrant.commande_light_pupitre;}
+// int Reseau::getCmd_sifflet(){return pupitre_entrant.commande_sifflet;}
+// bool Reseau::getCmd_LS_SF(){return pupitre_entrant.commande_LS_SF;}
+// bool Reseau::getCmd_BP_SF(){return pupitre_entrant.commande_BP_SF;}
+// int Reseau::getCmd_ETCS_release(){return pupitre_entrant.commande_ETCS_release;}
+// float Reseau::getCmd_VI(){return pupitre_entrant.commande_VI;}
+// int Reseau::getCmd_inverseur(){return pupitre_entrant.commande_inverseur;}
+// int Reseau::getCmd_conduct_mod(){return pupitre_entrant.commande_conduct_mod;}
+// float Reseau::getCmd_tract_frein(){return pupitre_entrant.commande_tract_frein;}
+// int Reseau::getCmd_sens_porte(){return pupitre_entrant.commande_sens_porte;}
+// bool Reseau::getCmd_annul_ouverture_porte(){return pupitre_entrant.commande_annul_ouverture_porte;}
+// bool Reseau::getCmd_BP_URG_panto(){return pupitre_entrant.commande_BP_URG_panto;}
+// bool Reseau::getCmd_BP_frein_neutre(){return pupitre_entrant.commande_BP_frein_neutre;}
+// bool Reseau::getCmd_essai_VA(){return pupitre_entrant.commande_essai_VA;}
+// bool Reseau::getCmd_annul_VA(){return pupitre_entrant.commande_annul_VA;}
+// bool Reseau::getCmd_cle_BL(){return pupitre_entrant.commande_cle_BL;}
+// bool Reseau::getCmd_ventilation(){return pupitre_entrant.commande_ventilation;}
+// int Reseau::getCmd_GROG(){return pupitre_entrant.commande_GROG;}
+// bool Reseau::getCmd_TVM_V1(){return pupitre_entrant.commande_TVM_V1;}
+// bool Reseau::getCmd_TVM_V2(){return pupitre_entrant.commande_TVM_V2;}
+// bool Reseau::getCmd_TVM_desarm(){return pupitre_entrant.commande_TVM_desarm;}
+// bool Reseau::getCmd_BP_alarme(){return pupitre_entrant.commande_BP_alarme;}
+// bool Reseau::commande_VA(){return pupitre_entrant.commande_VA;}
+// int Reseau::getCmd_BP_panto(){return pupitre_entrant.commande_BP_panto;}
+// int Reseau::getCmd_allum_diesel(){return pupitre_entrant.commande_allum_diesel;}

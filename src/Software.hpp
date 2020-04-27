@@ -9,9 +9,9 @@ class Software
 		sf::RenderWindow fenetre;
 		sf::ContextSettings settings;
 		sf::Event event;
-		sf::RenderWindow fenPcc;
+	/*	sf::RenderWindow fenPcc;
 		sf::ContextSettings settingsPcc;
-		sf::Event evevntPcc;
+		sf::Event evevntPcc;*/
 		double RE ;
 		int ecartX = 0;
 		int ecartY = 0;

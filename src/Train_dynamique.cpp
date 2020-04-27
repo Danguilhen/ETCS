@@ -9,6 +9,7 @@ Train_dynamique::Train_dynamique(Reseau &res, Train_statique &stat)
 float Train_dynamique::getV_train(){return V_train;}
 void Train_dynamique::setV_train(float V){V_train = V;}
 float Train_dynamique::getDistance_Uptdate(){return distance_update;}
+float Train_dynamique::getPK(){return PK;}
 float Train_dynamique::getTraction(){return traction;}
 void Train_dynamique::setTraction(float A){traction = A;}
 
@@ -19,6 +20,7 @@ void Train_dynamique::update()
 	cout << V_train << endl;
 	effortTraction();
 	calculVitesse();
+	calculDistance();
 }
 
 
@@ -131,10 +133,16 @@ void Train_dynamique::effortTraction()
 void Train_dynamique::calculVitesse()
 {
 	float NVitesse;      // nouvelle vitesse tampon
-	diftime = chrono.getElapsedTime();
-	deltats = diftime.asSeconds();
 	NVitesse = gamma*deltats*3.6;
 	V_train = NVitesse + V_train;
-	distance_update = deltats*V_train/3.6;
+
+}
+
+void Train_dynamique::calculDistance()
+{
+	diftime = chrono.getElapsedTime();
+	deltats = diftime.asSeconds();
+	distance_update = deltats*V_train/3.6; // mise à  jour distance parcourue
+	PK = PK + distance_update; // mise à jour du PK
 	chrono.restart();
 }

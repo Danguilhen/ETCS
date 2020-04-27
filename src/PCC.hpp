@@ -1,4 +1,4 @@
-#ifndef IPC
+/*#ifndef IPC
 #define IPC
 
 #include "define.hpp"
@@ -27,4 +27,4 @@ public:
 
 
 
-#endif
+#endif*/

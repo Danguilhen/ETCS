@@ -92,7 +92,7 @@ void Cadran::creation()
 
 void Cadran::update()
 {
-	if(bord)
+	if(bord) //SI ETCS
 		convertisseurVitesses();
 
 	V2f position;

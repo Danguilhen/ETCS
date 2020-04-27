@@ -69,13 +69,13 @@ void Default::update()
 		*ecran = "Special";
 	else if((*buttons)[4].getactivation() == 1)
 		*ecran = "Settings";
-	else if ((*buttons)[5].getactivation() == 1)
+	/*else if ((*buttons)[5].getactivation() == 1)
     {
         if(bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingArea" || bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement")
             bord->TrackRI.setTunnelStoppingArea(bord->TrackRI.getTunnelStoppingArea() + "-");
         else if (bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingArea-" || bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingAreaAnnouncement-")
             bord->TrackRI.setTunnelStoppingArea(bord->TrackRI.getTunnelStoppingArea().substr(0, bord->TrackRI.getTunnelStoppingArea().size() - 1));
-    }
+    }*/
 	else if ((*buttons)[6].getactivation() == 1)
 	{
 		if(S_D_monitoring == "On")
@@ -107,7 +107,7 @@ void Default::update()
 		else if(planningAffichage == "Off")
 			planningAffichage = "show planning information";
 	}
-	if(bord->TrackRI.getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
+	/*if(bord->TrackRI.getTunnelStoppingArea() != "TunnelStoppingAreaUnknown")
     {
         if(bord->TrackRI.getTunnelStoppingArea() == "TunnelStoppingArea")
         {
@@ -120,7 +120,7 @@ void Default::update()
             creation_texte(to_string(bord->TrackRI.getRemainingDistanceTunnel()), GREY, 12, 0, V2f(54 + 3 * 37 - 10, 54 + 30 + 191 + 25 + 50 / 2.0), 2);
         }
         (*symbol)[4].afficher(V2f(64 * 5 + 64 / 2.0, 54 + 30 + 191 + 5 * 25 + 30 + 50 / 2.0)); //F6 - DR05
-    }
+    }*/
 	if(geographicalPosition != "Unknown") //Geographical position
 	{
 		if(geographicalPosition == "On") //toggled on

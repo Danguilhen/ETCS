@@ -12,7 +12,7 @@ Software::Software()
 	fenetre.setFramerateLimit(60);
 	settings.antialiasingLevel = 8;
 	//fenetre du pcc
-	fenPcc.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"PCC", Style::Default, settingsPcc);
+	//fenPcc.create(VideoMode(VideoMode::getDesktopMode().width, VideoMode::getDesktopMode().height),"PCC", Style::Default, settingsPcc);
 }//constructeur
 void Software::software_update()
 {
@@ -25,7 +25,7 @@ int Software::getEcartY(){return ecartY;}
 bool Software::getEtat(){return en_marche;}
 void Software::setEtat(bool stop){en_marche = stop;}
 RenderWindow *Software::getFenetre(){return &fenetre;}
-RenderWindow *Software::getFenPcc(){return &fenPcc;}
+//RenderWindow *Software::getFenPcc(){return &fenPcc;}
 int Software::getVmax(){return Vmax;}
 void Software::setVmax(int V){Vmax = V;}
 bool Software::getS_Finished(){return s_Finished;}
