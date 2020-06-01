@@ -84,7 +84,7 @@ class SupervisionLimits : public Tools, public Son
 		float d_warning;
 		float d_permitted;
 		float d_indication;
-		std::string status = "CSM"; // "TSM" "CSM"
+		std::string status = "CSM"; // "TSM" "CSM" "RSM"
 		float V_delta0 = 0; //en m/s
 		float V_delta1 = 0; //en m/s
 		float V_delta2 = 0; //en m/s
@@ -97,10 +97,12 @@ class SupervisionLimits : public Tools, public Son
 		float T_indication = 9; //valeur suivant le doc ERTMS3
 		float Vbec;
 		float Dbec;
+		float releaseSpeed = 30;
 	public :
 		SupervisionLimits(Train_dynamique &T_R, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, MostRestrictiveSpeedLimit &MRSP, DeterminationOfDecelerationCurves &DODC);
 		void Curves();
 		void Supervision_limits();
+		void Changement_status();
 		float getV_ebi();
 		float getV_sbi();
 		float getV_warning();
@@ -113,6 +115,7 @@ class SupervisionLimits : public Tools, public Son
 		float getV_ebi_CSM(float vitesse);
 		float getV_warning_CSM(float vitesse);
 		std::string getStatus();
+		float getReleaseSpeed();
 };
 
 class SpeedAndDistanceMonitoringCommands : public Son
@@ -151,7 +154,7 @@ class SpeedAndDistanceMonitoring
 		SupervisionLimits SL;
 		SpeedAndDistanceMonitoringCommands SADMC;
 		SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft, Reseau &Res);
-		void SDM_Update();
+		void SDM_Update_FS();
 };
 
 

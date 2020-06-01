@@ -21,7 +21,7 @@ void ETCS_Bord::bord_update()
 	if(generalMode == "FS")
 	{
 		TrackRI.TrackRI_Update();
-		SDM.SDM_Update();
+		SDM.SDM_Update_FS();
 	}
 	if(generalMode == "SR")
 	{

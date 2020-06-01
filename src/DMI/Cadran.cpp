@@ -391,10 +391,11 @@ void Cadran::convertisseurVitesses()
 				actualisationVitesse(0, 0, 0, 0, 0, bord->SDM.SL.getV_permitted());
 			}
 		}
-	//	else if(bord->SDM.getStatus() == "RSM")
-	//	{
-//
-	//	}
+		else if(bord->SDM.SL.getStatus() == "RSM")
+		{
+			aiguilleColor = YELLOW;
+			actualisationVitesse(0, 0, bord->SDM.SL.getV_permitted(), 0, 0, 0);
+		}
 	}
 	//else if(bord->getGeneralMode() == "LS")
 	//{

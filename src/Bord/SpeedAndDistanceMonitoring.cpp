@@ -13,7 +13,7 @@ SpeedAndDistanceMonitoring::SpeedAndDistanceMonitoring(Train_dynamique &T_D, Tra
 	//cout << "SADM" << endl;
 }
 
-void SpeedAndDistanceMonitoring::SDM_Update()
+void SpeedAndDistanceMonitoring::SDM_Update_FS()
 {
 	//diftimeSDM = chronoSDM.getElapsedTime();
 	//deltatsSDM = diftimeSDM.asSeconds();
@@ -92,6 +92,7 @@ float SupervisionLimits::getd_indication(){return d_indication;}
 float SupervisionLimits::getd_permitted(){return d_permitted;}
 float SupervisionLimits::getd_ebi(){return d_ebi;}
 float SupervisionLimits::getd_warning(){return d_warning;}
+float SupervisionLimits::getReleaseSpeed(){return releaseSpeed;}
 void SupervisionLimits::Curves()
 {
 	vector<float> ligne;
@@ -151,6 +152,7 @@ float SupervisionLimits::getV_warning_CSM(float vitesse)
 void SupervisionLimits::Supervision_limits()
 {
 
+
 	if(status == "CSM")
 	{
 		//float Csbi = (TrainRI->FVD.getdV_sbi_max() - TrainRI->FVD.getdV_sbi_min()) / (TrainRI->FVD.getV_sbi_max() - TrainRI->FVD.getV_sbi_min() );
@@ -173,11 +175,6 @@ void SupervisionLimits::Supervision_limits()
 			n_ligne ++;
 		}
 		V_indication = curvestab[n_ligne][0];
-		if(V_indication <= MRSP->getV_MRSP()) // condition pour passer de CSM à TSM
-		{
-			status = "TSM";
-			playfunction(2);
-		}
 	}
 
 	if(status == "TSM")
@@ -210,13 +207,62 @@ void SupervisionLimits::Supervision_limits()
 		}
 		V_indication = max(curvestab[n_ligne][0], TrackRI->SADL.getSpeedTarget());
 		d_indication = curvestab[n_ligne][4];
-		if(TrackRI->SADL.getTarget_update() == true) // lorsque la EBD croise la EBI de la csm, alors on change de status
-		{
 
-			status = "CSM";
-			playfunction(2);
-			//cout << "changement" << endl;
+	}
+
+	if(status == "RSM")
+	{
+		int n_ligne = 0;
+		while(TrackRI->SADL.getTargetDistance() > curvestab[n_ligne][3])
+		{
+			n_ligne ++;
 		}
+		V_permited = max(min(curvestab[n_ligne][0], MRSP->getV_MRSP()), TrackRI->SADL.getSpeedTarget());
+		d_permitted = curvestab[n_ligne][3];
+		n_ligne = 0;
+		while(TrackRI->SADL.getTargetDistance() > curvestab[n_ligne][4])
+		{
+			n_ligne ++;
+		}
+		V_indication = max(curvestab[n_ligne][0], TrackRI->SADL.getSpeedTarget());
+		d_indication = curvestab[n_ligne][4];
+	}
+	Changement_status();
+	cout <<"status :" << status << endl;
+}
+
+void SupervisionLimits::Changement_status()
+{
+	//CONDITION A RETROUVER PAGE 149 DE LA SUBSET 026-3
+
+	//CONDITION 1 // condition pour passer de CSM à TSM
+	if(status == "CSM" && V_indication <= MRSP->getV_MRSP() && T_D->getV_train() >= releaseSpeed)
+	{
+		status = "TSM";
+		playfunction(2);
+	}
+	//CONDITION 2 //CSM & TSM --> RSM
+	if((status == "CSM" || status == "TSM") && V_ebi <= releaseSpeed)
+	{
+		status = "RSM";
+	}
+	//CONDITION 3 // RSM & TSM --> CSM
+	if((status == "RSM" || status == "TSM") && TrackRI->SADL.getTarget_update() == true && !(V_indication <= MRSP->getV_MRSP() && T_D->getV_train() >= releaseSpeed) && !(V_ebi <= releaseSpeed))
+	{
+		status = "CSM";
+		playfunction(2);
+		//cout << "changement" << endl;
+	}
+	//CONDITION 4 // RSM & CSM --> TSM
+	if( (status == "RSM" || status == "TSM") && TrackRI->SADL.getTarget_update() == true && (V_indication <= MRSP->getV_MRSP() && T_D->getV_train() >= releaseSpeed) && !(V_ebi <= releaseSpeed))
+	{
+		status = "TSM";
+		playfunction(2);
+	}
+	//CONDITION 5 // CSM & TSM --> RSM
+	if ((status == "CSM" || status == "TSM") && TrackRI->SADL.getTarget_update() == true &&((status == "CSM" || status == "TSM") && V_ebi <= releaseSpeed))
+	{
+		status = "RSM";
 	}
 }
 
@@ -436,12 +482,12 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 			command_triggered = "EB";
 		}
 		//Revocation conditions
-		if((int)T_D->getV_train() == 0)
-		{
-			supervision_status = "Normal";
-			command_triggered = "";
-			stopfunction();
-		}
+		//if((int)T_D->getV_train() == 0)
+		//{
+		//	supervision_status = "Normal";
+		//	command_triggered = "";
+		//	stopfunction();
+		//}
 		if(supervision_status != "Intervention")
 		{
 			if(T_D->getV_train() < SL->getV_indication())
@@ -458,6 +504,32 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 			}
 		}
 	}
+	if(SL->getStatus() == "RSM")
+	{
+		stopfunction();
+		if(T_D->getV_train() <= SL->getReleaseSpeed())
+		{
+			supervision_status = "Indication";
+		}
+		if(T_D->getV_train() > SL->getReleaseSpeed())
+		{
+			supervision_status = "Intervention";
+			command_triggered = "EB";
+		}
+		//Revocation conditions
+		if((int)T_D->getV_train() == 0)
+		{
+			supervision_status = "Indication";
+			command_triggered = "";
+			stopfunction();
+		}
+		if (supervision_status == "Overspeed" || supervision_status == "Warning")
+		{
+			supervision_status = "Indication";
+		}
+
+	}
+
 	//cout << supervision_status << " ";
 	//cout << T_D->getV_train() << " " << SL->getV_indication()<< " " << SL->getV_permitted()<< " " << SL->getV_warning() << " " << SL->getV_ebi();
 }
