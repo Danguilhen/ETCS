@@ -1,7 +1,7 @@
 #include "ETCS_Bord.hpp"
 
 
-ETCS_Bord::ETCS_Bord(Train_dynamique &T_D, Software &soft, Reseau &Res) : TrackRI(TrainRI, T_D, Res), SDM(T_D, TrainRI, TrackRI, soft, Res)
+ETCS_Bord::ETCS_Bord(Train_dynamique &T_D, Software &soft, Reseau &Res) : TrackRI(TrainRI, T_D, Res), SDM(T_D, TrainRI, TrackRI, soft, Res), BasicEVCcommands(T_D)
 {
 	//cout<< "BORD" <<endl;
 	this->T_D = &T_D;
@@ -11,6 +11,13 @@ ETCS_Bord::ETCS_Bord(Train_dynamique &T_D, Software &soft, Reseau &Res) : TrackR
 
 void ETCS_Bord::bord_update()
 {
+	//changement fin juin
+
+		TrackRI.TrackRI_Update();
+		SDM.SDM_Update_FS();
+
+
+	/*
 	if(connection == "Down" && Res->getEurobalise().MAJ_eurobalise == true)
 	{
 		connection = "Up";
@@ -22,16 +29,19 @@ void ETCS_Bord::bord_update()
 	{
 		TrackRI.TrackRI_Update();
 		SDM.SDM_Update_FS();
-	}
-	if(generalMode == "SR")
-	{
-		// à compléter
-	}
+	}*/
+	//else // Lancer les fonctions de sécurité basiques
+	//{
+	//	BasicEVCcommands.respect_vitesse(generalMode);
+	//}
 
-}
+}/*
 void ETCS_Bord::transition_generalMode()
 {
-	if(connection == "Up" && generalMode == "SR")
+	//Autres transition hors de cette méthode,
+	// - SB ---> SR quand start up fini
+	// - ** ---> TR quand il n'y a plus de MA où franchisement d'un signal
+	if(connection == "Up")
 	{
 		//cout<<"changement FS"<<endl;
 		generalMode = "FS";
@@ -40,7 +50,7 @@ void ETCS_Bord::transition_generalMode()
 	{
 		generalMode = "SR";
 	}
-}
+}*/
 
 string ETCS_Bord::getGeneralMode(){return generalMode;}
 void ETCS_Bord::setGeneralMode(std::string M){generalMode = M;}

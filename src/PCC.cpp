@@ -1,10 +1,13 @@
-/*#include "PCC.hpp"
-
-PCC::PCC(Software &soft, Train_dynamique &T_D)
+#include "PCC.hpp"
+/*
+PCC::PCC(Software &softw, Train_dynamique &T_D)
 {
-	this->soft = &soft;
+	this->soft = &softw;
 	this->temp_T_D = &T_D;
-	echelle = float(soft.getFenPcc()->getSize().x - 2*marge) / distance_max_affichable;
+	echelle = float(soft->getFenPcc()->getSize().x - 2*marge) / distance_max_affichable;
+	std::ifstream ig("C:/Users/nicol/OneDrive/Bureau/ETCS/src/canton.json");
+	ig >> liste_canton;
+
 }
 
 void PCC::update()
@@ -58,4 +61,5 @@ void PCC::train()
 	//cout << "distance parcourue : " << temp_position_train << endl;
 	soft->getFenPcc()->draw(train);
 
-}*/
+}
+*/

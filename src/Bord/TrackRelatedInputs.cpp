@@ -166,7 +166,7 @@ vector<vector<float>> TracksideSpeedRestriction::getVitesseTableau()
 void TracksideSpeedRestriction::TSR_Update(float distance_update)
 {
 	//MAJ vitesse (communication)
-
+/*
 	if(Res->getEurobalise().MAJ_eurobalise)
 	{
 		vector<float> temp;
@@ -177,7 +177,7 @@ void TracksideSpeedRestriction::TSR_Update(float distance_update)
 		tableau_vitesse_ligne.push_back(temp);
 		tableau_vitesse_ligne.push_back({tableau_vitesse_ligne[tableau_vitesse_ligne.size() - 1][1], tableau_vitesse_ligne[tableau_vitesse_ligne.size() - 1][1], 0});
 		speed_change = true;
-	}
+	}*/
 
 	//MAJ vitesse (distances)
 	for(size_t i = 0; i < tableau_vitesse_ligne.size(); i++)
@@ -237,7 +237,7 @@ void Gradient::Gradient_Update(float distance_update)
 		}
 	}*/
 
-	//ATTENTION LA PARTIE PRECEDENTE SE TROUVE DANS LE CONSTRUCTEUR DE GARDIENT EST DEVRA ETRE POSITIONNER ICI LORSQUE IL Y AURA COMMUNICATION
+	//ATTENTION LA PARTIE PRECEDENTE SE TROUVE DANS LE CONSTRUCTEUR DE GARDIENT ET DEVRA ETRE POSITIONNEE ICI LORSQUE IL Y AURA COMMUNICATION
 
 	//DETERMINATION DU GRADIENT LE PLUS CRITIQUE
 	for(size_t i = 0; i < tableau_gradient.size(); i++)//pour éviter de comparer avec une case non existante
@@ -293,13 +293,16 @@ TrackRelatedInputs::TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynami
 
 void TrackRelatedInputs::TrackRI_Update()
 {
+	pointKilometrique = pointKilometrique + T_D->getDistance_Uptdate();
+	cout << pointKilometrique << endl;
 	TSR.TSR_Update(T_D->getDistance_Uptdate());
 	gradient_ligne.Gradient_Update(T_D->getDistance_Uptdate());
 	SADL.SADL_update();
 
 }
 
-int TrackRelatedInputs::getPointKilometrique(){return pointKilometrique;}
-int TrackRelatedInputs::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
+float TrackRelatedInputs::getPointKilometrique(){return pointKilometrique;}
+void TrackRelatedInputs::setPointKilometrique(float P){pointKilometrique = P;}
+float TrackRelatedInputs::getRemainingDistanceTunnel(){return remainingDistanceTunnel;}
 string TrackRelatedInputs::getTunnelStoppingArea(){return tunnelStoppingArea;}
 void TrackRelatedInputs::setTunnelStoppingArea(string TSA){tunnelStoppingArea = TSA;}

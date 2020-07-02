@@ -1,0 +1,14 @@
+[
+	{
+		"numero_identifiant" : 0,
+		"PK_balise" : 0.5,
+		"voie" : 2,
+		"v_information" : [
+			{
+				"type_information" : "vitesse",
+				"PK_information" : 1.0,
+				"valeur_information" : 150
+			}
+		]
+	}
+]

@@ -41,9 +41,6 @@ cout << etat_sifflet << endl;
 }
 void Train_statique::update()
 {
-	int a;
-	a=res->getDynamique_train().A;
-	cout<< "A" << a;
 }
 
 

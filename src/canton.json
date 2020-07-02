@@ -1,0 +1,38 @@
+[
+	{
+		"PK_debut" : 0.0,
+		"PK_fin" : 0.5,
+		"voie" : 2,
+		"occupation" : 0
+	},
+	{
+		"PK_debut" : 0.5,
+		"PK_fin" : 5.9,
+		"voie" : 2,
+		"occupation" : 0
+	},
+	{
+		"PK_debut" : 5.9,
+		"PK_fin" : 15.0,
+		"voie" : 2,
+		"occupation" : 0
+	},
+	{
+		"PK_debut" : 15.0,
+		"PK_fin" : 17.8,
+		"voie" : 2,
+		"occupation" : 0
+	},
+	{
+		"PK_debut" : 17.8,
+		"PK_fin" : 25.9,
+		"voie" : 2,
+		"occupation" : 0
+	},
+	{
+		"PK_debut" : 25.9,
+		"PK_fin" : 32.5,
+		"voie" : 2,
+		"occupation" : 0
+	}
+]

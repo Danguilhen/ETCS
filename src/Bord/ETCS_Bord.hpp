@@ -6,6 +6,7 @@
 #include "Train_dynamique.hpp"
 #include "SpeedAndDistanceMonitoring.hpp"
 #include "Reseau.hpp"
+#include "BasicEVCSecurity.hpp"
 
 class SpeedAndDistanceMonitoring;
 
@@ -13,7 +14,7 @@ class SpeedAndDistanceMonitoring;
 class ETCS_Bord
 {
 	protected :
-		std::string generalMode = "SR";// FS,SR,SB
+		std::string generalMode = "FS";// FS,SR,SB
 		std::string version = "3.6.0";
 		std::string connection = "Down";
 		Train_dynamique *T_D;
@@ -24,6 +25,7 @@ class ETCS_Bord
 		TrackRelatedInputs TrackRI;
 		TrainRelatedInputs TrainRI;
 		SpeedAndDistanceMonitoring SDM;
+		BasicEVCSecurity BasicEVCcommands;
 		ETCS_Bord(Train_dynamique &T_D, Software &soft, Reseau &Res);
 		void bord_update();
 		void transition_generalMode();

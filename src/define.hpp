@@ -17,10 +17,12 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <json.hpp>
 
 using namespace sf;
 using namespace std;
 using namespace std::literals::chrono_literals;
+using json = nlohmann::json;
 
 #define V2f sf::Vector2f
 #define V2i sf::Vector2i

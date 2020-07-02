@@ -9,9 +9,9 @@ class Software
 		sf::RenderWindow fenetre;
 		sf::ContextSettings settings;
 		sf::Event event;
-	/*	sf::RenderWindow fenPcc;
+		sf::RenderWindow fenPcc;
 		sf::ContextSettings settingsPcc;
-		sf::Event evevntPcc;*/
+		sf::Event evevntPcc;
 		double RE ;
 		int ecartX = 0;
 		int ecartY = 0;
@@ -28,7 +28,7 @@ class Software
 		bool getEtat();
 		void setEtat(bool stop);
 		sf::RenderWindow *getFenetre();
-		sf::RenderWindow *getFenPcc();
+		//sf::RenderWindow *getFenPcc();
 		int getVmax();
 		void setVmax(int V);
 		bool getS_Finished();

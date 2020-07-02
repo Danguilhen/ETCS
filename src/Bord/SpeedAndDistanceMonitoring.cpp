@@ -23,10 +23,14 @@ void SpeedAndDistanceMonitoring::SDM_Update_FS()
 		//TBS.TBS_Update();
 		DODC.calculEBD();
 		SL.Curves();
-
 	}
 	SL.Supervision_limits();
 	SADMC.SpeedAndDistanceMonitoringCommands_update();
+}
+
+void SpeedAndDistanceMonitoring::SDM_Update_SR()
+{
+
 }
 
 Traction_Braking_system::Traction_Braking_system(TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI)

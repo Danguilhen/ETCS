@@ -9,7 +9,6 @@ class Train_dynamique
 {
 	private :
 	float V_train = 0.0;
-	float PK = 0; // la mise à 0 est temporaire
 	sf::Clock chrono;//créer le chrono
 	sf::Time diftime;//créer la varaible qui stocke le temps écoulé
 	float deltats;//créer la variable qui stocke le temps écoulé en seconde

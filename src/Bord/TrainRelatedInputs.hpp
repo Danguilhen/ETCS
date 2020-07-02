@@ -92,7 +92,7 @@ class Train_Data : public Tools
         //création des TC grâce au constructeur de la classe TC et ajout dans le vector
         std::vector<Train_Categories> tab_TC_list;//création des listes de Train categories
         Train_Categories train_categories;//La valeur stockée
-        int train_length = 100;
+        int train_length = 200;
         int maximum_train_speed;
         std::vector<Loading_gauge> tab_LG_list;//création des listes de Loading gauge
         Loading_gauge loading_gauge;//la valeur stockée

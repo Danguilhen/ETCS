@@ -11,7 +11,7 @@ void Virtual_train::update()
 
     train_statique.update();
     train_dynamique.update();
-    reseau.Reseau_update();
+    //reseau.Reseau_update();
     etcs.ETCS_uptade();
 
 }

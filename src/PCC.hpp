@@ -17,12 +17,14 @@ private:
 	float largeur_rail = 5; // 50 pixels
 	float temp_position_train = 0;
 	float ecart_entre_rangee =100;
+	json liste_canton;
 
 public:
-	PCC(Software &soft, Train_dynamique &T_D);
+	PCC(Software &softw, Train_dynamique &T_D);
 	void update();
 	void rail(float grandeur_longitudinale);
 	void train();
+	void canton();
 };
 
 

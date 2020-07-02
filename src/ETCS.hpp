@@ -8,13 +8,13 @@
 class ETCS
 {
 	private :
-		ETCS_Bord Bord;
-		ETCS_DMI EDMI;
 		Software *soft;
 		Reseau *Res;
 
 	public :
 
+		ETCS_Bord Bord;
+		ETCS_DMI EDMI;
 		ETCS(Software &soft, Train_dynamique &T_D, Reseau &Res);
 		void ETCS_uptade();
 };

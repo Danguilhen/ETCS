@@ -155,6 +155,7 @@ class SpeedAndDistanceMonitoring
 		SpeedAndDistanceMonitoringCommands SADMC;
 		SpeedAndDistanceMonitoring(Train_dynamique &T_D, TrainRelatedInputs &TrainRI, TrackRelatedInputs &TrackRI, Software &soft, Reseau &Res);
 		void SDM_Update_FS();
+		void SDM_Update_SR();
 };
 
 

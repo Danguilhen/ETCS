@@ -94,8 +94,9 @@ private:
 class TracksideSpeedRestriction : public Tools
 {
 	private :
-		std::vector<std::vector<float>> tableau_vitesse_ligne = {{0, 0, 0}};//[distance debut][distance fin][vitesse]
-		bool speed_change = false;
+		//std::vector<std::vector<float>> tableau_vitesse_ligne = {{0, 0, 0}};//[distance debut][distance fin][vitesse]
+		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 2000, 150}, {2000, 10000, 90}, {10000, 140000, 0}};//[distance debut][distance fin][vitesse]
+		bool speed_change = true;
 		Reseau *Res;
 	public :
 		TracksideSpeedRestriction(Reseau &Res);
@@ -149,8 +150,8 @@ class SpeedAndDistanceLimits
 class TrackRelatedInputs
 {
 	private :
-		int pointKilometrique = 0;
-		int remainingDistanceTunnel = 500;
+		float pointKilometrique = 0.0;
+		float remainingDistanceTunnel = 500;
 		std::string tunnelStoppingArea = "TunnelStoppingArea";
 		//Clock chronoTRI;//créer le chrono
 		//Time diftimeTRI;//créer la varaible qui stocke le temps écoulé
@@ -166,10 +167,23 @@ class TrackRelatedInputs
 		SpeedAndDistanceLimits SADL;
 		TrackRelatedInputs(TrainRelatedInputs &TrainRI, Train_dynamique &T_D, Reseau &Res);
 		void TrackRI_Update();
-		int getPointKilometrique();
-		int getRemainingDistanceTunnel();
+		float getPointKilometrique();
+		void setPointKilometrique(float P);
+		float getRemainingDistanceTunnel();
 		std::string getTunnelStoppingArea();
 		void setTunnelStoppingArea(std::string TSA);
+};
+
+class AnnouncementInfrastructureInformation
+{
+
+	private :
+	std::vector<std::vector<float>> tab_announcement; // [distance][numero de l'annonce]
+
+	public :
+	AnnouncementInfrastructureInformation();
+	void getTab_announcement();
+
 };
 
 
