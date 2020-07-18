@@ -14,7 +14,7 @@ struct Eurobalise
 struct Pupitre_entrant
 {
     string pupitre; //string contenant l'état des boutons (istringstream est utilisé pour pouvoir convertir les états des boutons en entiers par la suite)
-    int taille_pupitre;
+    unsigned int taille_pupitre;
     bool MAJ_pupitre;
     int commande_projecteurs;
     int commande_disj_pin1;
