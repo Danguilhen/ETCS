@@ -32,8 +32,6 @@ void StartUp::update()
 			bord->setGeneralMode("SR");
 			*ecran = "Default";
 		}
-
-
 	}
 
 }

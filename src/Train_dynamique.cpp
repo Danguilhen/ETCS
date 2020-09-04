@@ -17,42 +17,18 @@ void Train_dynamique::setTraction(float A){traction = A;}
 void Train_dynamique::update()
 {
 	//cout << V_train << endl;
-	effortTraction();
+	effortResultant();
+	determinationValeurManip();
+	//if(coefManip >= 0)
+		effortTraction();
+	//else
+	//	effortFreinage();
 	calculVitesse();
 	calculDistance();
 }
 
-
-void Train_dynamique::effortTraction()
+void Train_dynamique::effortResultant()
 {
-	float coefManip=0; // coef multiplicateur de la puissance envoyé par le conducteur avec le manip
-	float Rav;			// resistance avancement
-	float Rp;  // resistance profil
-	float Rd=0;
-	float Fres;
-	float F;
-	float Ft;
-	float Rd0=0;
-//	float Rp0;      // rp corrigé
-
-	valeurManip = traction;
-
-	if (valeurManip > 512 && valeurManip < 540)
-	{
-		coefManip = 0;
-	}
-	else if (valeurManip >= 540)
-	{
-		coefManip = (valeurManip - 540);
-		coefManip = coefManip/483;
-	}
-	else if (valeurManip < 512)
-	{
-		coefManip = 0;
-	}
-
-	//cout << valeurManip << endl;
-
 	///////// calcul de RAV
 	Rav = A + B*V_train + C*(V_train*V_train);
 	Rp = masse*9.81*(i/1000);
@@ -92,8 +68,33 @@ void Train_dynamique::effortTraction()
 	}
 	//cout << Rd << endl;
 	Fres = Rav + Rd + Rp;
+}
 
-	if (V_train == 0)
+void Train_dynamique::determinationValeurManip()
+{
+	valeurManip = traction;
+	cout << valeurManip << endl;
+
+	if (valeurManip > 470 && valeurManip < 540)
+	{
+		coefManip = 0;
+	}
+	else if (valeurManip >= 540)
+	{
+		coefManip = (valeurManip - 540.0);
+		coefManip = coefManip/483.0;
+	}
+	else if (valeurManip < 470)
+	{
+		coefManip = (valeurManip - 470.0) /470.0;
+	}
+	cout << coefManip << endl;
+}
+
+void Train_dynamique::effortTraction()
+{
+	gamma = 0;
+	if (V_train <= 0.0)
 	{
 		Rp =  Rd - Rd0;
 		if (abs(Ftraction*coefManip - Rp) > Rd0)
@@ -106,16 +107,33 @@ void Train_dynamique::effortTraction()
 			V_train = 0;
 		}
 	}
-	else if (V_train != 0)
+	else
 	{
 		if (coefManip == 0)
 		{
 			Ft = -Fres;
 			gamma = Ft / (masse*k);
 		}
-		else if (Ptraction*coefManip / (abs(V_train/3.6)) >= Ftraction*coefManip)                     // le train travail à sa force de trction max pour des vitesses relativement faible.
+		else if (abs(Ptraction*coefManip) / (abs(V_train/3.6)) >= abs(Ftraction*coefManip))                     // le train travail à sa force de trction max pour des vitesses relativement faible.
 		{
-		Ft = (Ftraction*coefManip - Fres);
+		Ft = (Ftraction*coefManip - Fres); // ne patine pas
+		gamma = Ft / (masse*k);
+		}
+		else if (abs(Ptraction*coefManip) / (V_train/3.6) < abs(Ftraction*coefManip))          // le train travail au max de sa puissance.
+		{
+		F = Ptraction*coefManip / (V_train/3.6);
+		Ft = (F - Fres);
+		gamma = Ft / (masse*k);
+		}
+	}
+	cout << "gamma = " << gamma << endl;
+}
+
+void Train_dynamique::effortFreinage()
+{
+		if (Ptraction*coefManip / (abs(V_train/3.6)) >= Ftraction*coefManip)                     // le train travail à sa force de trction max pour des vitesses relativement faible.
+		{
+		Ft = (Ftraction*coefManip - Fres); // ne patine pas
 		gamma = Ft / (masse*k);
 		}
 		else if (Ptraction*coefManip / (V_train/3.6) < Ftraction*coefManip)          // le train travail au max de sa puissance.
@@ -124,8 +142,6 @@ void Train_dynamique::effortTraction()
 		Ft = (F - Fres);
 		gamma = Ft / (masse*k);
 		}
-	}
-	//cout << "gamma = " << gamma << endl;
 }
 
 

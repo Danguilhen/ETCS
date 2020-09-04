@@ -27,6 +27,15 @@ class Train_dynamique
 	float typeTrain=0;   // pour la formule résistance au décollage =0 -> voyageur        =1 -> fret
 	float k=1.03;
 	float gamma;
+	float coefManip=0; // coef multiplicateur de la puissance envoyé par le conducteur avec le manip
+	float Rav;			// resistance avancement
+	float Rp;  // resistance profil
+	float Rd=0;
+	float Fres;
+	float F;
+	float Ft;
+	float Rd0=0;
+//	float Rp0;      // rp corrigé
 
 	Reseau *res;
 	Train_statique *stat;
@@ -43,6 +52,8 @@ class Train_dynamique
 	float getPK();
 	void setTraction(float A);
 	void effortTraction();
+	void effortResultant();
+	void determinationValeurManip();
 	void effortFreinage();
 	void calculVitesse();
 	void calculDistance();
