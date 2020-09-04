@@ -22,7 +22,7 @@ void WindowsSerial::setPort(unsigned int _comPortNum)
 
 void WindowsSerial::begin(unsigned int _baud)
 {
-	/*
+
 	#define CBR_110             110
 	#define CBR_300             300
 	#define CBR_600             600
@@ -38,7 +38,7 @@ void WindowsSerial::begin(unsigned int _baud)
 	#define CBR_115200          115200
 	#define CBR_128000          128000
 	#define CBR_256000          256000
-	*/
+
 
 	this->baud = _baud;
 

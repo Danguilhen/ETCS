@@ -1,7 +1,7 @@
 #include "Reseau.hpp"
 #include <iostream>
 #include "define.hpp"
-//#include "ArduSerial.h"
+#include "ArduSerial.hpp"
 
 using namespace std;
 
@@ -54,22 +54,22 @@ Reseau::Reseau()
     // INITIALISATION DE LA LIAISON SERIE SUR LE PORT 7
 
     // creation du string. Mettre dedans le string qu'est censé recevoir l'ordinateur
-    pupitre_entrant.pupitre = "%1024!0!0!00!0!0!0!01!00!00!00!00!00!10%";
-
+    //pupitre_entrant.pupitre = "%1024!0!0!00!0!0!0!01!00!00!00!00!00!10%";
+    pupitre_entrant.pupitre = "%315!1!%";
     pupitre_entrant.taille_pupitre = pupitre_entrant.pupitre.length();
 
     // A partir de cette ligne, tout est commenté le temps que aucune liaison n'est établie
-    /*
+
     // Initialisation de la liaison série sur le port 7
-    Serial7.begin(115200);
+    Serial4.begin(9600);
     std::cout << "Starting..." << std::endl;
 
     // Test la liaison initialisée
-    while (!Serial7);
-    while (Serial7.available())
-        Serial7.read();
+    while (!Serial4);
+    while (Serial4.available())
+        Serial4.read();
     // Confirmation de la création de la liaison
-    std::cout << "Connected" << std::endl; */
+    std::cout << "Connected" << std::endl;
 
     // INITIALISATION DES COMMANDES A 0
 
@@ -116,7 +116,6 @@ Reseau::Reseau()
     pupitre_entrant.commande_allum_diesel_pin1 = 0;
     pupitre_entrant.commande_allum_diesel_pin2 = 0;
 
-
     Reseau::Serial_update();
 
     }
@@ -125,7 +124,7 @@ Reseau::Reseau()
 void Reseau::Reseau_update() // Update des fonctions calculs et affichages de ETCS
 {
     Reseau::TCPClient_update();
-   // Reseau::Serial_update();
+    Reseau::Serial_update();
 
 }
 void Reseau::TCPClient_update()
@@ -141,15 +140,22 @@ void Reseau::TCPClient_update()
 }
 void Reseau::Serial_update()
 {
+
     pupitre_entrant.MAJ_pupitre = false;
-    /*if (Serial7.available() == pupitre_entrant.taille_pupitre)
+    cout<<"iiiiii"<<endl;
+    if (Serial4.available() == pupitre_entrant.taille_pupitre)
     {
         pupitre_entrant.MAJ_pupitre = true;
         pupitre_entrant.pupitre = "";
-        while (Serial7.available())
-            pupitre_entrant.pupitre = pupitre_entrant.pupitre + (char)Serial7.read();
+        while (Serial4.available())
+        {
+            pupitre_entrant.pupitre = pupitre_entrant.pupitre + (char)Serial4.read();
+            cout <<"ddddddddd"<<endl;
+            printf("%c", Serial1.read());
+        }
+
         cout << pupitre_entrant.pupitre << endl;
-    }*/
+    }
 
     //ACTUALISATION DE L'ETAT DES BOUTONS
     //"%0024!0!0!00!0!0!0!00!00!00!00!00!00!00!00%"
