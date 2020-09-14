@@ -8,7 +8,7 @@ using namespace std;
 Reseau::Reseau()
 // Constructeur
 //**********************************************************
-{
+{/*
     // Initialisation de la structure dynamique train aux paramètres de la duplex
     dynamique_train.A=2.27;
     dynamique_train.B=0.032;
@@ -26,6 +26,7 @@ Reseau::Reseau()
     // Définition du nom du client sur le Réseau
     string pseudo = "Train";
     // Connexion du Train au serveur
+
     if (client.connect(ip, port) == Socket::Done)
     {
         cout << "Connecte au serveur !\n" << endl;
@@ -49,25 +50,25 @@ Reseau::Reseau()
     cout << "Effort maximal: " << dynamique_train.F_traction << "KN" << endl;
     cout << "Puissance en freinage:" << dynamique_train.P_freinage << "KW" << endl;
     cout << "type de train (1=fret, 0=voyageur): " << dynamique_train.type_train << endl <<endl;
-
+*/
     //************************************************************
     // INITIALISATION DE LA LIAISON SERIE SUR LE PORT 7
 
     // creation du string. Mettre dedans le string qu'est censé recevoir l'ordinateur
     //pupitre_entrant.pupitre = "%1024!0!0!00!0!0!0!01!00!00!00!00!00!10%";
-    pupitre_entrant.pupitre = "%315!1!%";
+    pupitre_entrant.pupitre = "0000";
     pupitre_entrant.taille_pupitre = pupitre_entrant.pupitre.length();
 
     // A partir de cette ligne, tout est commenté le temps que aucune liaison n'est établie
 
     // Initialisation de la liaison série sur le port 7
-    Serial4.begin(9600);
+    Serial7.begin(115200);
     std::cout << "Starting..." << std::endl;
 
     // Test la liaison initialisée
-    while (!Serial4);
-    while (Serial4.available())
-        Serial4.read();
+    while (!Serial7);
+    while (Serial7.available())
+        Serial7.read();
     // Confirmation de la création de la liaison
     std::cout << "Connected" << std::endl;
 
@@ -118,7 +119,7 @@ Reseau::Reseau()
 
     Reseau::Serial_update();
 
-    }
+}
 
 
 void Reseau::Reseau_update() // Update des fonctions calculs et affichages de ETCS
@@ -142,20 +143,18 @@ void Reseau::Serial_update()
 {
 
     pupitre_entrant.MAJ_pupitre = false;
-    cout<<"iiiiii"<<endl;
-    if (Serial4.available() == pupitre_entrant.taille_pupitre)
+    if (Serial7.available() == pupitre_entrant.taille_pupitre)
     {
         pupitre_entrant.MAJ_pupitre = true;
         pupitre_entrant.pupitre = "";
-        while (Serial4.available())
+        while (Serial7.available())
         {
-            pupitre_entrant.pupitre = pupitre_entrant.pupitre + (char)Serial4.read();
-            cout <<"ddddddddd"<<endl;
-            printf("%c", Serial1.read());
+           pupitre_entrant.pupitre = pupitre_entrant.pupitre + (char)Serial7.read();
+           //cout << Serial7.read();
         }
-
-        cout << pupitre_entrant.pupitre << endl;
     }
+    cout << "apres reception" << pupitre_entrant.pupitre << endl;
+    //pupitre_entrant.pupitre = "500";
 
     //ACTUALISATION DE L'ETAT DES BOUTONS
     //"%0024!0!0!00!0!0!0!00!00!00!00!00!00!00!00%"

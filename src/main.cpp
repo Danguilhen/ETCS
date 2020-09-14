@@ -19,5 +19,6 @@ int main()
 	}while(soft.getEtat() == true);
 
 	cout << "end" ;
+
 	return 0;
 }

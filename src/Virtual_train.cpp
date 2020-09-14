@@ -8,10 +8,9 @@ Virtual_train::Virtual_train(Software &soft) : etcs(soft, train_dynamique, resea
 
 void Virtual_train::update()
 {
-
     train_statique.update();
     train_dynamique.update();
-    //reseau.Reseau_update();
+    std::thread reseau_Update(Reseau::Reseau_update, &reseau);
     etcs.ETCS_uptade();
-
+    reseau_Update.join();
 }

@@ -14,7 +14,6 @@ class Train_dynamique
 	float deltats;//créer la variable qui stocke le temps écoulé en seconde
 	float distance_update; // distance parcourue entre chaque mise à jour
 	int traction=510;
-
 	int masse=425; // masse à récupérer dans la class réseau
 	float A=2.7;
 	float B=0.032;
@@ -36,6 +35,28 @@ class Train_dynamique
 	float Ft;
 	float Rd0=0;
 //	float Rp0;      // rp corrigé
+	float Q=0;
+	float gammaEssieu;
+	float mumax = 0.35; // donnée à récupérer
+	float masseEssieuMoteur = 1.5;   // en tonnes
+	float Vessieu = 0;      // voir si je la declare dans la fonction calculvitesse
+	float newGlissement=0;
+	float glissement=0;
+	float mTournanteEssieuMoteur = 0.9;
+	float nbEssieuMoteur = 8;
+	float masseEssieu = 17;
+	float FtractionAdher=0;
+	float Vessieuprece;
+	float Vtrainprece;
+	float Freac=0;     // force de réaction du rail
+	float Ftransmis=0;
+	float Fessieu=0;
+	float mudyn=0;
+
+	int F1 = 287;
+	int F2 = 90;
+	//std::string F_mode; // quel mode de freinage utilisé
+	//std::string V_mode; // quel type de freinage utilisé en fonction de la vitesse
 
 	Reseau *res;
 	Train_statique *stat;
@@ -46,18 +67,17 @@ class Train_dynamique
 	void update();
 	float getV_train();
 	void setV_train(float V);
-	void mouvementTrain();
 	float getDistance_Uptdate();
 	float getTraction();
-	float getPK();
 	void setTraction(float A);
-	void effortTraction();
-	void effortResultant();
-	void determinationValeurManip();
-	void effortFreinage();
+	float getPK();
 	void calculVitesse();
 	void calculDistance();
-
+	void determinationValeurManip();
+	void effortTraction();
+	void effortResultant();
+	void effortFreinage();
+	void adherence();
 };
 
 #endif
