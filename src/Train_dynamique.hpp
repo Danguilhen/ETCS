@@ -78,6 +78,9 @@ class Train_dynamique
 	void effortResultant();
 	void effortFreinage();
 	void adherence();
+	float freinagePneumatiqueRemorque();
+	float freinagePneumatiqueMotrice();
+	void freinageUrgence();
 };
 
 #endif

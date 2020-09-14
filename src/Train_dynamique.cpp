@@ -201,18 +201,65 @@ void Train_dynamique::effortFreinage()
 		cout << "freinage" << endl;
 		if(V_train > 50.0)
 		{
-			if(valeurManip > 278)
+			if(valeurManip > F1)
 			{
 				//En freinage par récupération
 				float temp_coef;
 				temp_coef = (470.0 - valeurManip) /(470.0 - 286.0);
+				if (abs(Ptraction*temp_coef) / (abs(V_train/3.6)) >= abs(Ftraction*temp_coef))                     // le train travail à sa force de trction max pour des vitesses relativement faible.
+				{
+					cout << "1 er cas" << endl;
+					Ft = - (Ftraction*temp_coef + Fres); // ne patine pas
+					gamma = Ft / (masse*k);
+				}
+				else if (abs(Ptraction*temp_coef) / (V_train/3.6) < abs(Ftraction*temp_coef))          // le train travail au max de sa puissance.
+				{
+					cout << "2eme cas" << endl;
+					F = Ptraction*temp_coef / (V_train/3.6);
+					Ft = - (F + Fres);
+					gamma = Ft / (masse*k);
+				}
+				/*float temp_coef;
+				temp_coef = (470.0 - valeurManip) /(470.0 - 286.0);
 				Ft = - (Ptraction*temp_coef / (V_train/3.6) + Fres);
 				cout << Ft << endl;
+				gamma = Ft / (masse*k);*/
+			}
+			else if(valeurManip < F1 && valeurManip > F2)
+			{
+				if (abs(Ptraction) / (abs(V_train/3.6)) >= abs(Ftraction))                     // le train travail à sa force de trction max pour des vitesses relativement faible.
+				{
+					Ft = - Ftraction; // ne patine pas
+				}
+				else if (abs(Ptraction) / (V_train/3.6) < abs(Ftraction))          // le train travail au max de sa puissance.
+				{
+					F = Ptraction / (V_train/3.6);
+					Ft = - F;
+				}
+				//produit en croix pour déterminer l'application des freins pneumatiques des bogies porteurs
+				Ft = Ft - freinagePneumatiqueRemorque() - Fres;
 				gamma = Ft / (masse*k);
 			}
 		}
-
 }
+
+float Train_dynamique::freinagePneumatiqueRemorque()
+{
+	if(V_train > 220.0)
+		return (F1 - valeurManip) * (40.0 - (0.5*40)/1.5) / (F1 - F2); // 13.3 correspond la dépression de 4.5 bars dès le passage de F1 40 KN
+	else if (V_train < 200)
+		return (F1 - valeurManip) * (60.0 - (0.5*60)/1.5) / (F1 - F2); // 20.0 correspond la dépression de 4.5 bars dès le passage de F1 60 KN
+	else
+	{
+		// si entre les max et mins
+		float resultat_produit_en_croix = -(220 - V_train);
+		return (F1 - valeurManip) * (60.0 - resultat_produit_en_croix - (0.5*(60 - resultat_produit_en_croix))/1.5) / (F1 - F2); // 20.0 correspond la dépression de 4.5 bars dès le passage de F1 60 KN
+	}
+}
+/*float Train_dynamique::freinagePneumatiqueMotrice()
+{
+
+}*/
 
 
 void Train_dynamique::calculVitesse()

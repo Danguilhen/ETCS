@@ -424,7 +424,10 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 	{
 		//Triggering Conditions
 		if(T_D->getV_train() <= MRSP->getV_MRSP() && supervision_status == "Normal")
+		{
 			supervision_status = "Normal";
+			stopfunction();
+		}
 		if(T_D->getV_train() > MRSP->getV_MRSP() && supervision_status == "Normal")
 		{
 			supervision_status = "Overspeed";
@@ -452,6 +455,7 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 		{
 			supervision_status = "Normal";
 			command_triggered = "";
+			stopfunction();
 		}
 		if(T_D->getV_train() <= MRSP->getV_MRSP() && supervision_status != "Intervention")
 		{
@@ -495,7 +499,10 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 		if(supervision_status != "Intervention")
 		{
 			if(T_D->getV_train() < SL->getV_indication())
+			{
 				supervision_status = "Normal";
+				stopfunction();
+			}
 			else
 			if(T_D->getV_train() <= SL->getV_permitted())
 			{
@@ -531,9 +538,7 @@ void SpeedAndDistanceMonitoringCommands::SpeedAndDistanceMonitoringCommands_upda
 		{
 			supervision_status = "Indication";
 		}
-
 	}
-
 	//cout << supervision_status << " ";
 	//cout << T_D->getV_train() << " " << SL->getV_indication()<< " " << SL->getV_permitted()<< " " << SL->getV_warning() << " " << SL->getV_ebi();
 }
