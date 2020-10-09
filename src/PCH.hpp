@@ -23,6 +23,7 @@
 
 // Typical stdafx.h
 #include <algorithm>
+#include <winsock2.h>
 #include <cstdio>
 #include <deque>
 #include <fstream>

@@ -21,14 +21,22 @@ void Train_dynamique::update()
 		traction = stoi(res->getPupitre_entrant().pupitre); // TEMPORAIRE
 	cout << traction << endl; // TEMPORAIRE
 	effortResultant();
-	determinationValeurManip();
+	if(!freinage_urgence)
+		determinationValeurManip();
 	if(coefManip >= 0)
 		effortTraction();
 	else
-		effortFreinage();
+		effortFreinageTemp();
+	//effortFreinage();
 	cout << gamma << endl;
 	calculVitesse();
 	calculDistance();
+	partage_reseau();
+}
+
+void Train_dynamique::partage_reseau()
+{
+	res->setRes_vitesse(V_train);
 }
 
 void Train_dynamique::effortResultant()
@@ -87,10 +95,12 @@ void Train_dynamique::determinationValeurManip()
 	{
 		coefManip = (valeurManip - 540.0);
 		coefManip = coefManip/483.0;
+		coefManip = - coefManip;
 	}
 	else if (valeurManip < 470)
 	{
 		coefManip = (valeurManip - 470.0) /470.0;
+		coefManip = - coefManip;
 	}
 	cout << coefManip << endl;
 }
@@ -197,7 +207,6 @@ void Train_dynamique::effortFreinage()
 		Ft = (F - Fres);
 		gamma = Ft / (masse*k);
 		}*/
-
 		cout << "freinage" << endl;
 		if(V_train > 50.0)
 		{
@@ -241,6 +250,39 @@ void Train_dynamique::effortFreinage()
 				gamma = Ft / (masse*k);
 			}
 		}
+}
+
+void Train_dynamique::freinageUrgence()
+{
+	if (freinage_urgence)
+	{
+		coefManip = -1;
+	}
+	if ((int)V_train == 0)
+	{
+		freinage_urgence = false;
+	}
+}
+
+void Train_dynamique::effortFreinageTemp()
+{
+	freinageUrgence();
+	if(V_train > 300.0)
+	{
+		gamma = 0.675 * coefManip;
+	}
+	else if(V_train > 230.0)
+	{
+		gamma = 0.65 * coefManip;
+	}
+	else if(V_train > 170.0)
+	{
+		gamma = 0.79 * coefManip;
+	}
+	else if(V_train > 0.0)
+	{
+		gamma = 0.86 * coefManip;
+	}
 }
 
 float Train_dynamique::freinagePneumatiqueRemorque()

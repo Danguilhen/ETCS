@@ -53,6 +53,8 @@ class Train_dynamique
 	float Fessieu=0;
 	float mudyn=0;
 
+	bool freinage_urgence = false;
+
 	int F1 = 287;
 	int F2 = 90;
 	//std::string F_mode; // quel mode de freinage utilisé
@@ -65,6 +67,7 @@ class Train_dynamique
 
 	Train_dynamique(Reseau &res, Train_statique &stat);
 	void update();
+	void partage_reseau();
 	float getV_train();
 	void setV_train(float V);
 	float getDistance_Uptdate();
@@ -77,6 +80,7 @@ class Train_dynamique
 	void effortTraction();
 	void effortResultant();
 	void effortFreinage();
+	void effortFreinageTemp();
 	void adherence();
 	float freinagePneumatiqueRemorque();
 	float freinagePneumatiqueMotrice();

@@ -80,16 +80,28 @@ private:
     struct Eurobalise eurobalise;
     struct Pupitre_entrant pupitre_entrant;
     struct Dynamique_train dynamique_train;
+    sf::TcpSocket sock;
+    std::size_t received;
+    // variable a partager
+    float res_vitesse;
 
 public:
 
     Reseau();
+    void SocketSendInit();
+    void SocketUpdate();
     void Reseau_update();
     void TCPClient_update();
     void Serial_update();
     struct Pupitre_entrant getPupitre_entrant();
     struct Eurobalise getEurobalise();
     struct Dynamique_train getDynamique_train();
+
+    // fonctions variable a partager
+
+    float getRes_vitesse();
+    void setRes_vitesse(float V);
+
       //geters commande boutons
        // int getCmd_projecteurs();
         // int getCmd_disj();

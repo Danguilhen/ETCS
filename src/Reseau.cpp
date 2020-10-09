@@ -18,13 +18,14 @@ Reseau::Reseau()
     dynamique_train.P_freinage=5000;
     dynamique_train.mannip_traction=0;
     dynamique_train.type_train = 0;
+
     // INITIALISATION DE LA LIAISON RESEAU TCP à UE4
     //bool done = false;
-    short int port = 2000;
+    int port = 52001;
     // Définition de l'adresse IP de l'ordinateur sur le réseau local
-    string ip = "192.168.0.30";
+    string ip = "192.168.0.105";
     // Définition du nom du client sur le Réseau
-    string pseudo = "Train";
+    string pseudo = "a";
     // Connexion du Train au serveur
 
     if (client.connect(ip, port) == Socket::Done)
@@ -32,16 +33,18 @@ Reseau::Reseau()
         cout << "Connecte au serveur !\n" << endl;
         Packet sendPacket;
         sendPacket << pseudo;
+        cout << "avant send" << endl;
         client.send(sendPacket);
         Packet Premier;
         while (client.receive(Premier) != Socket::Done)
             cout << "waiting for serveur";
-        Premier >> dynamique_train.A >> dynamique_train.B >> dynamique_train.C >> dynamique_train.P_traction >> dynamique_train.F_traction >> dynamique_train.P_freinage >> dynamique_train.type_train;
+        //Premier >> dynamique_train.A >> dynamique_train.B >> dynamique_train.C >> dynamique_train.P_traction >> dynamique_train.F_traction >> dynamique_train.P_freinage >> dynamique_train.type_train;
     }
     else
         cout << "Serveur DOWN !" << endl;
     //Définissant des fonctions liés au train non bloquante
     client.setBlocking(false);
+
     cout << "Les parametres dynamiques du train sont les suivants:\n" << endl;
     cout << "coefficient A: " << dynamique_train.A << endl;
     cout << "coefficient B: " << dynamique_train.B << endl;
@@ -51,6 +54,7 @@ Reseau::Reseau()
     cout << "Puissance en freinage:" << dynamique_train.P_freinage << "KW" << endl;
     cout << "type de train (1=fret, 0=voyageur): " << dynamique_train.type_train << endl <<endl;
 */
+
     //************************************************************
     // INITIALISATION DE LA LIAISON SERIE SUR LE PORT 7
 
@@ -61,7 +65,7 @@ Reseau::Reseau()
 
     // A partir de cette ligne, tout est commenté le temps que aucune liaison n'est établie
 
-    // Initialisation de la liaison série sur le port 7
+   // Initialisation de la liaison série sur le port 7
     Serial7.begin(115200);
     std::cout << "Starting..." << std::endl;
 
@@ -70,7 +74,9 @@ Reseau::Reseau()
     while (Serial7.available())
         Serial7.read();
     // Confirmation de la création de la liaison
-    std::cout << "Connected" << std::endl;
+    std::cout << "Serial_Connected" << std::endl;
+
+    SocketSendInit();
 
     // INITIALISATION DES COMMANDES A 0
 
@@ -121,23 +127,65 @@ Reseau::Reseau()
 
 }
 
+void Reseau::SocketSendInit()
+{
+	cout << "debut" << endl;
+	if (sock.connect("192.168.0.105", 52001) != sf::Socket::Done)
+	{
+	    cout << "error_connection" << endl;
+	}
+	cout << "connecte" << endl;
+	const char* sendbuf = "a";
+	char recvbuf[4096];
+	if (sock.send(sendbuf, strlen(sendbuf)) != sf::Socket::Done)
+	{
+		cout << "error_send_a" << endl;
+	}
+	if (sock.receive(recvbuf, 4096, received) != sf::Socket::Done)
+	{
+	    cout << "error_receive_a" << endl;
+	}
+	string sent1 = "?0 0 0 0 0 0 0 0 0 0 0 0 ";
+	if (sock.send(sent1.c_str(), strlen(sent1.c_str())) != sf::Socket::Done)
+	{
+	    cout << "error_send_init" << endl;
+	}
+}
+
+void Reseau::SocketUpdate()
+{
+	cout << "next" << endl;
+	char bf[1024];
+	memset(bf, 0, sizeof(bf));
+	int zero = 0;
+	if (sock.receive(bf, sizeof(bf), received) != sf::Socket::Done)
+	{
+	    cout << "error_receive" << endl;
+	}
+    cout << "vitesse : " << res_vitesse << endl;
+	string string_sent = "?" + to_string(res_vitesse) + " " + to_string(zero) + " " + to_string(zero) + " "  + to_string(zero) + " " + to_string(zero) + " " + to_string(zero) + " "+ to_string(zero) + " " + to_string(zero) + " "  + to_string(zero) + " "  + to_string(zero) + " "  + to_string(zero) + " " + to_string(zero) + " " + to_string(zero) + " " + to_string(zero) + " ";
+	if (sock.send(string_sent.c_str(), strlen(string_sent.c_str())) != sf::Socket::Done)
+	{
+	    cout << "error_send" << endl;
+	}
+}
 
 void Reseau::Reseau_update() // Update des fonctions calculs et affichages de ETCS
 {
-    Reseau::TCPClient_update();
+    SocketUpdate();
+    //Reseau::TCPClient_update();
     Reseau::Serial_update();
 
 }
 void Reseau::TCPClient_update()
 {
+    /*cout << "update" << endl ;
     eurobalise.MAJ_eurobalise = false;
     if (client.receive(receivePacket) == Socket::Done)
     {
-        cout<<"mais merde";
-        eurobalise.MAJ_eurobalise = true;
-        receivePacket >> eurobalise.vitesse >> eurobalise.longueur;
-        cout << "la vitesse max est" << eurobalise.vitesse << " km/h\n" << "la longueur de la MA est de " << eurobalise.longueur << " m\n" << endl;
-    }
+        cout << "recu" << endl;
+    }*/
+
 }
 void Reseau::Serial_update()
 {
@@ -251,6 +299,9 @@ struct Dynamique_train Reseau::getDynamique_train()
 {
     return dynamique_train;
 }
+
+float Reseau::getRes_vitesse(){return res_vitesse;}
+void Reseau::setRes_vitesse(float V){res_vitesse = V;}
 
 // int Reseau::getCmd_projecteurs(){return pupitre_entrant.commande_projecteurs;}
 // int Reseau::getCmd_disj(){return pupitre_entrant.commande_disj;}

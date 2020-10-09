@@ -95,7 +95,7 @@ class TracksideSpeedRestriction : public Tools
 {
 	private :
 		//std::vector<std::vector<float>> tableau_vitesse_ligne = {{0, 0, 0}};//[distance debut][distance fin][vitesse]
-		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 2000, 150}, {2000, 10000, 90}, {10000, 140000, 0}};//[distance debut][distance fin][vitesse]
+		std::vector<std::vector<float>> tableau_vitesse_ligne{{0, 5000, 250}, {5000, 10000, 160}, {10000, 17000, 200}, {17000, 20000, 50}, {20000,23000, 0}};//[distance debut][distance fin][vitesse]
 		bool speed_change = true;
 		Reseau *Res;
 	public :
