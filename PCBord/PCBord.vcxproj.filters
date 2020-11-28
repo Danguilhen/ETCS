@@ -1,0 +1,866 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Button.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Cadran.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\DataEntry.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Dataview.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Default.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\DefaultTVM.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\DriverID.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\ERTMS_ETCSlevel.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\ETCS_DMI.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Fenetre.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\LeftSide.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Menu.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Override.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Planning.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Settings.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Special.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\StartUp.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Symbol.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Texte_DMI.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\TrainRunningNumberWindow.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bord\BasicEVCSecurity.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bord\ETCS_Bord.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bord\SpeedAndDistanceMonitoring.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bord\TrackRelatedInputs.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bord\TrainRelatedInputs.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PupitreEntrant.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Reseau.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Software.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Sol.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Train_dynamique.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Train_statique.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Virtual_train.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ArduSerial.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Balise.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ETCS.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Main_Thomas.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProvisoire.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PCC.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DMI\Main2.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Bord\TVM_Bord.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Button.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Cadran.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\DataEntry.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Dataview.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Default.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\DefaultTVM.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\DriverID.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\ERTMS_ETCSlevel.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\ETCS_DMI.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Fenetre.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\LeftSide.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Menu.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Override.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Planning.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Settings.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Special.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\StartUp.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Symbol.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Texte_DMI.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\TrainRunningNumberWindow.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Bord\BasicEVCSecurity.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Bord\ETCS_Bord.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Bord\SpeedAndDistanceMonitoring.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Bord\TrackRelatedInputs.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Bord\TrainRelatedInputs.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="PupitreEntrant.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Reseau.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Software.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Sol.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Train_dynamique.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Train_statique.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Virtual_train.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="PCC.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ArduSerial.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Balise.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="define.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ETCS.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DMI\Main2.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Bord\TVM_Bord.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="ressources\alarm.wav">
+      <Filter>Fichiers de ressources</Filter>
+    </Media>
+    <Media Include="ressources\Changement de V.wav">
+      <Filter>Fichiers de ressources</Filter>
+    </Media>
+    <Media Include="ressources\Survitesse.wav">
+      <Filter>Fichiers de ressources</Filter>
+    </Media>
+    <Media Include="ressources\sounds\click.wav">
+      <Filter>Fichiers de ressources</Filter>
+    </Media>
+    <Media Include="ressources\sounds\S_info.wav">
+      <Filter>Fichiers de ressources</Filter>
+    </Media>
+    <Media Include="ressources\sounds\S1_toofast.wav">
+      <Filter>Fichiers de ressources</Filter>
+    </Media>
+    <Media Include="ressources\sounds\S2_warning.wav">
+      <Filter>Fichiers de ressources</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ressources\BP.jpg">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\ecran demarage.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\Sect.jpg">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\textureAiguille1CF.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\textureAiguille2CF.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\DR_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\DR_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\DR_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\DR_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\DR_05.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_02a.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_05.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_06.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_07.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_08.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_08a.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_09.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_09a.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_10.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_11.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_12.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_13.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_14.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LE_15.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LS_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\LX_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_05.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_06.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_07.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_08.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_09.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_10.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_11.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_12.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_13.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_14.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_15.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_16.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_17.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_18.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_19.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_20.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_21.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\MO_22.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_05.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_06.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_07.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_08.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_09.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_10.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_11.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_12.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_13.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_14.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_15.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_16.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_17.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_18.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_18_2.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_19.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_20.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_21.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_22.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\NA_23.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_05.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_06.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_07.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_08.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_09.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_10.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_11.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_12.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_13.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_14.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_15.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_16.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_17.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_18.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_19.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_20.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_21.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_22.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_22ORIGINAL.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_23.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_24.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_25.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_26.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_27.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_28.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_29.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_30.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_31.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_32.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_33.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_34.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_35.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\PL_36.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\SE_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\SE_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\SE_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\SE_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\ST_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\ST_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\ST_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\ST_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\ST_05.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\ST_06.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_01.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_02.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_03.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_04.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_05.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_06.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_07.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_08.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_09.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_10.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_11.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_12.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_13.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_14.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_15.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_16.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_17.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_18.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_19.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_20.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_21.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_22.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_23.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_24.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_25.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_26.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_27.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_28.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_29.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_30.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_31.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_32.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_33.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_34.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_35.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_36.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\symbols\TC_37.bmp">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\AUTOR FERM DJ.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS AE-BA.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS AL.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS BC JS.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS BC RD.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF DJ C.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF F.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF ND.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF P.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF SURV.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF T.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF TRA.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DJ AUX.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS DJ.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS ECO.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS FEP.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS FR V-AN.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS GR.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS I.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS INS BG.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS PCO.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS Sab.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS SI-AL.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+    <Image Include="ressources\pictoBoiteAGlacons\LS UT CAB.png">
+      <Filter>Fichiers de ressources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="ressources\fonts\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="balise.json" />
+    <None Include="canton.json" />
+  </ItemGroup>
+</Project>

@@ -1,5 +1,0 @@
-changement de speed change en true
-isolement dans etcs bord des trtansitions entre general mode
-fonctionnement en FS et en down de base
-
-Pour remettre en route avec le mini serveur, faire la manipulation inverse !

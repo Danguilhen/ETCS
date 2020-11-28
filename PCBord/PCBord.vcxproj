@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{3ED02B9B-FD8B-4B23-922C-FD976D72C78D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PCBord</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.hpp</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;C:\Program Files (x86)\Visual Leak Detector\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\SFML-2.5.1\lib;C:\Program Files (x86)\Visual Leak Detector\lib\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;sfml-graphics-s-d.lib;sfml-network-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;ws2_32.lib;openal32.lib;vorbis.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;ogg.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>SFML_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;sfml-graphics-s.lib;sfml-network-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-audio-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="ArduSerial.hpp" />
+    <ClInclude Include="Balise.hpp" />
+    <ClInclude Include="Bord\BasicEVCSecurity.hpp" />
+    <ClInclude Include="Bord\ETCS_Bord.hpp" />
+    <ClInclude Include="Bord\TVM_Bord.hpp" />
+    <ClInclude Include="Bord\SpeedAndDistanceMonitoring.hpp" />
+    <ClInclude Include="Bord\TrackRelatedInputs.hpp" />
+    <ClInclude Include="Bord\TrainRelatedInputs.hpp" />
+    <ClInclude Include="define.hpp" />
+    <ClInclude Include="DMI\Button.hpp" />
+    <ClInclude Include="DMI\Cadran.hpp" />
+    <ClInclude Include="DMI\DataEntry.hpp" />
+    <ClInclude Include="DMI\Dataview.hpp" />
+    <ClInclude Include="DMI\Default.hpp" />
+    <ClInclude Include="DMI\DefaultTVM.hpp" />
+    <ClInclude Include="DMI\DriverID.hpp" />
+    <ClInclude Include="DMI\ERTMS_ETCSlevel.hpp" />
+    <ClInclude Include="DMI\ETCS_DMI.hpp" />
+    <ClInclude Include="DMI\Fenetre.hpp" />
+    <ClInclude Include="DMI\LeftSide.hpp" />
+    <ClInclude Include="DMI\Main2.hpp" />
+    <ClInclude Include="DMI\Menu.hpp" />
+    <ClInclude Include="DMI\Override.hpp" />
+    <ClInclude Include="DMI\Planning.hpp" />
+    <ClInclude Include="DMI\Settings.hpp" />
+    <ClInclude Include="DMI\Special.hpp" />
+    <ClInclude Include="DMI\StartUp.hpp" />
+    <ClInclude Include="DMI\Symbol.hpp" />
+    <ClInclude Include="DMI\Texte_DMI.hpp" />
+    <ClInclude Include="DMI\TrainRunningNumberWindow.hpp" />
+    <ClInclude Include="ETCS.hpp" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="PCC.hpp" />
+    <ClInclude Include="pch.hpp" />
+    <ClInclude Include="PupitreEntrant.hpp" />
+    <ClInclude Include="Reseau.hpp" />
+    <ClInclude Include="Software.hpp" />
+    <ClInclude Include="Sol.hpp" />
+    <ClInclude Include="Sound.hpp" />
+    <ClInclude Include="Tools.hpp" />
+    <ClInclude Include="Train_dynamique.hpp" />
+    <ClInclude Include="Train_statique.hpp" />
+    <ClInclude Include="Virtual_train.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ArduSerial.cpp" />
+    <ClCompile Include="Balise.cpp" />
+    <ClCompile Include="Bord\BasicEVCSecurity.cpp" />
+    <ClCompile Include="Bord\ETCS_Bord.cpp" />
+    <ClCompile Include="Bord\TVM_Bord.cpp" />
+    <ClCompile Include="Bord\SpeedAndDistanceMonitoring.cpp" />
+    <ClCompile Include="Bord\TrackRelatedInputs.cpp" />
+    <ClCompile Include="Bord\TrainRelatedInputs.cpp" />
+    <ClCompile Include="DMI\Button.cpp" />
+    <ClCompile Include="DMI\Cadran.cpp" />
+    <ClCompile Include="DMI\DataEntry.cpp" />
+    <ClCompile Include="DMI\Dataview.cpp" />
+    <ClCompile Include="DMI\Default.cpp" />
+    <ClCompile Include="DMI\DefaultTVM.cpp" />
+    <ClCompile Include="DMI\DriverID.cpp" />
+    <ClCompile Include="DMI\ERTMS_ETCSlevel.cpp" />
+    <ClCompile Include="DMI\ETCS_DMI.cpp" />
+    <ClCompile Include="DMI\Fenetre.cpp" />
+    <ClCompile Include="DMI\LeftSide.cpp" />
+    <ClCompile Include="DMI\Main2.cpp" />
+    <ClCompile Include="DMI\Menu.cpp" />
+    <ClCompile Include="DMI\Override.cpp" />
+    <ClCompile Include="DMI\Planning.cpp" />
+    <ClCompile Include="DMI\Settings.cpp" />
+    <ClCompile Include="DMI\Special.cpp" />
+    <ClCompile Include="DMI\StartUp.cpp" />
+    <ClCompile Include="DMI\Symbol.cpp" />
+    <ClCompile Include="DMI\Texte_DMI.cpp" />
+    <ClCompile Include="DMI\TrainRunningNumberWindow.cpp" />
+    <ClCompile Include="ETCS.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainProvisoire.cpp" />
+    <ClCompile Include="Main_Thomas.cpp" />
+    <ClCompile Include="PCC.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PupitreEntrant.cpp" />
+    <ClCompile Include="Reseau.cpp" />
+    <ClCompile Include="Software.cpp" />
+    <ClCompile Include="Sol.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="Train_dynamique.cpp" />
+    <ClCompile Include="Train_statique.cpp" />
+    <ClCompile Include="Virtual_train.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="ressources\alarm.wav" />
+    <Media Include="ressources\Changement de V.wav" />
+    <Media Include="ressources\sounds\click.wav" />
+    <Media Include="ressources\sounds\S1_toofast.wav" />
+    <Media Include="ressources\sounds\S2_warning.wav" />
+    <Media Include="ressources\sounds\S_info.wav" />
+    <Media Include="ressources\Survitesse.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ressources\BP.jpg" />
+    <Image Include="ressources\ecran demarage.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\AUTOR FERM DJ.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS AE-BA.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS AL.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS BC JS.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS BC RD.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF DJ C.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF F.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF ND.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF P.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF SURV.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF T.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DF TRA.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DJ AUX.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS DJ.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS ECO.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS FEP.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS FR V-AN.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS GR.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS I.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS INS BG.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS PCO.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS Sab.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS SI-AL.png" />
+    <Image Include="ressources\pictoBoiteAGlacons\LS UT CAB.png" />
+    <Image Include="ressources\Sect.jpg" />
+    <Image Include="ressources\symbols\DR_01.bmp" />
+    <Image Include="ressources\symbols\DR_02.bmp" />
+    <Image Include="ressources\symbols\DR_03.bmp" />
+    <Image Include="ressources\symbols\DR_04.bmp" />
+    <Image Include="ressources\symbols\DR_05.bmp" />
+    <Image Include="ressources\symbols\LE_01.bmp" />
+    <Image Include="ressources\symbols\LE_02.bmp" />
+    <Image Include="ressources\symbols\LE_02a.bmp" />
+    <Image Include="ressources\symbols\LE_03.bmp" />
+    <Image Include="ressources\symbols\LE_04.bmp" />
+    <Image Include="ressources\symbols\LE_05.bmp" />
+    <Image Include="ressources\symbols\LE_06.bmp" />
+    <Image Include="ressources\symbols\LE_07.bmp" />
+    <Image Include="ressources\symbols\LE_08.bmp" />
+    <Image Include="ressources\symbols\LE_08a.bmp" />
+    <Image Include="ressources\symbols\LE_09.bmp" />
+    <Image Include="ressources\symbols\LE_09a.bmp" />
+    <Image Include="ressources\symbols\LE_10.bmp" />
+    <Image Include="ressources\symbols\LE_11.bmp" />
+    <Image Include="ressources\symbols\LE_12.bmp" />
+    <Image Include="ressources\symbols\LE_13.bmp" />
+    <Image Include="ressources\symbols\LE_14.bmp" />
+    <Image Include="ressources\symbols\LE_15.bmp" />
+    <Image Include="ressources\symbols\LS_01.bmp" />
+    <Image Include="ressources\symbols\LX_01.bmp" />
+    <Image Include="ressources\symbols\MO_01.bmp" />
+    <Image Include="ressources\symbols\MO_02.bmp" />
+    <Image Include="ressources\symbols\MO_03.bmp" />
+    <Image Include="ressources\symbols\MO_04.bmp" />
+    <Image Include="ressources\symbols\MO_05.bmp" />
+    <Image Include="ressources\symbols\MO_06.bmp" />
+    <Image Include="ressources\symbols\MO_07.bmp" />
+    <Image Include="ressources\symbols\MO_08.bmp" />
+    <Image Include="ressources\symbols\MO_09.bmp" />
+    <Image Include="ressources\symbols\MO_10.bmp" />
+    <Image Include="ressources\symbols\MO_11.bmp" />
+    <Image Include="ressources\symbols\MO_12.bmp" />
+    <Image Include="ressources\symbols\MO_13.bmp" />
+    <Image Include="ressources\symbols\MO_14.bmp" />
+    <Image Include="ressources\symbols\MO_15.bmp" />
+    <Image Include="ressources\symbols\MO_16.bmp" />
+    <Image Include="ressources\symbols\MO_17.bmp" />
+    <Image Include="ressources\symbols\MO_18.bmp" />
+    <Image Include="ressources\symbols\MO_19.bmp" />
+    <Image Include="ressources\symbols\MO_20.bmp" />
+    <Image Include="ressources\symbols\MO_21.bmp" />
+    <Image Include="ressources\symbols\MO_22.bmp" />
+    <Image Include="ressources\symbols\NA_01.bmp" />
+    <Image Include="ressources\symbols\NA_02.bmp" />
+    <Image Include="ressources\symbols\NA_03.bmp" />
+    <Image Include="ressources\symbols\NA_04.bmp" />
+    <Image Include="ressources\symbols\NA_05.bmp" />
+    <Image Include="ressources\symbols\NA_06.bmp" />
+    <Image Include="ressources\symbols\NA_07.bmp" />
+    <Image Include="ressources\symbols\NA_08.bmp" />
+    <Image Include="ressources\symbols\NA_09.bmp" />
+    <Image Include="ressources\symbols\NA_10.bmp" />
+    <Image Include="ressources\symbols\NA_11.bmp" />
+    <Image Include="ressources\symbols\NA_12.bmp" />
+    <Image Include="ressources\symbols\NA_13.bmp" />
+    <Image Include="ressources\symbols\NA_14.bmp" />
+    <Image Include="ressources\symbols\NA_15.bmp" />
+    <Image Include="ressources\symbols\NA_16.bmp" />
+    <Image Include="ressources\symbols\NA_17.bmp" />
+    <Image Include="ressources\symbols\NA_18.bmp" />
+    <Image Include="ressources\symbols\NA_18_2.bmp" />
+    <Image Include="ressources\symbols\NA_19.bmp" />
+    <Image Include="ressources\symbols\NA_20.bmp" />
+    <Image Include="ressources\symbols\NA_21.bmp" />
+    <Image Include="ressources\symbols\NA_22.bmp" />
+    <Image Include="ressources\symbols\NA_23.bmp" />
+    <Image Include="ressources\symbols\PL_01.bmp" />
+    <Image Include="ressources\symbols\PL_02.bmp" />
+    <Image Include="ressources\symbols\PL_03.bmp" />
+    <Image Include="ressources\symbols\PL_04.bmp" />
+    <Image Include="ressources\symbols\PL_05.bmp" />
+    <Image Include="ressources\symbols\PL_06.bmp" />
+    <Image Include="ressources\symbols\PL_07.bmp" />
+    <Image Include="ressources\symbols\PL_08.bmp" />
+    <Image Include="ressources\symbols\PL_09.bmp" />
+    <Image Include="ressources\symbols\PL_10.bmp" />
+    <Image Include="ressources\symbols\PL_11.bmp" />
+    <Image Include="ressources\symbols\PL_12.bmp" />
+    <Image Include="ressources\symbols\PL_13.bmp" />
+    <Image Include="ressources\symbols\PL_14.bmp" />
+    <Image Include="ressources\symbols\PL_15.bmp" />
+    <Image Include="ressources\symbols\PL_16.bmp" />
+    <Image Include="ressources\symbols\PL_17.bmp" />
+    <Image Include="ressources\symbols\PL_18.bmp" />
+    <Image Include="ressources\symbols\PL_19.bmp" />
+    <Image Include="ressources\symbols\PL_20.bmp" />
+    <Image Include="ressources\symbols\PL_21.bmp" />
+    <Image Include="ressources\symbols\PL_22.bmp" />
+    <Image Include="ressources\symbols\PL_22ORIGINAL.bmp" />
+    <Image Include="ressources\symbols\PL_23.bmp" />
+    <Image Include="ressources\symbols\PL_24.bmp" />
+    <Image Include="ressources\symbols\PL_25.bmp" />
+    <Image Include="ressources\symbols\PL_26.bmp" />
+    <Image Include="ressources\symbols\PL_27.bmp" />
+    <Image Include="ressources\symbols\PL_28.bmp" />
+    <Image Include="ressources\symbols\PL_29.bmp" />
+    <Image Include="ressources\symbols\PL_30.bmp" />
+    <Image Include="ressources\symbols\PL_31.bmp" />
+    <Image Include="ressources\symbols\PL_32.bmp" />
+    <Image Include="ressources\symbols\PL_33.bmp" />
+    <Image Include="ressources\symbols\PL_34.bmp" />
+    <Image Include="ressources\symbols\PL_35.bmp" />
+    <Image Include="ressources\symbols\PL_36.bmp" />
+    <Image Include="ressources\symbols\SE_01.bmp" />
+    <Image Include="ressources\symbols\SE_02.bmp" />
+    <Image Include="ressources\symbols\SE_03.bmp" />
+    <Image Include="ressources\symbols\SE_04.bmp" />
+    <Image Include="ressources\symbols\ST_01.bmp" />
+    <Image Include="ressources\symbols\ST_02.bmp" />
+    <Image Include="ressources\symbols\ST_03.bmp" />
+    <Image Include="ressources\symbols\ST_04.bmp" />
+    <Image Include="ressources\symbols\ST_05.bmp" />
+    <Image Include="ressources\symbols\ST_06.bmp" />
+    <Image Include="ressources\symbols\TC_01.bmp" />
+    <Image Include="ressources\symbols\TC_02.bmp" />
+    <Image Include="ressources\symbols\TC_03.bmp" />
+    <Image Include="ressources\symbols\TC_04.bmp" />
+    <Image Include="ressources\symbols\TC_05.bmp" />
+    <Image Include="ressources\symbols\TC_06.bmp" />
+    <Image Include="ressources\symbols\TC_07.bmp" />
+    <Image Include="ressources\symbols\TC_08.bmp" />
+    <Image Include="ressources\symbols\TC_09.bmp" />
+    <Image Include="ressources\symbols\TC_10.bmp" />
+    <Image Include="ressources\symbols\TC_11.bmp" />
+    <Image Include="ressources\symbols\TC_12.bmp" />
+    <Image Include="ressources\symbols\TC_13.bmp" />
+    <Image Include="ressources\symbols\TC_14.bmp" />
+    <Image Include="ressources\symbols\TC_15.bmp" />
+    <Image Include="ressources\symbols\TC_16.bmp" />
+    <Image Include="ressources\symbols\TC_17.bmp" />
+    <Image Include="ressources\symbols\TC_18.bmp" />
+    <Image Include="ressources\symbols\TC_19.bmp" />
+    <Image Include="ressources\symbols\TC_20.bmp" />
+    <Image Include="ressources\symbols\TC_21.bmp" />
+    <Image Include="ressources\symbols\TC_22.bmp" />
+    <Image Include="ressources\symbols\TC_23.bmp" />
+    <Image Include="ressources\symbols\TC_24.bmp" />
+    <Image Include="ressources\symbols\TC_25.bmp" />
+    <Image Include="ressources\symbols\TC_26.bmp" />
+    <Image Include="ressources\symbols\TC_27.bmp" />
+    <Image Include="ressources\symbols\TC_28.bmp" />
+    <Image Include="ressources\symbols\TC_29.bmp" />
+    <Image Include="ressources\symbols\TC_30.bmp" />
+    <Image Include="ressources\symbols\TC_31.bmp" />
+    <Image Include="ressources\symbols\TC_32.bmp" />
+    <Image Include="ressources\symbols\TC_33.bmp" />
+    <Image Include="ressources\symbols\TC_34.bmp" />
+    <Image Include="ressources\symbols\TC_35.bmp" />
+    <Image Include="ressources\symbols\TC_36.bmp" />
+    <Image Include="ressources\symbols\TC_37.bmp" />
+    <Image Include="ressources\textureAiguille1CF.png" />
+    <Image Include="ressources\textureAiguille2CF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="ressources\fonts\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="balise.json" />
+    <None Include="canton.json" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
