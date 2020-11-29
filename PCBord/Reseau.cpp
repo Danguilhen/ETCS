@@ -172,7 +172,7 @@ Reseau::Reseau()
 
 void Reseau::SocketSendInit()
 {
-	/*if (validationSocket == 0) {
+	if (validationSocket == 0) {
 		WSADATA wsaData;
 
 		//	char recvbuf[512];
@@ -260,7 +260,7 @@ void Reseau::SocketSendInit()
 			return;
 		}
 		validationSocket = 1;
-	}*/
+	}
 }
 
 void Reseau::SocketUpdate()
@@ -299,8 +299,8 @@ void Reseau::Reseau_update() // Update des fonctions calculs et affichages de ET
 	//	cout << validationSocket << endl;
         SocketSendInit();
 		//Sleep(1);
-	//	if (validationSocket == 1)
-	//		SocketUpdate();
+		if (validationSocket == 1)
+			SocketUpdate();
 	//}
 	//Reseau::Serial_update();
 	
@@ -443,7 +443,7 @@ double Reseau::getSelfTimer(){return selfTimer;}
 void Reseau::setSelfTimer(double ST){selfTimer = ST;}
 
 int Reseau::getSideFrequency() { return sideFrequency; }
-void Reseau::setSideFrequency(double SIF) { sideFrequency = SIF; }
+void Reseau::setSideFrequency(int SIF) { sideFrequency = SIF; }
 
 bool Reseau::getValidationSocket() { return validationSocket; }
 

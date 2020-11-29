@@ -208,5 +208,6 @@ using json = nlohmann::json;
 #define TC_35 (*symbol)[151]
 #define TC_36 (*symbol)[152]
 #define TC_37 (*symbol)[153]
-
+#define Sect (*symbol)[154]
+#define BP (*symbol)[155]
 #endif

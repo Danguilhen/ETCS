@@ -32,6 +32,8 @@ class TVM_Bord
 		TVM_Bord(Reseau &Res);
 		void update();
 		string getIndication();
+		bool getSect();
+		bool getBp();
 };
 
 #endif

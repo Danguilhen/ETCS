@@ -130,7 +130,7 @@ public:
 
 
 	int getSideFrequency();
-	void setSideFrequency(double SIF);
+	void setSideFrequency(int SIF);
 
 	bool getValidationSocket();
 

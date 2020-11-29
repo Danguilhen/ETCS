@@ -153,7 +153,13 @@ void DefaultTVM::update()
 		creation_rectangle(V2f((54 + 5 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 5);
 	}
 
-	else if (indication.at(3) == 'C' || indication.at(3) == 'V') {
+	else if (indication.at(3) == 'V') {
+		creation_rectangle(V2f((54 + 3 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 6);
+		creation_rectangle(V2f((54 + 1 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 6);
+		creation_rectangle(V2f((54 + 5 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 6);
+	}
+
+	else if (indication.at(3) == 'C' && clockTVM.getElapsedTime()>periodeClignotement/floatdeux) {
 		creation_rectangle(V2f((54 + 3 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 6);
 		creation_rectangle(V2f((54 + 1 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 6);
 		creation_rectangle(V2f((54 + 5 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 6);
@@ -171,17 +177,23 @@ void DefaultTVM::update()
 		creation_rectangle(V2f((54 + 5 * 37), (54 + 30 + 191 + 25)), V2f(58, 50), 8);
 	}
 
-	if (indication.at(0) == '3' && indication.at(1) == '0' && indication.at(2) == '0') {
+	
+	if (indication.at(0) == '3' && indication.at(1) == '0' && indication.at(2) == '0' && indication.at(3) == 'V') {
 		creation_texte("3", WHITE, 48, 6, V2f(54 + 1 * 37+29, 54 + 30 + 191 + 25+25), 1);
 		creation_texte("0", WHITE, 48, 6, V2f(54 + 3 * 37+29, 54 + 30 + 191 + 25+25), 1);
 		creation_texte("0", WHITE, 48, 6, V2f(54 + 5 * 37+29, 54 + 30 + 191 + 25+25), 1);
+	}
+	else if (indication.at(0) == '3' && indication.at(1) == '0' && indication.at(2) == '0' && indication.at(3) == 'C' && clockTVM.getElapsedTime() > periodeClignotement / floatdeux) {
+		creation_texte("3", WHITE, 48, 6, V2f(54 + 1 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
+		creation_texte("0", WHITE, 48, 6, V2f(54 + 3 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
+		creation_texte("0", WHITE, 48, 6, V2f(54 + 5 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 	}
 	else if (indication.at(0) == '2' && indication.at(1) == '7' && indication.at(2) == '0' && indication.at(3) == 'V') {
 		creation_texte("2", WHITE, 48, 6, V2f(54 + 1 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 		creation_texte("7", WHITE, 48, 6, V2f(54 + 3 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 		creation_texte("0", WHITE, 48, 6, V2f(54 + 5 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 	}
-	else if (indication.at(0) == '2' && indication.at(1) == '7' && indication.at(2) == '0' && indication.at(3) == 'C') {
+	else if (indication.at(0) == '2' && indication.at(1) == '7' && indication.at(2) == '0' && indication.at(3) == 'C' && clockTVM.getElapsedTime() > periodeClignotement / floatdeux) {
 		creation_texte("2", WHITE, 48, 6, V2f(54 + 1 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 		creation_texte("7", WHITE, 48, 6, V2f(54 + 3 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 		creation_texte("0", WHITE, 48, 6, V2f(54 + 5 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
@@ -226,4 +238,14 @@ void DefaultTVM::update()
 		creation_texte("0", WHITE, 48, 6, V2f(54 + 3 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 		creation_texte("0", WHITE, 48, 6, V2f(54 + 5 * 37 + 29, 54 + 30 + 191 + 25 + 25), 1);
 	}
+
+	if (clockTVM.getElapsedTime() > periodeClignotement)
+		clockTVM.restart();
+
+	sect = TVM->getSect();
+	if (sect == 1)
+		Sect.afficher(V2f(54 + 140 + 36, 274));			//F5
+	bp = TVM->getBp();
+	if (bp == 1)
+		BP.afficher(V2f(54 + 140 - 36, 274));			//F5
 }

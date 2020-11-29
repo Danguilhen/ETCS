@@ -11,7 +11,7 @@ void TVM_Bord::update() {
 	selfTimer = Res->getSelfTimer();
 	side = Res->getSideFrequency();
 
-	mainFrequency = 11.4;
+	mainFrequency = 13.6;
 
 	if (mainFrequency == 11.4)
 		indication = "300V";
@@ -40,6 +40,7 @@ void TVM_Bord::update() {
 	else if (mainFrequency == 29)
 		indication = "RRRR";
 
+	secondaryFrequency = 1318;
 	//cout << indication << endl;
 	if (side == 1700 || side == 2300)
 		side = 1;
@@ -123,4 +124,10 @@ void TVM_Bord::update() {
 
 string TVM_Bord::getIndication() { 
 	return indication;  
+}
+bool TVM_Bord::getSect() {
+	return sect;
+}
+bool TVM_Bord::getBp() {
+	return bp;
 }
